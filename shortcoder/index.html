@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>WordPress ShortCode Plugin Builder</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<link rel="canonical" href="/shortcoder/" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.cookie.js"></script>
+</head>
+<body>
+
+<h1>WordPress ShortCode Plugin Builder</h1>
+
+<h2>これは何？</h2>
+
+<div class="content">
+<p>
+WordPress 2.5 で新しく追加された<a href="http://wpdocs.sourceforge.jp/%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%88%E3%82%B3%E3%83%BC%E3%83%89_API" title="ショートコード API - WordPress Codex 日本語版">ショートコード API機能</a>を利用したプラグインを簡単に生成することができます。 <br />
+使用方法： <a href="http://dogmap.jp/2009/10/06/wordpress-shortcode-plugin-builder/" title="WordPress ShortCode Plugin Builder : dogmap.jp">WordPress ShortCode Plugin Builder : dogmap.jp</a>
+</p>
+</div>
+
+<form id="request" action="shortcode_plugin.php" method="post">
+
+<h2 id="plugin_info">プラグインの情報</h2>
+
+<div class="content">
+
+<p>
+<label for="plugin_name"><strong><small>プラグイン名称 (必須)</small></strong></label>
+<input type="text" name="plugin_name" id="plugin_name" size="40" tabindex="1" value="" />
+</p>
+
+<p id="more_info"><label><small><a href="#">詳細情報を入力する &raquo;</a></small></label></p>
+
+<p style="display:none;">
+<label for="plugin_url"><small>プラグイン URL</small></label>
+<input type="text" name="plugin_url" id="plugin_url" size="40" tabindex="2" value="" />
+</p>
+
+<p style="display:none;">
+<label for="plugin_ver"><small>プラグインバージョン</small></label>
+<input type="text" name="plugin_ver" id="plugin_ver" size="40" tabindex="3" value="" />
+</p>
+
+<p style="display:none;">
+<label for="plugin_author"><small>プラグイン作者</small></label>
+<input type="text" name="plugin_author" id="plugin_author" size="40" tabindex="4" value="" />
+</p>
+
+<p style="display:none;">
+<label for="plugin_authorurl"><small>プラグイン作者 URL</small></label>
+<input type="text" name="plugin_authorurl" id="plugin_authorurl" size="40" tabindex="5" value="" />
+</p>
+
+<p style="display:none;">
+<label for="plugin_text_domain"><small>テキストドメイン</small></label>
+<input type="text" name="plugin_text_domain" id="plugin_text_domain" size="40" tabindex="5" value="" />
+</p>
+
+<p style="display:none;">
+<label for="plugin_domain_path"><small>テキストドメインパス</small></label>
+<input type="text" name="plugin_domain_path" id="plugin_domain_path" size="40" tabindex="5" value="" />
+</p>
+
+<p style="display:none;">
+<label for="plugin_copyright"><small>Copyright</small></label>
+<input type="text" name="plugin_copyright" id="plugin_copyright" size="40" tabindex="6" value="Copyright 2010" />
+</p>
+
+<p style="display:none;">
+<label for="plugin_desc"><small>プラグイン概要</small></label>
+<input type="text" name="plugin_desc" id="plugin_desc" size="100" tabindex="7" value="" />
+</p>
+
+</div>
+
+<h2 id="shortcode_info">ショートコードの情報</h2>
+
+<div class="content">
+
+<p>
+<label for="shortcode_name"><strong><small>ショートコード名称 (必須)</small></strong></label>
+<input type="text" name="shortcode_name" id="shortcode_name" size="40" tabindex="8" value="" />
+</p>
+
+<input type="hidden" name="atts_keynum" id="atts_keynum" value="0" />
+<p>
+<label for="atts_key" style="margin-left:190px;width:290px;"><small>キー名称</small></label>
+<label for="atts_default" style="margin-left:10px;"><small>デフオルト値</small></label>
+</p>
+<p id="key_0">
+<label><small>ショートコードオプション 1</small></label>
+<input type="text" name="atts_key_0" id="atts_key_0" size="40" tabindex="9" value="" style="margin-right:0;width:290px;" /><input type="text" name="atts_default_0" id="atts_default_0" size="40" tabindex="9" value="" style="margin-left:5px;" />
+</p>
+
+<p>
+<label for="plugin_code"><strong><small>コード (必須)</small></strong></label><br />
+<span style="margin-left:1em;">&lt;?php</span><br />
+<textarea name="plugin_code" id="plugin_code" cols="100%" rows="10" style="margin-left:1em;" tabindex="10">
+</textarea><br />
+<span style="margin-left:1em;">?&gt;</span>
+</p>
+
+<p>
+<label for="plugin_retval"><strong><small>整形後の値を格納する変数 (必須)</small></strong></label>
+<input type="text" name="plugin_retval" id="plugin_retval" size="40" tabindex="11" value="$return_text" />
+</p>
+
+</div>
+
+<p>
+<input name="submit" type="submit" id="submit" tabindex="12" value="プラグイン生成" />
+</p>
+</form>
+
+<script type="text/javascript" src="script.js"></script>
+<!--
+<script type="text/javascript" src="http://cdn.wibiya.com/Toolbars/dir_0439/Toolbar_439492/Loader_439492.js?ver=3.0.1"></script>
+-->
+</body>
+</html>

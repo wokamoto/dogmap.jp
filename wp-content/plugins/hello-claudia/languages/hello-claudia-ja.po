@@ -1,0 +1,258 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: hello-claudia\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-13 10:53+0900\n"
+"PO-Revision-Date: 2011-10-13 10:57+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Description
+msgid "Windows Azure Japanese official character \"Claudia Madobe\" is plugin to speak a message on a dashboard."
+msgstr "Windows Azure の日本公式キャラクター「クラウディア・窓辺」を、ダッシュボードに表示します。"
+
+#: ../hello-claudia.php:114
+msgid "さぁ、始めるわヨ"
+msgstr "さぁ、始めるわヨ"
+
+#: ../hello-claudia.php:115
+msgid "終了～"
+msgstr "終了～"
+
+#: ../hello-claudia.php:116
+msgid "往生際が悪いわヨ"
+msgstr "往生際が悪いわヨ"
+
+#: ../hello-claudia.php:117
+msgid "OK, Azure 今日もいい子ネ"
+msgstr "OK, Azure 今日もいい子ネ"
+
+#: ../hello-claudia.php:118
+msgid "Windows Azure はわたしの、最高の友達"
+msgstr "Windows Azure はわたしの、最高の友達"
+
+#: ../hello-claudia.php:119
+msgid "Azure にして後悔なんて、あるわけない"
+msgstr "Azure にして後悔なんて、あるわけない"
+
+#: ../hello-claudia.php:120
+msgid "Windows Azure"
+msgstr "Windows Azure"
+
+#: ../hello-claudia.php:121
+msgid "クラウドをよろしくネ"
+msgstr "クラウドをよろしくネ"
+
+#: ../hello-claudia.php:122
+msgid "マイクロソフト"
+msgstr "マイクロソフト"
+
+#: ../hello-claudia.php:123
+msgid "マンガでわかる Windows Azure プラットフォーム"
+msgstr "マンガでわかる Windows Azure プラットフォーム"
+
+#: ../hello-claudia.php:124
+msgid "それなら Windows Azure にすればいいじゃない"
+msgstr "それなら Windows Azure にすればいいじゃない"
+
+#: ../hello-claudia.php:125
+msgid "ブルースクリーンみたいな顔色ネ"
+msgstr "ブルースクリーンみたいな顔色ネ"
+
+#: ../hello-claudia.php:126
+msgid "Azure の実力はまだまだこんなモノじゃないワ!"
+msgstr "Azure の実力はまだまだこんなモノじゃないワ!"
+
+#: ../hello-claudia.php:127
+msgid "Finiiiiiish"
+msgstr "Finiiiiiish"
+
+#: ../hello-claudia.php:128
+msgid "じゃんけん、グー"
+msgstr "じゃんけん、グー"
+
+#: ../hello-claudia.php:129
+msgid "じゃんけん、パー"
+msgstr "じゃんけん、パー"
+
+#: ../hello-claudia.php:130
+msgid "じゃんけん、チョキ"
+msgstr "じゃんけん、チョキ"
+
+#: ../hello-claudia.php:131
+msgid "あいこで、グー"
+msgstr "あいこで、グー"
+
+#: ../hello-claudia.php:132
+msgid "あいこで、パー"
+msgstr "あいこで、パー"
+
+#: ../hello-claudia.php:133
+msgid "あいこで、チョキ"
+msgstr "あいこで、チョキ"
+
+#: ../hello-claudia.php:134
+msgid "Good Morning Azure Sky!"
+msgstr "Good Morning Azure Sky!"
+
+#: ../hello-claudia.php:135
+msgid "電話が鳴ってる"
+msgstr "電話が鳴ってる"
+
+#: ../hello-claudia.php:136
+msgid "メールが来たっ"
+msgstr "メールが来たっ"
+
+#: ../hello-claudia.php:137
+msgid "スタート!"
+msgstr "スタート!"
+
+#: ../hello-claudia.php:138
+msgid "デプロイ開始!"
+msgstr "デプロイ開始!"
+
+#: ../hello-claudia.php:139
+msgid "デプロイ完了!"
+msgstr "デプロイ完了!"
+
+#: ../hello-claudia.php:140
+msgid "ビルド完了!"
+msgstr "ビルド完了!"
+
+#: ../hello-claudia.php:141
+msgid "失敗しちゃった！"
+msgstr "失敗しちゃった！"
+
+#: ../hello-claudia.php:142
+msgid "大成功!"
+msgstr "大成功!"
+
+#: ../hello-claudia.php:143
+msgid "エイッ!"
+msgstr "エイッ!"
+
+#: ../hello-claudia.php:144
+msgid "きゃっ"
+msgstr "きゃっ"
+
+#: ../hello-claudia.php:145
+msgid "お疲れ様♪"
+msgstr "お疲れ様♪"
+
+#: ../hello-claudia.php:146
+msgid "ここがポイント！"
+msgstr "ここがポイント！"
+
+#: ../hello-claudia.php:147
+msgid "注意してネ♪"
+msgstr "注意してネ♪"
+
+#: ../hello-claudia.php:247
+msgid "クラウディア窓辺"
+msgstr "クラウディア窓辺"
+
+#: ../hello-claudia.php:327
+msgid "Y年n月j日"
+msgstr "Y年n月j日"
+
+#: ../hello-claudia.php:328
+msgid "G時i分"
+msgstr "G時i分"
+
+#: ../hello-claudia.php:362
+#, php-format
+msgid "<big><strong>%1$s</strong></big><br style=\"margin-bottom:.5em;\"/><big>%2$s</big><br />%3$s"
+msgstr "<big><strong>%1$s</strong></big><br style=\"margin-bottom:.5em;\"/><big>%2$s</big><br />%3$s"
+
+#: ../hello-claudia.php:371
+msgid "日"
+msgstr "日"
+
+#: ../hello-claudia.php:372
+msgid "月"
+msgstr "月"
+
+#: ../hello-claudia.php:373
+msgid "火"
+msgstr "火"
+
+#: ../hello-claudia.php:374
+msgid "水"
+msgstr "水"
+
+#: ../hello-claudia.php:375
+msgid "木"
+msgstr "木"
+
+#: ../hello-claudia.php:376
+msgid "金"
+msgstr "金"
+
+#: ../hello-claudia.php:377
+msgid "土"
+msgstr "土"
+
+#: ../hello-claudia.php:380
+#, php-format
+msgid "%1$s(%2$s)"
+msgstr "%1$s(%2$s)"
+
+#: ../hello-claudia.php:387
+#, php-format
+msgid "<big>%s</big>&nbsp;だヨ。"
+msgstr "<big>%s</big>&nbsp;だヨ。"
+
+#: ../hello-claudia.php:396
+#, php-format
+msgid "最後に記事を投稿したのは、<br /><big>%s</big>"
+msgstr "最後に記事を投稿したのは、<br /><big>%s</big>"
+
+#: ../hello-claudia.php:407
+#, php-format
+msgid "%1$d 時間"
+msgstr "%1$d 時間"
+
+#: ../hello-claudia.php:412
+#, php-format
+msgid "%1$d 日と %2$d 時間"
+msgstr "%1$d 日と %2$d 時間"
+
+#: ../hello-claudia.php:417
+msgid "1年以上"
+msgstr "1年以上"
+
+#: ../hello-claudia.php:421
+#, php-format
+msgid "最後に記事を投稿してから、<br /><big>%s</big>&nbsp;たったワ。"
+msgstr "最後に記事を投稿してから、<br /><big>%s</big>&nbsp;たったワ。"
+
+#: ../hello-claudia.php:428
+msgid "心機一転！<br />1年以上ぶりでもいいじゃない！<br />思い切って記事を書いてみよう！"
+msgstr "心機一転！<br />1年以上ぶりでもいいじゃない！<br />思い切って記事を書いてみよう！"
+
+#: ../hello-claudia.php:430
+msgid "久しぶりに記事を書いてみよう！<br />思い切って書き始めれば、<br />記事を書くペースもつかめるヨ！"
+msgstr "久しぶりに記事を書いてみよう！<br />思い切って書き始めれば、<br />記事を書くペースもつかめるヨ！"
+
+#: ../hello-claudia.php:432
+msgid "1週間以上、空いちゃったネ。<br />みんな待ってるヨ！<br />また記事を書いてみよう！"
+msgstr "1週間以上、空いちゃったネ。<br />みんな待ってるヨ！<br />また記事を書いてみよう！"
+
+#: ../hello-claudia.php:434
+msgid "いいペースだネ！<br />今日も記事を書いてみよう！<br />&nbsp;"
+msgstr "いいペースだネ！<br />今日も記事を書いてみよう！<br />&nbsp;"
+
+#: ../hello-claudia.php:438
+#, php-format
+msgid "<big>%s</big>"
+msgstr "<big>%s</big>"
+

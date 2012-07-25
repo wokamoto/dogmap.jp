@@ -1,0 +1,266 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: videopop_plus\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-05-22 16:51+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=shift_jis\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "VideoPop+"
+msgstr "VideoPop+"
+
+msgid "<strong>Done!</strong>"
+msgstr "<strong>完了!</strong>"
+
+msgid "<strong>or</strong>"
+msgstr "<strong>または</strong>"
+
+msgid "To use <strong>VideoPop+</strong>, the directory <strong>&quot;wp-content&quot;</strong> within your WordPress installation on your webserver must be writeable.<br /><br />To change permission, use a FTP program to access your websever and right-click on the directory <strong>&quot;wp-content&quot;</strong>.<br /> Tick all boxes that say &quot;Write&quot; or set the permission to <strong>777</strong>."
+msgstr "<strong>VideoPop+</strong>を使用するために、Webサーバの WordPress がインストールされているディレクトリの <strong>&quot;wp-content&quot;</strong> ディレクトリに書込権限を与えてください.<br /><br /> FTP 等で Webサーバにアクセスして <strong>&quot;wp-content&quot;</strong> ディレクトリに &quot;Write&quot; 権限をセットするか、パーミッションを <strong>777</strong> に設定してください."
+
+msgid "The VideoPop+ directory couldn't be created with &quot;mkdir()&quot; on your server. The function could be disabled by your webhost or another restriction is in place. Ask your host."
+msgstr "Webサーバ上に &quot;mkdir()&quot; 関数で VideoPop+ のディレクトリを作成できませんでした. この関数が使用できるかどうか確認してください."
+
+msgid "The VideoPop+ files couldn't be created with &quot;fopen()&quot; on your server. The function could be disabled by your webhost or another restriction is in place. Ask your host."
+msgstr "Webサーバ上に &quot;fopen()&quot; 関数でファイルを作成できませんでした. この関数が使用できるかどうか確認してください."
+
+msgid "The file couldn't be saved on your server"
+msgstr "Webサーバ上にファイルを保存することができませんでした."
+
+# Text on Pages
+msgid "My Videos"
+msgstr "ビデオファイル"
+
+msgid "Video Upload"
+msgstr "ビデオファイルのアップロード"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Choose video"
+msgstr "ビデオファイル"
+
+msgid "Thumbnail"
+msgstr "サムネイル"
+
+msgid "Caption"
+msgstr "キャプション"
+
+msgid "Size"
+msgstr "サイズ"
+
+msgid "Video type"
+msgstr "種類"
+
+msgid "Select size"
+msgstr "サイズを選択してください"
+
+msgid "Free Size"
+msgstr "サイズを入力"
+
+msgid "Select video type"
+msgstr "ビデオファイルの種類を選択してください"
+
+msgid "Upload"
+msgstr "登録"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "delete"
+msgstr "削除"
+
+msgid "edit"
+msgstr "編集"
+
+msgid "Video Edit"
+msgstr "ビデオファイル情報の編集"
+
+# Notes
+msgid "Notes"
+msgstr "注意点"
+
+msgid "Uninstall"
+msgstr "アンインストール"
+
+msgid "If you want to keep your videos and the popup functionality of your links but want to get rid of the additional menus in the control panel, just deactivate the plugin.<br />For a complete uninstall including all uploaded videos use the uninstall button."
+msgstr "VideoPop+ の設定を残したままアンインストールしたい場合はプラグインを無効化してください。<br />VideoPop+ で保存したファイルをすべて削除したい場合は &quot;アンインストール&quot; ボタンをクリックしてから、プラグインを無効化してください."
+
+# Text on Editor
+msgid "Add VideoPop"
+msgstr "ビデオファイルの追加"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Copy &amp; paste the code"
+msgstr "このコードをコピーして、本文に貼付てください"
+
+# Error Message
+msgid "Please enter a Name."
+msgstr "名称を入力してください"
+
+msgid "Please choose a Video or enter an URL."
+msgstr "ビデオファイルか URL を入力してください"
+
+msgid "Please choose a Video Type."
+msgstr "種類を選択してください"
+
+msgid "Please select a Size."
+msgstr "サイズを選択してください"
+
+msgid "Please enter a Width."
+msgstr "幅が不正です。数値を入力してください"
+
+msgid "Please enter a Height."
+msgstr "高さが不正です。数値を入力してください"
+
+msgid "Please edit again and enter a name."
+msgstr "名称が入力されていないため、編集結果は保存されませんでした<br />もう一度編集してください"
+
+msgid "Please edit again and enter an URL."
+msgstr "ビデオ URL が入力されていないため、編集結果は保存されませんでした<br />もう一度編集してください"
+
+msgid "Please edit again and select a video type."
+msgstr "種類が選択されていないため、編集結果は保存されませんでした<br />もう一度編集してください"
+
+msgid "Please edit again and select a Size."
+msgstr "サイズが選択されていないため、編集結果は保存されませんでした<br />もう一度編集してください"
+
+msgid "Please edit again and enter a Width."
+msgstr "幅の値が不正のため、編集結果は保存されませんでした<br />もう一度編集してください"
+
+msgid "Please edit again and enter a Height."
+msgstr "高さの値が不正のため、編集結果は保存されませんでした<br />もう一度編集してください"
+
+msgid "The links you created will not work anymore. Delete?"
+msgstr "ビデオファイルを削除してもよろしいですか？"
+
+msgid "You are about to delete all your settings and Videos! The links you created with VideoPop will not work after uninstall! Proceed with uninstall?"
+msgstr "すべてのビデオファイルを削除しますがよろしいですか？"
+
+msgid "Uninstall VideoPop+"
+msgstr "アンインストール"
+
+msgid "All files and folders have (probably) been deleted. Now click <strong>Plugins</strong> in the admin panel above and <b>Deactivate</b> the VideoPop plugin."
+msgstr "VideoPop+ でアップロードしたファイルはすべて削除されました. 管理パネルで VideoPop+ を無効化してください."
+
+msgid "Notice"
+msgstr "メッセージ"
+
+msgid "Loading..."
+msgstr "読込み中"
+
+# Option Message
+msgid "VideoPop+ Options"
+msgstr "VideoPop+ オプション"
+
+msgid "Update Options"
+msgstr "オプションの更新"
+
+# User Level
+msgid "User Level Permission -- Subscriber = 0, Contributor = 1, Author = 2, Editor = 7, Administrator = 9"
+msgstr "ユーザー権限 -- 購読者 = 0, 寄稿者 = 1, 投稿者 = 2, 編集者 = 7, 管理人 = 9"
+
+msgid "Set the user level the user needs to have (at least) to manage/upload/delete videos"
+msgstr "ビデオファイルの登録・削除・管理が行えるユーザのレベルを指定してください."
+
+msgid "User Level"
+msgstr "ユーザーレベル"
+
+msgid "subscriber"
+msgstr "購読者"
+
+msgid "contributor"
+msgstr "寄稿者"
+
+msgid "author"
+msgstr "投稿者"
+
+msgid "editor"
+msgstr "編集者"
+
+msgid "administrator"
+msgstr "管理人"
+
+# Display Setting
+msgid "Setting of method of display"
+msgstr "表示方法の設定"
+
+msgid "Please select it from &quot;Pop up&quot;, &quot;LightPop&quot;, &quot;In line&quot;, and &quot;The effect none&quot;."
+msgstr "「ポップアップ」、「LightPop」、「インライン」、「効果なし」から選択してください."
+
+msgid "<strong>Attention:</strong> When &quot;ModalBox&quot; is selected, the installation of <a href='http://wildbit.com/demos/modalbox/' title='ModalBox - An easy way to create popups and wizards'>ModalBox.js</a> is separately needed."
+msgstr "<strong>注意：</strong>「ModalBox」を選択した場合、別途 <a href='http://wildbit.com/demos/modalbox/' title='ModalBox - An easy way to create popups and wizards'>ModalBox.js</a> のインストールが必要になります."
+
+msgid "Method of display"
+msgstr "表示方法"
+
+msgid "Pop up"
+msgstr "ポップアップ"
+
+msgid "LightPop"
+msgstr "LightPop"
+
+msgid "ModalBox"
+msgstr "ModalBox"
+
+msgid "In line"
+msgstr "インライン"
+
+msgid "The effect none"
+msgstr "効果なし"
+
+msgid "Insert Editor Option"
+msgstr "エディタ挿入設定"
+
+msgid "Shortcode is inserted in the editor."
+msgstr "ショートコードをエディタに挿入する。"
+
+# Data Directory Setting.
+msgid "Data Directory"
+msgstr "データディレクトリ"
+
+msgid "Please set the data directory."
+msgstr "データディレクトリを設定してください."
+
+# Class Name Setting.
+msgid "Class name of the link tag"
+msgstr "リンクタグのクラス名"
+
+msgid "Please set the class name of the link tag."
+msgstr "リンクタグのクラス名を設定してください."
+
+msgid "Without File Type"
+msgstr "クラス名にファイル種類を含めない"
+
+msgid "With File Type"
+msgstr "クラス名にファイル種類を含める"
+
+# About the file of the video of the FLV form
+msgid "About the file of the video of the FLV form"
+msgstr "FLV形式のビデオファイルについて"
+
+msgid "It comes to be able to treat the file of the FLV form by preserving free <a href='http://www.jeroenwijering.com/?item=Flash_Video_Player&amp;' title='JW FLV Player'>JW FLV Player</a> in the same to plug-in directory. "
+msgstr "フリーの FLV プレイヤー <a href='http://www.jeroenwijering.com/?item=Flash_Video_Player&amp;' title='JW FLV Player'>JW FLV Player</a> をプラグインと同一ディレクトリに保存することで FLV 形式のファイルを扱えるようになります."
+
+msgid "Add to Editor"
+msgstr "エディタに挿入"
+
+# Page Navigation
+msgid "Prev"
+msgstr "前へ"
+
+msgid "Next"
+msgstr "次へ"
+
+# Video not Found
+msgid "Sorry, video not available."
+msgstr "ビデオファイルが見つかりません"
+

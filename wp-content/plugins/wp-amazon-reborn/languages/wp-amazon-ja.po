@@ -1,0 +1,317 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-amazon\n"
+"POT-Creation-Date: 2008-06-17 14:51+0900\n"
+"PO-Revision-Date: 2009-09-14 18:34+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "WP-Amazon adds the ability to search and include items from Amazon to your entries.  This plugin adds a button called \"Amazon\" on the post page.  Make sure to configure the plugin before using. This Plugin was based on WP-Amazon Plugin 1.3.2 by Rich Manalang"
+msgstr "WP-Amazon は、エントリ中に Amazon 商品タグを埋め込むためのプラグインです。新規投稿時に \"Amazon\" ボタンが表示されるので、そちらをクリックして商品を検索してください。このプラグインは Rich Manalang が作成した WP-Amazon Plugin 1.3.2 をベースにして独自の改良を加えてあります。"
+
+msgid "Options saved."
+msgstr "設定を保存しました。"
+
+msgid "General Options"
+msgstr "一般的な設定"
+
+msgid "Default Country"
+msgstr "地域を選択"
+
+msgid "Which Amazon country site would you like as your default?  Currently, Amazon's E-Commerce Service works with the following countries: Canada, France, Germany, Great Britain, Japan, and United States"
+msgstr "デフォルトの地域を選択してください。以下の国で使用できます: カナダ、フランス、ドイツ、英国、日本、およびアメリカ合衆国"
+
+msgid "Default Country:"
+msgstr "地域を選択:"
+
+msgid "Canada"
+msgstr "カナダ"
+
+msgid "France"
+msgstr "フランス"
+
+msgid "Great Britain"
+msgstr "英国"
+
+msgid "Germany"
+msgstr "ドイツ"
+
+msgid "Japan"
+msgstr "日本"
+
+msgid "United States"
+msgstr "アメリカ合衆国"
+
+msgid "United Kingdom"
+msgstr "英国"
+
+msgid "Associates ID"
+msgstr "トラッキングID"
+
+msgid "Amazon has an affiliate program called Amazon Associates.  This program allows you to earn money for refering customers to Amazon. To apply for the Associates Program, visit the <a href=\"http://www.amazon.com/associates\">Amazon Associates website</a> for details."
+msgstr "Amazon には Amazon アソシエイトと呼ばれるアフィリエートプログラムがあります。 このプログラムに参加することによって、商品の販売に応じて最大7%の紹介料を獲得できます。 アソシエイトプログラムの詳細は、<a href=\"http://www.amazon.com/associates\">Amazon アソシエイトウェブサイト</a>を参照してください。"
+
+msgid "You can chose to have WP-Amazon apply your Associate ID to any Amazon products you post via WP-Amazon &mdash; just specify your Associate ID here."
+msgstr "WP-Amazon 経由で表示するリンクタグに埋め込むトラッキングIDを設定してください。"
+
+msgid "Associate ID:"
+msgstr "トラッキングID:"
+
+msgid "Secret Key:"
+msgstr "秘密鍵:"
+
+msgid "Amazon E-Commerce Service (ECS) Subscription ID &amp; Secret Key"
+msgstr "Amazon E-コマース サービス(ECS) サブスクリプション ID &amp; 秘密鍵"
+
+msgid "Amazon's E-Commerce Service is what makes this WordPress plugin possible.  Amazon ECS developers must use an ECS Subscription ID &amp; Secret Key in order to access Amazon's web service."
+msgstr "WP-Amazon プラグインが Amazon の Web サービスを使用するためにサブスクリプション IDと秘密鍵を設定する必要があります。"
+
+msgid "You don't need to change this Subscription ID to use WP-Amazon, you can simply use the ID provided."
+msgstr "サブスクリプションIDを変更しなくても、WP-Amazon を使用できます。"
+
+msgid "Subscription ID:"
+msgstr "サブスクリプション ID:"
+
+msgid "This version of WP-Amazon is %1$s and the latest version is %2$s. %3$s"
+msgstr "バージョン %1$s の WP-Amazon を使用しています。WP-Amazon の最新バージョンは %2$s です。"
+
+msgid "Update Options"
+msgstr "設定の更新"
+
+msgid "Update Options &raquo;"
+msgstr "設定の更新 &raquo;"
+
+msgid "WP-Amazon Options"
+msgstr "WP-Amazon 設定"
+
+msgid "Amazon"
+msgstr "Amazon"
+
+msgid "Insert item from Amazon.com"
+msgstr "Amazon から商品を追加"
+
+msgid "Blended"
+msgstr "全商品"
+
+msgid "All Products"
+msgstr "全商品"
+
+msgid "Apparel"
+msgstr "アパレル&amp;シューズ"
+
+msgid "Baby"
+msgstr "ベビー&amp;マタニティ"
+
+msgid "Beauty"
+msgstr "理美容グッズ"
+
+msgid "Books"
+msgstr "本"
+
+msgid "Classical"
+msgstr "クラッシック音楽"
+
+msgid "Classical Music"
+msgstr "クラッシック音楽"
+
+msgid "DigitalMusic"
+msgstr "デジタル音楽"
+
+msgid "Digital Music"
+msgstr "デジタル音楽"
+
+msgid "DVD"
+msgstr "DVD"
+
+msgid "Electronics"
+msgstr "エレクトロニクス"
+
+msgid "ForeignBooks"
+msgstr "洋書"
+
+msgid "Foreign Books"
+msgstr "洋書"
+
+msgid "GourmetFood"
+msgstr "グルメ"
+
+msgid "Gourmet Food"
+msgstr "グルメ"
+
+msgid "HealthPersonalCare"
+msgstr "ヘルス&amp;ビューティー"
+
+msgid "Health &amp; Personal Care"
+msgstr "ヘルス&amp;ビューティー"
+
+msgid "HomeGarden"
+msgstr "ホーム&amp;ガーデン"
+
+msgid "Home &amp; Garden"
+msgstr "ホーム&amp;ガーデン"
+
+msgid "Jewelry"
+msgstr "宝石"
+
+msgid "Kitchen"
+msgstr "ホーム&amp;キッチン"
+
+msgid "Magazines"
+msgstr "雑誌"
+
+msgid "Miscellaneous"
+msgstr "その他"
+
+msgid "Music"
+msgstr "ミュージック"
+
+msgid "MusicalInstruments"
+msgstr "楽器"
+
+msgid "Musical Instruments"
+msgstr "楽器"
+
+msgid "MusicTracks"
+msgstr "音楽を曲名で検索"
+
+msgid "Music Tracks"
+msgstr "音楽を曲名で検索"
+
+msgid "OfficeProducts"
+msgstr "オフィス用品"
+
+msgid "Office Products"
+msgstr "オフィス用品"
+
+msgid "OutdoorLiving"
+msgstr "アウトドア"
+
+msgid "Outdoor Living"
+msgstr "アウトドア"
+
+msgid "PCHardware"
+msgstr "パソコン･周辺機器"
+
+msgid "PC Hardware"
+msgstr "パソコン･周辺機器"
+
+msgid "Photo"
+msgstr "写真"
+
+msgid "Restaurants"
+msgstr "レストラン"
+
+msgid "Software"
+msgstr "PCソフト"
+
+msgid "SoftwareVideoGames"
+msgstr "PCソフト/TVゲーム"
+
+msgid "Software/Video Games"
+msgstr "PCソフト/TVゲーム"
+
+msgid "SportingGoods"
+msgstr "スポーツ&amp;アウトドア"
+
+msgid "Tools"
+msgstr "ツール"
+
+msgid "Toys"
+msgstr "おもちゃ&amp;ホビー"
+
+msgid "VHS"
+msgstr "VHS"
+
+msgid "Video"
+msgstr "ビデオ(DVD&amp;VHS)"
+
+msgid "Video Games"
+msgstr "TVゲーム"
+
+msgid "VideoGames"
+msgstr "TVゲーム"
+
+msgid "Watches"
+msgstr "時計"
+
+msgid "Wireless"
+msgstr "無線"
+
+msgid "WirelessAccessories"
+msgstr "無線 周辺機器"
+
+msgid "Wireless Accessories"
+msgstr "無線 周辺機器"
+
+msgid "Results for"
+msgstr "検索結果"
+
+msgid "%s (%s matches)"
+msgstr "%s (%s 件)"
+
+msgid "%s (%s total results)"
+msgstr "%s (%s 件)"
+
+msgid "Click here for more information on this product"
+msgstr "クリックすると、この製品に関する詳しい情報を表示します"
+
+msgid "Link only"
+msgstr "リンクのみ"
+
+msgid "Link with small image"
+msgstr "リンク＋イメージ(小)"
+
+msgid "Link with medium image"
+msgstr "リンク＋イメージ(中)"
+
+msgid "Link with large image"
+msgstr "リンク＋イメージ(大)"
+
+msgid "Add to HTML Post"
+msgstr "エディタに挿入"
+
+msgid "Close Window"
+msgstr "終了"
+
+msgid "Back"
+msgstr "検索結果に戻る"
+
+msgid "Price"
+msgstr "値段"
+
+msgid "ASIN"
+msgstr "ASIN"
+
+msgid "View product details at Amazon"
+msgstr "Amazon で商品の詳細を確認する"
+
+msgid "Search Amazon"
+msgstr "Amazon 商品検索"
+
+msgid "Select"
+msgstr "選択"
+
+msgid "Go"
+msgstr "検索"
+
+msgid "How to Include?"
+msgstr "リンクの種類を選択してください"
+
+msgid "HTML Code"
+msgstr "HTMLコード"
+
+msgid "Uninstall"
+msgstr "アンインストール"
+
+msgid "All the settings of &quot;wp-amazon&quot; are deleted."
+msgstr "&quot;wp-amazon&quot; のすべての設定を削除する"
+
+msgid "Delete Options &raquo;"
+msgstr "設定を削除 &raquo;"
+

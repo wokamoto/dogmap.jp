@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms no-csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ready pointerevents" lang="ja"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>あの日見た WordPress API の機能を僕達はまだ知らない » 新潟グラム</title>
+	
+	<meta name="description" content="あの日見た WordPress API の機能を僕達はまだ知らない" />
+	<meta name="author" content="wokamoto" />
+	<meta name="viewport" content="width=960" />
+	
+	<link rel="stylesheet" href="css/deck.core.css" />
+	<link rel="stylesheet" href="css/deck.menu.css" />
+	<link rel="stylesheet" href="css/deck.goto.css" />
+	<link rel="stylesheet" href="css/deck.status.css" />
+	<link rel="stylesheet" href="css/deck.navigation.css" />
+	<link rel="stylesheet" href="css/deck.hash.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/home.css" />
+	<link rel="stylesheet" id="transition-theme-link" href="css/horizontal-slide.css" />
+
+	<style type='text/css' media='screen'>
+	hgroup > h1  { font-size: 40pt; }
+	.content > p, .content > ul, .content > div, .content > .slide { font-size: 19pt; }
+	.slide > pre { font-size: 15pt; }
+	.deck-container h3 { font-size: 20pt; }
+	</style>
+
+	<script src="js/modernizr.js"></script>
+</head>
+
+<body class="home">
+
+<header>
+	<nav>
+		<h1><a href="">新潟グラム　4gram</a></h1>
+		<ul>
+			<li><a href="http://shot.dogmap.jp/about/">Author</a></li>
+			<li><a href="http://dogmap.jp/">Blog</a></li>
+			<li><a href="http://twitter.com/wokamoto/">Twitter</a></li>
+			<li><a href="http://www.facebook.com/dogmap.jp">Facebook</a></li>
+		</ul>
+	</nav>
+</header>
+	
+<article class="deck-container">
+	<section class="slide" id="intro">
+		<div>
+			<hgroup>
+				<h1>あの日見た WordPress API の機能を僕達はまだ知らない</h1>
+				<h2><a href="http://niigm.com/course/4g" title="講習内容　4gram | デザイナーズ☆ワークショップ 【 新潟グラム 】｜ 新潟でデザイン業界に関わる方のためのスクール形式のセミナー、勉強会">新潟グラム　4gram</a> - wokamoto</h2>
+			</hgroup>
+
+			<p>
+				※カーソルキー左右でページめくりできます
+			</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>自己紹介 (wokamoto)</h2>
+
+		<div class="content slide">
+		<p>
+			<img width="83px" height="83px" style="float:right;" src="images/wo_blue.png" />
+			WordPress Plugins/JSeries プロジェクトの一員で、趣味で WordPress のプラグインをつくっていましたが、<br>
+			この春から<a href="http://www.digitalcube.jp/" title="株式会社デジタルキューブ｜WordPressなどのCMSコンサルティング">「め組」ことデジタルキューブ</a>さんと、一緒に WordPress 関係の仕事をやらせてもらってます。
+		</p>
+
+		<ul>
+			<li><a href="http://wppluginsj.sourceforge.jp/head-cleaner/" title="WordPress Plugins/JSeries » Head Cleaner (最適化＆高速化)">Head Cleaner</a> - &lt;head&gt; 部分のお掃除をするプラグイン</li>
+			<li><a href="http://wppluginsj.sourceforge.jp/googlemaps-anywhere/" title="WordPress Plugins/JSeries » Google Maps Anywhere (地図表示)">Google Maps Anywhere</a> - Google Map 挿入用プラグイン</li>
+			<li><a href="http://dogmap.jp/2011/07/25/wordpress-oauth-provider/" title="WordPress に OAuth プロバイダを実装する : dogmap.jp">OAuth Provider</a> - WordPress を OAuth プロバイダにするためのプラグイン</li>
+			<li>...etc</li>
+		</ul>
+
+		<p style="margin-top:1em;">
+			あと WordCamp っていう WordPress のお祭りのスタッフをやってます。<br>
+			11/27(日) には、<a href="http://2011.tokyo.wordcamp.org/" title="WordCamp Tokyo 2011 | 2011年11月27日(日) 品川シーサイド 楽天タワー2号館">WordCamp Tokyo</a> があるので、時間がある人はよろしく。
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>概要</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+WordPress の便利機能を紹介します。
+		</p>
+
+		<ul class="slide deck-after">
+<li>開発に便利なプラグイン Debug bar</li>
+<li>子テーマ</li>
+<li>ブラウザ判別</li>
+<li>JavaScript のロード</li>
+<li>投稿記事のサムネイル表示</li>
+<li>自動メディアリンク</li>
+<li>投稿フォーマット</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar</h2>
+
+		<div class="content">
+
+		<p class="slide">
+WordPress 3.1 以降で追加された「管理バー」を便利にするプラグインです。
+		</p>
+
+		<ul class="slide deck-after">
+<li><a href="http://wordpress.org/extend/plugins/debug-bar/">http://wordpress.org/extend/plugins/debug-bar/</a></li>
+<li><a href="http://wordpress.org/extend/plugins/debug-bar-extender/">http://wordpress.org/extend/plugins/debug-bar-extender/</a></li>
+<li><a href="http://wordpress.org/extend/plugins/debug-bar-console/">http://wordpress.org/extend/plugins/debug-bar-console/</a></li>
+		</ul>
+
+		<p class="slide deck-after">
+インストールしたら wp-config.php に以下の3行を追加します。<br>
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+<pre><code>define('SAVEQUERIES', true);
+define('WP_DEBUG', true);
+define('WP_DEBUG_DISPLAY', false);</code></pre>
+		</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Deprecated</h2>
+
+		<div class="content">
+
+		<p>
+Deprecated というメニューを選択すると、WordPress 実行時に発生している error やら warning メッセージが、ファイル名と行数つきで表示されます。<br>
+下位互換のために残された、現在は非推奨のテンプレートタグを使ってたりすると、それらも表示されます。
+		</p>
+
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/debugbar_deprecated.png" />
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Request</h2>
+
+		<div class="content">
+
+		<p>
+Request というタブでは、表示しているページの URL を構成する文字列と、それがどのように展開されて WordPress に渡されたか確認することができます。
+		</p>
+
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/debugbar_request.png" />
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Console</h2>
+
+		<div class="content">
+
+		<p>
+Debug Bar Console をインストールすることで表示される Console というタブでは、PHP や SQL スクリプトを実際に動かすことができます。
+		</p>
+
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/debugbar_console.png" />
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Console</h2>
+
+		<div class="content">
+
+		<p class="slide">
+例えば、左側のペインに SQL 文を打ち込めば、右側のペインに SQL 文の検索結果が表示されます。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+<pre><code>select count(*)
+from wp_posts;</code></pre>
+		</div>
+
+		<p class="slide">
+PHP スクリプトを打ち込めば、右側のペインに PHP の実行結果が表示されます。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+<pre><code>$charset = get_option('blog_charset');
+var_dump($charset);</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Profiler</h2>
+
+		<div class="content">
+
+		<p>
+Profiler タブでは、設定されたチェックポイントごとに、処理にかかった時間を計測してくれます。
+		</p>
+
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/debugbar_profiler.png" />
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Profiler</h2>
+
+		<div class="content">
+
+		<p class="slide">
+独自のチェックポイントを追加したい場合は、チェックポイントを追加したい場所に以下のように書きましょう。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+<pre><code>&lt;?php if (function_exists('dbgx_checkpoint')) dbgx_checkpoint(<span style="color:red;">'hoge'</span>); ?&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Valiable Lookup</h2>
+
+		<div class="content">
+
+		<p>
+Valiable Lookup タブでは、変数の内容を確認することができます。
+		</p>
+
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/debugbar_valiable.png" />
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar<br>&nbsp; - Valiable Lookup</h2>
+
+		<div class="content">
+
+		<p class="slide">
+確認したい変数が有る場合は、以下のように書きましょう。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+<pre><code>&lt;?php if (function_exists('dbgx_trace_var')) dbgx_trace_var(<span style="color:red;">$hoge</span>); ?&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>開発に便利なプラグイン Debug bar</h2>
+
+		<div class="content">
+
+		<p>
+Debug Bar と Debug Bar Extendar は、あくまでも WordPress の Debug をするためのプラグインです。<br>
+<br>
+実稼動しているサイトでは、常時有効にしておく必要はありません。<br>
+<br>
+分析が終わったら、無効にしておくことをオススメします。
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>子テーマ</h2>
+
+		<div class="content">
+		<p class="slide">
+WordPress のテンプレートを作成するとき、既存のテーマを元にして新しいテーマを作成する機会は多いと思います。
+		</p>
+
+		<p class="slide deck-after">
+元テーマの必要なところを修正しても良いのですが、テーマがアップデートされた時、その内容をマージしないといけません。
+		</p>
+
+		<p class="slide deck-after">
+そんな時は、子テーマという機能を使いましょう。
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>子テーマ <br>&nbsp; - 構成ファイル</h2>
+
+		<div class="content">
+		<p class="slide">
+デフォルトテーマ Twenty Eleven の子テーマを作成する場合の最小構成は、以下のような style.css を用意するだけです。
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>/*
+Theme Name:     Niigata Gram
+Theme URI:      
+Description:    Child theme for the Twenty Eleven theme for WordPress
+Author:         
+Author URI:     
+<span style="color:red;">Template:       twentyeleven</span>
+Version:        0.1.0
+*/
+<span style="color:red;">@import url('../twentyeleven/style.css');</span></code></pre>
+		</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>子テーマ</h2>
+
+		<div class="content">
+		<p class="slide">
+これで Twenty Eleven の全機能を持った子テーマの完成です。<br>
+<br>
+css だけを変更したい場合は、この style.css を修正します。
+		</p>
+
+		<p class="slide deck-after">
+index.php などを修正したい場合は、同名のファイルを親テーマからコピーして修正します。<br>
+<br>
+親テーマと同名のテンプレートファイルが子テーマのフォルダにある場合、子テーマのテンプレートファイルを読み込みます。<br>
+無い場合は、親テーマのテンプレートファイルを読み込みます。
+		</p>
+
+		<p class="slide deck-after">
+ただし functions.php だけは特殊で、子テーマの functions.php を読み込んだ後、親テーマの functions.php が読み込まれます。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>ブラウザ判別</h2>
+
+		<div class="content">
+
+		<p class="slide">
+閲覧者のブラウザによって body のクラスを変更できると便利ですよね？
+		</p>
+
+		<div class="slide deck-after">
+<label>functions.php:</label>
+<pre><code>function browser_body_class($classes) {
+    global $is_lynx, $is_gecko, $is_IE, $is_opera, $is_NS4, $is_safari, $is_chrome, $is_iphone;
+
+    if($is_lynx)       $classes[] = 'lynx';
+    elseif($is_gecko)  $classes[] = 'gecko';
+    elseif($is_opera)  $classes[] = 'opera';
+    elseif($is_NS4)    $classes[] = 'ns4';
+    elseif($is_safari) $classes[] = 'safari';
+    elseif($is_chrome) $classes[] = 'chrome';
+    elseif($is_IE)     $classes[] = 'ie';
+    else               $classes[] = 'unknown';
+
+    if($is_iphone)     $classes[] = 'iphone';
+    return $classes;
+}
+add_filter('body_class','browser_body_class');</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>ブラウザ判別<br>&nbsp; - 使用方法</h2>
+
+		<div class="content">
+
+		<p class="slide">
+ブラウザごとに css のクラスを変更するには、テンプレートファイルで body_class() 関数を使います。
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>&lt;body <span style="color:red;">&lt;?php body_class(); ?&gt;</span>&gt;</code></pre>
+		</div>
+
+		<div class="slide deck-after">
+<p>実際には、こうなる</p>
+<pre><code>&lt;div class="home blog single-author two-column right-sidebar <span style="color:red;">ie</span>"&gt;</code></pre>
+		</div>
+
+		<div class="slide deck-after">
+<p>css で、デザインしやすくなりますね。</p>
+<pre><code>body.ie{
+    background-color: #000 ;
+}</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>JavaScript のロード</h2>
+
+		<div class="content">
+
+		<p class="slide">
+WordPress で JavaScript を読み込む場合 header.php に直接書いてませんか？
+		</p>
+
+		<div class="slide deck-after">
+<label>header.php:</label>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+&lt;meta charset="&lt;?php bloginfo( 'charset' ); ?&gt;" /&gt;
+&lt;meta name="viewport" content="width=device-width" /&gt;
+&lt;title&gt;&lt;?php wp_title( '|', true, 'right' ); ?&gt;&lt;/title&gt;
+&lt;link rel="profile" href="http://gmpg.org/xfn/11" /&gt;
+&lt;link rel="stylesheet" type="text/css" media="all" href="&lt;?php bloginfo( 'stylesheet_url' ); ?&gt;" /&gt;
+&lt;link rel="pingback" href="&lt;?php bloginfo( 'pingback_url' ); ?&gt;" /&gt;
+<span style="color:red;">&lt;script type='text/javascript' src='http://example.com/jquery.js'&gt;&lt;/script&gt;</span>
+&lt;?php wp_head(); ?&gt;
+&lt;/head&gt;</code></pre>
+		</div>
+
+		<p class="slide deck-after">
+こんなことをすると、jQuery.js が複数読み込まれてしまいます。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>JavaScript のロード<br>&nbsp; - wp_enqueue_script</h2>
+
+		<div class="content">
+
+		<p class="slide">
+同じ JavaScript ライブラリを複数読み込ませないようにするには wp_enqueue_script() を使いましょう。<br>
+例えば jQuery を使いたいなら、こんな感じです。
+		</p>
+
+		<div class="slide deck-after">
+<label>header.php:</label>
+<pre><code><span style="color:red;">&lt;?php wp_enqueue_script('jquery'); ?&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+&lt;meta charset="&lt;?php bloginfo( 'charset' ); ?&gt;" /&gt;
+&lt;meta name="viewport" content="width=device-width" /&gt;
+&lt;title&gt;&lt;?php wp_title( '|', true, 'right' ); ?&gt;&lt;/title&gt;
+&lt;link rel="profile" href="http://gmpg.org/xfn/11" /&gt;
+&lt;link rel="stylesheet" type="text/css" media="all" href="&lt;?php bloginfo( 'stylesheet_url' ); ?&gt;" /&gt;
+&lt;link rel="pingback" href="&lt;?php bloginfo( 'pingback_url' ); ?&gt;" /&gt;
+&lt;?php wp_head(); ?&gt;
+&lt;/head&gt;</code></pre>
+		</div>
+
+		<p class="slide deck-after">
+これで jQuery は、一回しか読み込まれません。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>JavaScript のロード<br>&nbsp; - wp_enqueue_script</h2>
+
+		<div class="content">
+
+		<p class="slide">
+WordPress 本体に含まれていない jQuery のプラグイン、例えば jquery.example.js を読み込ませたい場合は、こうします。
+		</p>
+
+		<div class="slide deck-after">
+<label>header.php:</label>
+<pre><code><span style="color:red;">&lt;?php
+wp_enqueue_script('jquery');
+wp_enqueue_script('jquery.example', home_url('/') . 'jquery.example.js', array('jquery'));
+?&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+&lt;meta charset="&lt;?php bloginfo( 'charset' ); ?&gt;" /&gt;
+&lt;meta name="viewport" content="width=device-width" /&gt;
+&lt;title&gt;&lt;?php wp_title( '|', true, 'right' ); ?&gt;&lt;/title&gt;
+&lt;link rel="profile" href="http://gmpg.org/xfn/11" /&gt;
+&lt;link rel="stylesheet" type="text/css" media="all" href="&lt;?php bloginfo( 'stylesheet_url' ); ?&gt;" /&gt;
+&lt;link rel="pingback" href="&lt;?php bloginfo( 'pingback_url' ); ?&gt;" /&gt;
+&lt;?php wp_head(); ?&gt;
+&lt;/head&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>JavaScript のロード<br>&nbsp; - wp_enqueue_script</h2>
+
+		<div class="content">
+
+		<p class="slide">
+WordPress に含まれている jQuery ではなく、Google Ajax Library から読み込ませたい場合は、こんな感じ。
+		</p>
+
+		<div class="slide deck-after">
+<label>header.php:</label>
+<pre><code><span style="color:red;">&lt;?php
+wp_deregister_script('jquery');
+wp_enqueue_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js', array(), '1.6.1');
+?&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+&lt;meta charset="&lt;?php bloginfo( 'charset' ); ?&gt;" /&gt;
+&lt;meta name="viewport" content="width=device-width" /&gt;
+&lt;title&gt;&lt;?php wp_title( '|', true, 'right' ); ?&gt;&lt;/title&gt;
+&lt;link rel="profile" href="http://gmpg.org/xfn/11" /&gt;
+&lt;link rel="stylesheet" type="text/css" media="all" href="&lt;?php bloginfo( 'stylesheet_url' ); ?&gt;" /&gt;
+&lt;link rel="pingback" href="&lt;?php bloginfo( 'pingback_url' ); ?&gt;" /&gt;
+&lt;?php wp_head(); ?&gt;
+&lt;/head&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>記事のサムネイルを表示する</h2>
+
+		<div class="content">
+
+		<p class="slide">
+WordPress 2.9 以降では「投稿サムネイル」という機能が追加されました。<br>
+<br>
+まずは、テーマでサムネイルをサポートするように設定。
+		</p>
+
+		<div class="slide deck-after">
+<label>functions.php:</label>
+<pre><code>add_theme_support( 'post-thumbnails' );</code></pre>
+		</div>
+
+		<p class="slide deck-after">
+次にサムネイル画像のサイズを設定
+		</p>
+
+		<div class="slide deck-after">
+<label>functions.php:</label>
+<pre><code>set_post_thumbnail_size( 50, 50, true );
+// 幅 50 px、高さ 50 px、切り抜きモード</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>記事のサムネイルを表示する</h2>
+
+		<div class="content">
+
+		<p>
+これで、サムネイルをテーマに表示するテンプレート関数が利用できるようになりました。
+		</p>
+		<p>
+これらの関数は、ループ内で利用する必要があります。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>記事のサムネイルを表示する<br>&nbsp; - サムネイルが設定されているか確認する</h2>
+
+		<div class="content">
+
+		<p class="slide">
+投稿にサムネイルが設定されているかどうかを確認するには has_post_thumbnail() を使います。
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>&lt;?php if ( <span style="color:red;">has_post_thumbnail()</span> ) { ?&gt;
+    サムネイルを持っているときの処理
+&lt;?php } else { ?&gt;
+    サムネイルを持っていないときの処理
+&lt;?php } ?&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>記事のサムネイルを表示する<br>&nbsp; - 投稿サムネイルを表示する</h2>
+
+		<div class="content">
+
+		<p class="slide">
+投稿サムネイルを表示するには、the_post_thumbnail() を使います。
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>&lt;?php the_post_thumbnail(); ?&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>記事のサムネイルを表示する<br>&nbsp; - サムネイルが設定されていない場合</h2>
+
+		<div class="content">
+
+		<p class="slide">
+サムネイルが設定されていない場合でも、記事中の一つ目の画像をサムネイルとして取ってきたいとか思いませんか？
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>function catch_that_image() {
+    global $post;
+
+    return
+      isset($post) && preg_match('/&lt;img [^&gt;]*&gt;/i', $post-&gt;post_content, $matches)
+      ? $matches[0]
+      : '&lt;img src="/images/default.jpg" alt="default" /&gt;';
+}</code></pre>
+		</div>
+
+		<p class="slide deck-after">
+これで &lt;php? catch_that_image(); ?&gt; とかってやれば、擬似的にサムネイルを表示させることができます。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>自動メディアリンク</h2>
+
+		<div class="content slide">
+
+		<p>
+WordPress 2.9 以降では、自動メディアリンクという機能が追加されました。
+		</p>
+
+		<p>
+例えば、YouTube や Flickr の URL を書くだけで、投稿が表示される際に URL の位置に自動的に YouTube 動画や Flickr の写真が埋め込まれて表示されます。
+		</p>
+
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/oembed.png" />
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>自動メディアリンク<br>&nbsp; - 対応メディア</h2>
+
+		<div class="content slide">
+
+		<ul style="font-size:18pt;">
+<li>    YouTube</li>
+<li>    Vimeo</li>
+<li>    DailyMotion</li>
+<li>    blip.tv</li>
+<li>    Flickr (both videos and images)</li>
+<li>    Viddler</li>
+<li>    Hulu</li>
+<li>    Qik</li>
+<li>    Revision3</li>
+<li>    Scribd</li>
+<li>    Photobucket</li>
+<li>    PollDaddy</li>
+<li>    Google Video</li>
+<li>    WordPress.tv（現在は VideoPress 形式の動画のみ）</li>
+<li>    SmugMug（WordPress 3.0 以降）</li>
+<li>    FunnyOrDie.com（WordPress 3.0 以降）</li>
+		</ul>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>自動メディアリンク<br>&nbsp; - PDF に対応させる</h2>
+
+		<div class="content">
+
+		<p class="slide">
+これ以外のメディアに対応させるには wp_embed_register_handler() 関数を使ってハンドラーを登録します。
+		</p>
+
+		<div class="slide deck-after">
+<label>functions.php:</label>
+<pre><code>function wp_embed_handler_pdf( $matches, $attr, $url, $rawattr ) {
+    $embed = sprintf(
+        '&lt;iframe src="http://docs.google.com/viewer?url=%1$s&embedded=true" width="%2$d" height="%3$d" style="border: none;"&gt;&lt;/iframe&gt;',
+        esc_attr(rawurlencode($matches[0])),
+        600,
+        780
+        );
+    return apply_filters( 'embed_pdf', $embed, $matches, $attr, $url, $rawattr );
+}
+wp_embed_register_handler( 'pdf', '/^https?(:\/\/[-_\.!~*\'()a-zA-Z0-9;\/:\@=+\$,%#]+)(\.pdf)$/', 'wp_embed_handler_pdf' );</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>自動メディアリンク<br>&nbsp; - PDF に対応させる</h2>
+
+		<div class="content">
+
+		<p>
+デモ： <a href="http://demo.dogmap.jp/2011/01/26/wp_embed_register_handler-test/" title="wp_embed_register_handler test | demo">http://demo.dogmap.jp/?p=4</a>
+		</p>
+
+		</div>
+	</section>
+
+
+
+	<section class="slide">
+		<h2>投稿フォーマット</h2>
+
+		<div class="content slide">
+
+		<p>
+WordPress 3.1 以降では、投稿フォーマットという機能が追加されました。
+		</p>
+
+		<p>
+それぞれの投稿に投稿フォーマットという情報を持たせて、表示方法を変える機能です。
+		</p>
+
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/post_format.png" />
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>投稿フォーマット<br>&nbsp; - 種類</h2>
+
+		<div class="content slide">
+
+		<ul style="font-size:18pt;">
+<li>aside（アサイド）- 通常タイトルなしで表示。</li>
+<li>chat（チャット） - チャット履歴。</li>
+<li>gallery（ギャラリー） - 画像ギャラリー。</li>
+<li>image（画像） - 単独の画像。投稿本文内の最初の &lt;img /&gt; タグが画像と見なされる。</li>
+<li>link（リンク） - 他サイトへのリンク。投稿本文内の一つ目の &lt;a href=””&gt; タグがその投稿の外部リンクと見なされる。</li>
+<li>quote（引用） - 引用文。引用文と引用元のテキストエリアを設けるのが望ましい。</li>
+<li>status（ステータス） - 通常140程度の短い近況アップデート。Twitter のツイートのようなもの。 </li>
+<li>video（動画）- 単独の動画。投稿本文内の最初の &lt;video /&gt; タグまたは object/embed が動画と見なされる。</li>
+<li>audio（音声）- 単独の音声。</li>
+		</ul>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>投稿フォーマット<br>&nbsp; - テーマへの実装</h2>
+
+		<div class="content">
+
+		<p class="slide">
+テーマで使用できるようにするには、以下のようにします。
+		</p>
+
+		<div class="slide deck-after">
+<label>functions.php:</label>
+<pre><code>add_theme_support(
+    'post-formats',
+    array(
+        'aside',
+        'chat',
+        'gallery',
+        'image',
+        'link',
+        'quote',
+        'status',
+        'video',
+        'audio',
+    )
+);</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>投稿フォーマット<br>&nbsp; - 使用方法</h2>
+
+		<div class="content">
+
+		<p class="slide">
+投稿フォーマットごとに css のクラスを変更するには、テンプレートファイルで post_class() 関数を使います。
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>&lt;div <span style="color:red;">&lt;?php post_class(); ?&gt;</span>&gt;
+    メインコンテンツとかいろいろ
+&lt;/div&gt;</code></pre>
+		</div>
+
+		<div class="slide deck-after">
+<p>実際には、こうなる</p>
+<pre><code>&lt;div class="post type-post status-publish <span style="color:red;">format-aside</span>"&gt;
+    メインコンテンツとかいろいろ
+&lt;/div&gt;</code></pre>
+		</div>
+
+		<div class="slide deck-after">
+<p>css で、デザインしやすくなりますね。</p>
+<pre><code>.format-aside{
+    background-color: #000 ;
+}</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>投稿フォーマット<br>&nbsp; - 条件分岐</h2>
+
+		<div class="content">
+
+		<p class="slide">
+投稿フォーマットごとに条件分岐させるには get_post_format() 関数を使います。
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>&lt;?php if ( 'quote' == get_post_format( $post->ID ) ) { ?&gt;
+        引用コンテンツのみのボックス
+&lt;?php } elseif ( 'image' == get_post_format( $post->ID ) ) { ?&gt;
+        ポートフォリオとか
+&lt;?php } elseif ( 'gallery' == get_post_format( $post->ID ) ) { ?&gt;
+        ギャラリー
+&lt;?php } else { ?&gt;
+        そのほか
+&lt;?php } ?&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>One more thing</h2>
+
+		<div class="content">
+
+		<p class="slide">
+紹介し切れませんでしたが、他にも便利な機能は色々あります。<br>
+これらを駆使することで WordPress を強力な CMS として利用することができます。
+		</p>
+
+		<div class="slide deck-after">
+		<h3>カスタムフィールド</h3>
+		<p>
+投稿にメタ情報を追加する機能。<br>
+例えば「商品名」とか「価格」とか。
+		</p>
+		</div>
+
+		<div class="slide deck-after">
+		<h3>カスタム投稿タイプ</h3>
+		<p>
+投稿・固定ページといった、デフォルトの投稿タイプの他に、全く新しい投稿タイプを定義する機能。<br>
+例えば「不動産物件」とか「商品」とか。<br>
+投稿タイプによって、入力画面を変更したりとかが容易にできます。
+		</p>
+		</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>One more thing</h2>
+
+		<div class="content">
+
+		<div>
+		<h3>カスタムタクソノミー</h3>
+		<p>
+カテゴリー・タグといった、デフォルトのタクソノミーの他に、全く新しいタクソノミーを定義する機能。<br>
+カスタム投稿タイプと組み合わせて、カテゴライズ方法を増やすことができます。
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide" id="final">
+		<h2>Enjoy!</h2>
+
+		<div class="content">
+		<p style="margin:3em;">
+			wokamoto ( OKAMOTO Wataru )<br>
+			blog: <a href="http://dogmap.jp/">http://dogmap.jp/</a><br>
+
+			twitter: <a href="http://twitter.com/wokamoto">http://twitter.com/wokamoto</a><br>
+			facebook: <a href="http://www.facebook.com/dogmap.jp">http://www.facebook.com/dogmap.jp</a>
+		</p>
+
+		<div id="version">2011-10-29</div>
+
+		<div id="author">
+			<a href="http://dogmap.jp/" title="dogmap.jp">dogmap.jp</a>
+		</div>
+		</div>
+	</section>
+
+<!--
+	<a href="#" class="deck-prev-link deck-nav-disabled" title="Previous">←</a>
+	<a href="#sample" class="deck-next-link" title="Next">→</a>
+	
+	<p class="deck-status">
+		<span class="deck-status-current">1</span>
+		/
+		<span class="deck-status-total">15</span>
+	</p>
+-->
+</article>
+
+<footer>
+	<p>2011-10-29 <a href="http://niigm.com/course/4g" title="講習内容　4gram | デザイナーズ☆ワークショップ 【 新潟グラム 】｜ 新潟でデザイン業界に関わる方のためのスクール形式のセミナー、勉強会">新潟グラム　4gram</a></p>
+</footer>
+	
+<script src="js/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js">\x3C/script>')</script>
+	
+<script src="js/deck.core.js"></script>
+<script src="js/deck.goto.js"></script>
+<script src="js/deck.navigation.js"></script>
+<script src="js/deck.status.js"></script>
+<script src="js/deck.hash.js"></script>
+<script src="js/deck.menu.js"></script>
+<script src="js/home.js"></script>
+
+
+
+</body></html>

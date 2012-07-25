@@ -1,0 +1,262 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: videopop_plus\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-05-22 11:08+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "VideoPop+"
+msgstr ""
+
+msgid "<strong>Done!</strong>"
+msgstr ""
+
+msgid "<strong>or</strong>"
+msgstr ""
+
+msgid "To use <strong>VideoPop+</strong>, the directory <strong>&quot;wp-content&quot;</strong> within your WordPress installation on your webserver must be writeable.<br /><br />To change permission, use a FTP program to access your websever and right-click on the directory <strong>&quot;wp-content&quot;</strong>.<br /> Tick all boxes that say &quot;Write&quot; or set the permission to <strong>777</strong>."
+msgstr ""
+
+msgid "The VideoPop+ directory couldn't be created with &quot;mkdir()&quot; on your server. The function could be disabled by your webhost or another restriction is in place. Ask your host."
+msgstr ""
+
+msgid "The VideoPop+ files couldn't be created with &quot;fopen()&quot; on your server. The function could be disabled by your webhost or another restriction is in place. Ask your host."
+msgstr ""
+
+msgid "The file couldn't be saved on your server"
+msgstr ""
+
+# Text on Pages
+msgid "My Videos"
+msgstr ""
+
+msgid "Video Upload"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Choose video"
+msgstr ""
+
+msgid "Thumbnail"
+msgstr ""
+
+msgid "Caption"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Video type"
+msgstr ""
+
+msgid "Select size"
+msgstr ""
+
+msgid "Free Size"
+msgstr ""
+
+msgid "Select video type"
+msgstr ""
+
+msgid "Upload"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "delete"
+msgstr ""
+
+msgid "edit"
+msgstr ""
+
+msgid "Video Edit"
+msgstr ""
+
+# Notes
+msgid "Notes"
+msgstr ""
+
+msgid "Uninstall"
+msgstr ""
+
+msgid "If you want to keep your videos and the popup functionality of your links but want to get rid of the additional menus in the control panel, just deactivate the plugin.<br />For a complete uninstall including all uploaded videos use the uninstall button."
+msgstr ""
+
+# Text on Editor
+msgid "Add VideoPop"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Copy &amp; paste the code"
+msgstr ""
+
+# Error Message
+msgid "Please enter a Name."
+msgstr ""
+
+msgid "Please choose a Video or enter an URL."
+msgstr ""
+
+msgid "Please choose a Video Type."
+msgstr ""
+
+msgid "Please select a Size."
+msgstr ""
+
+msgid "Please enter a Width."
+msgstr ""
+
+msgid "Please enter a Height."
+msgstr ""
+
+msgid "Please edit again and enter a name."
+msgstr ""
+
+msgid "Please edit again and enter an URL."
+msgstr ""
+
+msgid "Please edit again and select a video type."
+msgstr ""
+
+msgid "Please edit again and select a Size."
+msgstr ""
+
+msgid "Please edit again and enter a Width."
+msgstr ""
+
+msgid "Please edit again and enter a Height."
+msgstr ""
+
+msgid "The links you created will not work anymore. Delete?"
+msgstr ""
+
+msgid "You are about to delete all your settings and Videos! The links you created with VideoPop will not work after uninstall! Proceed with uninstall?"
+msgstr ""
+
+msgid "Uninstall VideoPop+"
+msgstr ""
+
+msgid "All files and folders have (probably) been deleted. Now click <strong>Plugins</strong> in the admin panel above and <b>Deactivate</b> the VideoPop plugin."
+msgstr ""
+
+msgid "Notice"
+msgstr ""
+
+msgid "Loading..."
+msgstr ""
+
+# Option Message
+msgid "VideoPop+ Options"
+msgstr ""
+
+msgid "Update Options"
+msgstr ""
+
+# User Level
+msgid "User Level Permission -- Subscriber = 0, Contributor = 1, Author = 2, Editor = 7, Administrator = 9"
+msgstr ""
+
+msgid "Set the user level the user needs to have (at least) to manage/upload/delete videos"
+msgstr ""
+
+msgid "User Level"
+msgstr ""
+
+msgid "subscriber"
+msgstr ""
+
+msgid "contributor"
+msgstr ""
+
+msgid "author"
+msgstr ""
+
+msgid "editor"
+msgstr ""
+
+msgid "administrator"
+msgstr ""
+
+# Display Setting
+msgid "Setting of method of display"
+msgstr ""
+
+msgid "Please select it from &quot;Pop up&quot;, &quot;LightPop&quot;, &quot;In line&quot;, and &quot;The effect none&quot;."
+msgstr ""
+
+msgid "<strong>Attention:</strong> When &quot;ModalBox&quot; is selected, the installation of <a href='http://wildbit.com/demos/modalbox/' title='ModalBox - An easy way to create popups and wizards'>ModalBox.js</a> is separately needed."
+msgstr ""
+
+msgid "Method of display"
+msgstr ""
+
+msgid "Pop up"
+msgstr ""
+
+msgid "LightPop"
+msgstr ""
+
+msgid "ModalBox"
+msgstr ""
+
+msgid "In line"
+msgstr ""
+
+msgid "The effect none"
+msgstr ""
+
+msgid "Insert Editor Option"
+msgstr ""
+
+msgid "Shortcode is inserted in the editor."
+msgstr ""
+
+# Data Directory Setting.
+msgid "Data Directory"
+msgstr ""
+
+msgid "Please set the data directory."
+msgstr ""
+
+# Class Name Setting.
+msgid "Class name of the link tag"
+msgstr ""
+
+msgid "Please set the class name of the link tag."
+msgstr ""
+
+msgid "Without File Type"
+msgstr ""
+
+msgid "With File Type"
+msgstr ""
+
+# About the file of the video of the FLV form
+msgid "About the file of the video of the FLV form"
+msgstr ""
+
+msgid "It comes to be able to treat the file of the FLV form by preserving free <a href='http://www.jeroenwijering.com/?item=Flash_Video_Player&amp;' title='JW FLV Player'>JW FLV Player</a> in the same to plug-in directory. "
+msgstr ""
+
+msgid "Add to Editor"
+msgstr ""
+
+# Page Navigation
+msgid "Prev"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+# Video not Found
+msgid "Sorry, video not available."
+msgstr ""

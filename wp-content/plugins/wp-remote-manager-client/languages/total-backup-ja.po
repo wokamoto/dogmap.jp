@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: total-backup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-03 10:26+0900\n"
+"PO-Revision-Date: 2011-10-13 14:36+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Description
+msgid "This plugin backs up a whole WordPress site and its database into a zip file."
+msgstr "稼働中の WordPress サイトの DB とソース一式をバックアップして一つの zip ファイルを作成するプラグインです。"
+
+#: ../total-backup.php:465
+msgid "not logged in!"
+msgstr "ログインしていません！"
+
+#: ../total-backup.php:486
+msgid "Method not found!"
+msgstr "メソッドが見つかりません！"
+
+#: ../total-backup.php:531
+msgid "Settings"
+msgstr "設定"
+
+#: ../total-backup.php:671
+#: ../total-backup.php:672
+#: ../total-backup.php:732
+msgid "Total Backup"
+msgstr "Total Backup"
+
+#: ../total-backup.php:685
+#: ../total-backup.php:867
+msgid "Option &gt; Total Backup"
+msgstr "設定 &gt; Total Backup"
+
+#: ../total-backup.php:686
+msgid "Option"
+msgstr "設定"
+
+#: ../total-backup.php:718
+msgid "Delete Backup Files!"
+msgstr "バックアップファイルを削除しました。"
+
+#: ../total-backup.php:736
+msgid "Site backup."
+msgstr "サイトをバックアップしました。"
+
+#: ../total-backup.php:741
+#: ../total-backup.php:743
+msgid "Site Backup"
+msgstr "サイトのバックアップ"
+
+#: ../total-backup.php:749
+msgid "Backup Files."
+msgstr "バックアップファイル"
+
+#: ../total-backup.php:758
+msgid "Backup file name"
+msgstr "バックアップファイル名"
+
+#: ../total-backup.php:759
+msgid "Datetime"
+msgstr "日時"
+
+#: ../total-backup.php:760
+msgid "Size"
+msgstr "サイズ"
+
+#: ../total-backup.php:761
+#: ../total-backup.php:767
+msgid "Delete"
+msgstr "削除 "
+
+#: ../total-backup.php:823
+msgid "Failure!: Archive path is not writable."
+msgstr "エラー: 「バックアップファイルを保存するディレクトリ」に書き込み権限がありません。"
+
+#: ../total-backup.php:827
+msgid "Failure!: Archive path is not found."
+msgstr "エラー: 「バックアップファイルを保存するディレクトリ」が見つかりません。"
+
+#: ../total-backup.php:848
+#, php-format
+msgid "Failure!: Excluded dir(\"%s\") is not found."
+msgstr "エラー: 「除外するディレクトリ ( %s )」が見つかりません。"
+
+#: ../total-backup.php:860
+msgid "Done!"
+msgstr "完了"
+
+#: ../total-backup.php:871
+msgid "Options update."
+msgstr "オプション"
+
+#: ../total-backup.php:881
+msgid "Archive path"
+msgstr "バックアップファイルを保存するディレクトリ"
+
+#: ../total-backup.php:886
+msgid "Excluded dir"
+msgstr "バックアップ対象から除外するディレクトリ"
+
+#: ../total-backup.php:898
+msgid "Update Options"
+msgstr "設定を更新"
+
+#: ../total-backup.php:933
+msgid "File not Found"
+msgstr "ファイルが見つかりませんでした。"
+
+#: ../includes/class-wp-backuper.php:205
+#: ../includes/class-wp-backuper.php:210
+msgid "Could not backup!"
+msgstr "バックアップに失敗しました。"
+
+#: ../includes/class-wp-backuper.php:321
+msgid "Could not open the backup file for writing!"
+msgstr "バックアップファイルをオープン(保存)することができませんでした。"
+
+#: ../includes/class-wp-backuper.php:353
+msgid "Could not open the ZIP file for writing!"
+msgstr "zip ファイルをオープン(保存)することができませんでした。"
+
+#: ../includes/class-wp-backuper.php:470
+msgid "WordPress MySQL database backup"
+msgstr "WordPress データベースをバックアップします"
+
+#: ../includes/class-wp-backuper.php:472
+#, php-format
+msgid "Generated: %s"
+msgstr "生成日: %s"
+
+#: ../includes/class-wp-backuper.php:473
+#, php-format
+msgid "Hostname: %s"
+msgstr "ホスト名: %s"
+
+#: ../includes/class-wp-backuper.php:474
+#, php-format
+msgid "Database: %s"
+msgstr "データベース: %s"
+
+#: ../includes/class-wp-backuper.php:483
+msgid "Could not open the db dump file for writing!"
+msgstr "データベースダンプファイルをオープン(保存)することができませんでした。"
+
+#: ../includes/class-wp-backuper.php:499
+msgid "There was an error writing a line to the backup script:"
+msgstr "バックアップスクリプトを書き込めませんでした:"
+
+#: ../includes/class-wp-backuper.php:517
+#, php-format
+msgid "Table: %s"
+msgstr "テーブル: %s"
+
+#: ../includes/class-wp-backuper.php:523
+msgid "Error getting table details"
+msgstr "テーブル情報を取得する際にエラーが発生しました。"
+
+#: ../includes/class-wp-backuper.php:530
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "テーブル %s が存在すれば削除"
+
+#: ../includes/class-wp-backuper.php:538
+#, php-format
+msgid "Table structure of table %s"
+msgstr "テーブル %s の構造"
+
+#: ../includes/class-wp-backuper.php:547
+#, php-format
+msgid "Data contents of table %s"
+msgstr "テーブル %s のデータ"
+
+#: ../includes/class-wp-backuper.php:550
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "テーブル %s に対して「SHOW CREATE TABLE」が発行できませんでした。"
+
+#: ../includes/class-wp-backuper.php:553
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "テーブル %s の構造を取得する際にエラーが発生しました。"
+
+#: ../includes/class-wp-backuper.php:613
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "テーブル %s のデータを取得終了しました。"
+

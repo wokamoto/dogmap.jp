@@ -1,0 +1,236 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: google-maps-anywhere\n"
+"POT-Creation-Date: 2010-03-17 12:01+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Стас Михайлюк <office@kosivart.com>\n"
+"Language-Team: Stanislav Mykhajlyuk (kosivart.com) <office@kosivart.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Ukrainian\n"
+"X-Poedit-Country: UKRAINE\n"
+
+# description
+msgid "Add Google Maps to your posts and pages.(Only for WordPress 2.5+)"
+msgstr "Добавте Google Maps до ваших записів та сторінок (Працює для версій WordPress 2.5 і вище)."
+
+#: ../googlemaps-anywhere.php:179
+msgid "http://maps.google.com/maps"
+msgstr "http://maps.google.com/maps"
+
+#: ../googlemaps-anywhere.php:252
+msgid "Move to the Google Maps."
+msgstr "Перейти до Google Maps."
+
+#: ../googlemaps-anywhere.php:254
+#: ../googlemaps-anywhere.php:255
+#: ../googlemaps-anywhere.php:256
+#: ../googlemaps-anywhere.php:825
+#: ../googlemaps-anywhere.php:880
+#: ../googlemaps-anywhere.php:883
+#: ../googlemaps-anywhere.php:886
+msgid "Error: "
+msgstr "Помилка: "
+
+#: ../googlemaps-anywhere.php:254
+#: ../googlemaps-anywhere.php:825
+#: ../googlemaps-anywhere.php:880
+msgid "No panorama data was found."
+msgstr "Не знайдено даних для панорами."
+
+#: ../googlemaps-anywhere.php:255
+#: ../googlemaps-anywhere.php:883
+msgid "Flash doesn't appear to be supported by your browser."
+msgstr "Flash не підтримується вашим броузером."
+
+#: ../googlemaps-anywhere.php:256
+#: ../googlemaps-anywhere.php:886
+msgid "Unknown Error."
+msgstr "Невідома помилка."
+
+#: ../googlemaps-anywhere.php:330
+msgid "Add Google Maps"
+msgstr "Добавити Google Maps"
+
+#: ../googlemaps-anywhere.php:364
+#: ../googlemaps-anywhere.php:694
+msgid "Place"
+msgstr "Місце"
+
+#: ../googlemaps-anywhere.php:367
+#: ../googlemaps-anywhere.php:697
+msgid "Place Name"
+msgstr "Назва місця"
+
+#: ../googlemaps-anywhere.php:369
+#: ../googlemaps-anywhere.php:699
+#: ../googlemaps-anywhere.php:983
+#: ../googlemaps-anywhere.php:988
+msgid "Lat"
+msgstr "Широта"
+
+#: ../googlemaps-anywhere.php:370
+#: ../googlemaps-anywhere.php:700
+#: ../googlemaps-anywhere.php:984
+#: ../googlemaps-anywhere.php:989
+msgid "Lng"
+msgstr "Довгота"
+
+#: ../googlemaps-anywhere.php:375
+#: ../googlemaps-anywhere.php:708
+#: ../googlemaps-anywhere.php:711
+msgid "Alignment"
+msgstr "Вирівнювання"
+
+#: ../googlemaps-anywhere.php:379
+#: ../googlemaps-anywhere.php:713
+msgid "None"
+msgstr "Немає"
+
+#: ../googlemaps-anywhere.php:381
+#: ../googlemaps-anywhere.php:715
+msgid "Left"
+msgstr "Вліво"
+
+#: ../googlemaps-anywhere.php:383
+#: ../googlemaps-anywhere.php:717
+msgid "Center"
+msgstr "По центру"
+
+#: ../googlemaps-anywhere.php:385
+#: ../googlemaps-anywhere.php:719
+msgid "Right"
+msgstr "Вправо"
+
+#: ../googlemaps-anywhere.php:390
+#: ../googlemaps-anywhere.php:724
+msgid "Size"
+msgstr "Розмір"
+
+#: ../googlemaps-anywhere.php:393
+#: ../googlemaps-anywhere.php:727
+#: ../googlemaps-anywhere.php:978
+msgid "Width"
+msgstr "Широта"
+
+#: ../googlemaps-anywhere.php:394
+#: ../googlemaps-anywhere.php:728
+#: ../googlemaps-anywhere.php:979
+msgid "Height"
+msgstr "Висота"
+
+#: ../googlemaps-anywhere.php:395
+#: ../googlemaps-anywhere.php:729
+msgid "Zoom"
+msgstr "Зум"
+
+#: ../googlemaps-anywhere.php:400
+msgid "KML"
+msgstr "KML"
+
+#: ../googlemaps-anywhere.php:406
+#: ../googlemaps-anywhere.php:736
+msgid "Insert into Post"
+msgstr "Вставити в запис"
+
+#: ../googlemaps-anywhere.php:411
+msgid "Custom Fields"
+msgstr "Додаткові поля"
+
+#: ../googlemaps-anywhere.php:414
+msgid "Key"
+msgstr "Ключ"
+
+#: ../googlemaps-anywhere.php:415
+msgid "Value"
+msgstr "Значення"
+
+#: ../googlemaps-anywhere.php:418
+msgid "Add Custom Field"
+msgstr "Добавити додаткове поле"
+
+#: ../googlemaps-anywhere.php:702
+msgid "Yaw"
+msgstr "Yaw"
+
+#: ../googlemaps-anywhere.php:703
+msgid "Pitch"
+msgstr "Крок"
+
+#: ../googlemaps-anywhere.php:950
+msgid "Done!"
+msgstr "Готово!"
+
+#: ../googlemaps-anywhere.php:953
+msgid "Please Enter Your Google Maps API Key"
+msgstr "Будь-ласка, введіть ваш ключ Google Maps API"
+
+#: ../googlemaps-anywhere.php:960
+msgid "Your Google Maps API Key"
+msgstr "Ваш ключ Google Maps API"
+
+#: ../googlemaps-anywhere.php:963
+msgid "API Key"
+msgstr "Ключ API"
+
+#: ../googlemaps-anywhere.php:964
+#, php-format
+msgid "(don't have one? get one <a href=%s>here</a>)"
+msgstr "(немаєте? отримайте ключ <a href=%s>тут</a>)"
+
+#: ../googlemaps-anywhere.php:968
+msgid "Current API Key"
+msgstr "Поточний ключ API"
+
+#: ../googlemaps-anywhere.php:974
+msgid "Option"
+msgstr "Опція"
+
+#: ../googlemaps-anywhere.php:977
+msgid "Default Size"
+msgstr "Розмір по-замовчуванню"
+
+#: ../googlemaps-anywhere.php:982
+msgid "Initial position <br />(Google Maps)"
+msgstr "Початкова позиція <br />(Google Maps)"
+
+#: ../googlemaps-anywhere.php:987
+msgid "Initial position <br />(Street View)"
+msgstr "Початкова позиція <br />(Street View)"
+
+#: ../googlemaps-anywhere.php:992
+msgid "Google Maps URL"
+msgstr "Google Maps URL"
+
+#: ../googlemaps-anywhere.php:999
+msgid "Update Options"
+msgstr "Обновити налаштування"
+
+#: ../googlemaps-anywhere.php:1010
+#: ../googlemaps-anywhere.php:1016
+#: ../googlemaps-anywhere.php:1023
+#: ../googlemaps-anywhere.php:1028
+msgid "Google Maps"
+msgstr "Google Maps"
+
+#: ../googlemaps-anywhere.php:1011
+#: ../googlemaps-anywhere.php:1024
+msgid "Street View"
+msgstr "Street View"
+
+#: ../googlemaps-anywhere.php:1012
+#: ../googlemaps-anywhere.php:1017
+#: ../googlemaps-anywhere.php:1307
+#: ../includes/common-controller.php:170
+msgid "Settings"
+msgstr "Налаштування"
+
+#: ../googlemaps-anywhere.php:1249
+msgid "Map of this location"
+msgstr "Карта цього місця"
+
+#: ../googlemaps-anywhere.php:1299
+msgid "Google Maps Anywhere"
+msgstr "Google Maps Anywhere"
+

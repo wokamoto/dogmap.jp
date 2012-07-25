@@ -1,0 +1,1453 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP System Health v1.1.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-08-31 08:49+0000\n"
+"Last-Translator: admin <info@code-styling.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: wp-system-health.php:197
+#@ wp-system-health
+msgid "PHP libcurl"
+msgstr "PHP libcurl"
+
+#: wp-system-health.php:198
+#@ wp-system-health
+msgid "Allows you to connect and communicate to many different types of servers with many different types of protocols."
+msgstr ""
+
+#: wp-system-health.php:199
+#@ wp-system-health
+msgid "PHP Streams API"
+msgstr "PHP Streams API"
+
+#: wp-system-health.php:200
+#@ wp-system-health
+msgid "Streams were introduced with PHP 4.3.0 as a way of generalizing file, network, data compression, and other operations which share a common set of functions and uses."
+msgstr ""
+
+#: wp-system-health.php:201
+#@ wp-system-health
+msgid "function fopen"
+msgstr "function fopen"
+
+#: wp-system-health.php:202
+#@ wp-system-health
+msgid "Opens file or URL."
+msgstr ""
+
+#: wp-system-health.php:203
+#@ wp-system-health
+msgid "function fsockopen"
+msgstr "function fsockopen"
+
+#: wp-system-health.php:204
+#@ wp-system-health
+msgid "Open Internet or Unix domain socket connection"
+msgstr ""
+
+#: wp-system-health.php:205
+#@ wp-system-health
+msgid "Built-in HTTP"
+msgstr "Built-in HTTP"
+
+#: wp-system-health.php:206
+#@ wp-system-health
+msgid "It eases handling of HTTP URLs, dates, redirects, headers and messages and more."
+msgstr ""
+
+#: wp-system-health.php:338
+#@ wp-system-health
+msgid "System"
+msgstr ""
+
+#: wp-system-health.php:339
+#@ wp-system-health
+msgid "PHP"
+msgstr ""
+
+#: wp-system-health.php:340
+#: wp-system-health.php:586
+#: wp-system-health.php:673
+#@ wp-system-health
+msgid "WordPress"
+msgstr ""
+
+#: wp-system-health.php:344
+#@ wp-system-health
+msgid "Database"
+msgstr "Datenbank"
+
+#: wp-system-health.php:349
+#@ wp-system-health
+msgid "Server Setup:"
+msgstr "Serverdaten:"
+
+#: wp-system-health.php:352
+#@ wp-system-health
+msgid "OS Type"
+msgstr "Betriebssystem"
+
+#: wp-system-health.php:358
+#: wp-system-health.php:418
+#@ wp-system-health
+msgid "PHP Version"
+msgstr ""
+
+#: wp-system-health.php:359
+#@ wp-system-health
+msgid "Zend Version"
+msgstr ""
+
+#: wp-system-health.php:360
+#@ wp-system-health
+msgid "Platform"
+msgstr "Plattform"
+
+#: wp-system-health.php:361
+#@ wp-system-health
+msgid "Loaded Extensions"
+msgstr "geladene Erweiterungen"
+
+#: wp-system-health.php:495
+#: wp-system-health.php:496
+#@ wp-system-health
+msgid "Language"
+msgstr "Sprache"
+
+#: wp-system-health.php:363
+#: wp-system-health.php:724
+#@ wp-system-health
+msgid "Memory Limit"
+msgstr ""
+
+#: wp-system-health.php:397
+#@ wp-system-health
+msgid "Checkpoints:"
+msgstr "Kontrollpunkte:"
+
+#: wp-system-health.php:403
+#@ wp-system-health
+msgid "Attention:"
+msgstr ""
+
+#: wp-system-health.php:405
+#@ wp-system-health
+msgid "Your provider denies the function <b><i>memory_get_usage</i></b> for security reasons."
+msgstr ""
+
+#: wp-system-health.php:408
+#@ wp-system-health
+msgid "Your provider denies the function <b><i>exec</i></b> for security reasons."
+msgstr ""
+
+#: wp-system-health.php:410
+#@ wp-system-health
+msgid "(You will <b>not</b> get any memory related information because of above named restriction.)"
+msgstr ""
+
+#: wp-system-health.php:419
+#@ wp-system-health
+msgid "Runtime Configuration:"
+msgstr "Laufzeit-Konfiguration:"
+
+#: wp-system-health.php:422
+#@ wp-system-health
+msgid "Include Path"
+msgstr ""
+
+#: wp-system-health.php:422
+#@ wp-system-health
+msgid "Specifies a list of directories where the require(), include(), fopen(), file(), readfile() and file_get_contents()  functions look for files."
+msgstr ""
+
+#: wp-system-health.php:423
+#@ wp-system-health
+msgid "Maximum Input Time"
+msgstr ""
+
+#: wp-system-health.php:423
+#: wp-system-health.php:424
+#: wp-system-health.php:551
+#@ wp-system-health
+msgid "seconds"
+msgstr "Sekunden"
+
+#: wp-system-health.php:423
+#@ wp-system-health
+msgid "This sets the maximum time in seconds a script is allowed to parse input data, like POST, GET and file uploads."
+msgstr ""
+
+#: wp-system-health.php:424
+#@ wp-system-health
+msgid "Maximum Execution Time"
+msgstr ""
+
+#: wp-system-health.php:424
+#@ wp-system-health
+msgid "This sets the maximum time in seconds a script is allowed to run before it is terminated by the parser."
+msgstr ""
+
+#: wp-system-health.php:426
+#@ wp-system-health
+msgid "File Upload Settings:"
+msgstr "Datei-Upload-Einstellungen:"
+
+#: wp-system-health.php:429
+#@ wp-system-health
+msgid "HTTP File Upload"
+msgstr ""
+
+#: wp-system-health.php:429
+#@ wp-system-health
+msgid "Whether or not to allow HTTP file uploads."
+msgstr ""
+
+#: wp-system-health.php:430
+#@ wp-system-health
+msgid "Temporary Directory"
+msgstr ""
+
+#: wp-system-health.php:430
+#@ wp-system-health
+msgid "The temporary directory used for storing files when doing file upload."
+msgstr ""
+
+#: wp-system-health.php:431
+#@ wp-system-health
+msgid "Maximum File Size"
+msgstr ""
+
+#: wp-system-health.php:432
+#@ wp-system-health
+msgid "The maximum size of an uploaded file."
+msgstr ""
+
+#: wp-system-health.php:435
+#@ wp-system-health
+msgid "Data handling:"
+msgstr "Datenverarbeitung:"
+
+#: wp-system-health.php:438
+#@ wp-system-health
+msgid "Maximum Post Size"
+msgstr ""
+
+#: wp-system-health.php:438
+#@ wp-system-health
+msgid "Sets max size of post data allowed. This setting also affects file upload. To upload large files, this value must be larger than upload_max_filesize.   If memory limit is enabled by your configure script, memory_limit also affects file uploading. Generally speaking, memory_limit should be larger than post_max_size."
+msgstr ""
+
+#: wp-system-health.php:439
+#@ wp-system-health
+msgid "Multibyte Function Overload"
+msgstr ""
+
+#: wp-system-health.php:439
+#@ wp-system-health
+msgid "Overloads a set of single byte functions by the mbstring counterparts."
+msgstr ""
+
+#: wp-system-health.php:441
+#@ wp-system-health
+msgid "Language Options:"
+msgstr "Spracheinstellungen:"
+
+#: wp-system-health.php:444
+#@ wp-system-health
+msgid "Short Open Tags"
+msgstr ""
+
+#: wp-system-health.php:444
+#@ wp-system-health
+msgid "Tells whether the short form (&lt;? ?&gt;) of PHP's open tag should be allowed."
+msgstr ""
+
+#: wp-system-health.php:445
+#@ wp-system-health
+msgid "ASP Tags"
+msgstr ""
+
+#: wp-system-health.php:445
+#@ wp-system-health
+msgid "Enables the use of ASP-like &lt;% %&gt; tags in addition to the usual &lt;?php ?&gt; tags."
+msgstr ""
+
+#: wp-system-health.php:446
+#@ wp-system-health
+msgid "Zend Engine Compatibitlity"
+msgstr ""
+
+#: wp-system-health.php:446
+#@ wp-system-health
+msgid "Enable compatibility mode with Zend Engine 1 (PHP&nbsp;4)."
+msgstr ""
+
+#: wp-system-health.php:448
+#@ wp-system-health
+msgid "Security and Safe Mode:"
+msgstr "Sicherheit:"
+
+#: wp-system-health.php:451
+#@ wp-system-health
+msgid "Remote open Files"
+msgstr ""
+
+#: wp-system-health.php:451
+#@ wp-system-health
+msgid "This option enables the URL-aware fopen wrappers that enable accessing URL object like files. Should be disabled for security reasons, to prevent remote file inclusion attacks."
+msgstr ""
+
+#: wp-system-health.php:452
+#@ wp-system-health
+msgid "Remote include Files"
+msgstr ""
+
+#: wp-system-health.php:452
+#@ wp-system-health
+msgid "This option allows the use of URL-aware fopen wrappers with the following functions: include(), include_once(), require(), require_once(). Should be disabled for security reasons, to prevent remote file inclusion attacks."
+msgstr ""
+
+#: wp-system-health.php:453
+#@ wp-system-health
+msgid "PHP Safe Mode"
+msgstr ""
+
+#: wp-system-health.php:453
+#@ wp-system-health
+msgid "Whether to enable PHP's safe mode."
+msgstr ""
+
+#: wp-system-health.php:454
+#@ wp-system-health
+msgid "Open Basedir"
+msgstr ""
+
+#: wp-system-health.php:454
+#@ wp-system-health
+msgid "Limit the files that can be opened by PHP to the specified directory-tree, including the file itself. This directive is NOT affected by whether Safe Mode is turned On or Off."
+msgstr ""
+
+#: wp-system-health.php:455
+#@ wp-system-health
+msgid "Disabled Function"
+msgstr ""
+
+#: wp-system-health.php:455
+#@ wp-system-health
+msgid "This directive allows you to disable certain functions for security reasons."
+msgstr ""
+
+#: wp-system-health.php:456
+#@ wp-system-health
+msgid "Disabled Classes"
+msgstr ""
+
+#: wp-system-health.php:456
+#@ wp-system-health
+msgid "This directive allows you to disable certain classes for security reasons."
+msgstr ""
+
+#: wp-system-health.php:570
+#@ wp-system-health
+msgid "HTTP Transport:"
+msgstr "HTTP-Anbindung:"
+
+#: wp-system-health.php:479
+#: wp-system-health.php:480
+#: wp-system-health.php:481
+#: wp-system-health.php:482
+#: wp-system-health.php:574
+#@ wp-system-health
+msgid "Yes"
+msgstr "Ja"
+
+#: wp-system-health.php:479
+#: wp-system-health.php:480
+#: wp-system-health.php:481
+#: wp-system-health.php:482
+#: wp-system-health.php:574
+#@ wp-system-health
+msgid "No"
+msgstr "Nein"
+
+#: wp-system-health.php:518
+#@ wp-system-health
+msgid "System Constants:"
+msgstr "System-Konstanten:"
+
+#: wp-system-health.php:535
+#@ wp-system-health
+msgid "Post Revision Handling"
+msgstr ""
+
+#: boot-loader.php:60
+#: boot-loader.php:107
+#: boot-loader.php:128
+#: boot-loader.php:129
+#: wp-system-health.php:537
+#: wp-system-health.php:729
+#: wp-system-health.php:733
+#: wp-system-health.php:810
+#: wp-system-health.php:811
+#@ wp-system-health
+msgid "-n.a.-"
+msgstr "-n.a.-"
+
+#: boot-loader.php:57
+#: boot-loader.php:66
+#: wp-system-health.php:539
+#: wp-system-health.php:551
+#: wp-system-health.php:555
+#@ wp-system-health
+msgid "Off"
+msgstr "Aus"
+
+#: wp-system-health.php:541
+#@ wp-system-health
+msgid "no limit"
+msgstr "keine Begrenzung"
+
+#: wp-system-health.php:546
+#@ wp-system-health
+msgid "Whether to skip, enable or limit post revisions."
+msgstr ""
+
+#: wp-system-health.php:550
+#@ wp-system-health
+msgid "Automatic Save Interval"
+msgstr ""
+
+#: wp-system-health.php:551
+#@ wp-system-health
+msgid "Post/Page Editor time interval for sending an automatic draft save."
+msgstr ""
+
+#: wp-system-health.php:558
+#@ wp-system-health
+msgid "Journal Database Requests"
+msgstr ""
+
+#: wp-system-health.php:558
+#@ wp-system-health
+msgid "Whether to enable journal of database queries performed."
+msgstr ""
+
+#: wp-system-health.php:559
+#@ wp-system-health
+msgid "Concatinate Javascripts"
+msgstr ""
+
+#: wp-system-health.php:559
+#@ wp-system-health
+msgid "Whether to enable concatination of all enqueued Javascripts into one single file for serving."
+msgstr ""
+
+#: wp-system-health.php:560
+#@ wp-system-health
+msgid "Compress Javascripts"
+msgstr ""
+
+#: wp-system-health.php:560
+#@ wp-system-health
+msgid "Whether to enable compression of Javascripts being served."
+msgstr ""
+
+#: wp-system-health.php:561
+#@ wp-system-health
+msgid "Compress Stylesheets"
+msgstr ""
+
+#: wp-system-health.php:561
+#@ wp-system-health
+msgid "Whether to enable compression of Stylesheet files being served."
+msgstr ""
+
+#: wp-system-health.php:562
+#@ wp-system-health
+msgid "Enforce GZip Compression"
+msgstr ""
+
+#: wp-system-health.php:562
+#@ wp-system-health
+msgid "Whether to force GZip instead of Inflate if compression is enabled."
+msgstr ""
+
+#: wp-system-health.php:650
+#@ wp-system-health
+msgid "Table Statistics:"
+msgstr "Tabellenstatistik:"
+
+#: wp-system-health.php:675
+#@ wp-system-health
+msgid "Custom"
+msgstr ""
+
+#: wp-system-health.php:679
+#@ wp-system-health
+msgid "Data:"
+msgstr "Daten:"
+
+#: wp-system-health.php:680
+#@ wp-system-health
+msgid "Index:"
+msgstr "Index:"
+
+#: wp-system-health.php:681
+#@ wp-system-health
+msgid "Waste:"
+msgstr "Abfall:"
+
+#: wp-system-health.php:686
+#@ wp-system-health
+msgid "Utilization Summary:"
+msgstr "Zusammenfassung:"
+
+#: wp-system-health.php:689
+#@ wp-system-health
+msgid "WordPress Tables"
+msgstr "WordPress Tabellen"
+
+#: wp-system-health.php:689
+#@ wp-system-health
+msgid "Amount of memory your WordPress tables currently utilize."
+msgstr ""
+
+#: wp-system-health.php:690
+#@ wp-system-health
+msgid "Custom/Plugin Tables"
+msgstr "Custom/Plugin Tabellen"
+
+#: wp-system-health.php:690
+#@ wp-system-health
+msgid "Amount of memory your Custom tables currently utilize."
+msgstr ""
+
+#: wp-system-health.php:691
+#@ wp-system-health
+msgid "Amount of memory your database currently utilize in total."
+msgstr ""
+
+#: wp-system-health.php:693
+#@ wp-system-health
+msgid "Posts"
+msgstr ""
+
+#: wp-system-health.php:693
+#@ wp-system-health
+msgid "Table Analysis:"
+msgstr "Tabellenanalyse:"
+
+#: wp-system-health.php:706
+#: wp-system-health.php:708
+#@ wp-system-health
+msgid "percentage of total rows"
+msgstr ""
+
+#: wp-system-health.php:350
+#: wp-system-health.php:367
+#: wp-system-health.php:379
+#: wp-system-health.php:389
+#: wp-system-health.php:399
+#: wp-system-health.php:420
+#: wp-system-health.php:427
+#: wp-system-health.php:436
+#: wp-system-health.php:442
+#: wp-system-health.php:449
+#: wp-system-health.php:464
+#: wp-system-health.php:493
+#: wp-system-health.php:519
+#: wp-system-health.php:571
+#: wp-system-health.php:583
+#: wp-system-health.php:640
+#: wp-system-health.php:651
+#: wp-system-health.php:687
+#: wp-system-health.php:694
+#@ wp-system-health
+msgid "show detailed &raquo;"
+msgstr "detailliert zeigen »"
+
+#: wp-system-health.php:350
+#: wp-system-health.php:367
+#: wp-system-health.php:379
+#: wp-system-health.php:389
+#: wp-system-health.php:399
+#: wp-system-health.php:420
+#: wp-system-health.php:427
+#: wp-system-health.php:436
+#: wp-system-health.php:442
+#: wp-system-health.php:449
+#: wp-system-health.php:464
+#: wp-system-health.php:493
+#: wp-system-health.php:519
+#: wp-system-health.php:571
+#: wp-system-health.php:583
+#: wp-system-health.php:640
+#: wp-system-health.php:651
+#: wp-system-health.php:687
+#: wp-system-health.php:694
+#@ wp-system-health
+msgid "&laquo; collapse"
+msgstr "« zuklappen"
+
+#: boot-loader.php:59
+#: boot-loader.php:65
+#@ wp-system-health
+msgid "On"
+msgstr "An"
+
+#: wp-system-health.php:209
+#: wp-system-health.php:213
+#@ wp-system-health
+msgid "PHP Runtime Boot"
+msgstr "Start PHP Laufzeitumgebung"
+
+#: wp-system-health.php:210
+#@ wp-system-health
+msgid "Will be passed if basic configuration values has been defined and WordPress tries it's boot sequence."
+msgstr ""
+
+#: wp-system-health.php:214
+#@ wp-system-health
+msgid "If you want to know the pure amount of memory the PHP runtime has allocated, read the <a href=\"http://www.code-styling.de/english/development/wordpress-plugin-wp-system-health-en\">documentation</a> about modification of <i>wp-config.php</i> to get a boot strip."
+msgstr ""
+
+#: wp-system-health.php:217
+#@ wp-system-health
+msgid "System Health Boot"
+msgstr "Start WordPress System Health"
+
+#: wp-system-health.php:218
+#@ wp-system-health
+msgid "Will be passed if this monitoring plugin has been loaded successful."
+msgstr ""
+
+#: wp-system-health.php:221
+#@ wp-system-health
+msgid "Plugins Active"
+msgstr "Plugins aktiviert"
+
+#: wp-system-health.php:222
+#@ wp-system-health
+msgid "Will be passed if all active plugins have been loaded successful."
+msgstr ""
+
+#: wp-system-health.php:225
+#@ wp-system-health
+msgid "Theme / Widgets"
+msgstr "Theme / Widgets"
+
+#: wp-system-health.php:226
+#@ wp-system-health
+msgid "Will be passed if the Theme and Widget Factory has been initialized."
+msgstr ""
+
+#: wp-system-health.php:229
+#@ wp-system-health
+msgid "Localization File"
+msgstr "Sprachdatei"
+
+#: wp-system-health.php:230
+#@ wp-system-health
+msgid "Will be passed if the WordPress language file has been loaded successful."
+msgstr ""
+
+#: wp-system-health.php:233
+#@ wp-system-health
+msgid "Init WordPress"
+msgstr "Init WordPress"
+
+#: wp-system-health.php:234
+#@ wp-system-health
+msgid "Will be passed if WordPress initialization has been finished."
+msgstr ""
+
+#: wp-system-health.php:237
+#@ wp-system-health
+msgid "Init Admin Center"
+msgstr "Init Admin-Bereich"
+
+#: wp-system-health.php:238
+#@ wp-system-health
+msgid "Will be passed if Admin Center initialization has been finished."
+msgstr ""
+
+#: wp-system-health.php:241
+#@ wp-system-health
+msgid "Rendering Dashboard"
+msgstr "Dashboard darstellen"
+
+#: wp-system-health.php:242
+#@ wp-system-health
+msgid "Will be passed during generation of this Dashboard Overview."
+msgstr ""
+
+#: wp-system-health.php:286
+#: wp-system-health.php:892
+#@ wp-system-health
+msgid "unknown checkpoint"
+msgstr "unbekannter Kontrollpunkt"
+
+#: wp-system-health.php:287
+#@ wp-system-health
+msgid "There are no specific descriptions available for this checkpoint."
+msgstr ""
+
+#: wp-system-health.php:522
+#@ wp-system-health
+msgid "WordPress address"
+msgstr ""
+
+#: wp-system-health.php:522
+#@ wp-system-health
+msgid "Allows the WordPress address (URL) to be defined. The valued defined is the address where your WordPress core files reside."
+msgstr ""
+
+#: wp-system-health.php:523
+#@ wp-system-health
+msgid "Blog address"
+msgstr ""
+
+#: wp-system-health.php:523
+#@ wp-system-health
+msgid "Similar to WP_SITEURL, WP_HOME overrides the wp_options table value for home but does not change it permanently. home is the address you want people to type in their browser to reach your WordPress blog."
+msgstr ""
+
+#: wp-system-health.php:524
+#@ wp-system-health
+msgid "Language Dir"
+msgstr ""
+
+#: wp-system-health.php:524
+#@ wp-system-health
+msgid "Defines what directory the WPLANG .mo file resides. If WP_LANG_DIR is not defined WordPress looks first to wp-content/languages and then wp-includes/languages for the .mo defined by WPLANG file."
+msgstr ""
+
+#: wp-system-health.php:525
+#@ wp-system-health
+msgid "Content Dir"
+msgstr ""
+
+#: wp-system-health.php:526
+#@ wp-system-health
+msgid "Plugin Dir"
+msgstr ""
+
+#: wp-system-health.php:527
+#@ wp-system-health
+msgid "Plugin Dir (compatibility)"
+msgstr ""
+
+#: wp-system-health.php:528
+#@ wp-system-health
+msgid "Content URL"
+msgstr ""
+
+#: wp-system-health.php:529
+#@ wp-system-health
+msgid "Plugin URL"
+msgstr ""
+
+#: wp-system-health.php:530
+#@ wp-system-health
+msgid "Cookie Domain"
+msgstr ""
+
+#: wp-system-health.php:530
+#@ wp-system-health
+msgid "The domain set in the cookies for WordPress can be specified for those with unusual domain setups."
+msgstr ""
+
+#: wp-system-health.php:532
+#@ wp-system-health
+msgid "Cache"
+msgstr ""
+
+#: wp-system-health.php:532
+#@ wp-system-health
+msgid "If true, includes the wp-content/advanced-cache.php script, when executing wp-settings.php. "
+msgstr ""
+
+#: wp-system-health.php:554
+#@ wp-system-health
+msgid "Empty Trash Interval"
+msgstr ""
+
+#: wp-system-health.php:555
+#@ wp-system-health
+msgid "days"
+msgstr ""
+
+#: wp-system-health.php:555
+#@ wp-system-health
+msgid "Constant controls the number of days before WordPress permanently deletes posts, pages, attachments, and comments, from the trash bin."
+msgstr ""
+
+#: wp-system-health.php:563
+#@ wp-system-health
+msgid "Debug WordPress"
+msgstr ""
+
+#: wp-system-health.php:563
+#@ wp-system-health
+msgid "Controls the display of some errors and warnings."
+msgstr ""
+
+#: wp-system-health.php:566
+#@ wp-system-health
+msgid "Debug javascripts"
+msgstr ""
+
+#: wp-system-health.php:566
+#@ wp-system-health
+msgid "This will allow you to edit the scriptname.dev.js files in the wp-includes/js and wp-admin/js directories. "
+msgstr ""
+
+#: wp-system-health.php:567
+#@ wp-system-health
+msgid "Automatic Database Optimizing"
+msgstr ""
+
+#: wp-system-health.php:567
+#@ wp-system-health
+msgid "That this define enables the functionality, The user does not need to be logged in to access this functionality when this define is set. This is because its main intent is to repair a corrupted database, Users can often not login when the database is corrupt."
+msgstr ""
+
+#: wp-system-health.php:568
+#@ wp-system-health
+msgid "Alternative Cron"
+msgstr ""
+
+#: wp-system-health.php:568
+#@ wp-system-health
+msgid "This alternate method uses a redirection approach, which makes the users browser get a redirect when the cron needs to run, so that they come back to the site immediately while cron continues to run in the connection they just dropped. This method is a bit iffy sometimes, which is why it's not the default."
+msgstr ""
+
+#: wp-system-health.php:643
+#@ wp-system-health
+msgid "Name"
+msgstr ""
+
+#: wp-system-health.php:643
+#@ wp-system-health
+msgid "Your database name currently configured."
+msgstr ""
+
+#: wp-system-health.php:644
+#@ wp-system-health
+msgid "Host"
+msgstr ""
+
+#: wp-system-health.php:644
+#@ wp-system-health
+msgid "Your Database host currently configured."
+msgstr ""
+
+#: wp-system-health.php:645
+#@ wp-system-health
+msgid "Charset"
+msgstr ""
+
+#: wp-system-health.php:645
+#@ wp-system-health
+msgid "Your Database character set currently configured."
+msgstr ""
+
+#: wp-system-health.php:646
+#@ wp-system-health
+msgid "Collation"
+msgstr ""
+
+#: wp-system-health.php:646
+#@ wp-system-health
+msgid "Your Database collation currently configured."
+msgstr ""
+
+#: wp-system-health.php:353
+#@ wp-system-health
+msgid "Server Software"
+msgstr ""
+
+#: wp-system-health.php:354
+#@ wp-system-health
+msgid "Server Signature"
+msgstr ""
+
+#: wp-system-health.php:355
+#@ wp-system-health
+msgid "Server Name"
+msgstr ""
+
+#: wp-system-health.php:356
+#@ wp-system-health
+msgid "Server Address"
+msgstr ""
+
+#: wp-system-health.php:357
+#@ wp-system-health
+msgid "Server Port"
+msgstr ""
+
+#: wp-system-health.php:492
+#@ wp-system-health
+msgid "Automatic Updates:"
+msgstr "Automatische Updates:"
+
+#: wp-system-health.php:500
+#@ wp-system-health
+msgid "Describes the layer been used to performs automatic updates at your WordPress installation."
+msgstr ""
+
+#: wp-system-health.php:503
+#@ wp-system-health
+msgid "Your provider denies direct file access for security reasons. That's why only FTP/SSH access is permitted."
+msgstr ""
+
+#: wp-system-health.php:507
+#@ wp-system-health
+msgid "File System Method (forced)"
+msgstr ""
+
+#: wp-system-health.php:507
+#@ wp-system-health
+msgid "Forces the filesystem method. It should only be \"direct\", \"ssh\", \"ftpext\", or \"ftpsockets\". Generally, You should only change this if you are experiencing update problems."
+msgstr ""
+
+#: wp-system-health.php:508
+#@ wp-system-health
+msgid "FTP Base Path"
+msgstr ""
+
+#: wp-system-health.php:508
+#@ wp-system-health
+msgid "The full path to the \"base\"(ABSPATH) folder of the WordPress installation"
+msgstr ""
+
+#: wp-system-health.php:509
+#@ wp-system-health
+msgid "FTP Content Dir"
+msgstr ""
+
+#: wp-system-health.php:509
+#@ wp-system-health
+msgid "The full path to the wp-content folder of the WordPress installation."
+msgstr ""
+
+#: wp-system-health.php:510
+#@ wp-system-health
+msgid "FTP Plugin Dir"
+msgstr ""
+
+#: wp-system-health.php:510
+#@ wp-system-health
+msgid "The full path to the plugins folder of the WordPress installation."
+msgstr ""
+
+#: wp-system-health.php:511
+#@ wp-system-health
+msgid "FTP Public Key"
+msgstr ""
+
+#: wp-system-health.php:511
+#@ wp-system-health
+msgid "The full path to your SSH public key."
+msgstr ""
+
+#: wp-system-health.php:512
+#@ wp-system-health
+msgid "FTP Private Key"
+msgstr ""
+
+#: wp-system-health.php:512
+#@ wp-system-health
+msgid "The full path to your SSH private key."
+msgstr ""
+
+#: wp-system-health.php:513
+#@ wp-system-health
+msgid "FTP User"
+msgstr ""
+
+#: wp-system-health.php:513
+#: wp-system-health.php:514
+#@ wp-system-health
+msgid "defined, but not shown for security reasons"
+msgstr ""
+
+#: wp-system-health.php:513
+#@ wp-system-health
+msgid "FTP_USER is either user FTP or SSH username. Most likely these are the same, but use the appropriate one for the type of update you wish to do. "
+msgstr ""
+
+#: wp-system-health.php:514
+#@ wp-system-health
+msgid "FTP Password"
+msgstr ""
+
+#: wp-system-health.php:514
+#@ wp-system-health
+msgid "FTP_PASS is the password for the username entered for FTP_USER. If you are using SSH public key authentication this can be omitted."
+msgstr ""
+
+#: wp-system-health.php:515
+#@ wp-system-health
+msgid "FTP Host"
+msgstr ""
+
+#: wp-system-health.php:515
+#@ wp-system-health
+msgid "The hostname:port combination for your SSH/FTP server. The default FTP port is 21 and the default SSH port is 22, These do not need to be mentioned."
+msgstr ""
+
+#: wp-system-health.php:516
+#@ wp-system-health
+msgid "FTP SSL"
+msgstr ""
+
+#: wp-system-health.php:516
+#@ wp-system-health
+msgid "TRUE for SSL-connection if supported by the underlying transport, Not available on all servers. This is for \"Secure FTP\" not for SSH SFTP."
+msgstr ""
+
+#: wp-system-health.php:691
+#@ wp-system-health
+msgid "All Tables"
+msgstr "Alle Tabellen"
+
+#: wp-system-health.php:639
+#@ wp-system-health
+msgid "Settings:"
+msgstr "Einstellungen:"
+
+#: wp-system-health.php:252
+#@ wp-system-health
+msgid "WP System Health"
+msgstr ""
+
+#: wp-system-health.php:825
+#@ wp-system-health
+msgid "WordPress System Health"
+msgstr ""
+
+#: wp-system-health.php:832
+#@ wp-system-health
+msgid "disable dashboard widget"
+msgstr "Dashboard Widget deaktivieren"
+
+#: wp-system-health.php:846
+#@ wp-system-health
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: wp-system-health.php:905
+#: wp-system-health.php:920
+#@ default
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: wp-system-health.php:826
+#@ wp-system-health
+msgid "WordPress System Health provides a comprehensive overview about your current WordPress installation in terms of configuration and settings."
+msgstr "WordPress System Health bietet einen umfassenden Überblick über Ihre aktuelle WordPress-Installation in Bezug auf die Konfiguration und Einstellungen."
+
+#: wp-system-health.php:362
+#: wp-system-health.php:642
+#@ wp-system-health
+msgid "MySQL Server"
+msgstr ""
+
+#: wp-system-health.php:521
+#@ wp-system-health
+msgid "This section list most of WordPress constants can be configured at your <em>wp-config.php</em> file. Some of this constants have to be handled with care, please read additionally:"
+msgstr ""
+
+#: wp-system-health.php:834
+#@ wp-system-health
+msgid "disable admin footer memory message"
+msgstr "Admin-Footer Speicheranzeige deaktivieren"
+
+#: wp-system-health.php:678
+#: wp-system-health.php:706
+#: wp-system-health.php:708
+#@ wp-system-health
+msgid "row"
+msgid_plural "rows"
+msgstr[0] "Zeile"
+msgstr[1] "Zeilen"
+
+#: wp-system-health.php:463
+#@ wp-system-health
+msgid "Core Information:"
+msgstr ""
+
+#: wp-system-health.php:466
+#@ wp-system-health
+msgid "Version"
+msgstr ""
+
+#: wp-system-health.php:467
+#@ wp-system-health
+msgid "Installation Type"
+msgstr ""
+
+#: wp-system-health.php:467
+#@ wp-system-health
+msgid "Multi Site Installation"
+msgstr ""
+
+#: wp-system-health.php:467
+#@ wp-system-health
+msgid "Standard Installation"
+msgstr ""
+
+#: wp-system-health.php:489
+#@ wp-system-health
+msgid "Active Plugins"
+msgstr "Aktive Plugins"
+
+#: wp-system-health.php:498
+#@ wp-system-health
+msgid "Update Method"
+msgstr "Update-Methode"
+
+#: wp-system-health.php:875
+#, php-format
+#@ wp-system-health
+msgid "Memory: %s of %s ~ %s %%"
+msgstr "Speicher: %s of %s ~ %s %%"
+
+#: wp-system-health.php:342
+#@ wp-system-health
+msgid "Translation"
+msgstr "Übersetzung"
+
+#: wp-system-health.php:471
+#@ wp-system-health
+msgid "Blogs Overview"
+msgstr "Blogs im Überblick"
+
+#: wp-system-health.php:471
+#, php-format
+#@ wp-system-health
+msgid "total %s blog"
+msgid_plural "total %s blogs"
+msgstr[0] "insgesamt %s Blog"
+msgstr[1] "insgesamt %s Blogs"
+
+#: wp-system-health.php:479
+#@ wp-system-health
+msgid "public:"
+msgstr ""
+
+#: wp-system-health.php:480
+#@ wp-system-health
+msgid "deleted:"
+msgstr ""
+
+#: wp-system-health.php:481
+#@ wp-system-health
+msgid "spam:"
+msgstr ""
+
+#: wp-system-health.php:482
+#@ wp-system-health
+msgid "archived:"
+msgstr ""
+
+#: wp-system-health.php:582
+#@ wp-system-health
+msgid "Textdomains:"
+msgstr ""
+
+#: wp-system-health.php:590
+#: wp-system-health.php:610
+#: wp-system-health.php:616
+#: wp-system-health.php:619
+#@ wp-system-health
+msgid "File:"
+msgstr "Datei:"
+
+#: wp-system-health.php:592
+#: wp-system-health.php:611
+#@ wp-system-health
+msgid "Size:"
+msgstr "Größe:"
+
+#: wp-system-health.php:593
+#: wp-system-health.php:612
+#@ wp-system-health
+msgid "Strings:"
+msgstr "Texte:"
+
+#: wp-system-health.php:597
+#: wp-system-health.php:617
+#@ wp-system-health
+msgid "Translation File missing!"
+msgstr "Übersetzungdatei fehlt!"
+
+#: wp-system-health.php:717
+#@ wp-system-health
+msgid "Sorry for less information here, the database analysis for WordPress Multisite Installation is much more expensive and will be introduced with the next update."
+msgstr "Entschuldigung für die spärliche Information hier. Die Analyse der Datenbank für Multi Site Installationen ist viel aufwändiger und wird im nächsten Update zur Verfügung stehen."
+
+#: wp-system-health.php:366
+#: wp-system-health.php:374
+#@ wp-system-health
+msgid "Server Quota's:"
+msgstr ""
+
+#: wp-system-health.php:369
+#@ wp-system-health
+msgid "Storage Space"
+msgstr "Speicherplatz"
+
+#: wp-system-health.php:369
+#: wp-system-health.php:858
+#, php-format
+#@ wp-system-health
+msgid "<b>%s</b> of <b>%s</b> (%s %%) used."
+msgstr "<b>%s</b> von <b>%s</b> (%s %%) genutzt."
+
+#: wp-system-health.php:370
+#: wp-system-health.php:372
+#@ wp-system-health
+msgid "- Soft Limit"
+msgstr ""
+
+#: wp-system-health.php:371
+#@ wp-system-health
+msgid "Number of Files"
+msgstr "Dateianzahl"
+
+#: wp-system-health.php:371
+#: wp-system-health.php:861
+#, php-format
+#@ wp-system-health
+msgid "<b>%s</b> of <b>%s</b> files (%s %%) stored."
+msgstr "<b>%s</b> von <b>%s</b> Dateien (%s %%) abgelegt."
+
+#: wp-system-health.php:372
+#@ wp-system-health
+msgid "files"
+msgstr "Dateien"
+
+#: wp-system-health.php:374
+#@ wp-system-health
+msgid "access not permitted or quota not configured."
+msgstr "Zugriff nicht erlaubt oder Quota nicht konfiguriert."
+
+#: wp-system-health.php:378
+#@ wp-system-health
+msgid "Server Locale:"
+msgstr ""
+
+#: wp-system-health.php:381
+#@ wp-system-health
+msgid "collation"
+msgstr ""
+
+#: wp-system-health.php:382
+#@ wp-system-health
+msgid "uppercasing"
+msgstr ""
+
+#: wp-system-health.php:383
+#@ wp-system-health
+msgid "monetary"
+msgstr ""
+
+#: wp-system-health.php:384
+#@ wp-system-health
+msgid "numerical"
+msgstr ""
+
+#: wp-system-health.php:385
+#@ wp-system-health
+msgid "date/time"
+msgstr ""
+
+#: wp-system-health.php:386
+#@ wp-system-health
+msgid "messages"
+msgstr ""
+
+#: wp-system-health.php:388
+#@ wp-system-health
+msgid "Load Average:"
+msgstr ""
+
+#: wp-system-health.php:392
+#@ wp-system-health
+msgid "last 1 minute"
+msgstr "letzte 1 Minute"
+
+#: wp-system-health.php:393
+#@ wp-system-health
+msgid "last 5 minutes"
+msgstr "letzte 5 Minuten"
+
+#: wp-system-health.php:394
+#@ wp-system-health
+msgid "last 15 minutes"
+msgstr "letzte 15 Minuten"
+
+#: wp-system-health.php:599
+#: wp-system-health.php:620
+#@ wp-system-health
+msgid "Translation File missing but not required."
+msgstr "Übersetzungdatei fehlt, ist aber nicht erforderlich."
+
+#: wp-system-health.php:627
+#@ wp-system-health
+msgid "total translations"
+msgstr "Übersetzungen"
+
+#: wp-system-health.php:629
+#@ wp-system-health
+msgid "Loaded Files:"
+msgstr "Geladenen Dateien:"
+
+#: wp-system-health.php:630
+#@ wp-system-health
+msgid "Total Size:"
+msgstr "Größe gesamt:"
+
+#: wp-system-health.php:631
+#@ wp-system-health
+msgid "Total Strings:"
+msgstr "Texte gesamt:"
+
+#: wp-system-health.php:833
+#@ wp-system-health
+msgid "disable server storage quota's at dashboard"
+msgstr "Deaktivieren der Anzeige der Server Speicherplatz-Quota im Dashboard"
+
+#: wp-system-health.php:835
+#@ wp-system-health
+msgid "enable public performance monitoring comments"
+msgstr "öffentliche Performance Monitoring HTML Kommentare einschalten"
+
+#: wp-system-health.php:836
+#@ wp-system-health
+msgid "block size for disk quota's"
+msgstr "Blockgröße für Datenträger-Quota"
+
+#: wp-system-health.php:856
+#@ wp-system-health
+msgid "Server Storage Quota's"
+msgstr "Server Speicherplatz-Quota's"
+
+#: wp-system-health.php:627
+#@ wp-system-health
+msgid "summary"
+msgstr "Zusammenfassung"
+
+#: wp-system-health.php:345
+#@ wp-system-health
+msgid "Memory Allocation Check"
+msgstr "Prüfung der Speicherauslastung"
+
+#: wp-system-health.php:531
+#@ wp-system-health
+msgid "Default Theme"
+msgstr ""
+
+#: wp-system-health.php:531
+#@ wp-system-health
+msgid "This is the standard theme WordPress uses if your current theme fails or new user will register."
+msgstr ""
+
+#: wp-system-health.php:533
+#@ wp-system-health
+msgid "WP Memory Limit"
+msgstr ""
+
+#: wp-system-health.php:533
+#@ wp-system-health
+msgid "The defined initially memory limit WordPress suggests for your installation."
+msgstr ""
+
+#: wp-system-health.php:557
+#@ wp-system-health
+msgid "Media Trash"
+msgstr ""
+
+#: wp-system-health.php:557
+#@ wp-system-health
+msgid "Permits media files to be trashed."
+msgstr ""
+
+#: wp-system-health.php:564
+#@ wp-system-health
+msgid "Debug WordPress visual"
+msgstr ""
+
+#: wp-system-health.php:564
+#@ wp-system-health
+msgid "Globally configured setting for display_errors and not force errors to be displayed."
+msgstr ""
+
+#: wp-system-health.php:565
+#@ wp-system-health
+msgid "Debug WordPress logfile"
+msgstr ""
+
+#: wp-system-health.php:565
+#@ wp-system-health
+msgid "Enable error logging to wp-content/debug.log"
+msgstr ""
+
+#: wp-system-health.php:728
+#@ wp-system-health
+msgid "Memory Usable"
+msgstr "Nutzbarer Speicher"
+
+#: wp-system-health.php:736
+#@ wp-system-health
+msgid "Single Tests Report"
+msgstr "Einzeltests-Bericht"
+
+#: wp-system-health.php:739
+#@ wp-system-health
+msgid "check  memory allocation limit"
+msgstr "prüfe Speichernutzungsgrenze"
+
+#: wp-system-health.php:742
+#@ wp-system-health
+msgid "test is running, please wait..."
+msgstr "Test läuft, bitte warten ..."
+
+#: wp-system-health.php:788
+#: wp-system-health.php:798
+#@ wp-system-health
+msgid "requested:"
+msgstr "angefragt:"
+
+#: wp-system-health.php:793
+#@ wp-system-health
+msgid "100% available, no problems at your provider."
+msgstr "100% verfügbar, es gibt keine Probleme bei Ihrem Provider."
+
+#: wp-system-health.php:800
+#@ wp-system-health
+msgid "Your Provider does not permit the full limit has been configured! Contact your Provider to solve this issue."
+msgstr "Ihr Provider erlaubt Ihnen nicht das volle Limit, welches konfiguriert wurde! Kontaktieren Sie Ihren Provider, um dieses Problem zu lösen."
+
+#: wp-system-health.php:732
+#@ wp-system-health
+msgid "Test Conclusion"
+msgstr "Test Fazit"
+

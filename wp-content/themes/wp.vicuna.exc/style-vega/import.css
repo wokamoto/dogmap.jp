@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+/*==================
+	vicuna
+==================*/
+
+@import url(core.css);
+@import url(layouts.css);
+
+@import url(tuika.css);
+
+/*--------
+	Font size setting
+---------*/
+
+body {
+	font-size: 13px;
+}
+
+div#main {
+	font-size: 13px;
+}

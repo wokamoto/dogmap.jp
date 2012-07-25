@@ -1,0 +1,238 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: googlemaps-anywhere v.1.2.4\n"
+"POT-Creation-Date: 2010-03-17 12:01+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: WordPressPluginGuide.com <info@wppg.me>\n"
+"Language-Team: http://wppg.me <info@wppg.me>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+# description
+msgid "Add Google Maps to your posts and pages.(Only for WordPress 2.5+)"
+msgstr "Voeg Google Maps toe aan je berichten en pagina's. (Alleen voor WordPress 2.5+)"
+
+#: ../googlemaps-anywhere.php:179
+msgid "http://maps.google.com/maps"
+msgstr "http://maps.google.com/maps"
+
+#: ../googlemaps-anywhere.php:252
+msgid "Move to the Google Maps."
+msgstr "Verplaats naar Google Maps."
+
+#: ../googlemaps-anywhere.php:254
+#: ../googlemaps-anywhere.php:255
+#: ../googlemaps-anywhere.php:256
+#: ../googlemaps-anywhere.php:825
+#: ../googlemaps-anywhere.php:880
+#: ../googlemaps-anywhere.php:883
+#: ../googlemaps-anywhere.php:886
+msgid "Error: "
+msgstr "Fout:"
+
+#: ../googlemaps-anywhere.php:254
+#: ../googlemaps-anywhere.php:825
+#: ../googlemaps-anywhere.php:880
+msgid "No panorama data was found."
+msgstr "Er is geen panorama data gevonden"
+
+#: ../googlemaps-anywhere.php:255
+#: ../googlemaps-anywhere.php:883
+msgid "Flash doesn't appear to be supported by your browser."
+msgstr "Flash wordt niet ondersteund door je browser."
+
+#: ../googlemaps-anywhere.php:256
+#: ../googlemaps-anywhere.php:886
+msgid "Unknown Error."
+msgstr "Onbekende Fout."
+
+#: ../googlemaps-anywhere.php:330
+msgid "Add Google Maps"
+msgstr "Toevoegen Google Maps"
+
+#: ../googlemaps-anywhere.php:364
+#: ../googlemaps-anywhere.php:694
+msgid "Place"
+msgstr "Plaats"
+
+#: ../googlemaps-anywhere.php:367
+#: ../googlemaps-anywhere.php:697
+msgid "Place Name"
+msgstr "Plaatsnaam"
+
+#: ../googlemaps-anywhere.php:369
+#: ../googlemaps-anywhere.php:699
+#: ../googlemaps-anywhere.php:983
+#: ../googlemaps-anywhere.php:988
+msgid "Lat"
+msgstr "Lat"
+
+#: ../googlemaps-anywhere.php:370
+#: ../googlemaps-anywhere.php:700
+#: ../googlemaps-anywhere.php:984
+#: ../googlemaps-anywhere.php:989
+msgid "Lng"
+msgstr "Lng"
+
+#: ../googlemaps-anywhere.php:375
+#: ../googlemaps-anywhere.php:708
+#: ../googlemaps-anywhere.php:711
+msgid "Alignment"
+msgstr "Uitlijning"
+
+#: ../googlemaps-anywhere.php:379
+#: ../googlemaps-anywhere.php:713
+msgid "None"
+msgstr "Geen"
+
+#: ../googlemaps-anywhere.php:381
+#: ../googlemaps-anywhere.php:715
+msgid "Left"
+msgstr "Links"
+
+#: ../googlemaps-anywhere.php:383
+#: ../googlemaps-anywhere.php:717
+msgid "Center"
+msgstr "Midden"
+
+#: ../googlemaps-anywhere.php:385
+#: ../googlemaps-anywhere.php:719
+msgid "Right"
+msgstr "Rechts"
+
+#: ../googlemaps-anywhere.php:390
+#: ../googlemaps-anywhere.php:724
+msgid "Size"
+msgstr "Grootte"
+
+#: ../googlemaps-anywhere.php:393
+#: ../googlemaps-anywhere.php:727
+#: ../googlemaps-anywhere.php:978
+msgid "Width"
+msgstr "Breedte"
+
+#: ../googlemaps-anywhere.php:394
+#: ../googlemaps-anywhere.php:728
+#: ../googlemaps-anywhere.php:979
+msgid "Height"
+msgstr "Hoogte"
+
+#: ../googlemaps-anywhere.php:395
+#: ../googlemaps-anywhere.php:729
+msgid "Zoom"
+msgstr "Vergroot"
+
+#: ../googlemaps-anywhere.php:400
+msgid "KML"
+msgstr "KML"
+
+#: ../googlemaps-anywhere.php:406
+#: ../googlemaps-anywhere.php:736
+msgid "Insert into Post"
+msgstr "Invoegen in bericht"
+
+#: ../googlemaps-anywhere.php:411
+msgid "Custom Fields"
+msgstr "Aangepaste Velden"
+
+#: ../googlemaps-anywhere.php:414
+msgid "Key"
+msgstr "Sleutel"
+
+#: ../googlemaps-anywhere.php:415
+msgid "Value"
+msgstr "Waarde"
+
+#: ../googlemaps-anywhere.php:418
+msgid "Add Custom Field"
+msgstr "Toevoegen Aangepast Veld"
+
+#: ../googlemaps-anywhere.php:702
+msgid "Yaw"
+msgstr "Afwijken van de richting"
+
+#: ../googlemaps-anywhere.php:703
+msgid "Pitch"
+msgstr "Afstand"
+
+#: ../googlemaps-anywhere.php:950
+msgid "Done!"
+msgstr "Klaar!"
+
+#: ../googlemaps-anywhere.php:953
+msgid "Please Enter Your Google Maps API Key"
+msgstr "Voer je Google Maps API sleutel in"
+
+#: ../googlemaps-anywhere.php:960
+msgid "Your Google Maps API Key"
+msgstr "Je Google Maps API sleutel"
+
+#: ../googlemaps-anywhere.php:963
+msgid "API Key"
+msgstr "API Sleutel"
+
+#: ../googlemaps-anywhere.php:964
+#, php-format
+msgid "(don't have one? get one <a href=%s>here</a>)"
+msgstr "(heb je er geen? verkrijg er een <a href=%s>hier</a>)"
+
+#: ../googlemaps-anywhere.php:968
+msgid "Current API Key"
+msgstr "Huidige API sleutel"
+
+#: ../googlemaps-anywhere.php:974
+msgid "Option"
+msgstr "Optie"
+
+#: ../googlemaps-anywhere.php:977
+msgid "Default Size"
+msgstr "Standaard Grootte"
+
+#: ../googlemaps-anywhere.php:982
+msgid "Initial position <br />(Google Maps)"
+msgstr "Initiële positie <br />(Google Maps)"
+
+#: ../googlemaps-anywhere.php:987
+msgid "Initial position <br />(Street View)"
+msgstr "Initiële positie <br />(Street View)"
+
+#: ../googlemaps-anywhere.php:992
+msgid "Google Maps URL"
+msgstr "Google Maps URL"
+
+#: ../googlemaps-anywhere.php:999
+msgid "Update Options"
+msgstr "Bijwerken Opties"
+
+#: ../googlemaps-anywhere.php:1010
+#: ../googlemaps-anywhere.php:1016
+#: ../googlemaps-anywhere.php:1023
+#: ../googlemaps-anywhere.php:1028
+msgid "Google Maps"
+msgstr "Google Maps"
+
+#: ../googlemaps-anywhere.php:1011
+#: ../googlemaps-anywhere.php:1024
+msgid "Street View"
+msgstr "Street View"
+
+#: ../googlemaps-anywhere.php:1012
+#: ../googlemaps-anywhere.php:1017
+#: ../googlemaps-anywhere.php:1307
+#: ../includes/common-controller.php:170
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../googlemaps-anywhere.php:1249
+msgid "Map of this location"
+msgstr "Kaart van deze locatie"
+
+#: ../googlemaps-anywhere.php:1299
+msgid "Google Maps Anywhere"
+msgstr "Google Maps Overal"
+

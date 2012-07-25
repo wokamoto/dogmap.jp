@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 2.0.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-09-30 00:16+0900\n"
+"Last-Translator: IKEDA Yuriko <yuirko-poedit@yuriko.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;_x:2c,1;_n:1,2;_n_noop:1,2;_c;__ngettext:1,2;__ngettext_noop:1,2\n"
+
+# ----- index.php --------------------------------------------------
+msgid "New Articles"
+msgstr "新着記事"
+
+msgid "Y.m.d H:i"
+msgstr "Y.m.d H:i"
+
+msgid "&rarr; "
+msgstr "→ "
+
+msgid "Read More"
+msgstr "もっと見る"
+
+# ----- footer.php --------------------------------------------------
+msgid ", "
+msgstr "・"
+
+# ----- single.php --------------------------------------------------
+msgid "Prev"
+msgstr "前記事"
+
+msgid "Next"
+msgstr "次記事"
+
+msgid "View Comments(0)"
+msgstr "コメントを見る(0)"
+
+msgid "View Comment(1)"
+msgstr "コメントを見る(1)"
+
+#, php-format
+msgid "View Comments(%d)"
+msgstr "コメントを見る(%d)"
+
+msgid "<img localsrc=\"61\" alt=\"X \" />Comments Stopped"
+msgstr "<img localsrc=\"61\" alt=\"×\" />コメント停止中"
+
+msgid "<img localsrc=\"77\" alt=\"\" />Related Words"
+msgstr "<img localsrc=\"77\" alt=\"\" />関連ワード"
+
+# ----- comments.php --------------------------------------------------
+msgid "Comments list for <a href=\"%1$s\">%2$s</a>"
+msgstr "<a href=\"%1$s\">%2$s</a>へのコメント一覧"
+
+msgid "From Newer"
+msgstr "最新順"
+
+msgid "From Older"
+msgstr "古い順"
+
+msgid "Write a comment"
+msgstr "コメントを書く"
+
+msgid "Comment"
+msgstr "コメント"
+
+msgid "Reply to comment #%1$d of <a href=\"%2$s\">%3$s</a> of &quot;%4$s&quot;"
+msgstr "「%4$s」<a href=\"%2$s\">%3$s</a> のコメント #%1$d に返信します。"
+
+msgid "Post a comment for <a href=\"%1$s\">%2$s</a> of &quot;%3$s&quot;"
+msgstr "「%3$s」<a href=\"%1$s\">%2$s</a> にコメントします。"
+
+msgid "Please confirm below items"
+msgstr "以下の項目をご確認下さい"
+
+msgid "&diams;"
+msgstr "◆"
+
+msgid "Nickname"
+msgstr "ニックネーム"
+
+msgid "URL"
+msgstr ""
+
+msgid "Submit"
+msgstr "投稿する"
+

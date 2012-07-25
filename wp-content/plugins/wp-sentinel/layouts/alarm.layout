@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>WP-Sentinel Alarm</title>
+	
+<style type="text/css">
+   body {
+   		font-family: Verdana, Geneva, sans-serif; 
+   		font-size: 12px; 
+   		background-color: #fff;
+   }
+   
+   #main_table {
+   		border: 3px dotted red; 
+   		background-color: #FEDAE0; 
+   		padding: 10px; 
+   		-moz-border-radius: 15px; 
+   		border-radius: 15px;
+   		width: 50%;	
+   		display: block;
+   		margin-left: 25%;
+   		margin-top: 15%;
+   }
+   
+   #warning {
+		color: red;
+		font-weight: bold;
+		text-align: center;
+		padding-bottom: 20px;
+   }
+</style>
+</head>
+<body>
+
+<table id="main_table">
+	<tr>
+		<td id="warning"><h1><blink>!!! WARNING !!!</blink></h1></td>
+	</tr>
+
+	<tr>
+		<td>
+			The <a target="_blank" href="http://www.evilsocket.net/"><b>WP-Sentinel</b></a> security system, has detected a potential hacker attack against this blog.<br><br>
+		    Attack details follow :<br><br>
+		</td>
+	</tr>
+		{ALARM_ROWS}
+	<tr>
+		<td>
+		<br>
+		
+		A complete and detailed report which includes your details, such as your IP address etc, has just been saved and sent to the administrator of this site. <br>
+		If it was a mistake, properly a "false positive", you do not have nothing to fear as they will be ignored, but if your attack is actually a violation of existing rules on breach of computer systems, hacking and / or theft of copyrighted material, competent authorities will be contacted and provided with all the necessary data to find you.
+    	<br/><br/>
+	</td>
+</tr>
+</table>
+</body>
+</html>

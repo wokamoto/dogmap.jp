@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Custom Smilies in italiano\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-20 18:03+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Michael Vollmer <m.vollmer@styloweb.de>\n"
+"Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;_c;__ngettext:1,2;__ngettext_noop:1,2\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ./..\n"
+
+#: ../common.inc.php:114
+msgid "Preferences updated."
+msgstr "Einstellungen wurden gespeichert."
+
+#: ../common.inc.php:116
+msgid "No changes made."
+msgstr "Keine Änderungen durchgeführt."
+
+#: ../common.inc.php:132
+msgid "Your smilies have been updated."
+msgstr "Deine Smileys wurden aktualisiert."
+
+#: ../common.inc.php:141
+msgid "Manage Smilies"
+msgstr "Smileys verwalten"
+
+#: ../common.inc.php:144
+msgid "Display all smilies"
+msgstr "Alle Smileys anzeigen"
+
+#: ../common.inc.php:144
+msgid "Display undefined smilies only"
+msgstr "Nur nicht definierte Smileys anzeigen"
+
+#: ../common.inc.php:147
+msgid "Please note that your smilies cannot contain any of these characters: ' \" \\"
+msgstr "Bitte beachte, dass Deine Smileys die folgenden Zeichen nicht enthalten können: ' \" \\"
+
+#: ../common.inc.php:154
+#: ../common.inc.php:160
+#: ../common.inc.php:166
+msgid "Smilie"
+msgstr "Smiley"
+
+#: ../common.inc.php:157
+#: ../common.inc.php:163
+#: ../common.inc.php:169
+msgid "What to type"
+msgstr "Zeichenfolge"
+
+#: ../common.inc.php:213
+msgid "Update"
+msgstr "Aktualisieren"
+
+#: ../common.inc.php:217
+#: ../for25.php:6
+#: ../for27.php:47
+msgid "Smilies Options"
+msgstr "Smileys Optionen"
+
+#: ../common.inc.php:221
+msgid "Display these smilies above the comment form by default:"
+msgstr "Zeige diese Smileys standardmäßig oberhalb des Kommentarfeldes:"
+
+#: ../common.inc.php:224
+msgid "Put your smilies here, separated by comma. Example: <b>:D, :), :wink:, :(</b>"
+msgstr "Gib hier Deine Smileys ein, getrennt mit einem Komma. Beispiel: <b>:D, :), :wink:, :(</b>"
+
+#: ../common.inc.php:225
+msgid "Leave this field blank if you want to display all smilies."
+msgstr "Lass dieses Feld leer, wenn Du alle Smileys anzeigen möchtest."
+
+#: ../common.inc.php:229
+msgid "The name of the input box for comment:"
+msgstr "Name des Eingabefelds für Kommentare:"
+
+#: ../common.inc.php:232
+msgid "If you find Custom Smilies can&#39;t be used in your theme, there is a different id for comment input in your theme. So you could enter the id here."
+msgstr "Wenn benutzerdefinierte Smileys in Deinem Theme nicht verwendet werden können, hat das Kommentar-Eingabefeld in Deinem Theme eine abweichende ID. Hier kannst Du diese ID angeben."
+
+#: ../common.inc.php:236
+msgid "Popup window width:"
+msgstr "Breite Popup-Fenster:"
+
+#: ../common.inc.php:242
+msgid "Popup window height:"
+msgstr "Höhe  Popup-Fenster:"
+
+#: ../common.inc.php:248
+msgid "Other options:"
+msgstr "Andere Optionen:"
+
+#: ../common.inc.php:253
+msgid "Use the action named comment_form in comments.php if your theme support it. So you don&#39;t need to add cs_print_smilies() in comments.php manually."
+msgstr "Benutze die Aktion comment_form in comments.php, wenn Dein Theme dies unterstützt. In diesem Fall musst Du die Funktion cs_print_smilies() nicht manuell in comments.php einfügen."
+
+#: ../common.inc.php:260
+msgid "Update Options"
+msgstr "Optionen aktualisieren"
+
+#: ../custom-smilies.php:143
+msgid "Manage"
+msgstr "Verwalten"
+
+#: ../custom-smilies.php:144
+#: ../custom-smilies.php:156
+msgid "Options"
+msgstr "Optionen"
+
+#: ../for25.php:6
+#: ../for27.php:47
+msgid "Smilies"
+msgstr "Smileys"
+
+#: ../lang.php:15
+msgid "Custom Smilies"
+msgstr "Benutzerdefinierte Smileys"
+
+#: ../lang.php:20
+msgid "Insert Smilies"
+msgstr "Smileys einfügen"
+
+#~ msgid "Smilies Management"
+#~ msgstr "Gestione Smilies"
+#~ msgid ""
+#~ "The file init.php is nonexistent, and Custom Smilies has no permission to "
+#~ "create it. You must create it in %s manually"
+#~ msgstr ""
+#~ "文件 init.php 不存在，或者 Custom Smilies 没有权限创建这个文件。你必须手动"
+#~ "在 %s 里创建这个文件。"
+#~ msgid ""
+#~ "Custom Smilies has create init.php to make itself available. Now you can "
+#~ "<a href=\"%s\">use Custom Smilies</a>."
+#~ msgstr ""
+#~ "为了正常运行，Custom Smilies 已经自动创建了 init.php 文件。现在，你可以 "
+#~ "<a href=\"%s\">使用 Custom Smilies</a> 了"
+#~ msgid ""
+#~ "The file init.php is not writeable, so Custom Smilies is not available. "
+#~ "Please make it writable."
+#~ msgstr ""
+#~ "文件 init.php 不可写，所以 Custom Smilies 不能运行。请将 init.php 设置为可"
+#~ "写。"
+

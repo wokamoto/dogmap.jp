@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Head Cleaner の紹介 - wokamoto</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<link rel="stylesheet" href="css/zoomooz.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/shCore.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/shThemeDefault.css" type="text/css" media="screen">
+<style type="text/css" media="screen">/*<![CDATA[*/
+.section{
+	width:640px;
+	height:auto;
+	padding:20px;
+}
+.syntaxhighlighter td{
+	word-break:break-all
+}
+.syntaxhighlighter code{
+	display:inline;
+}
+.screenshot {
+/*	opacity: 0.6; */
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-attachment: scroll;
+}
+
+#headcleaner { background-image:url(images/head-cleaner.png); }
+#yslow { background-image: url(images/yslow_ss.jpg); }
+/*]]>*/</style>
+</head>
+
+<body>
+
+	<!--************************
+	**  TITLE                 **
+	*************************-->
+
+	<div class="section" style="height:420px">
+		<h3><a href="http://wordpress.org/extend/plugins/head-cleaner/" title="WordPress &gt; Head Cleaner &laquo; WordPress Plugins">Head Cleaner</a></h2>
+		<p>
+			&lt;head&gt; の中身とフッタ領域を解析して、キレイにします。<br />
+			css を上に javascript を下に配置したり、複数 css, js を結合したりといった操作を自動で行うプラグインです。
+		</p>
+		<div class="screenshot" id="headcleaner"></div>
+	</div>
+	
+	<div class="section odd" >
+		<h3>Head Cleaner - 適用前ソース</h2>
+<pre class="brush: html">
+&lt;head profile=&quot;http://gmpg.org/xfn/11&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Style-Type&quot; content=&quot;text/css&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Script-Type&quot; content=&quot;text/javascript&quot; /&gt;
+&lt;title&gt;dogmap.jp&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;独断と偏見の何でもレビュー。since Feb. 27, 2005&quot; /&gt;
+&lt;meta name=&quot;verify-v1&quot; content=&quot;bbSV5OEjzrRHFUb9VnM4muyviei2JNsLabQwT3KWoAA=&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;http://dogmap.jp/wp-content/themes/dogmap/style.css?ver=20081006&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;
+&lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;http://dogmap.jp/favicon.ico&quot; /&gt;
+&lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;http://dogmap.jp/favicon.ico&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;RSS&quot; href=&quot;http://dogmap.jp/feed/rss/&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;RSS 2.0&quot; href=&quot;http://dogmap.jp/feed/&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; type=&quot;application/atom+xml&quot; title=&quot;Atom&quot; href=&quot;http://dogmap.jp/feed/atom/&quot; /&gt;
+
+&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;ROR&quot; href=&quot;http://dogmap.jp/sitemap.xml&quot; /&gt;
+&lt;link rel=&quot;index&quot; href=&quot;http://dogmap.jp/&quot; title=&quot;dogmap.jp&quot; /&gt;
+&lt;link rel=&quot;start&quot; href=&quot;http://dogmap.jp/&quot; title=&quot;Home&quot; /&gt;
+&lt;link rel=&quot;appendix&quot; href=&quot;http://dogmap.jp/about/&quot; title=&quot;About&quot; /&gt;
+&lt;link rel=&quot;pingback&quot; href=&quot;http://dogmap.jp/xmlrpc.php&quot; /&gt;
+&lt;link rel='stylesheet'  href='http://dogmap.jp/wp-content/plugins/contact-form-7/styles.css?ver=2.2' type='text/css' media='all' /&gt;
+&lt;script type='text/javascript' src='http://dogmap.jp/wp-includes/js/jquery/jquery.js?ver=1.3.2'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='http://dogmap.jp/wp-content/plugins/kougaburari/js/jquery.cycle.all.min.js?ver=2.74'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='http://dogmap.jp/wp-content/plugins/wp-lightpop/js/jquery.lightpop-0.8.3.min.js?ver=0.8.3'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='http://dogmap.jp/wp-content/themes/dogmap/js/jquery.cookie.js?ver=1.0'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='http://dogmap.jp/wp-content/themes/dogmap/js/time-tracker.min.js?ver=2.9.2'&gt;&lt;/script&gt;
+&lt;link rel=&quot;EditURI&quot; type=&quot;application/rsd+xml&quot; title=&quot;RSD&quot; href=&quot;http://dogmap.jp/xmlrpc.php?rsd&quot; /&gt;
+
+&lt;link rel=&quot;wlwmanifest&quot; type=&quot;application/wlwmanifest+xml&quot; href=&quot;http://dogmap.jp/wp-includes/wlwmanifest.xml&quot; /&gt; 
+&lt;meta name=&quot;generator&quot; content=&quot;WordPress 2.9.2&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; media=&quot;handheld&quot; type=&quot;text/html&quot; href=&quot;http://dogmap.jp/&quot; /&gt;
+&lt;link rel=&quot;shortlink&quot; href=&quot;http://wp.me/ehNz&quot; /&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot; /&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot; /&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;/*&lt;![CDATA[ */
+var addLoadEvent = function(func){ if(typeof jQuery!='undefined'){jQuery(document).ready(func);} else if(typeof google.setOnLoadCallback!='undefined'){google.setOnLoadCallback(func);} else if(typeof wpOnload!='function'){wpOnload=func;} else {var oldonload=wpOnload; wpOnload=function(){oldonload();func();}}};
+var timeTracker = new TimeTracker();timeTracker._recordStartTime();
+/* ]]&gt;*/&lt;/script&gt;
+
+&lt;style type=&quot;text/css&quot; media=&quot;all&quot;&gt; /*&lt;![CDATA[ */
+.slideshow { overflow: hidden; cursor: pointer; }
+.slideshow-box { margin: 0 auto; }
+.slideshow img { margin: 0 auto; padding: 0; border: none; cursor: pointer; }
+/* ]]&gt;*/ &lt;/style&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;//&lt;![CDATA[
+var lightpop={options:{ imageLoading:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/lightpop-ico-loading.gif',imageBtnPrev:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/lightpop-btn-prev.gif',imageBtnNext:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/lightpop-btn-next.gif',imageBtnClose:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/lightpop-btn-close.gif',imageBlank:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/lightpop-blank.gif',flvplayer:'http://dogmap.jp/wp-content/plugins/wp-lightpop/swf/mediaplayer.swf',contentFrameType:'box',overlayBgColor:'#FFF',boxBorderSize:12,imageBox:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/box.gif',imageBorderL:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/box_l.gif',imageBorderR:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/box_r.gif',overlayOpacity:0.8,setLinkToTitle:true,Image:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-image.png',size:new Array(640,640)},Video:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-video.png'},Contents:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-contents.png',iframeEnabled:false},YouTube:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-youtube.png'},Metacafe:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-metacafe.png'},LiveLeak:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-liveleak.png'},GoogleVideo:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-googlevideo.png'},Dailymotion:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-dailymotion.png'},superdeluxe:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-superdeluxe.png'},nicovideo:{enabled:true,icon:'http://dogmap.jp/wp-content/plugins/wp-lightpop/images/icon-nicovideo.png'}},start:function(){}};
+//]]&gt;&lt;/script&gt;
+&lt;/head&gt;
+</pre>
+	</div>
+
+	<div class="section even" >
+		<h3>Head Cleaner - 適用後ソース</h2>
+<pre class="brush: html">
+&lt;head profile=&quot;http://gmpg.org/xfn/11&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Style-Type&quot; content=&quot;text/css&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Script-Type&quot; content=&quot;text/javascript&quot; /&gt;
+&lt;meta name=&quot;description&quot; content=&quot;独断と偏見の何でもレビュー。since Feb. 27, 2005&quot; /&gt;
+&lt;meta name=&quot;generator&quot; content=&quot;WordPress 2.9.2&quot; /&gt;
+&lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot; /&gt;
+&lt;meta name=&quot;verify-v1&quot; content=&quot;bbSV5OEjzrRHFUb9VnM4muyviei2JNsLabQwT3KWoAA=&quot; /&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot; /&gt;
+&lt;title&gt;dogmap.jp&lt;/title&gt;
+&lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;http://dogmap.jp/favicon.ico&quot; /&gt;
+&lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;http://dogmap.jp/favicon.ico&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;RSS&quot; href=&quot;http://dogmap.jp/feed/rss/&quot; /&gt;
+
+&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;RSS 2.0&quot; href=&quot;http://dogmap.jp/feed/&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; type=&quot;application/atom+xml&quot; title=&quot;Atom&quot; href=&quot;http://dogmap.jp/feed/atom/&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;ROR&quot; href=&quot;http://dogmap.jp/sitemap.xml&quot; /&gt;
+&lt;link rel=&quot;alternate&quot; media=&quot;handheld&quot; type=&quot;text/html&quot; href=&quot;http://dogmap.jp/&quot; /&gt;
+&lt;link rel=&quot;index&quot; href=&quot;http://dogmap.jp/&quot; title=&quot;dogmap.jp&quot; /&gt;
+&lt;link rel=&quot;start&quot; href=&quot;http://dogmap.jp/&quot; title=&quot;Home&quot; /&gt;
+&lt;link rel=&quot;appendix&quot; href=&quot;http://dogmap.jp/about/&quot; title=&quot;About&quot; /&gt;
+&lt;link rel=&quot;pingback&quot; href=&quot;http://dogmap.jp/xmlrpc.php&quot; /&gt;
+&lt;link rel=&quot;shortlink&quot; href=&quot;http://wp.me/ehNz&quot; /&gt;
+&lt;link rel=&quot;canonical&quot; href=&quot;http://dogmap.jp/&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;http://dogmap.jp/wp-content/cache/head-cleaner/css/72e498ef417ce5d6f9dc5720e6fa6058.css&quot; media=&quot;all&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://dogmap.jp/wp-content/cache/head-cleaner/js/1a56ed01fb4958acb1a0e5e91bc1226f.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+</pre>
+	</div>
+
+	<div class="section odd" style="height:420px">
+		<h3>Head Cleaner - YSlow 結果</h2>
+		<div class="screenshot" id="yslow"></div>
+	</div>
+
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/sylvester.js"></script>
+<script type="text/javascript" src="js/jquery.zoomooz.js"></script>
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript">/*<![CDATA[*/
+jQuery(function($) {
+	with(SyntaxHighlighter.config.strings){
+		expandSource="+ ソースを表示";
+		viewSource="プレインテキスト";
+		copyToClipboard="クリップボードにコピー";
+		copyToClipboardConfirmation="クリップボードにコピーされました";
+		print="印刷";
+		help="?";
+		noBrush="Can't find brush for: ";
+		brushNotHtmlScript="Brush wasn't made for html-script option: ";
+	}
+	SyntaxHighlighter.config.clipboardSwf = "js/clipboard.swf";
+	SyntaxHighlighter.defaults["toolbar"] = false;
+	SyntaxHighlighter.defaults["wrap-lines"] = false;
+	SyntaxHighlighter.all()
+
+	$(".section").click(function(evt) {
+		$(this).zoomTo({targetsize:0.85, duration:600});
+		evt.stopPropagation();
+	});
+	$(document).click(function(evt) {
+		$("body").zoomTo({targetsize:1.0});
+		evt.stopPropagation();
+	});
+//	$("body").zoomTo({targetsize:1.0});
+	$(".section:first").zoomTo({targetsize:0.95, duration:600});
+});
+/*]]>*/</script>
+
+</body>
+</html>

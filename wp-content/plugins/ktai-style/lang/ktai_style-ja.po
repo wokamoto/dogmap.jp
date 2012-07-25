@@ -1,0 +1,1127 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 2.0.5\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-08-21 19:23+0900\n"
+"Last-Translator: IKEDA Yuriko <yuriko-poedit@yuriko.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;_x:2c,1;_n:1,2;_n_noop:1,2;_c;__ngettext:1,2;__ngettext_noop:1,2\n"
+
+# ----- ktai_style.php --------------------------------------------------
+msgid "http://wordpress.org/extend/plugins/ktai-style/"
+msgstr "http://wppluginsj.sourceforge.jp/ktai_style/"
+
+msgid "Provides lightweight pages and simple admin interfaces for mobile phones."
+msgstr "携帯電話用に軽量化したページおよび簡単な管理インターフェースを提供します。"
+
+msgid "IKEDA Yuriko"
+msgstr "池田百合子"
+
+msgid "http://en.yuriko.net/"
+msgstr "http://www.yuriko.net/cat/wordpress/"
+
+msgid "Can't display pages. Bacause mobile phone templates are collapsed."
+msgstr "携帯電話向けテンプレートが壊れているため表示できません。"
+
+msgid "Mobile themes in <code>ktai-style/themes/*</code> are initialized to the distribution state. If you customize these themes directory, create a <code>wp-content/ktai-themes/</code> directory and move your themes to there."
+msgstr "<code>ktai-style/themes/*</code>にある携帯テーマは配布状態に初期化されます。もしこれらのテーマを直接カスタマイズしているなら、<code>wp-content/ktai-themes/</code> ディレクトリーを作成し、あなたのテーマをここに移動させてください。"
+
+#, php-format
+msgid "Back to <a href=\"%s\">the previous page</a>."
+msgstr "<a href=\"%s\">前のページ</a>に戻る。"
+
+msgid "WordPress | Error"
+msgstr "WordPress | エラー"
+
+# ----- shrinkage.php --------------------------------------------------
+#, php-format
+msgid "Original(%dKB)"
+msgstr "元画像(%dKB)"
+
+msgid "[external]"
+msgstr "[外部サイト]"
+
+msgid "Link Target"
+msgstr "リンク先"
+
+msgid "IMAGE:"
+msgstr "画像:"
+
+msgid "*.Prev"
+msgstr "*.前"
+
+msgid "#.Next"
+msgstr "#.次"
+
+#, php-format
+msgid "<div align=\"center\">Splitting the page for mobile: %1$s page #%2$d %3$s</div>"
+msgstr "<div align=\"center\">携帯用にページ分割: %1$s %2$d ページ目 %3$s</div>"
+
+# ----- template-tags.php --------------------------------------------------
+msgid "Encoding discriminant strings to avoid charset mis-understanding"
+msgstr "文字化け防止のためエンコーディング判別文字列"
+
+#, php-format
+msgid "Search results of %s"
+msgstr "%sの検索結果"
+
+#, php-format
+msgid "Archive for the %s category"
+msgstr "%s カテゴリーの投稿"
+
+#, php-format
+msgid "Posts Tagged as %s"
+msgstr "%s タグの投稿"
+
+#, php-format
+msgid "Archive for %s"
+msgstr "%s の投稿"
+
+msgid "F jS, Y"
+msgstr "Y年m月d日"
+
+msgid "F, Y"
+msgstr "Y年m月"
+
+#, php-format
+msgid "Archive for year %s"
+msgstr "%s の投稿"
+
+msgid "Y"
+msgstr "Y年"
+
+#, php-format
+msgid "Archive written by %s"
+msgstr "%s による投稿"
+
+msgid "[]"
+msgstr "□"
+
+msgid "First"
+msgstr "最初"
+
+msgid "Last"
+msgstr "末尾"
+
+msgid "Move to page"
+msgstr "ページに移動"
+
+msgid "No comments"
+msgstr "コメントなし"
+
+msgid "One comment"
+msgstr "コメント1件"
+
+msgid "% comments"
+msgstr "コメント%件"
+
+msgid "X "
+msgstr "×"
+
+msgid "Comments off"
+msgstr "コメント停止中"
+
+msgid "View comments (Need password)"
+msgstr "コメントを見る(要パスワード)"
+
+msgid "Post comments"
+msgstr "コメント投稿"
+
+msgid "&larr;"
+msgstr "←"
+
+msgid "Back to the post"
+msgstr "記事に戻る"
+
+msgid "All Pages"
+msgstr "ページ一覧"
+
+msgid "To PC view"
+msgstr "PC 表示にする"
+
+msgid "To Mobile view"
+msgstr "携帯表示にする"
+
+msgid "Images:"
+msgstr "画像:"
+
+msgid "Show"
+msgstr "表示する"
+
+msgid "As Link"
+msgstr "リンクにする"
+
+# ----- comments-post.php --------------------------------------------------
+msgid "No target for your post."
+msgstr "コメント対象の投稿が見当りません。"
+
+msgid "Error: please configure to send your terminal ID (serial number, EZ number etc)."
+msgstr "エラー: 端末識別情報 (製造番号、EZ 番号 等) を送信するよう設定してください。"
+
+# ----- config/panel.php --------------------------------------------------
+msgid "Mobile Output"
+msgstr "携帯表示"
+
+msgid "Ktai Style Configuration"
+msgstr "Ktai Style 設定"
+
+msgid "Theme for mobile"
+msgstr "携帯電話用テーマ"
+
+msgid "Theme"
+msgstr "テーマ"
+
+msgid "Mobile Theme Configuration"
+msgstr "携帯テーマ設定"
+
+msgid "Color &amp; Format"
+msgstr "色と書式"
+
+msgid "Delete Configuration"
+msgstr "設定の削除"
+
+msgid "Delete Options"
+msgstr "オプションの削除"
+
+msgid "Note: To revert values to default, just empty of the field."
+msgstr "※デフォルト値に戻すには、フィールドを空にします。"
+
+msgid "Behavior"
+msgstr "動作"
+
+msgid "Typing pictograms at comment forms, post contents"
+msgstr "コメントフォームや投稿内容での絵文字入力"
+
+msgid "Deny"
+msgstr "認めない"
+
+msgid "Allow"
+msgstr "許す"
+
+msgid "Comments and Pings"
+msgstr "コメントとピン通知 (トラックバック/ピンバック)"
+
+msgid "Mix them at each posts and/or recent comments."
+msgstr "各記事・最新コメントにおいて、コメント・トラックバック・ピンバックを混在させる。"
+
+msgid "Separate comments and pings."
+msgstr "コメントとトラックバック・ピンバックとを分離する。"
+
+msgid "Terminal ID of comment poster"
+msgstr "コメント投稿者の端末識別情報"
+
+msgid "Not required"
+msgstr "必須ではない"
+
+msgid "Required to send"
+msgstr "送信が必須"
+
+msgid "Note: Terminal ID is sensitive private information because the same ID is sent to any mobile sites.<br />Collecting the IDs is a risk of keeping private information of others.<br />Please select \"Not required\" unless you can get much merit than that risk."
+msgstr "注意: 端末識別情報は、どのサイトにも同じ ID が送信されるという繊細な個人情報です。<br />これを収集することは他人の個人情報を保存するというリスクとなります。<br />リスクよりもメリットが大きくない限り「必須ではない」を選択してください。"
+
+msgid "Websites to link directly"
+msgstr "直接リンクを張るサイト"
+
+msgid "(Not using the redirect page for these sites; space separated)"
+msgstr "(これらのサイトへは中継ページを使いません。スペース区切りです)"
+
+msgid "New theme activated."
+msgstr "新しいテーマを有効化しました。"
+
+msgid "Additonal themes are available at <a href=\"http://ks-theme.sourceforge.jp/\">Ktai Style Themes</a> website."
+msgstr "追加テーマは <a href=\"http://ks-theme.sourceforge.jp/\">Ktai Style テーマ</a> 配布サイトから入手できます。"
+
+msgid "Displaying %s&#8211;%s of %s"
+msgstr " %s&#8211;%s件 (%s件中) を表示中"
+
+msgid "%1$s %2$s by %3$s"
+msgstr "%1$s %2$s : %3$s 作"
+
+msgid "Theme for each career"
+msgstr "電話キャリア別テーマ"
+
+msgid "For mova (docomo)"
+msgstr "mova 用 (ドコモ)"
+
+msgid "For FOMA (docomo)"
+msgstr "FOMA 用 (ドコモ)"
+
+msgid "For EZweb (au)"
+msgstr "EZweb 用 (au)"
+
+msgid "For SoftBank PDC"
+msgstr "ソフトバンク PDC 端末用"
+
+msgid "For SoftBank 3G"
+msgstr "ソフトバンク 3G 端末用"
+
+msgid "For WILLCOM"
+msgstr "ウィルコム用"
+
+msgid "For EMobile Handset"
+msgstr "イー・モバイル音声端末用"
+
+msgid "For iPhone, Android"
+msgstr "iPhone, Android 用"
+
+msgid "(Don't use Ktai Style)"
+msgstr "(Ktai Style を使わない)"
+
+msgid "(Same as common theme)"
+msgstr "(共通テーマと同じ)"
+
+msgid "Other phones (Windows Mobile, Palm, PSP, Nintendo DS, etc) are not able to select an exclusive theme."
+msgstr "その他端末 (Windows Mobile, Palm, PSP, ニンテンドーDS 等) は、個別にテーマを選択できません。"
+
+msgid "Note: Settings below may not be reflected with other than standard theme (default, compact)."
+msgstr "※下記の設定は標準テーマ (default, compact) 以外では反映されないことがあります。"
+
+msgid "Text Color"
+msgstr "文字色"
+
+msgid "Target"
+msgstr "対象"
+
+msgid "#rrggbb as hex format"
+msgstr "#rrggbb の16進表記"
+
+msgid "Color sample"
+msgstr "色見本"
+
+msgid "Date/time for post titles"
+msgstr "記事タイトル一覧の日時"
+
+msgid "Author, Date with a post content"
+msgstr "記事本文での投稿者・日付"
+
+msgid "Comment types"
+msgstr "コメント種別"
+
+msgid "Link text for PC targeted external sites"
+msgstr "PC 向け外部サイトへのリンク文字列"
+
+msgid "Link of edit posts/pages/commetns for login user"
+msgstr "ログインユーザーが投稿・ページ・コメントを編集できるリンク"
+
+msgid "Note: To configure background color/normal text color/hyperlink color/visited link color, edit &lt;body&gt; element at themes/*/header.php"
+msgstr "※背景色・通常の文字色・リンク色・訪問済みリンク色は、themes/*/header.php の &lt;body&gt; 要素の属性で設定してください。"
+
+msgid "&raquo; Edit"
+msgstr "&raquo; 編集する"
+
+msgid "Date and time format of posts/comments"
+msgstr "投稿・コメントの日時書式"
+
+msgid "Datetime for last year and before<br />(year, month, and date required)"
+msgstr "去年以前の日時<br />(年・月・日が必須)"
+
+msgid "Datetime for this year<br />(month and date required)"
+msgstr "今年の日時<br />(月・日が必須)"
+
+msgid "Datetime for today<br />(date or hour required)"
+msgstr "今日の日時<br />(日または時が必須)"
+
+msgid "Note: About date format, refer to <a href=\"http://codex.wordpress.org/Formatting_Date_and_Time\">Codex</a> or <a href=\"http://www.php.net/date\">date() function manual</a> of PHP."
+msgstr "※フォーマットの説明は <a href=\"http://wpdocs.sourceforge.jp/Formatting_Date_and_Time\">Codex 日本語版の説明</a>もしくは、PHP の <a href=\"http://jp2.php.net/date\">date() 関数マニュアル</a>をご覧ください。"
+
+msgid "Delete option values and revert them to default &raquo;"
+msgstr "オプション値を削除してデフォルトに戻す &raquo;"
+
+msgid "Do you really delete option values and revert them to default?"
+msgstr "オプション値を削除してデフォルトに戻していいですか。"
+
+msgid "Options Deleted."
+msgstr "オプションを削除しました。"
+
+msgid "Poster's terminal ID and subscriber ID"
+msgstr "投稿者の端末番号・契約者ID"
+
+#, php-format
+msgid "Term ID: %s"
+msgstr "端末番号: %s"
+
+#, php-format
+msgid "USIM ID:%s"
+msgstr "USIM 番号: %s"
+
+#, php-format
+msgid "Sub ID: %s"
+msgstr "契約者ID: %s"
+
+msgid "N/A"
+msgstr "データーなし"
+
+# ----- redir.php --------------------------------------------------
+msgid "Confirm connecting to external sites"
+msgstr "外部サイト接続確認"
+
+msgid "You are about to visit a website for PC:"
+msgstr "PC 向けサイトを訪問しようとしています:"
+
+msgid "A mobile view is provided with the same URL at the visiting site:"
+msgstr "訪問先のサイトは同じ URL で携帯表示があります:"
+
+msgid "A mobile site found for the visiting site:"
+msgstr "訪問先のサイトに携帯サイトが見つかりました:"
+
+msgid "The host is diffrent from the origial. Make sure the valid mobile site."
+msgstr "接続先ホストが元のサイトと異なります。正しい携帯サイトかどうか確認してください。"
+
+msgid "The original URL of the site:"
+msgstr "サイトの本来の URL:"
+
+#, php-format
+msgid "(<a %s>View the site by PC Site Viewer.</a>)"
+msgstr "(<a %s>PCサイトビューアーで見る。</a>)"
+
+#, php-format
+msgid "(<a %s>View the site by Full Browser.</a>)"
+msgstr "(<a %s>フルブラウザで見る。</a>)"
+
+msgid "If you are sure, follow above link. If not, go to the previous page with browser's back button."
+msgstr "よろしければ、上記リンクを辿ってください。そうでなければ、ブラウザの戻るボタンで前のページに戻ってください。"
+
+msgid "To copy the URL, use below text field:"
+msgstr "URL をコピーするには、次のテキストフィールドを使ってください:"
+
+msgid "Error linking to external sites"
+msgstr "外部サイトへのリンクエラー"
+
+msgid ""
+"A certain time has elapsed since you viewed the page, the link to exteral sites has became invalid.<br />\n"
+"Go back the previous page and reload it. After that, retry clicking the link."
+msgstr ""
+"ページを閲覧してから一定時間が経由したため、外部サイトへのリンクが無効になりました。<br />\n"
+"前のページに戻って再読み込みしてください。その後リンクのクリックを試してください。"
+
+# ----- login.php --------------------------------------------------
+msgid "<strong>ERROR</strong>: Your login session has been expired. Please login again."
+msgstr "<strong>エラー</strong>: ログインセッションが失効しました。再度ログインしてください。"
+
+msgid "Mobile admin feature is not available."
+msgstr "携帯管理機能は使えません。"
+
+msgid "<strong>ERROR</strong>: Cannot create a login session."
+msgstr "<strong>エラー</strong>: ログインセッションを生成できませんでした。"
+
+msgid "You are now logged out."
+msgstr "ログアウトしました。"
+
+#, php-format
+msgid "Back to %s"
+msgstr "%s に戻る"
+
+msgid "Go to PC login form."
+msgstr "PC 用ログインフォームに移動"
+
+# ----- admin/admin-footer.php --------------------------------------------------
+msgid "&uarr;"
+msgstr "↑"
+
+#, php-format
+msgid "<p>The page is too big for your terminal. Please back to <a href=\"%s\">the previous page</a>.</p>"
+msgstr "<p>ページが大きすぎて携帯端末で表示できません。<a href=\"%s\">前のページ</a>に戻ってください。</p>"
+
+msgid "Visit Site with logged in"
+msgstr "ログイン状態でサイトを表示"
+
+msgid "DO NOT bookmark this page. DO NOT tell others the URL of this page."
+msgstr "このページをブックマークしたり、このページのURLを他人に教えないでください。"
+
+# ----- admin/admin-header.php --------------------------------------------------
+msgid "Admin"
+msgstr "管理"
+
+#, php-format
+msgid "Howdy, %s."
+msgstr "こんにちは、%sさん"
+
+# ----- admin/template.php --------------------------------------------------
+#, php-format
+msgid "Are you sure you want to change categories of this post: &quot;%s&quot;?"
+msgstr "この投稿「%s」のカテゴリーを変更しますか ?"
+
+#, php-format
+msgid "Are you sure you want to delete the comment: &quot;%s&quot;?"
+msgstr "コメント「%s」を削除しますか ?"
+
+#, php-format
+msgid "Are you sure you want to unapprove the comment: &quot;%s&quot;?"
+msgstr "コメント「%s」を非承認にしますか ?"
+
+#, php-format
+msgid "Are you sure you want to approve the comment: &quot;%s&quot;?"
+msgstr "コメント「%s」を承認しますか ?"
+
+#, php-format
+msgid "Are you sure you want to delete this post: &quot;%s&quot;?"
+msgstr "この投稿「%s」を削除しますか ?"
+
+#, php-format
+msgid "Are you sure you want to delete this page: &quot;%s&quot;?"
+msgstr "このページ「%s」を削除しますか ?"
+
+msgid "Are you sure you want to delete all spam?"
+msgstr "すべてのスパムを削除していいですか ?"
+
+msgid "WordPress Confirmation"
+msgstr "WordPress 確認ウインドウ"
+
+msgid "Back"
+msgstr "戻る"
+
+msgid "--omitting quote--"
+msgstr "--引用を省略--"
+
+# ----- admin/comment.php --------------------------------------------------
+msgid "Approval Status"
+msgstr "承認ステータス"
+
+#, php-format
+msgid "<font color=\"%s\">Approved</font>"
+msgstr "<font color=\"%s\">承認済み</font>"
+
+#, php-format
+msgid "<font color=\"%s\">Pending</font>"
+msgstr "<font color=\"%s\">承認待ち</font>"
+
+#, php-format
+msgid "<font color=\"%s\">Spam</font>"
+msgstr "<font color=\"%s\">スパム</font>"
+
+msgid "You are about to move the following comment to the Trash:"
+msgstr "このコメントをゴミ箱に移動しようとしています:"
+
+# ----- admin/comment-reply.php --------------------------------------------------
+msgid "Comment Reply"
+msgstr "コメント返信"
+
+msgid "Cancel reply"
+msgstr "返信をキャンセル"
+
+msgid "Error: you are replying to a comment on a draft post."
+msgstr "エラー: 下書きとして保存された投稿へのコメントに返信しようとしています。"
+
+msgid "Sorry, you must be logged in to reply to a comment."
+msgstr "すみませんが、コメントを投稿するにはログインしてください。"
+
+# ----- admin/edit.php --------------------------------------------------
+#, php-format
+msgid "Published (%s)"
+msgid_plural "Published (%s)"
+msgstr[0] "公開済み (%s)"
+
+#, php-format
+msgid "Scheduled (%s)"
+msgid_plural "Scheduled (%s)"
+msgstr[0] "予約済み (%s)"
+
+#, php-format
+msgid "Pending Review (%s)"
+msgid_plural "Pending Review (%s)"
+msgstr[0] "レビュー待ち (%s)"
+
+#, php-format
+msgid "Draft (%s)"
+msgid_plural "Drafts (%s)"
+msgstr[0] "下書き (%s)"
+
+#, php-format
+msgid "Private (%s)"
+msgid_plural "Private (%s)"
+msgstr[0] "非公開 (%s)"
+
+#, php-format
+msgid "Trash (%s)"
+msgid_plural "Trash (%s)"
+msgstr[0] "ゴミ箱 (%s)"
+
+#, php-format
+msgid "<label>Monthnum: <input type=\"text\" name=\"monthnum\" size=\"2\" istyle=\"4\" mode=\"numeric\" value=\"%1$s\" /></label>, <label>Year: <input type=\"text\" name=\"year\" size=\"4\" istyle=\"4\" mode=\"numeric\" value=\"%2$s\" /></label>"
+msgstr "日付<label><input type=\"text\" name=\"year\" size=\"4\"  istyle=\"4\" mode=\"numeric\" value=\"%2$s\" />年</label><label><input type=\"text\" name=\"monthnum\" size=\"2\" istyle=\"4\" mode=\"numeric\" value=\"%1$s\" />月</label>"
+
+#, php-format
+msgid "Post permanently deleted."
+msgid_plural "%s posts permanently deleted."
+msgstr[0] "%s件の投稿を完全に削除しました。"
+
+msgid "Any"
+msgstr "すべて"
+
+#, php-format
+msgid "by %s"
+msgstr "作成者 %s"
+
+#, php-format
+msgid "matching &#8220;%s&#8221;"
+msgstr "検索「%s」"
+
+#, php-format
+msgid "in &#8220;%s&#8221;"
+msgstr "カテゴリー「%s」"
+
+#, php-format
+msgid "with tag &#8220;%s&#8221;"
+msgstr "タグ「%s」"
+
+#, php-format
+msgid "during %1$s, %2$d"
+msgstr "%2$d年%1$s"
+
+#, php-format
+msgid "%1$s%2$s%3$s%4$s%5$s%6$s|You can reorder these: 1: Posts, 2: by {s}, 3: matching {s}, 4: in {s}, 5: with {s}, 6: during {s}"
+msgstr "%2$s%3$s%4$s%5$s%6$sの%1$s"
+
+msgid "<img localsrc=\"7\" alt=\"&laquo;\" />Previous Page"
+msgstr "<img localsrc=\"7\" alt=\"&laquo;\" />前のページ"
+
+msgid "Next Page<img localsrc=\"8\" alt=\"&raquo;\" />"
+msgstr "次のページ<img localsrc=\"8\" alt=\"&raquo;\" />"
+
+#, php-format
+msgid "<a href=\"%s\">Back to lists</a>"
+msgstr "<a href=\"%s\">一覧に戻る</a>"
+
+#, php-format
+msgid "<a href=\"%s\">Cancel Edit</a>"
+msgstr "<a href=\"%s\">編集をキャンセル</a>"
+
+#
+msgid "No posts found."
+msgstr "投稿は見つかりませんでした。"
+
+#, php-format
+msgid "<img localsrc=\"104\" alt=\"\" /><a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#, php-format
+msgid "'%1$5d:%2$s%3$s|post-row-title"
+msgstr ""
+
+#, php-format
+msgid "<img localsrc=\"46\" alt=\" at \" />%s"
+msgstr ""
+
+#, php-format
+msgid "<img localsrc=\"68\" alt=\"by \" />%s"
+msgstr ""
+
+#, php-format
+msgid "<img localsrc=\"354\" alt=\"%1$s\" />%2$s"
+msgstr ""
+
+#, php-format
+msgid "<img localsrc=\"77\" alt=\"%1$s\" />%2$s"
+msgstr ""
+
+# ----- admin/edit-comments.php --------------------------------------------------
+#, php-format
+msgid "Comments for %s"
+msgstr "%s へのコメント"
+
+#, php-format
+msgid "%s comment approved."
+msgid_plural "%s comments approved."
+msgstr[0] "%s件のコメントが承認されました。"
+
+#, php-format
+msgid "%s comment marked as spam."
+msgid_plural "%s comments marked as spam."
+msgstr[0] "%s件のコメントがスパムとしてマークされました。"
+
+#, php-format
+msgid "%s comment restored from the spam"
+msgid_plural "%s comments restored from the spam"
+msgstr[0] "%s件のコメントに対しスパム判定を解除しました。"
+
+#, php-format
+msgid "%s comment moved to the trash."
+msgid_plural "%s comments moved to the trash."
+msgstr[0] "%s件のコメントをゴミ箱へ移動しました。"
+
+#, php-format
+msgid "%s comment restored from the trash."
+msgid_plural "%s comments restored from the trash."
+msgstr[0] "%s件のコメントをゴミ箱から復元しました。"
+
+#, php-format
+msgid "%s comment deleted."
+msgid_plural "%s comments deleted."
+msgstr[0] "%s件のコメントが削除されました。"
+
+msgid "Bulk Actions"
+msgstr "一括操作"
+
+msgid "Mark as Spam"
+msgstr "スパムとしてマーク"
+
+msgid "All comment types"
+msgstr "すべてのタイプ"
+
+## single form after WP 2.7
+msgid "All"
+msgstr "すべて"
+
+#, php-format
+msgid "Pending (%s)"
+msgstr "承認待ち (%s)"
+
+msgid "Approved"
+msgstr "承認済み"
+
+#, php-format
+msgid "Spam (%s)"
+msgstr "スパム (%s)"
+
+#, php-format
+msgid "%1$s%2$5d:%3$s|comment-list-title"
+msgstr ""
+
+msgid "Reply"
+msgstr "返信"
+
+msgid "Empty Spam"
+msgstr "スパムをすべて削除"
+
+# ----- admin/edit-form.php --------------------------------------------------
+#, php-format
+msgid "Post updated. Continue editing below or <a href=\"%s\">go back</a>."
+msgstr "投稿を更新しました。このまま編集を続けるか<a href=\"%s\">一覧に戻ってください</a>"
+
+msgid "Custom field updated."
+msgstr "カスタムフィールドが削除されました。"
+
+msgid "Custom field deleted."
+msgstr "カスタムフィールドが削除されました。"
+
+msgid "Post updated."
+msgstr "投稿が更新されました。"
+
+msgid "Post published."
+msgstr "投稿を公開しました。"
+
+msgid "Post saved."
+msgstr "投稿を保存しました。"
+
+msgid "Post submitted."
+msgstr "投稿を送信しました。"
+
+msgid "Content"
+msgstr "内容"
+
+msgid "(Optional)"
+msgstr "(入力は任意)"
+
+msgid "The content is too big is chopped to fit in the form. If you save changes, part of the content may be lost. Please back to previous page."
+msgstr "内容が多いためフォームでは末尾が削除されています。変更点を保存すると内容の一部が失なわれます。前のページに戻ってください。"
+
+msgid "Change"
+msgstr "変更"
+
+msgid "Visibility:"
+msgstr "公開状態:"
+
+msgid "Privately Published"
+msgstr "非公開"
+
+msgid "Password protected"
+msgstr "パスワード保護"
+
+msgid "Public, Sticky"
+msgstr "公開 (先頭に固定表示)"
+
+msgid "Public"
+msgstr "一般公開"
+
+msgid "Turn to private"
+msgstr "非公開にする"
+
+# ----- admin/edit-pages.php --------------------------------------------------
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "「%s」の検索結果"
+
+#, php-format
+msgid "All (%s)"
+msgstr "すべて (%s)"
+
+# ----- admin/edit-page-form.php --------------------------------------------------
+#, php-format
+msgid "Page updated. Continue editing below or <a href=\"%s\">go back</a>."
+msgstr "ページを更新しました。このまま編集を続けるか<a href=\"%s\">一覧に戻ってください</a>。"
+
+msgid "Page updated."
+msgstr "ページが更新されました。"
+
+msgid "Page published."
+msgstr "ページを公開しました。"
+
+msgid "Page submitted."
+msgstr "ページを送信しました。"
+
+#, php-format
+msgid "Page restored to revision from %s"
+msgstr "リビジョン %s からページが復元されました。"
+
+#
+msgid "No pages found."
+msgstr "ページは見つかりませんでした。"
+
+#
+msgid "Parent Page:"
+msgstr "親ページ:"
+
+#
+msgid "Page Order:"
+msgstr "ページ順序:"
+
+# ----- admin/index.php --------------------------------------------------
+msgid "Posts: %link"
+msgstr "投稿: %link"
+
+msgid "Pages: %link"
+msgstr "ページ: %link"
+
+msgid "Categories: %link"
+msgstr "カテゴリー: %link"
+
+msgid "Tags: %link"
+msgstr "タグ: %link"
+
+msgid "Comments: %link"
+msgstr "コメント: %link"
+
+#, php-format
+msgid "%1$s: %2$s|comments count"
+msgstr "%1$s: %2$s|"
+
+msgid "Recent Drafts"
+msgstr "最近の下書き"
+
+msgid "There are no drafts at the moment"
+msgstr "今のところ下書きはありません"
+
+msgid "View all"
+msgstr "すべて表示"
+
+msgid "Recent Comments|dashboard"
+msgstr "最近のコメント"
+
+#, php-format
+msgid "From %s on %%link"
+msgstr "%%link に %s より"
+
+#, php-format
+msgid "%s on %%link"
+msgstr "%%link に %s"
+
+# ----- admin/menu.php --------------------------------------------------
+msgid "Edit Posts"
+msgstr "投稿編集"
+
+msgid "Edit Pages"
+msgstr "ページ編集"
+
+msgid "Post Cat"
+msgstr "投稿カテゴリー"
+
+msgid "Email Post"
+msgstr "メール投稿"
+
+# ----- admin/options-cat.php --------------------------------------------------
+msgid "Default Post Category:"
+msgstr "投稿用カテゴリー初期設定:"
+
+msgid "Set Category"
+msgstr "カテゴリーを設定"
+
+# ----- admin/options-cat_mail.php --------------------------------------------------
+msgid "Default Mail Category:"
+msgstr "メール投稿用カテゴリー初期設定:"
+
+msgid "Check Mail Posts"
+msgstr "メール投稿の確認"
+
+msgid "Retrieve new mail posts"
+msgstr "新着メール投稿を読み込む"
+
+msgid "(After checking, back to here by using \"Back\" feature of your terminal.)"
+msgstr "(確認後、ここに戻るには端末の「戻る」機能を使ってください。)"
+
+# ----- admin/post.php --------------------------------------------------
+msgid "Select Category"
+msgstr "カテゴリー選択"
+
+# ----- operators/emobile.php --------------------------------------------------
+msgid ""
+"ERROR: Please allow transmission of user ID.\n"
+"Go EMnet Service &gt; Charges &amp; Application &gt; Contract Change &gt; Content Service &gt; User ID Transmission."
+msgstr ""
+"エラー: ユーザID番号を通知するよう設定してください。\n"
+"EMnet サービス→料金&amp;各種申込→契約内容変更→コンテンツサービス→ユーザID通知設定"
+
+# ----- operators/ezweb.php --------------------------------------------------
+msgid ""
+"ERROR: Please configure to send you EZ number (subscriber ID).\n"
+"Go au one top &gt; au customer support &gt; Apply/Change &gt; EZ number sending preference."
+msgstr ""
+"エラー: EZ 番号 (サブスクライバ ID) を送信するよう設定してください。\n"
+"au one トップ→au お客様サポート→申し込む／変更する→EZ番号通知設定"
+
+# ----- operators/i-mode.php --------------------------------------------------
+msgid ""
+"ERROR: Please send your mobile phone info, or configure to notify your i-mode ID.\n"
+"Go iMenu &gt; Charges &amp;Apply/Prefs &gt; 4.Options &gt; i-mode ID notify preference."
+msgstr ""
+"エラー: 携帯電話情報を送信するか、iモードIDを通知するよう設定してください。\n"
+"iメニュー→料金&amp;お申し込み・設定→4.オプション設定→iモードID通知設定"
+
+# ----- operators/softbank.php --------------------------------------------------
+msgid "ERROR: Can't post a comment. We request your terminal's manufacture number but your phone does not available to trasmit it."
+msgstr "エラー: コメント投稿はできません。端末製造番号の通知が必要ですが、あなたの電話機は対応していません。"
+
+msgid ""
+"ERROR: Please allow transmission of user infomation or your terminal's manifacture number.\n"
+"Go Yahoo! Japan &gt; My Softbank (User Support) &gt; Misc Application &gt; Transmission of User Infomation / Transmission of Manifacture Number."
+msgstr ""
+"エラー: ユーザIDもしくは端末製造番号を通知するよう設定してください。\n"
+"Yahoo! ケータイ→My Softbank (設定・申込)→各種変更手続き→ユーザID通知設定／製造番号通知設定"
+
+msgid ""
+"ERROR: Please allow transmission of user infomation or your terminal's manifacture number.\n"
+"Go Yahoo! Japan &gt; My Softbank (User Support) &gt; Misc Application &gt; Transmission of User Infomation.\n"
+"Go Yahoo! Keitai &gt; Common Settings &gt; Security Settings &gt; Manufacture Number."
+msgstr ""
+"エラー: ユーザIDもしくは端末製造番号を通知するよう設定してください。\n"
+"Yahoo! Japan→My Softbank (設定・申込)→各種変更手続き→ユーザID通知設定\n"
+"Yahoo! ケータイ→ブラウザ共通設定→セキュリティ設定→製造番号通知"
+
+# ----- themes/default/***.php --------------------------------------------------
+msgid "Not Found"
+msgstr "見つかりません"
+
+msgid "Select"
+msgstr "選択"
+
+# ----- themes/default/header.php --------------------------------------------------
+msgid "&darr;"
+msgstr "↓"
+
+msgid "Menu"
+msgstr "メニュー"
+
+#Backward compatibility
+msgid "v"
+msgstr "↓"
+
+# ----- themes/default/index.php --------------------------------------------------
+msgid "Skip the content"
+msgstr "記事を飛ばす"
+
+msgid "No Comments/Pings"
+msgstr "コメント・ピン通知なし"
+
+msgid "One Comment/Ping"
+msgstr "コメント・ピン通知計1件"
+
+msgid "% Comments and Pings"
+msgstr "コメント・ピン通知計%件"
+
+msgid "Off"
+msgstr "停止中"
+
+msgid "Following posts"
+msgstr "以後の記事"
+
+#Backward compatibility
+msgid "No Comments/Trackbacks"
+msgstr "コメント・トラバなし"
+
+msgid "One Comment/Trackback"
+msgstr "コメント・トラバ計1件"
+
+msgid "% Comments and Trackbacks"
+msgstr "コメント・トラバ計%件"
+
+msgid "/-"
+msgstr "┏"
+
+msgid "|-"
+msgstr "┣"
+
+msgid "+-"
+msgstr "┗"
+
+# ----- themes/default/comments.php --------------------------------------------------
+msgid "Enter your password to post a comment."
+msgstr "コメントを投稿するにはパスワードを入力してください。"
+
+msgid "Comment"
+msgstr "コメント"
+
+msgid "Pings"
+msgstr "トラックバック・ピンバック"
+
+msgid "Your comment is awaiting moderation."
+msgstr "あなたのコメントは管理者の承認待ちです。"
+
+msgid "No pings yet."
+msgstr "トラックバック・ピンバックはまだありません。"
+
+msgid "<img localsrc=\"7\" alt=\"&laquo; \">Older Comments"
+msgstr "<img localsrc=\"7\" alt=\"&laquo; \">古いコメント"
+
+msgid "<img localsrc=\"7\" alt=\"&laquo; \">Newer Comments"
+msgstr "<img localsrc=\"7\" alt=\"&laquo; \">新しいコメント"
+
+msgid "Newer Comments<img localsrc=\"8\" alt=\" &raquo;\">"
+msgstr "新しいコメント<img localsrc=\"8\" alt=\" &raquo;\">"
+
+msgid "Older Comments<img localsrc=\"8\" alt=\" &raquo;\">"
+msgstr "古いコメント<img localsrc=\"8\" alt=\" &raquo;\">"
+
+msgid "Can't post a comment from mobile phones. You must logged in from PC to make a comment."
+msgstr "携帯電話ではコメントできません。コメントするには PC からのログインが必要です。"
+
+msgid "Reply to the above comment"
+msgstr "上記コメントに返信"
+
+#, php-format
+msgid "Logged in as %s."
+msgstr "%s としてログイン中"
+
+msgid "Note: Ater posting a comment, you are automatically logged out."
+msgstr "※コメント投稿後は自動的にログアウトします。"
+
+#, php-format
+msgid "<a href=\"%s\">Log in</a> and post a comment."
+msgstr "<a href=\"%s\">ログイン</a>してコメントする"
+
+msgid "Mail (will not be published)"
+msgstr "メール (公開されません)"
+
+msgid "(Pictograms Available)"
+msgstr "(絵文字対応)"
+
+msgid "NOTE: If submit comments, your terminal ID will be sent."
+msgstr "※コメント投稿すると、あなたの端末識別情報が送信されます。"
+
+msgid "NOTE: Your name, e-mail and URL will be stored o your phone. (If cookie is ON)"
+msgstr "※あなたの名前・メールアドレス・URL は電話機に保存されます。(クッキーが ON の場合)"
+
+#Backward compatibility
+msgid "Trackbacks and Pingbacks"
+msgstr "トラックバック・ピンバック"
+
+msgid "No trackbacks yet."
+msgstr "この記事にはまだトラックバックがありません。"
+
+# ----- themes/default/footer.php --------------------------------------------------
+msgid " / "
+msgstr "／"
+
+msgid "Front Page"
+msgstr "サイトトップ"
+
+msgid "New Posts"
+msgstr "最新記事"
+
+msgid "Recent Comments/Pings"
+msgstr "最新コメント・トラバ"
+
+msgid "Recent Comments"
+msgstr "最新コメント"
+
+#Backward compatibility
+msgid "Recent Tracbacks/Pingbacks"
+msgstr "最新トラックバック・ピンバック"
+
+# ----- themes/default/single.php --------------------------------------------------
+#, php-format
+msgid "Comments for <a href=\"%1$s\">%2$s</a>"
+msgstr "<a href=\"%1$s\">%2$s</a> へのコメント"
+
+msgid "Comments for <a href=\"%1$s\"><span style=\"%2$s\">%3$s</span></a>"
+msgstr "<a href=\"%1$s\"><span style=\"%2$s\">%3$s</span></a> へのコメント"
+
+# ----- themes/default/menu_cats.php --------------------------------------------------
+msgid "Category List"
+msgstr "カテゴリー一覧"
+
+# ----- themes/default/menu_comments.php --------------------------------------------------
+msgid "Recent Pings"
+msgstr "最新トラックバック・ピンバック"
+
+msgid "Can't show comments because this post is password protected."
+msgstr "パスワード保護されているため表示できません。"
+
+# ----- themes/default/menu_links.php --------------------------------------------------
+msgid "Links"
+msgstr "リンク一覧"
+
+# ----- themes/default/menu_months.php --------------------------------------------------
+msgid "Archives by Months"
+msgstr "年月アーカイブ"
+
+msgid "Archives for year %d"
+msgstr "%d年のアーカイブ"
+
+# ----- themes/default/menu_years.php --------------------------------------------------
+msgid "Archives by Years"
+msgstr "年別アーカイブ"
+
+# ----- themes/default/menu_pages.php --------------------------------------------------
+msgid "Pages"
+msgstr "ページ一覧"
+
+# ----- themes/default/menu_tags.php --------------------------------------------------
+msgid "Tags List"
+msgstr "タグ一覧"
+
+# ----- themes/classic/single.php --------------------------------------------------
+msgid "*.Prev:%link"
+msgstr "*.前:%link"
+
+msgid "#.Next:%link"
+msgstr "#.次:%link"
+
+# ----- themes/classic/redir.php --------------------------------------------------
+msgid "You can translate the PC site to view suitable for mobile using services below."
+msgstr "以下のサービスを利用して、PC サイトを携帯向けに変換させた表示を行うことができます。"
+
+msgid "Tsuukin(commuting)-browser"
+msgstr "通勤ブラウザ"
+
+msgid "Google Wireless Transcoder"
+msgstr "Google 携帯変換"
+
+msgid "PC Site Viewer on your phone."
+msgstr "端末上の PC サイトブラウザ"
+
+#, php-format
+msgid "<a %s>Full Browser on your phone.</a>"
+msgstr "<a %s>端末上のフルブラウザ</a>"
+
+msgid "If you know that the site is suitable for mobile at the same URL, it is good to jump directly."
+msgstr "もしリンク先が同じ URL で携帯対応していると知っていれば、直接ジャンプするのがよいでしょう。"
+
+# ----- themes/redportal/index.php --------------------------------------------------
+msgid "*.Prev one post"
+msgid_plural "*.Prev %d posts"
+msgstr[0] "*.前の%d件"
+
+msgid "Next one post.#"
+msgid_plural "Next %d posts.#"
+msgstr[0] "次の%d件.#"
+
+# ----- themes/redportal/footer.php --------------------------------------------------
+msgid "&dagger;"
+msgstr "†"
+

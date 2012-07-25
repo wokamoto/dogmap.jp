@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: simple-tweet\n"
+"POT-Creation-Date: 2010-02-15 10:32+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: WordPressPluginGuide.com <info@wppg.me>\n"
+"Language-Team: http://WPwebshop.com <info@wppg.me>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+# Description
+msgid "This is a plugin creating a new tweet including a URL of new post on your wordpress."
+msgstr "Dit is een plugin welke een nieuwe tweet maakt inclusief een URL van het nieuwe bericht op je blog."
+
+#: ../simple-tweet.php:388
+msgid "Simple Tweet"
+msgstr "Simple Tweet"
+
+#: ../simple-tweet.php:395
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../simple-tweet.php:441
+#, php-format
+msgid "blogged: %1$s - %2$s"
+msgstr "Geblogd: %1$s - %2$s"
+
+#: ../simple-tweet.php:446
+#, php-format
+msgid "RT @%1$s: %2$s - %3$s %4$s"
+msgstr "RT @%1$s: %2$s - %3$s %4$s"
+
+#: ../simple-tweet.php:455
+msgid "Tweet this!"
+msgstr "Tweet dit!"
+
+#: ../simple-tweet.php:813
+#: ../simple-tweet.php:839
+#: ../simple-tweet.php:850
+msgid "Done!"
+msgstr "Klaar!"
+
+#: ../simple-tweet.php:856
+#: ../simple-tweet.php:884
+msgid "Simple Tweet Options"
+msgstr "Simple Tweet Opties"
+
+#: ../simple-tweet.php:863
+msgid "Update Options &raquo;"
+msgstr "Bijwerken Opties &raquo;"
+
+#: ../simple-tweet.php:868
+msgid "Uninstall"
+msgstr "Deinstalleren"
+
+#: ../simple-tweet.php:871
+msgid "Delete all the settings of &quot;Simple Tweet&quot;."
+msgstr "Verwijder alle instellingen van &quot;Simple Tweet&quot;."
+
+#: ../simple-tweet.php:872
+msgid "Delete Options &raquo;"
+msgstr "Verwijder Opties &raquo;"
+
+#: ../simple-tweet.php:1001
+#: ../simple-tweet.php:1059
+msgid "Twitter OAuth"
+msgstr "Twitter OAuth"
+
+#: ../simple-tweet.php:1003
+msgid "<a href=\"http://wppluginsj.sourceforge.jp/simple-tweet/simple-tweet-oauth-en/\" title=\"WordPress Plugins/JSeries ? Simple Tweet OAuth Setting\">OAuth Setting</a>"
+msgstr "<a href=\"http://wppluginsj.sourceforge.jp/simple-tweet/simple-tweet-oauth-en/\" title=\"WordPress Plugins/JSeries ? Simple Tweet OAuth Instelling\">OAuth Instelling</a>"
+
+#: ../simple-tweet.php:1010
+msgid "Get Consumer Key"
+msgstr "Verkrijg Gebruiker Sleutel"
+
+#: ../simple-tweet.php:1011
+msgid "Applications Using Twitter"
+msgstr "Applicaties welke Twitter gebruiken"
+
+#: ../simple-tweet.php:1014
+msgid "Consumer Key"
+msgstr "Gebruiker Sleutel"
+
+#: ../simple-tweet.php:1018
+msgid "Consumer Secret"
+msgstr "Gebruiker Geheim"
+
+#: ../simple-tweet.php:1034
+msgid "OAuth"
+msgstr "OAuth"
+
+#: ../simple-tweet.php:1035
+msgid "Click on the link to go to twitter to authorize your account."
+msgstr "Klik op de link om naar Twitter te gaan om je account te authoriseren."
+
+#: ../simple-tweet.php:1039
+msgid "PIN"
+msgstr "PIN"
+
+#: ../simple-tweet.php:1046
+msgid "OAuth reset"
+msgstr "OAuth resetten"
+
+#: ../simple-tweet.php:1062
+msgid "Twitter OAuth supports PHP5 or later."
+msgstr "Twitter OAuth ondersteund PHP5 of nieuwer."
+
+#: ../simple-tweet.php:1069
+#: ../simple-tweet.php:1171
+msgid "Twitter ID"
+msgstr "Twitter ID"
+
+#: ../simple-tweet.php:1073
+#: ../simple-tweet.php:1135
+msgid "User Name"
+msgstr "Gebruikersnaam"
+
+#: ../simple-tweet.php:1077
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: ../simple-tweet.php:1081
+msgid "If you would like to change the password type a new one. Otherwise leave this blank."
+msgstr "Als je het wachtwoord wilt veranderen moet je een nieuwe invoeren. Laat anders dit leeg."
+
+#: ../simple-tweet.php:1091
+msgid "Tweet text"
+msgstr "Tweet tekst"
+
+#: ../simple-tweet.php:1096
+msgid "Tweet without Permalink"
+msgstr "Tweet zonder Permalink"
+
+#: ../simple-tweet.php:1113
+msgid "Short Link"
+msgstr "Korte Link"
+
+#: ../simple-tweet.php:1116
+msgid "Compress Permalink"
+msgstr "Comprimeren Permalink"
+
+#: ../simple-tweet.php:1136
+msgid "bit.ly API Key"
+msgstr "bit.ly API Sleutel"
+
+#: ../simple-tweet.php:1139
+msgid "Other Service"
+msgstr "Andere Diensten"
+
+#: ../simple-tweet.php:1145
+msgid "Separator between message and Permalink"
+msgstr "Scheidingsteken tussen boodschap en Permalink"
+
+#: ../simple-tweet.php:1153
+msgid "Add \"Tweet this\" link"
+msgstr "Toevoegen \"Tweet dit\" link"
+
+#: ../simple-tweet.php:1158
+msgid "Tweet this link"
+msgstr "Tweet deze link"
+
+#: ../simple-tweet.php:1163
+msgid "Tweet this text"
+msgstr "Tweet deze tekst"
+
+#: ../simple-tweet.php:1170
+msgid "The following characters are converted respectively."
+msgstr "De volgende tekens zijn respectievelijk omgezet."
+
+#: ../simple-tweet.php:1172
+msgid "Site Name"
+msgstr "Site Naam"
+
+#: ../simple-tweet.php:1173
+msgid "Post No."
+msgstr "Bericht no."
+
+#: ../simple-tweet.php:1174
+msgid "Post Title"
+msgstr "Bericht Titel"
+
+#: ../simple-tweet.php:1175
+msgid "Post Excerpt"
+msgstr "Bericht Uittreksel"
+
+#: ../simple-tweet.php:1176
+msgid "Permalink"
+msgstr "Permalink"
+
+#: ../simple-tweet.php:1185
+msgid "Output log? (debug mode)"
+msgstr "Output log? (debug modus)"
+

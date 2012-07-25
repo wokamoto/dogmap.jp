@@ -1,0 +1,197 @@
+/*
+Theme Name:     Twenty Twelve for dogmap.jp
+Theme URI:      
+Description:    Child theme for the Twenty Twelve theme for WordPress
+Author:         wokamoto
+Author URI:     http://dogmap.jp/
+Template:       twentytwelve
+Version:        0.3.1
+*/
+
+#masthead hgroup
+{
+  background: url("http://static.dogmap.jp/images/icons/dogmap.jpg") no-repeat scroll right top black;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  height:90px;
+  padding-left: 12px;
+  margin: 0 -12px;
+}
+
+.site-header hgroup h2 {
+  display: none;
+}
+@media screen and (min-width: 600px) {
+  .site-header hgroup h2 {
+    display: block;
+  }
+}
+
+img.attachment-post-thumbnail {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.widget-area aside {
+  clear: both;
+}
+
+#searchform label {
+    display: none;
+}
+
+.widget-area li{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis; /* Safari */
+    -o-text-overflow: ellipsis; /* Opera */
+    white-space: nowrap;
+}
+
+input#subscribe_comments,
+input#subscribe_blog {
+  float: left;
+}
+
+cite.fn span.commenters-info {
+  display: block;
+  float: right;
+  border: none;
+  background: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+cite.fn span.commenters-info img {
+  margin-left: .25em;
+  vertical-align: middle;
+}
+
+.categories_search select {
+  float: left;
+  margin-right: .5em;
+}
+input.wpcf7-submit ,
+input#submit {
+  line-height: 2.181818182;
+}
+.search_result button {
+  margin-bottom: 0.5em;
+  clear: both;
+}
+input.wpcf7-submit ,
+input#submit ,
+.search_result button {
+  padding: 1px 10px;
+  padding:  0.071428571rem 0.714285714rem;
+  cursor: pointer;
+  font-size: 11px;
+  font-size: 0.785714286rem;
+  font-weight: normal;
+  color: #7c7c7c;
+  background-color: #e6e6e6;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f4f4f4), to(#e6e6e6));
+  background-image: -moz-linear-gradient(top, #f4f4f4, #e6e6e6);
+  background-image: -ms-linear-gradient(top, #f4f4f4, #e6e6e6);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f4f4f4), color-stop(100%, #e6e6e6));
+  background-image: -webkit-linear-gradient(top, #f4f4f4, #e6e6e6);
+  background-image: -o-linear-gradient(top, #f4f4f4, #e6e6e6);
+  background-image: linear-gradient(top, #f4f4f4, #e6e6e6);
+  border: 1px solid #d2d2d2;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px rgba(64, 64, 64, 0.1);
+  -moz-box-shadow: 0 1px 2px rgba(64, 64, 64, 0.1);
+  box-shadow: 0 1px 2px rgba(64, 64, 64, 0.1);
+}
+input.wpcf7-submit:hover ,
+input#submit:hover ,
+.search_result button:hover {
+  color: #5e5e5e;
+  background-color: #ebebeb;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f9f9f9), to(#ebebeb));
+  background-image: -moz-linear-gradient(top, #f9f9f9, #ebebeb);
+  background-image: -ms-linear-gradient(top, #f9f9f9, #ebebeb);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f9f9f9), color-stop(100%, #ebebeb));
+  background-image: -webkit-linear-gradient(top, #f9f9f9, #ebebeb);
+  background-image: -o-linear-gradient(top, #f9f9f9, #ebebeb);
+  background-image: linear-gradient(top, #f9f9f9, #ebebeb);
+}
+input.wpcf7-submit:active ,
+input#submit:active ,
+.search_result button:active {
+  color: #777777;
+  background-color: #e1e1e1;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#ebebeb), to(#e1e1e1));
+  background-image: -moz-linear-gradient(top, #ebebeb, #e1e1e1);
+  background-image: -ms-linear-gradient(top, #ebebeb, #e1e1e1);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ebebeb), color-stop(100%, #e1e1e1));
+  background-image: -webkit-linear-gradient(top, #ebebeb, #e1e1e1);
+  background-image: -o-linear-gradient(top, #ebebeb, #e1e1e1);
+  background-image: linear-gradient(top, #ebebeb, #e1e1e1);
+  -webkit-box-shadow: inset 0 0 8px 2px #c6c6c6, 0 1px 0 0 #f4f4f4;
+  -moz-box-shadow: inset 0 0 8px 2px #c6c6c6, 0 1px 0 0 #f4f4f4;
+  box-shadow: inset 0 0 8px 2px #c6c6c6, 0 1px 0 0 #f4f4f4;
+  border: none;
+}
+
+/* contact 7 */
+.wpcf7 input, .wpcf7 textarea {
+  font: .9em Lucida Grande,Verdana,Arial,Sans-Serif;
+  padding: 2px;
+  border: 1px solid rgb(204, 204, 204);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.wpcf7 input {
+  margin: 3px 2px 2px;
+}
+
+.wpcf7 .wpcf7-form-control-wrap input {
+  background: #fff none;
+}
+
+.wpcf7 textarea {
+  width: 95%;
+}
+
+.wpcf7-form label small {
+  display: block;
+  float: left;
+  width: 17em;
+}
+
+/* JRelated */
+#wpjr {
+  margin-bottom: 1em;
+}
+
+ul#wpjrelated {
+  margin-bottom: .5em;
+}
+
+#wpjr .yahoologo {
+  margin-left: 2em;
+}
+
+/* syntaxhighlighter */
+.syntaxhighlighter {
+  overflow: scroll;
+}

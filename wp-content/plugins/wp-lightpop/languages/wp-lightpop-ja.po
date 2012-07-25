@@ -1,0 +1,218 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-lightpop\n"
+"POT-Creation-Date: 2008-07-14 15:25+0900\n"
+"PO-Revision-Date: 2010-01-25 15:07+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "Add overlay images and videos (and more) to Your Wordpress site."
+msgstr "画像だけでなくYouTubeなどの動画サイトや各種動画ファイルを lightbox 風に表示するプラグインです。"
+
+msgid "LightPop"
+msgstr "LightPop"
+
+msgid "<strong>Done!</strong>"
+msgstr "<strong>完了!</strong>"
+
+msgid "WP-LightPop Options"
+msgstr "WP-LightPop オプション"
+
+msgid "jQuery Type"
+msgstr "jQuery タイプ"
+
+msgid "Add Header"
+msgstr "ヘッダに追加する"
+
+msgid "Target Element"
+msgstr "対象のXHTML要素"
+
+msgid "Post Class"
+msgstr "エントリのクラス"
+
+msgid "Each class makes it to the group."
+msgstr "入力すると同一クラスのリンクをグループ化します"
+
+msgid "Frame type"
+msgstr "フレーム枠の種類"
+
+msgid "Border Size"
+msgstr "フレーム枠のサイズ"
+
+msgid "Border"
+msgstr "ボーダー"
+
+msgid "Default box"
+msgstr "デフォルトフレーム"
+
+msgid "Emboss"
+msgstr "エンボスがついた角丸"
+
+msgid "Drop shadow"
+msgstr "ドロップシャドウがついた角丸"
+
+msgid "Shadow in the inside"
+msgstr "内側にシャドウがついた角丸"
+
+msgid "Double shadow"
+msgstr "２重シャドウがついた角丸"
+
+msgid "Detainment of corner"
+msgstr "４つ角がピンでとめられた角丸"
+
+msgid "Original design"
+msgstr "画像指定(デザイン変更)"
+
+msgid "Box Image path"
+msgstr "フレーム枠 画像のパス"
+
+msgid "Border left Image path"
+msgstr "フレーム枠左 画像のパス"
+
+msgid "Border right Image path"
+msgstr "フレーム枠右 画像のパス"
+
+msgid "Link icon"
+msgstr "リンクアイコン"
+
+msgid "Before link"
+msgstr "リンクタグの前に表示する"
+
+msgid "Set link to title"
+msgstr "タイトルにリンクを設定する"
+
+msgid "Overlay"
+msgstr "オーバーレイ"
+
+msgid "Background color"
+msgstr "背景色"
+
+msgid "Opacity"
+msgstr "透明度"
+
+msgid "Content"
+msgstr "コンテンツ"
+
+msgid "Border CSS"
+msgstr "ボーダーに適用するCSS"
+
+msgid "Container"
+msgstr "コンテナー"
+
+msgid "Border size"
+msgstr "ボーダーのサイズ"
+
+msgid "Resize speed"
+msgstr "リサイズ時のスピード"
+
+msgid "Image"
+msgstr "画像ファイル"
+
+msgid "Max Width"
+msgstr "拡大表示時の最大幅"
+
+msgid "Max Height"
+msgstr "拡大表示時の最大高さ"
+
+msgid "Prev button"
+msgstr "Prev ボタン"
+
+msgid "Next button"
+msgstr "Next ボタン"
+
+msgid "Close button"
+msgstr "Close ボタン"
+
+msgid "Loading"
+msgstr "読込中に表示する画像"
+
+msgid "Blank"
+msgstr "空白"
+
+msgid "Image path"
+msgstr "画像のパス"
+
+msgid "width"
+msgstr "幅"
+
+msgid "Navigation"
+msgstr "ナビゲーション"
+
+msgid "Default text"
+msgstr "標準で表示する文字"
+
+msgid "text of"
+msgstr "区切り文字"
+
+msgid "Key bind"
+msgstr "キーの割当"
+
+msgid "to Prev"
+msgstr "前表示"
+
+msgid "to Next"
+msgstr "後表示"
+
+msgid "to Close"
+msgstr "終了"
+
+msgid "FLV player path"
+msgstr "FLV player のパス"
+
+msgid "More options"
+msgstr "詳細な設定"
+
+msgid "Update Options"
+msgstr "更新"
+
+msgid "Uninstall"
+msgstr "アンインストール"
+
+msgid "Delete Options"
+msgstr "削除"
+
+msgid "Options of each Link Type"
+msgstr "リンクタイプごとのオプション"
+
+msgid "Enable"
+msgstr "有効"
+
+msgid "Width"
+msgstr "幅"
+
+msgid "Height"
+msgstr "高さ"
+
+msgid "Other Params"
+msgstr "パラメータ"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "Metacafe"
+msgstr "Metacafe"
+
+msgid "LiveLeak"
+msgstr "LiveLeak"
+
+msgid "GoogleVideo"
+msgstr "GoogleVideo"
+
+msgid "ifilm"
+msgstr "ifilm"
+
+msgid "Dailymotion"
+msgstr "Dailymotion"
+
+msgid "superdeluxe"
+msgstr "superdeluxe"
+
+msgid "nicovideo"
+msgstr "ニコニコ動画"
+

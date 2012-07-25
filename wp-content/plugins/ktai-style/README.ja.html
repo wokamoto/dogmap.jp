@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Ktai Style 説明書</title>
+<style type="text/css">
+h1 {text-align:center;}
+h2 {color:white; background: maroon;}
+h3 {width:50%; color: white; background: maroon;}
+h3 a {color:lightblue;}
+h4 {width:48%; border-bottom:dotted 1px maroon; border-left:solid 12px maroon; padding-left:3px;}
+dt {font-weight:bold;}
+dd {margin-bottom:0.5em;}
+li {line-height:1.5em;}
+.navi {text-align:center;}
+strong, del {background-color:#ccc;}
+pre {color:#230;padding:3px;border:solid gray 1px;line-height:100%;}
+table {border-top:1px solid black;border-left:1px solid black;border-collapse:collapse}
+table th {border:0 none;border-right: solid 1px black;border-bottom: solid 1px black;}
+table td {border:0 none;border-right: solid 1px black;border-bottom: solid 1px black;}</style>
+</head>
+<body>
+<h1>Ktai Style マニュアル</h1>
+<p class="navi">[ <a href="README.ja.html">はじめに</a> | <a href="DOCUMENTS/HISTORY.ja.html">改版履歴</a> | <a href="DOCUMENTS/CUSTOMIZE.ja.html">サイト設定とテンプレートの改造</a> | <a href="DOCUMENTS/ADMIN.ja.html">ウェブログ管理機能</a> | <a href="DOCUMENTS/Q_and_A.ja.html">よくある質問と答え</a> ]</p>
+<h2>はじめに</h2>
+
+<p>プラグイン配布サイト: <a href="http://wppluginsj.sourceforge.jp/ktai_style/">http://wppluginsj.sourceforge.jp/ktai_style/</a></p>
+
+<p>※以前からのユーザーさんは、少なくとも「↓<a href="#upgrade">以前のバージョンからの更新方法</a>」と「<a href="DOCUMENTS/HISTORY.ja.html">改版履歴</a>」には目を通しておいてください。</p>
+
+<h3 id="abstract">概要</h3>
+<p>Ktai Style は、あなたの WordPress ウェブログを日本の携帯電話対応 (5キャリアおよびスマートフォン対応) にするプラグインです。WordPress + Ktai Style で、携帯ブログが構築できます。</p>
+<ul>
+  <li>携帯電話で閲覧すると軽量化したサイト表示を行います。(フロントページのみならず、アーカイブページ、個別エントリーの URI も対象)</li>
+  <li>ページ容量が大きい場合、端末に応じてページ分割を行います (5KB〜50KB ごと)。</li>
+  <li>要所要所で、携帯電話に応じた絵文字を使用しています (数字・矢印・時計・顔など)。</li>
+  <li>コメントや投稿本文に絵文字が使えます (設定変更が必要)。携帯電話での閲覧時は各社に応じた絵文字に変換し、PC やスマートフォンでの閲覧時はテキストに置換して表示します。</li>
+  <li>記事中の画像は、縮小してインライン表示するか (サーバー上もしくは Flickr の画像で 3G 端末等の場合)、画像へのリンクに変換します (それ以外の場合)。</li>
+  <li>投稿で PNG 画像を使った場合、i-mode 向けに GIF 画像に変換して表示します。GIF 画像を使った場合、ソフトバンク PDC 向けに PNG 画像に変換して表示します。</li>
+  <li>i-mode, EZweb, Yahoo! ケータイ、ディズニー・モバイルの場合、外部サイトへのリンクは中継ページを出します。ウィルコム、イー・モバイル、その他の端末では直接リンクします。ただし、リンク先サイトにモバイル版ページがあると判断できる場合、中継ページを出さずに直接ジャンプします。</li>
+  <li>複数の携帯テーマをインストールして簡単に切り替えできます。携帯テーマは WordPress のテンプレート構造に準拠していて、<a href="DOCUMENTS/CUSTOMIZE.ja.html">容易に制作</a>できます。</li>
+  <li>簡単な<a href="DOCUMENTS/ADMIN.ja.html">ウェブログ管理機能</a> (新規投稿・投稿編集・コメント管理など) があります。</li>
+  <li>コメント投稿時にログインできます。登録ユーザーのみコメント可能な設定でも携帯電話からコメント可能です。</li>
+  <li>画像変換、PCサイト変換について、デフォルトでは外部サービスを極力利用していません。それらのサービスの信頼性・継続性に左右されることなく、安定して運用できます。</li>
+</ul>
+<p>動作サンプルとしては、作者のサイト「<a href="http://www.yuriko.net/">Yuriko.Net</a>」または「<a href="http://www.yuriko.net/travel/">Yuriko.Net 旅行記</a>」をご覧ください。ただし、開発中のバージョンを使っていたり、カスタマイズを行なっているため、標準機能と動作が異なります。その他の採用サイトも参考にしてみてください。</p>
+<ul>
+<li><a href="http://wpme.sourceforge.jp/">WordPress ME サポート</a> (Monolith テーマ)</li>
+<li><a href="http://nagano.wordbench.org/">WordBench 長野</a> (Default テーマ)</li>
+<li><a href="http://kanto.j2.org/">J2 関東</a> (Green テーマ; アイコンは変更)</li>
+</ul>
+<p>「<a href="DOCUMENTS/Q_and_A.ja.html">よくある質問と答え</a>」を用意しました。当ドキュメントと合わせてご覧ください。</p>
+
+<h3 id="requirements">対応環境</h3>
+<ul>
+  <li>WordPress 2.8 以降。携帯電話向け表示機能は 3.2.1 まで対応していますが、サイト管理機能は WordPress 3.0.x までの対応です。</li>
+  <li>WordPress 2.0〜2.3.3 は Ktai Style 1.49 を、WordPress 2.5.1〜2.7.1 は Ktai Style 1.82 をご利用ください。</li>
+  <li>PHP 5.0 以降。<strong>PHP 4 では動きません!!</strong><br />
+なお、動作確認は PHP 5.2.x, PHP 5.3 で行なっていますので、5.0.x, 5.1.x では動かないかもしません。残念ながら PHP 4 への対応予定はありません (サーバー屋さんに PHP5 へのアップグレードを依頼してください)。</li>
+  <li>対応している携帯電話サービスは、以下の通りです。
+<ul>
+  <li>i-mode (NTT ドコモの mova, FOMA)</li>
+  <li>EZweb (KDDI, 沖縄セルラー)</li>
+  <li>Yahoo!ケータイ (ソフトバンクの PDC, 3G)</li>
+  <li>ディズニー・モバイル</li>
+  <li>ウィルコムのコンテンツサービス (ウィルコムの AIR-EDGE PHONE, SIM STYLE)</li>
+  <li>イー・モバイルの EMnet (モバイルブラウザモードのみ)</li>
+  <li>iPhone, iPod touch (デフォルトでは Ktai Style が適用されません。設定変更が必要)</li>
+  <li>Nokia 端末</li>
+  <li>BlackBerry 端末</li>
+  <li>Windows Mobile スマートフォン<br />
+    - W-ZERO3 シリーズ、ドコモ htcZ、ソフトバンク X シリーズ、EM・ONE など</li>
+  <li>Palm OS ハンドヘルド</li>
+  <li>シャープ Zaurus シリーズ</li>
+  <li>PlayStation Portable (PSP), Sony mylo</li>
+  <li>ニンテンドー DS シリーズおよび、ニンテンドー Wii</li>
+  <li>mixi モバイルからの外部ブログ接続 (mixi 日記のかわりに WordPress ウェブログを設定したとき、PC 向け表示ではなく Ktai Style による表示が mixi によって変換されます)</li>
+</ul>
+</li>
+  <li>Windows Mobile スマートフォン、PSP, ニンテンドー DS など (「その他」端末) の場合は、画面最下部に「PC 表示にする」リンクが出て、PC で見たときの表示に切り替え可能です。</li>
+  <li>フルブラウザ・PC サイトビューアー・PC サイトブラウザ・EMnet の「オープンブラウザ」・Windows Mobile 向け Opera の「デスクトップとして認識する」設定などは、PC 向けと認識し、携帯電話向け出力になりません。</li>
+</ul>
+
+<h3 id="installation">設置方法</h3>
+<ol>
+  <li>プラグインをダウンロードして展開し、ktai-style フォルダーごとサーバーのプラグインディレクトリー (wp-content/plugins/) に転送します。<br />
+  ※ただし、README などの txt, html ファイル、DOCUMENTS ディレクトリー、および screenshot-NN.png は転送しなくて構いません。<br />
+  <strong>** 重要 **</strong><br />ウェブログ管理機能を使わない場合は admin フォルダを転送しないでください。</li>
+  <li>WordPress の管理パネルより Ktai Style プラグインを有効にします。</li>
+  <li>好みに応じて、サイト管理画面の携帯表示でテーマやオプションを変更します。たいていはデフォルトのままで構いません。</li>
+  <li>本プラグインの更新は WordPress の標準機能で可能となりました。「<a href="http://wppluginsj.sourceforge.jp/jseries-notifier/">JSeries Notifier</a>」は不要です。</li>
+</ol>
+
+<h4 id="move_wpcontent">wp-content もしくは wp-content/plugins ディレクトリーを標準の位置以外に移設する場合</h4>
+<p>WordPress 2.6 以降で可能になった、wp-content ディレクトリーや wp-content/plugins ディレクトリーを標準の位置以外に移設する場合は、以下の手順で行なってください。</p>
+<ol>
+  <li>プラグインのインストール時、ktai-style ディレクトリーにウェブサーバーから書き込み可能な権限を与えておきます。つまり、パーミッションを 757 や 777 にしておきます。</li>
+  <li>プラグインを有効化します。このとき、ktai_style ディレクトリー直下に wp-load-conf.php ファイルが自動的に作られれば、設定 OK です。</li>
+  <li>作られない場合は、手動で ktai_style/wp-load.php を編集してください。<br />
+  20行目にある <code>$wp_root</code> 変数を変更して、WordPress インストールディレクトリーへの絶対パスを示すようにしてください。<dl>
+    <dt>例: WordPress ディレクトリーが /home/foo/public_html/wp-core/ で、wp-content ディレクトリーが /home/foo/public_html/wp-content/ の場合</dt>
+    <dd><code>$wp_root = dirname(dirname(dirname(dirname(__FILE__)))) . '/wp-core/';</code> とします。</dd>
+  </dl></li>
+</ol>
+
+<h4 id="supercache">WP Suer Cache と併用する場合</h4>
+<p>gDonncha 氏による <a href="http://ocaoimh.ie/wp-super-cache/">WP Super Cache</a> を併用した場合、そのままではさまざまな不具合が発生します (携帯電話に PC 向けのキャッシュされた内容を出力する／携帯電話出力が文字化けする etc)。このため、携帯電話閲覧時はキャッシュプラグインを動作させないようなアドオンを用意しています。以下のようにして組み込んでください。(WP-Cache の場合は以下の「<a href="#wpcache">WP-Cache と併用する場合</a>」を参照のこと)</p>
+<ol>
+  <li>ktai_style/patch-supercache-ktaistyle.php ファイルを WP Super Cache 配下の plugins ディレクトリーに配置します。通常は wp-content/plugins/wp-super-cache/plugins/ というパスです。</li>
+  <li>Ktai Style および WP Super Cache を有効にします。</li>
+  <li>WP Super Cache の設定画面で、一番下の方にある「Ktai Style Support」を Enabled にします。</li>
+  <li>引き続いて、WP Super Cache の設定画面で Mobile Device Support をオンにします。もしくは、Mobile Device Support をオフにして、Mod Rewrite Rules を設定します。以下の2行のコードが含まれているのを確認してから「Update Mod_Rewrite Rules」ボタンを押してください。
+<pre>RewriteCond %{HTTP_USER_AGENT} !^(DoCoMo/|J-PHONE/|J-EMULATOR/|Vodafone/|MOT(EMULATOR)?-|SoftBank/|[VS]emulator/|KDDI-|UP\.Browser|emobile/|Huawei/|IAC/|Nokia|mixi-mobile-converter/)
+RewriteCond %{HTTP_USER_AGENT} !(DDIPOCKET;|WILLCOM;|Opera\ Mini|Opera\ Mobi|PalmOS|Windows\ CE;|PDA;\ SL-|PlayStation\ Portable;|SONY/COM|Nitro|Nintendo)</pre></li>
+  <li>iPhone, iPod, Android にも Ktai Style を適用させる場合は、以下の行を上の2行に追加してください。
+  <pre>RewriteCond %{HTTP_USER_AGENT} !(iPhone;|iPod;|Android)</pre></li>
+  <li>ログアウト状態、かつ、クッキーを削除した状態の PC で閲覧して、リロードしたとき、XHTML ソースの末尾に 「Cached page generated by WP-Super-Cach」の表示があることを確認する WP Super Cache の動作確認)</li>
+  <li>携帯電話で同じページを閲覧して、携帯向け表示になっていることを確認します。PC 表示だったり文字化けしていたら失敗です (PC 向けブラウザーでユーザーエージェント偽装しての確認だとうまくいかないことがあります)。</li>
+  <li>再度 PC で同じページを見て、携帯向け表示になってないことを確認します (携帯ページがキャッシュされてないかの確認)。</li>
+</ol>
+
+<h4 id="wpcache">WP-Cache と併用する場合</h4>
+<p>gallir 氏による <a href="http://mnm.uib.es/gallir/wp-cache-2/">WP-Cache</a> プラグインを併用する場合は以下のようにして組み込んでください。(WP Super Cache の場合は上の「<a href="#supercache">WP Super Cache と併用する場合</a>」を参照のこと)</p>
+<ol>
+  <li>WP-Cache をこれからインストールする場合は、wp-cache-config-sample.php をコピーして wp-cache-config.php ファイルを作ります。</li>
+  <li>wp-cache-config.php の19行目付近、すなわち <code>$cache_rejected_user_agent</code> を設定する直後に、以下のコードを追加します。(追加場所がよく分からなければ、末尾の ?&gt; の直前で構いません)
+<pre>if (file_exists(ABSPATH. 'wp-content/plugins/ktai-style/patches/wpcache.php')) {
+        include ABSPATH. 'wp-content/plugins/ktai-style/patches/wpcache.php';
+}</pre>
+※wp-content/ ディレクトリーもしくは plugins ディレクトリーを移動させている場合は、pache-wpcache.php へのパスを適切に変更してください。</li>
+  <li>wp-cache-config.php ファイルを wp-content/ 直下に配置し、キャッシュプラグインを有効にします。</li>
+  <li>ログアウト状態、かつ、クッキーを削除した状態の PC で閲覧して、リロードしたとき、XHTML ソースの末尾に 「Cached page served by WP-Cache」の表示があることを確認する (WP-Cache の動作確認)</li>
+  <li>携帯電話で同じページを閲覧して、携帯向け表示になっていることを確認します。PC 表示だったり文字化けしていたら失敗です (PC 向けブラウザーでユーザーエージェント偽装しての確認だとうまくいかないことがあります)。</li>
+  <li>再度 PC で同じページを見て、携帯向け表示になってないことを確認します (携帯ページがキャッシュされてないかの確認)。</li>
+</ol>
+
+<h3 id="upgrade">以前のバージョンからの更新方法</h3>
+<ol>
+  <li>まず、プラグインを無効にしてください。</li>
+  <li>サーバー上で自作テーマ／古いテーマの修正が必要です。<ul>
+    <li>バージョン 2.0.3 で Classic, Default テーマの footer.php を修正しました (<code>ks_ordered_link()</code> の後ろにあった &lt;/a&gt; を削除)。これらのテーマを元に自作テーマを作成した場合、同様の修正を行なってください。</li>
+    <li>バージョン 2.0.0 で、以下の修正を行いました。(1.82 以前の) ktai_style/themes/ 配下のテーマを直接改造している場合は、まず wp-content/ktai-themes/ ディレクトリーを作成してここに移動しておいてください。<ul>
+      <li><code>get_stylesheet(), get_template(), load_theme_textdomain()</code> 等の結果を携帯テーマに振り替える処理をやめました。</li>
+      <li>携帯ログインの URL を ktai_style/login.php から ktai-style/admin/login.php に変更しました。<code>ks_get_login_url()</code> を使えば正しい携帯ログイン URL が取得できます。</li>
+      <li><code>ks_wp_head()</code> にて、iPhone 用 viewport 設定 meta 要素の出力、EZweb  や SoftBank 3G 端末向けの p 要素マージン設定の出力を行うようにしました。</li>
+    </ul>
+    これに伴ない、以下の書き換えが必要です。
+    <table border="1">
+    <thead><th>旧</th><th>新</th></thead>
+    <tbody>
+      <tr><td><code>load_theme_textdomain('<em>DOMAIN</em>')</code></td><td><code>load_theme_textdomain('<em>DOMAIN</em>', dirname(__FILE__))</code></td></tr>
+      <tr><td><code>get_stylesheet(), get_template()</code></td><td><code>ks_get_theme(KTAI_NOT_ECHO)</code></td></tr>
+      <tr><td><code>ks_plugin_url() . 'login.php'</code></td><td><code>ks_get_login_url(KTAI_NOT_ECHO)</code></td></tr>
+      <tr><td><code>ks_plugin_url() . 'login.php&redirect_to=' . urlencode(ks_comments_post_url())</code></td><td><code>ks_get_login_url(KTAI_NOT_ECHO, ks_comments_post_url())</code></td></tr>
+      <tr><td><code>ks_siteurl() . 'wp-login.php'</code></td><td><code>ks_get_login_url()</code></td></tr>
+      <tr><td><code>&lt;?php if (is_ktai('type') == 'TouchPhone') { ?&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1.0;" /&gt;
+&lt;?php } ?&gt;</code></td><td>(削除)</td></tr>
+      <tr><td><code>if (is_ktai() == 'KDDI') { ?&gt;
+&lt;style&gt;p {margin:0.75em 0;}&lt;/style&gt;
+&lt;?php } elseif (is_ktai() == 'SoftBank') { ?&gt;
+&lt;style&gt;p {margin:0.5em 0;}&lt;/style&gt;
+&lt;php }</code></td><td>(削除)</td></tr>
+    </tbody></table>
+	ログイン状態を維持しながら携帯サイトを閲覧している場合に編集リンクが出すことも可能です。編集リンク (<code>edit_post_link(), edit_comment_link()</code>) をどこに入れるかはテーマ作者の自由にできるため、同梱のテーマを参考に入れてみてください。
+    </li>
+    <li>バージョン 1.81 で <a href="DOCUMENTS/CUSTOMIZE.ja.html#redir_php">redir.php テンプレート</a>の仕様が変わりました (Classic, Green, Monolith テーマをベースとした場合に存在するテンプレート)。グローバルなオブジェクト <code>$Redir</code> を廃止して、<code>ks_is_redir(), ks_redir_has(), ks_redir_get(), ks_redir_same_host()</code> テンプレートを導入しました。以下の対比表を参考に書き換えてください。不要になった <code>global $Redir;</code> も適宜削除してください。また、hedir.php テンプレート以外に header.php テンプレートにも <code>isset($Redir)</code> という記述があるため、これを <code>ks_is_redir()</code> に修正してください。
+    <table border="1">
+    <thead><th>旧</th><th>新</th></thead>
+    <tbody>
+      <tr><td><code>$Redir->url</code></td><td><code>ks_redir_get('url')</code></td></tr>
+      <tr><td><code>$Redir->mobile_url</code></td><td><code>ks_redir_get('mobile_url')</code></td></tr>
+      <tr><td><code>$Redir->full_url</code></td><td><code>ks_redir_get('full_url')</code></td></tr>
+      <tr><td><code>$Redir->same_host</code></td><td><code>ks_redir_same_host()</code></td></tr>
+      <tr><td><code>isset($Redir)</code></td><td><code>ks_is_redir()</code></td></tr>
+      <tr><td><code>isset($Redir->full_url)</code></td><td><code>ks_redir_has('full_url')</code></td></tr>
+      <tr><td><code>empty($Redir->mobile_url)</code></td><td><code>! ks_redir_has('mobile_url')</code></td></tr>
+    </tbody></table></li>
+    <li>バージョン 1.80 で iPhone/Androoid 向けに viewport 設定が入りました。header.php の4行目 (<code>&lt;meta http-equiv="Content-Type"</code> の次の行) に以下のコードを入れてください。
+    <pre>&lt;?php if (is_ktai('type') == 'TouchPhone') { ?&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1.0;" /&gt;
+&lt;?php } ?&gt;</pre></li>
+    <li>バージョン 1.74 で、comments.php が変更されました。<code>$user_ID</code> が使われている部分をすべて <code>is_user_logged_in()</code> に変更してください (4〜6か所あります)。</li>
+    <li>バージョン 1.73 で、header.php が変更されました。以下の3行を、title 要素を出力している個所の直前に入れてください。
+    <pre>&lt;?php if ( ks_is_comment_post() || isset($Redir) ) { ?&gt;
+&lt;meta name="robots" content="noindex,nofollow" /&gt;
+&lt;?php } ?&gt;</pre></li>
+    <li>バージョン 1.70 で Compact テーマは Default テーマと統合されました。Default テーマにある home.php を削除すれば、Compact テーマとほぼ同等の動作になります (footer.php の挙動が少し異なります)。</li>
+    <li>バージョン 0.99〜1.47, 1.60 の comments.php は、WordPress 2.7 でのコメント投稿時に携帯端末情報が送信されなかったとき、PHP のエラーが表示されたり反応がなくなったりすることがあります。独自のテーマを利用している場合、comments.php の以下のコードを探して直してください (Default テーマでは91行付近です)。なお、テーマによって <code>implode()</code> で挟む文字列は異なります。
+    <pre>echo implode("&lt;br /&gt;", <strong>wp_specialchars(</strong>explode("\n", $ks_commentdata['message']))); </pre>
+    ↓
+    <pre>echo implode("&lt;br /&gt;", <strong>array_map('wp_specialchars', </strong>explode("\n", $ks_commentdata['message']))); </pre></li>
+    <li>バージョン 1.70 で header.php, redir.php テンプレートの仕様が一部変更になりました。ジャンプ先の URL が <code>$full_url</code> というグローバル変数ではなく <code>$Redir</code> というオブジェクトで渡されます。Classic, Green, Monolith テーマを参考に、使い方を調べてみてください。</li>
+    <li>バージョン 1.70 より古い場合、テーマのローカライズ文字列 (<code>_e(), __()</code> 関数を使っている部分) が変更されています。そのままでは英語表示になってしまうため、附属テーマを参考に修正してください。コメントの入れ子に対応したい場合も、附属テーマを参考に修正してみてください。よく分からなければ、附属テーマを複製して改造し直した方が早いかもしれません。</li>
+    <li>バージョン 1.46 以前において、themes/classic/functions.php にある <code>ks_convert_kana()</code> 関数を自作テーマにコピーしている場合、この関数を消去してください。<code>ks_convert_kana()</code> 関数は Ktai Style 本体に組み込まれました。</li>
+    <li>バージョン 1.36 以前を使っている場合、ktai_style-ja.po, ktai_style-ja.mo, ktai_style-ja_UTF.mo, ktai_style-ja_EUC.po, ktai_style-ja_EUC.mo, emobile.php, ezweb.php, i-mode.php, services.php, softbank.php, willcom.php を削除してください。これらは lang および operators フォルダーに移動されたため、ktai_style ディレクトリー直下にあるファイルは使われないためです。</li>
+    <li>バージョン 1.20 以前で、header.php で <code>wp_head()</code> を、footer.php で <code>wp_footer()</code> を有効にしている場合、それぞれ <code>ks_wp_head(), ks_wp_footer()</code> に変更すると、より携帯電話に適した動作になります。</li>
+    <li>バージョン 1.11 以前で自作テーマを使っている場合、絵文字テンプレートタグで alt 属性が抜けている箇所に空の alt 文字列を補完してください。<br />
+      <code>&lt;img localsrc="XXXX" alt="" /&gt;</code><br />
+従来は alt 属性がない場合、スマートフォン等で閲覧したとき何も置換しませんでしたが、バージョン 1.20 からは既定の代替文字列に置換されてしまうためです。<code>alt=""</code> と書けば従来通り置換されません。</li>
+    <li>バージョン 1.01 以前で自作テーマを使っている場合、footer.php 等に <code>&lt;?php ks_switch_inline_images(); ?&gt;</code> を追加してください(default テーマの footer.php などを参考にしてください)。さもないと、「画像を表示する／リンクに変換」のメニューが表示されません。</li>
+    <li>バージョン 0.97〜0.99 で自作テーマを使っている場合、default テーマから style.css をコピーして自作テーマのディレクトリーに入れてください。できれば、記載内容を適宜修正してください (修正は必須ではありません)。style.css がない場合、携帯テーマとして認識されません。</li>
+    <li>バージョン 0.96 までのテンプレート (templates フォルダー以下のファイル) をそのまま利用している場合、サーバーの templates フォルダーを削除してください。</li>
+    <li>バージョン 0.96 までのテンプレートを改造している場合は、サーバー上の templates ディレクトリーを適当な名前 (old など) に変更し、themes ディレクトリーの配下に移動してください。また、default テーマから style.css をコピーしておいてください (上記と同じ要領)。</li>
+  </ul></li>
+  <li>WP Super Cache を利用している場合、バージョン 1.81 で WP Super Cache への対応方法が変更になりました。wp-content/wp-cache-config.php の修正は不要になったので、該当する3行は削除してください。それから、上記の「<a href="#supercache">WP Super Cache と併用する場合</a>」を読んで、その手順に従ってください。</li>
+  <li>サーバーにファイルを転送します。(バージョン 0.97 以降で) 自作テーマを利用している場合、サーバー上の themes ディレクトリーにある自作テーマを消さないよう注意してください。(WordPress 本体をアップグレードするとき wp-content の中身を消さないようにするのと同じ要領です)</li>
+  <li>プラグインを有効にしてください。プラグインを一度無効にしてから有効にしないと、管理画面へのログインができません (ログインセッションを生成できない、というエラーになります)。</li>
+  <li>必要に応じて管理画面でテーマを選択します。(自作テンプレートを ktai-themes ディレクトリーに移動した場合など)</li>
+  <li>環境設定の確認をしてください。1.60 からは、「去年以前の日時」「今年の日時」に時刻フォーマットも含める必要があります。したがって、そのままでは、「去年以前の日時」「今年の日時」を表示するとき、時刻が出なくなります。従来と同じ出力にしたいならば、それぞれ「Y-m-d H:i」ないし「n/j H:i」という指定に直してください。</li>
+  <li>バージョン 1.82 以前からのアップグレードの場合、「ktai_style」というディレクトリー名の旧プラグインが残ってしまいますので、これは FTP/SFTP ツールで手動で削除してください。WordPress の削除機能を使うとオプション値が消えてしまいます。</li>
+</ol>
+
+<h3 id="purge">プラグインの撤去</h3>
+<p>プラグインの使用を中止して撤去するに、プラグインを無効にし、WordPress のプラグイン管理パネルでプラグインの「削除」を行なってください。これがうまく動かない場合は以下の手順に従ってください。</p>
+<ol>
+  <li>管理画面の「携帯表示」→「オプションの削除」で、一番下にある「オプション値をデフォルトに戻す」をクリックします。</li>
+  <li>プラグインを無効にします。これにより、セッション管理用テーブルが削除されます。</li>
+  <li>FTP ツール等で、wp-content/plugins から ktai-style ディレクトリーを丸ごと削除します。wp-content/ktai-themes ディレクトリーがあれば、これも削除します。</li>
+  <li>wp-content/uploads ディレクトリー配下などにある、携帯電話向けサムネール (*****.ktai.jpg などのファイル名の画像) は残ってしまいます。そのままでもウェブログの表示に影響はありませんが、気になる場合は、FTP ツールで削除するか、シェルログインして find コマンド等で削除してください。
+  <pre>$ cd wp-content/uploads
+$ find . -name '*.ktai.jpg' -or -name '*.ktai.png' -or -name '*.ktai.gif' -exec rm {} \;</pre></li>
+</ol>
+
+<h3 id="customize">携帯サイトの調整</h3>
+<p>携帯サイトの見た目は、PC での管理画面による設定、およびテンプレートの改造により、お好みに調整できます。管理画面では以下の設定が可能です (デフォルトテーマ以外では無効の場合があります)。詳細は「<a href="DOCUMENTS/CUSTOMIZE.ja.html">サイト設定およびテンプレートの改造について</a>」を参照してください。</p>
+<ul>
+  <li>使用するテーマの切り替え</li>
+  <li>コメント欄や投稿本文に絵文字の入力を許可するか否かの選択</li>
+  <li>コメントとトラックバック・ピンバックを混在するか分離するかの選択</li>
+  <li>中継ページを使わず直接リンクを張る外部サイト</li>
+  <li>コメント投稿時にコメント投稿者の端末識別情報を要求するか不要とするか</li>
+  <li>文字色 (日付、投稿者名、コメント種別、PC 向け外部サイトのリンク文字)</li>
+  <li>日付・時刻の書式</li>
+</ul>
+<p>なお、PC 向けテーマと携帯テーマは連動していませんので、PC 向けテーマで利用している機能 (ウィジェットやブログパーツ等) は原則として使えません。携帯テーマのテンプレートをカスタマイズすれば、ウィジェットの機能を再現できるかもしれません (できないこともあります)。</p>
+
+<h3 id="features">機能詳細</h3>
+<ul>
+  <li>ウェブログ管理機能については「<a href="DOCUMENTS/ADMIN.ja.html">ウェブログ管理機能について</a>」をご覧ください。</li>
+  <li>文字コードは Shift_JIS に変換しています。古い端末 (PDC 端末等) でも表示できるため、絵文字表示を行うためとパケット節約のためです (UTF-8 に比べて2〜3割減)。</li>
+  <li>del 要素で囲まれた部分は削除されます。PC では通常取り消し線が付きますが、携帯端末の多くは取り消し線に対応しておらず、通常表示と区別が付かなくなるためです。</li>
+  <li>1ページに表示される記事数は、PC 向けサイトと同じ (各種設定→表示設定の「ブログページ」の設定値と同じ) になります。したがって、ページ番号付きの URL (http://blog.example.jp/page/3/ のような URL) でも、PC と携帯電話で同じ内容が見られます。この動作を維持するため、携帯電話だけ記事数を減らす機能を付ける予定はありません。</li>
+  <li>記事中の画像は、縮小してインライン表示するか、画像へのリンクに変換します。縮小してインライン表示するのは、サーバー配下もしくは Flickr に登録した画像で、今ドキの携帯 (FOMA, EZweb WAP2.0, ソフトバンク 3G, イー・モバイル音声端末、ウィルコム, 「その他」端末) で閲覧した場合です。それ以外の場合 (外部サイトの画像や古い世代の電話での閲覧時) は、リンクとなります。古い端末でサーバー配下の画像へのリンクになる場合、リンク先画像のサイズが大きくて表示できないと推測されれば、より小さい画像へのリンクに差し替えます。Flickr 以外の外部サイトの画像の場合、縮小画像を作成せず無条件にリンクとなります。</li>
+  <li>画像をインライン表示している場合、画面下部のメニューで画像をリンクに変換するか (従来通りの表示)、インライン表示に戻したりできます。携帯電話向けのページ分割がされた場合、分割前のページ全体のとこかにインライン画像があれば、分割後のすべてのページで切り替えメニューが出ます。したがって、分割後のページで画像が存在しないのに切り替えメニューが出ることがあります。なお、古い端末の場合は画像をインライン表示できないため、切り替えメニューは出ません。</li>
+  <li>Ktai Style が作成する縮小画像は、****.ktai.jpg 等のファイル名で、オリジナル画像と同じディレクトリーに保存されます (以後の閲覧で再利用)。縮小サイズは、長辺側が 96 ピクセルで決め打ちです。WordPress がそのディレクトリーに書き込み権限を持たない場合、縮小画像が作成できないため、インライン画像は表示されずリンクになります。</li>
+  <li>元画像が PNG (または GIF) 画像の場合、携帯電話用サムネールは PNG, GIF 両方を作成します (****.ktai.png, *****.ktai.gif)。また、元画像と同じサイズの GIF (または PNG) 画像も作成されます。「<a href="DOCUMENTS/CUSTOMIZE.ja.html#png_gif">PNG, GIF 自動切り替え機能</a>」により、i-mode 端末では GIF 画像を表示／ソフトバンク PDC 端末では PNG 画像を表示するため、PNG, GIF 画像をシームレスに扱えます。なお、JPEG 画像が表示できない端末については考慮していません。</li>
+  <li>サムネールに対して元画像へのリンクを張っている場合、サムネールの後に元画像へのリンクを追加します (ファイルサイズも表示)。画像サイズが大きい場合は、リンクにならず元画像のファイルサイズだけ表示します。</li>
+  <li>シンボリックリンク等で、WordPress インストールディレクトリー配下でないディレクトリーを呼び出して画像を使っている場合も、できる限り同一サーバー上とみなします。例えば、http://example.jp/blog/ に WordPress をインストールしていて、http://example.jp/photos/ に画像を入れている場合でも、サムネールを作成したり、「元画像(xxKB)」のようなリンクになります (サーバーの設定やファイル構成によっては、同一サーバーと認識されない場合があります)。</li>
+  <li>画像にウェブサイトへのリンクを張っている場合 (ソーシャルブックマークへの登録ボタン等)、画像へのリンクの後ろに、ウェブサイトへのリンクを追加します。</li>
+  <li>ドコモ、au、ソフトバンク、ウィルコム、イー・モバイルの場合、プラグイン用画像はリンクにせず、alt 文字列をそのまま表示します。スマートフォン等の「その他」端末ではプラグイン画像をそのまま表示します。<a href="http://www.neato.co.nz/ultimate-tag-warrior/">Ultimate Tag Warrior</a> のアイコン、<a href="http://wppluginsj.sourceforge.jp/wp-tegaki/">wp-tegaki</a> の TrueType 画像、<a href="http://firestats.cc/">FireStats</a>のブラウザーアイコンなどが対象です。なお、FireStats の国旗アイコンはできるだけ携帯絵文字の国旗にします、</li>
+  <li>携帯電話に画像を縮小させずそのまま見せたい場合は、img 要素に<br /><code>class="ktai"</code><br />という属性を追加してください (詳細は「<a href="DOCUMENTS/CUSTOMIZE.ja.html#use_images">テンプレートで画像を使う</a>」を参照)。</li>
+  <li>携帯端末でコメントや投稿本文に絵文字を入力した場合、<code>&lt;img localsrc="999" /&gt;</code> というフォーマットに置換してデータベースに保存されます。絵文字番号は下記の通りになります。<br />
+<table border="1">
+<tr><th>サービス</th><th style="width:6.5em;">値</th><th>説明</th></tr>
+<tr><td><a href="http://www.au.kddi.com/ezfactory/tec/spec/3.html">EZweb</a></td><td>1〜822</td><td>10進数で EZweb 絵文字番号にそのまま対応</td></tr>
+<tr><td><a href="http://developers.softbankmobile.co.jp/dp/tool_dl/web/picword_top.php">SoftBank</a></td><td>se001〜se53e</td><td>s を除いた部分は16進数4ケタで、ソフトバンク絵文字の UNICODE 値に対応。</td></tr>
+<tr><td><a href="http://www.nttdocomo.co.jp/service/imode/make/content/pictograph/index.html">i-mode</a></td><td>d001〜d276</td><td>d を除いた部分は10進数。1〜176 は基本絵文字、201〜276 は拡張絵文字 1〜76 に対応。</td></tr>
+<tr><td rowspan="2"><a href="http://www.willcom-inc.com/ja/service/contents_service/club_air_edge/for_phone/homepage/">WILLCOM</a></td><td>d001〜d276</td><td>i-mode と同じ</td></tr>
+<tr><!-- td/td --><td>wf040〜wf15f</td><td>w を除いた部分は16進数4ケタで、ウィルコム絵文字の Shift_JIS コードに対応</td></tr>
+<tr><td rowspan="2"><a href="http://developer.emnet.ne.jp/browser.html">EMnet</a></td><td>d001〜d276</td><td>i-mode と同じ</td></tr>
+<tr><!-- td/td --><td>e253〜e278</td><td>e を除いた部分は10進数で、イー・モバイル絵文字 253〜278 に対応。</td></tr>
+</table>
+Ktai Style で定義されていない文字コードの絵文字 (新しく追加された絵文字など) の場合、<code>&lt;img localsrc="ZZ" alt="[0xHHHH または ESC$XnnnSI]" /&gt;</code> というフォーマットになります。ZZ はキャリア識別文字 (ez: EZweb, d: i-mode, s: SoftBank, w:WILLCOM, e: EMnet) で、0xHHHH は 16進数の ShiftJIS コード、ESC$XnnnSI はソフトバンクのウェブコード (X は 3バイト目で G,E,F,O,P,Q のいずれか、nnn は4バイト目を10進数にしたもの) です。</li>
+  <li>外部サイトへのリンクは以下の通りに処理されます。
+<table border="1">
+<tr><th style="width:10em;">ドコモ FOMA<br />EZweb (WAP2.0)</th><td>中継ページ経由リンクに変換。フルブラウザ／PC サイトビューアーでの閲覧リンクも併記。</td></tr>
+<tr><th>ソフトバンク<br />ディズニー・モバイル</th><td>中継ページ経由リンクに変換。手動でPCサイトブラウザに切り替えてください。</td></tr>
+<tr><th>ドコモ mova<br />EZweb (HDML)</th><td>中継ページ経由リンクに変換</td></tr>
+<tr><th>ウィルコム<br />イー・モバイル<br />それ以外</th><td>直接リンク</td></tr>
+</table>
+ただし、以下のブログサービスへのリンクは、中継ページを出さずに直接リンクします。リンクの前に PC アイコンや [PC向け] 表示も出ません。<ul>
+  <li>PC 版と携帯版の URL が同じもの: <a href="http://blog.fc2.com/">FC2 ブログ</a>、<a href="http://www.yaplog.jp/contents/portable#01">ヤプログ</a>、<a href="http://autopage.teacup.com/">teacup.ブログ AutoPage</a>、<a href="http://jugem.jp/service/">JUGEM</a>、<a href="http://blog-help.seesaa.net/category/2648651-1.html">Seesaaブログ</a>、<a href="http://blog.goo.ne.jp/how_to/e/dc9e8a024d614e163970f23f474ef77d">goo ブログ</a>、<a href="http://www.auone-net.jp/lovelog/help/list8.html">LOVELOG</a>, <a href="http://blog.auone.jp/service/help_detail/?InfoID=140">au one ブログ</a>, <a href="http://www.so-net.ne.jp/blog/about/mobile.html">so-net ブログ</a>、<a href="http://helpn.paslog.jp/article/795730.html">NetLaputaブログ</a>、<a href="http://www.sixapart.jp/vox/">VOX</a>、<a href="http://affiliate.rakuten.co.jp/guide/kyoyu/">楽天アフィリエイト</a>、<a href="http://pub.ne.jp/">ぷららブローチ</a></li>
+  <li>PC 版 URL から携帯版 URL にリダイレクトされるもの: <a href="http://www.hatena.ne.jp/help/mobile">はてなダイアリー</a>, <a href="http://helpguide.livedoor.com/help/blog/qa/grp44">livedoor ブログ</a>, <a href="http://support.cocolog-nifty.com/howto/04/">ココログ</a>, <a href="http://webryblog.biglobe.ne.jp/guide/keitai.html">ウェブリブログ</a>、<a href="http://blog.excite.co.jp/bloghelp/4662244/">エキサイトブログ</a>、<a href="http://drecomblog.office.drecom.jp/faq/category_7/">ドリコムブログ</a>、<a href="http://blog.ameba.jp/content/mobile_pr/">アメーバブログ</a> (携帯ネットワーク以外およびイー・モバイル音声端末未対応)、<a href="http://japantips.spaces.live.com/blog/cns!5D15F42436DDC865!330.entry">Windows Live Spaces</a>(ウィルコム非対応ブログ)、<a href="http://plaza.rakuten.co.jp/hlp/">楽天ブログ</a>(ウィルコム非対応ブログ)、<a href="http://www.ninja.co.jp/faq/category/7_5/">忍者ブログ</a>(blog.shinobi.jp ドメインのみ認識、ウィルコム非対応ブログ)</li>
+  <li>(参考) PC／携帯両対応しているものの、URL が分離されていてリンク差し替えできないサービス(中継ページが出ます): <a href="http://blogs.yahoo.co.jp/FRONT/PROMO/introduction.html">Yahoo! ブログ</a>、<a href="http://hanshin-now.com/common/mobile.asp">阪神ナウ・クチログ</a></li>
+  <li>その他の場合でも、a 要素に class="ktai" という属性を追加したリンク、もしくは、「携帯表示」設定の「直接リンクを張るサイト」にリストアップしたサイトは、中継ページを出さずに直接リンクします。リンク先が、同一 URL で PC／携帯両対応している場合に、いずれかの指定をすると便利です。</li>
+  <li>いずれにも該当しない場合、中継ページを出す直前でリンク先にアクセスし、<a href="http://www.sixapart.jp/docs/tech/mobile_link_discovery_ja.html">Mobile Link Discovery</a> を埋め込んでいるか確認します。もしあれば、その URL に直接ジャンプします。Ktai Style や MT4i などを使っている場合などが該当します。この場合、中継ページを出すタイミングで相手にアクセスするため、相手先には、Ktai Style (エージェント名は WordPress) によるアクセスと閲覧者によるアクセスの両方がログされることに注意してください。</li>
+  <li>リンク先の反応が遅く、Mobile Link Discovery の確認をするとタイムアウトすることがある場合、a 要素に class="pconly" を入れると Mobile Link Discovery のチェックをせずに、いきなり中継ページを出します。</li>
+</ul></li>
+  <li>ページ分割サイズは端末に応じて自動調整されます。分割値は以下の通りです。
+<table border="1">
+<tr><th>ドコモ mova</th><td>5000 バイト (約5KB)</td></tr>
+<tr><th>ドコモ FOMA</th><td>20000 バイト (約20KB)</td></tr>
+<tr><th>EZweb (HDML)</th><td>7500 バイト (約7.5KB)</td></tr>
+<tr><th>EZweb (WAP2.0)</th><td>20000 バイト (約20KB)</td></tr>
+<tr><th>ソフトバンク PDC</th><td>6000 バイト (約6KB)</td></tr>
+<tr><th>ソフトバンク 3G<br />ディズニー・モバイル</th><td>20000 バイト (約20KB)</td></tr>
+<tr><th>ウィルコム<br />イー・モバイル</th><td>20000 バイト (約20KB)</td></tr>
+<tr><th>その他</th><td>50000 バイト (約50KB)</td></tr>
+</table></li>
+  <li>画像表示可能なサイズ (キャッシュサイズ) は、ユーザーエージェント文字列などより自動判別されます。3G 端末の場合 100KB〜128KB 程度、スマートフォンの場合は 512KB となります。</li>
+</ul>
+
+<h3 id="restrictions">制限事項</h3>
+<p>※<a href="DOCUMENTS/ADMIN.ja.html#restrictions">管理機能の制限事項</a>もお読みください。</p>
+<ul>
+  <li>シンボリックリンクを利用して ktai-style ディレクトリー、wp-content ディレクトリー等を移動している場合、正常に動作しないことがあります。</li>
+  <li>WordPress 2.7 以降で、「1 ページ当たり NN 個のコメントで複数ページに分割する」機能を使っている場合、コメント一覧ページでは、コメントとトラックバック・ピンバックは強制的に混在表示になり、分離表示はできません。これは、コメントのページ数がおかしくなるためです。</li>
+  <li>携帯電話向けページ分割した際、「画像を表示する／リンクに変換」の切り替えを行うと、分割位置が変化するため、現在見ている内容が前後の分割ページに移動することがあります。</li>
+  <li>プラグインが提供する PNG, GIF 画像は、<a href="DOCUMENTS/CUSTOMIZE.ja.html#png_gif">PNG, GIF 自動切り替え機能</a>に対応するものの、PNG→GIF画像および GIF→PNG画像の自動生成には対応していません。あらかじめ PNG, GIF の両方の画像を生成しておいてください。</li>
+  <li>携帯電話の絵文字は、i モード拡張絵文字、EZweb type-D、ソフトバンクの拡張絵文字を一部利用していますので、古い端末だと表示されない場合があります。</li>
+  <li>PC、スマートフォン向けの携帯絵文字は完全には収録していません。このため、PC 等で絵文字を含むコメントや投稿を見たときは、[ボウリング] や (#□#) などの代替文字に変換されることがあります。</li>
+  <li>ソフトバンク 3G の一部の機種では絵文字入力に対応していません。ただし、対象となる機種は非常に少なく、Shift_JIS 非対応端末など、UTF-8 で絵文字を送出してしまう端末のみです。(ノキア製などが該当)</li>
+  <li>フラグメント識別子 (#comment-99 のようなもの) を使って、ページ内リンクや他ページへのリンクをしている場合、リンク先の位置が携帯端末向けページ分割によって2ページ目以降に回された場合でも、その分割ページにはリンクできません。携帯電話で見ることを想定したコンテンツでは、ページサイズを少な目にして、フラグメント識別子は極力使わないことをおすすめします。</li>
+  <li>UTF-8 で保存されたコンテンツを Shift_JIS に変換して表示しているため、投稿本文で Shift_JIS に存在しない文字を使っている場合、携帯閲覧時に欠落したり文字化けする可能性があります (温泉マークやはしご高など)。</li>
+  <li>コメント投稿時にログインする場合、コメントフォーム右上にある「ログインしてコメントする」のリンクを使ってください。ページ下にある「ログイン」の場合、管理画面に入ってしまい、ウェブログ画面に移るとログイン状態が解除されてしまいます。また、ログイン直後にコメント投稿せず、他のリンク (「記事に戻る」やページ下部のメニューなど) を辿った場合も、ログイン状態が解除されてしまいます。「送信する」ボタン以外は使わないよう、ご注意ください。</li>
+  <li>パスワード保護された投稿でコメント投稿したとき、投稿後に記事またはコメントを見るには、再度パスワード入力が必要となります。</li>
+  <li>XHTML Basic (携帯電話向け XHTML) では不要な要素・属性をできるだけ除去していますが、テーブルタグなど、一部端末で対応していない要素も出力してしまいます。</li>
+  <li>携帯電話からの新規投稿やコメント投稿で「&#12316;」(波ダッシュ) を含む文字を使った場合、Unicode コード U+301C の波ダッシュ「&#12316;」としてデータベースに保存します。Macintosh や  Linux は通常この波ダッシュを使うため問題ありませんが、Windows では、全角チルダ U+FF5E「&#65374;」を多用しており、複数の波形文字が混ざってしまいます。これは仕様ですので、ご了承ください。気になる場合は、全角チルダを波ダッシュに矯正する拙作プラグイン「<a href="http://wppluginsj.sourceforge.jp/force-wave-dash/">Force Wave Dash</a>」をご利用ください。</li>
+  <li>キーワードタグに、全角チルダ U+FF5E「&#65374;」を含む文字列を使用していた場合 (Windows で波形の文字を使うとこの文字になります)、携帯管理画面で投稿編集すると、波ダッシュ U+301C「&#12316;」として保存してします。このため、編集前とは別のタグになってしまいます。キーワードタグで全角チルダを使わないようにしてください。(Force Wave Dash はキーワードタグへの対応は完全ではなく、全角チルダを駆逐できません)</li>
+  <li>WordPress MU で、<a href="http://yonyon-blog.net/youmei/2008/07/19/wpmu-plugin-control-100_stable/">WPMU Plugin Control</a> (プラグインを一括管理するプラグイン) を使って Ktai Style を有効・無効にしたときは、携帯ログイン時のセッション管理テーブルの作成・破棄ができません。これは、WPMU Plugin Control がプラグインの activate/deactivate フックを呼んでいないのが原因です。WPMU Plugin Control を使って Ktai Style の有効・無効は行なわないでください。</li>
+</ul>
+
+<h3 id="difference-to-mobilepressneo"><a href="http://linux.matchy.net/archives/38">MobilePressNEO</a> との相違点</h3>
+<ul>
+  <li>6種類のテンプレートが附属しており、好きなものを選んで使えます。</li>
+  <li>電話キャリアを自動判別して、要所要所で絵文字を使っています。コメントや投稿本文への絵文字入力が可能です。</li>
+  <li>投稿本文に小さめの画像をインライン表示できます。</li>
+  <li>ページ容量が大きい場合、5KB〜50KB ごとにページ分割します。</li>
+  <li>最新のコメント一覧やタグクラウドが見られます。</li>
+  <li>コメント投稿にユーザー登録必須としている場合でも、コメントできます (ただし、あらかじめ PC でユーザー登録が必要)。</li>
+  <li>ウェブログ管理機能があります。</li>
+  <li>全角カナ→半角への変換は行いません (テーマによっては変換します)。</li>
+  <li>クッキーに対応していない携帯電話でも、パスワード保護された投稿の閲覧が可能です。</li>
+  <li>PHP4 では動かなくなりました。</li>
+</ul>
+
+<h3 id="difference-to-mobileeyeplus"><a href="http://hrlk.com/script/mobile-eye-plus/">Mobile Eye+</a> との相違点</h3>
+<ul>
+  <li>電話キャリアを自動判別して、要所要所で絵文字を使っています。コメントや投稿本文への絵文字入力が可能です。</li>
+  <li>投稿本文に小さめの画像をインライン表示できます。ただし、外部サイトの画像は原則としてリンクになります。</li>
+  <li>ページ容量が大きい場合、5KB〜50KB ごとにページ分割します。</li>
+  <li>最新のコメント一覧やタグクラウドが見られます。</li>
+  <li>コメント投稿にユーザー登録必須としている場合でも、コメントできます (ただし、あらかじめ PC でユーザー登録が必要)。</li>
+  <li>ウェブログ管理機能があります。</li>
+  <li>全角カナ→半角への変換は行いません (テーマによっては変換します)。</li>
+  <li>原則として PCサイト／画像の変換サービスは利用しません (Classic テーマのみ、通勤ブラウザと Google サイト変換を使用)。「あやしい広告」が出ないよう、極力外部サービスは使わない配慮をしています。</li>
+  <li>デフォルトではコメントとトラックバックを混在して表示します (WordPress の挙動に準拠)。</li>
+  <li>パスワード保護の解除は、端末によらずフォームへの入力で可能です (Basic 認証は使いません)。そのかわり、投稿やコメントの閲覧の度にパスワード入力が必要となります。</li>
+  <li>PHP4 では動かなくなりました。</li>
+</ul>
+
+<h3 id="todo">今後の予定</h3>
+<ul>
+  <li>端末識別情報を使って簡単ログインができるようにする。</li>
+  <li>投稿作成時にファイル添付を可能とする。</li>
+  <li>カテゴリーやタグの管理を可能とする。</li>
+  <li>Ktai Entry と連携して、投稿の編集をメール投稿で行えるようにしたり、メール投稿用のテンプレートを Ktai Style で作成できるようにする。</li>
+  <li>投稿時に位置情報を追加できるようにする。</li>
+  <li>携帯電話からユーザー登録可能とする。</li>
+</ul>
+
+<h3 id="nottodo">実装しない予定の機能</h3>
+<dl>
+<dt>携帯サイトの URL を PC 向けと分離する</dt>
+  <dd>実装するには技術的にやや困難なことと、今後のウェブサイトは「同じ URL でさまざまなデバイスに対応する」ことが望ましいことから、実装する予定はありません。</dd>
+<dt>端末識別情報を使って簡単ログインができるようにする。</dt>
+  <dd>セキュリティーホールになりやすいことと、クッキーに対応した端末ならば「ログインしたままにする」機能で十分なことから、実装する予定はありません。</dd>
+</dl>
+
+<h2 id="rights">著作権について</h2>
+<p>Ktai Style のライセンスは GPL v2 or later とし、著作権は作者である IKEDA Yuriko が保有します。ただし、ソースコードのいくつかの部分は WordPress の本体コードを流用したものがあり、その部分は WordPress 開発者が著作者です。</p>
+<p>pics/SA/ フォルダー以下の画像252枚は、シックスアパートが制作したもので、ライセンスは GPL を適用しています。同じ画像が以下の URL で入手できます。<br />
+http://start.typepad.jp/typecast/</p>
+
+<p>以上</p>
+</body>
+</html>

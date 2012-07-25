@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms no-csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ready pointerevents" lang="ja"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>ハイパフォーマンス WordPress サイト入門 » WordCamp KOBE 2011</title>
+	
+	<meta name="description" content="ハイパフォーマンス WordPress サイト入門" />
+	<meta name="author" content="wokamoto" />
+	<meta name="viewport" content="width=960" />
+	
+	<link rel="stylesheet" href="css/deck.core.css" />
+	<link rel="stylesheet" href="css/deck.menu.css" />
+	<link rel="stylesheet" href="css/deck.goto.css" />
+	<link rel="stylesheet" href="css/deck.status.css" />
+	<link rel="stylesheet" href="css/deck.navigation.css" />
+	<link rel="stylesheet" href="css/deck.hash.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/home.css" />
+	<link rel="stylesheet" id="transition-theme-link" href="css/horizontal-slide.css" />
+
+	<script src="js/modernizr.js"></script>
+</head>
+
+<body class="home">
+
+<header>
+	<nav>
+		<h1><a href="http://dogmap.jp/wckobe2011/">ハイパフォーマンス WordPress サイト入門</a></h1>
+		<ul>
+			<li><a href="http://shot.dogmap.jp/about/">Author</a></li>
+			<li><a href="http://dogmap.jp/">Blog</a></li>
+			<li><a href="http://twitter.com/wokamoto/">Twitter</a></li>
+			<li><a href="http://www.facebook.com/dogmap.jp">Facebook</a></li>
+		</ul>
+	</nav>
+</header>
+	
+<article class="on-slide-0 deck-container">
+	<section class="slide" id="intro">
+		<div>
+			<hgroup>
+				<h1>ハイパフォーマンス WordPress サイト入門</h1>
+				<h2>WordCamp KOBE 2011 - wokamoto</h2>
+			</hgroup>
+		
+			<p>
+				※カーソルキー左右でページめくりできます
+			</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>自己紹介 (wokamoto)</h2>
+
+		<div class="content">
+		<p>
+			<img width="83px" height="83px" style="float:right;" src="images/wo_blue.png" />
+			WordPress Plugins/JSeries プロジェクトの一員で、主に WordPress のプラグインをつくっています。
+		</p>
+
+		<ul>
+			<li><a href="http://wppluginsj.sourceforge.jp/head-cleaner/" title="WordPress Plugins/JSeries » Head Cleaner (最適化＆高速化)">Head Cleaner</a> - &lt;head&gt; 部分のお掃除をするプラグイン</li>
+			<li><a href="http://dogmap.jp/2011/07/25/wordpress-oauth-provider/" title="WordPress に OAuth プロバイダを実装する : dogmap.jp">OAuth Provider</a> - WordPress を OAuth プロバイダにするためのプラグイン</li>
+			<li><a href="http://wppluginsj.sourceforge.jp/googlemaps-anywhere/" title="WordPress Plugins/JSeries » Google Maps Anywhere (地図表示)">Google Maps Anywhere</a> - Google Map 挿入用プラグイン</li>
+			<li>...etc</li>
+		</ul>
+
+		<p style="margin-top:1em;">
+			この春から<a href="http://www.digitalcube.jp/" title="株式会社デジタルキューブ｜WordPressなどのCMSコンサルティング">「め組」ことデジタルキューブ</a>さんと、一緒に仕事をやらせてもらってます。<br />
+			め組さんとの仕事では、主に既存 WordPress サイトの高速化とかやってます。
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>自己紹介 (wokamoto)</h2>
+
+		<div class="content">
+		<p>
+最近では、「め組」のたいさんと一緒に Nginx 公式サイトの日本語化にも貢献したりしました。<br />
+<a href="http://nginx.org/ja/">http://nginx.org/ja/</a><br />
+<a href="http://nginx.org/ja/">http://nginx.org/ja/docs/</a>
+		</p>
+		<p>
+<img src="./images/nginx.news.png" />
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>セッション概要</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+タイムテーブルには、上級者向けって書いてたのに「入門」なんてつけちゃって申し訳ない。<br />
+上級者には、やや物足りない内容になるかもですが、ご容赦を。
+		</p>
+
+		<p class="slide deck-after">
+今回は、バックエンド(サーバサイド)の高速化についての話をメインにします。<br />
+フロントエンド(クライアントサイド)の高速化については、プラグインや手法をちらっと紹介するにとどめます。
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>高速化に王道なし</h2>
+
+		<div class="content">
+<!---
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/300_01.jpg" />
+		</p>
+--->
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Debug Bar と Debug Bar Extendar</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+まずは、現状分析してボトルネックを探りましょう。<br />
+現状分析には Debug Bar と Debug Bar Extendar プラグインが便利です。
+		</p>
+<ul>
+<li><a href="http://wordpress.org/extend/plugins/debug-bar/">http://wordpress.org/extend/plugins/debug-bar/</a></li>
+<li><a href="http://wordpress.org/extend/plugins/debug-bar-extender/">http://wordpress.org/extend/plugins/debug-bar-extender/</a></li>
+</ul>
+		</div>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p>
+インストールしたら wp-config.php に以下の3行を追加します。<br />
+		</p>
+<pre><code>define('SAVEQUERIES', true);
+define('WP_DEBUG', true);
+define('WP_DEBUG_DISPLAY', false);</code></pre>
+		</div>
+
+		<p class="slide deck-after">
+Debug Bar と Debug Bar Extendar は、あくまでも WordPress の Debug をするためのプラグインです。<br />
+実稼動しているサイトでは、常時有効にしておく必要はありません。<br />
+分析が終わったら、無効にしておくことをオススメします。
+		</p>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>ボトルネックを探る</h2>
+
+		<div class="content">
+
+		<p>
+WordPress が遅くなる原因はおおまかにわけて以下の2つです。
+		</p>
+
+<ul class="slide deck-after">
+<li>PHP の処理が遅い</li>
+<li>MySQL の処理が遅い</li>
+</ul>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+ただし、これらが発生する原因は種々様々です。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>ボトルネックを探る</h2>
+
+		<div class="content">
+
+		<p>
+ただし、これらが発生する原因は種々様々です。
+		</p>
+
+<ul class="slide deck-after">
+<li>PHP の処理が遅い
+	<ul>
+	<li>プラグインを詰め込みすぎてて、そもそも処理自体が重くなってる</li>
+	<li>アクセスが多くて、処理が追いついてない</li>
+	</ul>
+</li>
+</ul>
+
+<ul class="slide deck-after">
+<li>MySQL の処理が遅い
+	<ul>
+	<li>プラグインを詰め込みすぎてて、そもそも発行される SQL クエリーが多い</li>
+	<li>発行している SQL クエリーが適切にチューニングされておらず時間がかかる</li>
+	<li>MySQL サーバと Web サーバが別立てになっていて、その間のネットワーク速度が遅い</li>
+	<li>MySQL サーバが適切にチューニングされておらず、パフォーマンスを出せていない</li>
+	</ul>
+</li>
+</ul>
+		</div>
+	</section>
+
+<!---
+	<section class="slide">
+		<h2>プラグインを詰め込みすぎてる</h2>
+
+		<div class="content">
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/300-movie-publicity-still-300-222280_800_600.jpg" />
+		</p>
+		</div>
+	</section>
+--->
+
+	<section class="slide">
+		<h2>プラグインを詰め込みすぎてる</h2>
+
+		<div class="content">
+		<p>
+簡単に WordPress に機能を追加できるプラグイン便利です。<br />
+でも、これを入れすぎると処理が全体的に重くなります。
+		</p>
+		<div class="slide deck-after">
+		<p>
+どのプラグインがボトルネックになっているかを探るには Debug Bar と Debug Bar Extendar が便利です。<br />
+これを導入して管理バーに表示されるメニュー「Debug」を見ることで、ある程度特定できます。
+		</p>
+		<p style="margin-top:1em;">
+<img src="./images/debugbar_2.png" />
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Debug Bar の Queries タブ</h2>
+
+		<div class="content">
+
+		<p>
+Queries タブでは WordPress 実行時に発行されたすべての SQL クエリーと、その実行時間が表示されます。
+		</p>
+		<p>
+<img src="./images/debugbar_1.png" />
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Debug Bar の Profiler タブ</h2>
+
+		<div class="content">
+
+		<p>
+Profiler タブでは、設定されたチェックポイントごとに実行時間を計測してくれます。<br />
+<img src="./images/debugbar_2.png" style="margin-top:1em;" />
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Debug Bar の Profiler タブ</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+テーマテンプレートに以下のようなコードを挿入することで、チェックポイントを独自に追加することもできます。<br />
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>&lt;?php
+if (class_exists('Debug_Bar_Extender')
+  Debug_Bar_Extender::instance()->checkpoint('loop start');
+?&gt;</code></pre>
+		</div>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+これで、ボトルネックになっている処理を特定することができます。
+		</p>
+
+		</div>
+	</section>
+
+<!---
+	<section class="slide">
+		<h2>そもそもアクセス数が多い</h2>
+
+		<div class="content">
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/300_02.jpg" />
+		</p>
+		</div>
+	</section>
+--->
+
+	<section class="slide">
+		<h2>そもそもアクセス数が多い</h2>
+
+		<div class="content">
+
+		<p>
+アクセス数が多いのは嬉しいことですが、非力なサーバに大量にアクセスされると、処理が追いつかなくなります。
+		</p>
+		<p>
+WordPress も版を重ねるに連れて、徐々にリソースを大量に要求するアプリケーションになってきました。
+		</p>
+		<p>
+メモリ不足でスワップ領域使い出したとか言うと目も当てられないことになります。
+		</p>
+		<p style="display:block;margin:0 auto;width:497px;">
+<img src="./images/5718272553_633e0b13ab.jpg" />
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>WordPress を極力動かさない</h2>
+
+		<div class="content">
+		<p class="slide deck-after">
+意外と落とし穴なのが、存在しないファイルへのアクセスで PHP プロセスが実行してしまう所。
+		</p>
+		<p class="slide deck-after" style="margin-top:1em;">
+WordPress をインストールし、カスタムパーマリンクを有効にすると、こんな .htaccess が設定されると思います。
+		</p>
+		<div class="slide deck-after">
+<pre><code># BEGIN WordPress
+&lt;IfModule mod_rewrite.c&gt;
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+&lt;/IfModule&gt;
+ 
+# END WordPress</code></pre>
+		</div>
+		<p class="slide deck-after" style="margin-top:1em;">
+これは、リクエストされたファイルが存在しない場合に WordPress を起動させるための設定です。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>WordPress を極力動かさない</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+存在しないファイルへのアクセスが有った場合には、必ず WordPress が呼び出されているのです。
+		</p>
+
+		<div class="slide deck-after">
+		<p>
+例えば、以下のファイルなんかは、ブラウザやクローラからファイルの有無を確認されることが多いです。
+		</p>
+<ul>
+<li>/favicon.ico</li>
+<li>/apple-touch-icon.png</li>
+<li>/robots.txt</li>
+<li>/crossdomain.xml</li>
+</ul>
+		<p>
+これらは、あらかじめ用意しておいたほうが良いですね。
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>WordPress を極力動かさない</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+.htaccess を以下のように修正すれば、Web サーバレベルで「404 Not Found」を返し、WordPress が呼び出されません。
+		</p>
+
+		<div class="slide deck-after">
+<pre><code># BEGIN WordPress
+&lt;IfModule mod_rewrite.c&gt;
+RewriteEngine On
+RewriteBase /
+<span style="color:red;">RewriteCond %{REQUEST_FILENAME}
+	 !\.(html?|xml|txt|xsl|js|css|jpe?g|png|gif|ico)$</span>
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+&lt;/IfModule&gt;
+ 
+# END WordPress</code></pre>
+		</div>
+		<p class="slide deck-after" style="margin-top:1em;">
+これは、リクエストされたファイルの拡張子で静的ファイルか判断し、静的ファイルへのリクエストの場合は WordPress を起動させないための設定です。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>WordPress を極力動かさない</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+WordPress をマルチサイト版で利用している場合、子サイトの静的ファイルへのアクセスでも PHP プロセスが起動しています。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p>
+マルチサイト版の子サイトでは、画像の URL が以下のような感じになりますが<br />
+		</p>
+		<p>
+http://hoge.example.com/files/2011/05/fuga.jpg
+		</p>
+		<p>
+実際にはサーバ上には /files/2011/05/fuga.jpg ってファイルは存在してません。
+		</p>
+		</div>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+WordPress が、どうやってこのファイルを処理しているかというと…
+		</p>
+
+<ul class="slide deck-after">
+<li>mod_rewrite で files/ を wp-includes/ms-files.php に置換<br />
+	RewriteRule ^files/(.+) wp-includes/ms-files.php?file=$1 [L]</li>
+<li>wp-includes/ms-files.php で<br />
+	/wp-content/blogs.dir/{blog ID}/files/2011/05/fuga.jpg を読んで出力</li>
+</ul>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>WordPress を極力動かさない</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+.htaccess で、以下のように設定してやれば wp-includes/ms-files.php を経由しないで、直接 Web サーバに応答させることができます。
+		</p>
+
+		<div class="slide deck-after">
+		<p>
+Web サーバとして Apache を採用していて、子サイトのサイト名が hoge.example.com で、ブログIDが2の場合。
+		</p>
+
+<pre><code>RewriteEngine On
+RewriteCond %{HTTP_HOST} ^hoge\.example\.com$
+RewriteRule ^(/files/.+) %{HTTP_HOST}$1 [C]
+RewriteRule ^hoge\.example\.com(/files/.*)
+	/wp-content/blogs.dir/2$1 [L]</code></pre>
+
+		<p>
+ただし、子サイトを追加したりした場合は、都度 .htaccess を手で修正してやらなければならないので注意が必要です。
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>静的ファイルに有効期限を設けよう</h2>
+
+		<div class="content">
+		<p class="slide deck-after">
+HTTP ヘッダの expires をセットし、静的ファイルに適切な有効期限を設けることで、クライアントのブラウザにキャッシュを保持してもらって Web サーバへのアクセスを減らせるかもしれません。
+		</p>
+
+		<div class="slide deck-after">
+		<p style="margin-top:1em;">
+Apache の .htaccess に書くなら、こんな感じ。
+		</p>
+<pre><code>&lt;IfModule mod_expires.c&gt;
+ExpiresActive On
+ExpiresDefault "access plus 1 seconds"
+ExpiresByType text/html "access plus 1 seconds"
+ExpiresByType image/gif "access plus 2592000 seconds"
+ExpiresByType image/jpeg "access plus 2592000 seconds"
+ExpiresByType image/png "access plus 2592000 seconds"
+ExpiresByType image/x-icon "access plus 2592000 seconds"
+ExpiresByType text/css "access plus 604800 seconds"
+ExpiresByType text/javascript "access plus 604800 seconds"
+ExpiresByType application/x-javascript "access plus 604800 seconds"
+&lt;/IfModule&gt;</code></pre>
+		</div>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+これで画像は30日、css・js などは7日間、ブラウザにキャッシュされます。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>.htaccess は、極力使わない</h2>
+
+		<div class="content">
+		<p class="slide deck-after">
+さて、今まで .htaccess に書こうと言ってきましたが、そもそも .htaccess の処理自体、かなり重い処理です。
+		</p>
+		<div class="slide deck-after">
+		<p>
+深い階層のサブディレクトリ内を見られたとき Apache は、全ての親ディレクトリをたどって継承元となる .htaccess が無いか確認し、あればマージします。
+		</p>
+		<p>
+もし、Apache を使用していて httpd.conf が修正できる場合は、これらの設定はすべて httpd.conf で行い .htaccess は使用しないようにした方が賢明です。
+		</p>
+		</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Apache 以外の Web サーバを試してみる</h2>
+
+		<div class="content">
+		<p class="slide deck-after">
+Apache は高機能な Web サーバですが WordPress を動作させるだけであれば、不要な機能も山盛りです。
+		</p>
+		<div class="slide deck-after">
+		<p>
+それらを削ってチューニングしていっても良いのですが、さらに軽量でチューニングも容易な <a href="http://www.lighttpd.net/" title="lighttpd fly light">lighttpd</a> や <a href="http://nginx.org/" title="nginx news">Nginx</a> で運用することも検討してみてはどうでしょうか？
+		</p>
+		<p style="display:block;margin:0 auto;width:580px;">
+<img src="./images/light_logo_170px.png" /> <img src="./images/nginx-logo.png"/>
+		</p>
+		</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Nginx の情報は、どこで手に入る？</h2>
+
+		<div class="content">
+		<p class="slide deck-after">
+Nginx は、設定ファイルの記述方法もわかり易いので、オススメです。
+		</p>
+		<div class="slide deck-after">
+		<p>
+公式サイトの文書も、先日「め組」のたいさんと私が日本語訳しました。<br />
+		</p>
+<ul>
+<li><a href="http://nginx.org/ja/">http://nginx.org/ja/</a></li>
+<li><a href="http://nginx.org/ja/">http://nginx.org/ja/docs/</a></li>
+</ul>
+		</p>
+		</div>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+Nginx + fastcgi で構成しても良いですし、Nginx をリバースプロキシとして動作させ、静的ファイルへのリクエストは Nginx で捌きつつ、バックグラウンドで Apache + mod_php をアプリケーションサーバとして動作させても良いです。<br />
+実際 <a href="wordbench.org">wordbench.org</a> のサーバは、この構成で動作しています。<br />
+<img src="./images/wordbench.png" style="display:block;margin:1em auto 0;" />
+		</p>
+
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>それでも負荷が高い場合</h2>
+
+		<div class="content">
+		<p class="slide deck-after">
+サーバを多重化させてスケールアウトさせることも視野に入れてみましょう。
+		</p>
+		<div class="slide deck-after">
+		<p>
+Nginx なら、わりと簡単にスケールアウトさせることができます。<br />
+例えば、バックエンドのアプリケーションサーバ(192.168.0.2:8000) を追加した場合、こんな感じです。
+		</p>
+<pre><code>http {
+   ：
+    upstream backend {
+        ip_hash;
+        server 127.0.0.1:8000;
+        <span style="color:red;">server 192.168.0.2:8000;</span>
+    }
+
+    server {
+        listen       80;
+        server_name  _;
+        root    /var/www/html;
+        index   index.php index.html index.htm;
+        location ~ .*\.php { proxy_pass http://backend; }
+        location ~ /\.ht { deny  all; }
+        location ~ .*\.(txt|xml|html?|js|css|gz|ico|jpe?g|gif|png|wmv|flv|swf|mpg) {
+            access_log  off;
+            expires 30d;
+            break;
+        }
+        location / { proxy_pass http://backend; }
+    }
+   ：
+}</code></pre>
+		</div>
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>サーバを多重化させた場合の WordPress のコアソースや、プラグインの同期は？</h2>
+
+		<div class="content">
+		<div class="slide deck-after">
+		<p>
+WordPress がインストールされているディレクトリ内のファイルの同期には lsyncd 辺りを使えば良いでしょう。
+		</p>
+		<p style="margin-top:1em;">
+lsyncd は linux kernel 2.6.13 で導入された iNotify という API を使って動作しています。<br />
+この API を使うと、ファイルの作成や削除などをそれぞれイベントとして取得することができます。<br />
+lsyncd では、この API と rsync を組み合わせてリアルタイムなファイル同期を実現しています。
+		</p>
+		<p style="margin-top:1em;">
+詳細な設定方法は、僕とこのブログで解説してます。
+		</p>
+		<p style="margin-top:1em;">
+<a href="http://dogmap.jp/EI">http://dogmap.jp/EI</a>
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>PHP の処理速度をあげる</h2>
+
+		<div class="content">
+		<div class="slide deck-after">
+WordPress は PHP で記述されたアプリケーションです。<br />
+PHP は、実行するたびにソースから中間コードを生成しています。<br />
+eAccelerator や APC は、この中間コードをキャッシュして PHP の処理速度自体を高速化してくれます。
+		</p>
+		<p style="display:block;margin:0 auto;width:250px;">
+<img src="./images/eAccelerator.png" />
+		</p>
+		</div>
+
+		<div class="slide deck-after">
+		<p>
+インストール方法とかは、そこら中に情報転がってると思うので割愛。<br />
+動作しているか確認するには php -i で確認しましょう。
+		</p>
+		<p>
+eAccelerator の場合は
+		</p>
+<pre><code>$ php -i | grep eAccelerator
+    with eAccelerator v0.9.6.1, Copyright (c) 2004-2010 eAccelerator, by eAccelerator
+eAccelerator
+eAccelerator support => enabled</code></pre>
+		<p>
+APC の場合は
+		</p>
+<pre><code>$ php -i | grep apc
+apc
+apc.cache_by_default => On => On
+apc.canonicalize => On => On
+apc.coredump_unmap => Off => Off
+apc.enable_cli => Off => Off
+apc.enabled => On => On
+apc.file_md5 => Off => Off
+apc.file_update_protection => 2 => 2
+apc.filters => no value => no value
+apc.gc_ttl => 3600 => 3600
+apc.include_once_override => Off => Off
+apc.lazy_classes => Off => Off
+apc.lazy_functions => Off => Off
+apc.max_file_size => 1M => 1M
+apc.mmap_file_mask => no value => no value
+apc.num_files_hint => 1000 => 1000
+apc.preload_path => no value => no value
+apc.report_autofilter => Off => Off
+apc.rfc1867 => Off => Off
+apc.rfc1867_freq => 0 => 0
+apc.rfc1867_name => APC_UPLOAD_PROGRESS => APC_UPLOAD_PROGRESS
+apc.rfc1867_prefix => upload_ => upload_
+apc.rfc1867_ttl => 3600 => 3600
+apc.shm_segments => 1 => 1
+apc.shm_size => 32M => 32M
+apc.slam_defense => On => On
+apc.stat => On => On
+apc.stat_ctime => Off => Off
+apc.ttl => 0 => 0
+apc.use_request_time => On => On
+apc.user_entries_hint => 4096 => 4096
+apc.user_ttl => 0 => 0
+apc.write_lock => On => On </code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>さらに速度が必要？</h2>
+
+		<div class="content">
+		<p class="slide deck-after">
+さらに速度が必要な場合は、中間コード生成元の PHP ファイルが変更されたかどうかのチェックを止めさせましょう。
+		</p>
+
+		<div class="slide deck-after">
+		<p>
+eAccelerator の場合、php.ini に以下を追加
+		</p>
+<pre><code>eaccelerator.check_mtime='0'</code></pre>
+		</div>
+
+		<div class="slide deck-after">
+		<p>
+APC の場合、php.ini に以下を追加
+		</p>
+<pre><code>apc.stat=FALSE</code></pre>
+		</div>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p style="margin-top:1em;">
+ただし、これやると WordPress でテーマファイル修正したとか、WordPress 本体とかプラグインとかアップデートしたときに中間コードのキャッシュを自動で再作成してくれません。
+		</p>
+		<p style="margin-top:1em;">
+そんな時は、手動でキャッシュを消すことを忘れずに。
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>さて、結果は？</h2>
+
+		<div class="content">
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p style="margin-top:1em;">
+Debug Bar で、見てみましょう。一目瞭然ですね。
+		</p>
+
+		<p style="display:block;margin:1em auto 0;width:470px;">
+<img src="./images/eAccelerator_11.png" /><img src="./images/eAccelerator_12.png" />
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Object Cache</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+WordPress には object cache という仕組みがあります。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p>
+WordPress のパフォーマンスチューニングで、以下のような手法が紹介されることが多いと思います。
+		</p>
+<pre><code>&lt;?php bloginfo('stylesheet_url') ?&gt;</code></pre>
+		<p>
+上のようなテンプレートタグは MySQL サーバにアクセスして遅くなるので、直接書いておけ。
+		</p>
+<pre><code>http://example.jp/wp-content/themes/example/style.css</code></pre>
+		</div>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+これ、実は効果ありません。
+		</p>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+WordPress では options テーブル上で autoload に設定されているデータについては、初期の段階ですべて読み込んで object cache します。<br />
+なので、bloginfo() を呼び出していようが居まいが、必ず MySQL サーバへのアクセスは発生してます。
+また、bloginfo() を何回呼び出しても object cache からデータを取得するので、処理速度的にはまったく関係ありません。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Object Cache されたデータを保存する</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+この object cache ですが、せっかく取得してきたデータは WordPress のプロセスが終了すると破棄されてしまいます。<br />
+このデータを memcached などにキャッシュさせておくプラグイン(正確にはドロップイン)もあります。
+		</p>
+
+		<ul class="slide deck-after" style="margin-top:1em;">
+<li><a href="http://wordpress.org/extend/plugins/memcached/" title="WordPress &gt; Memcached Object Cache « WordPress Plugins">Memcached Object Cache</a></li>
+<li><a href="http://wordpress.org/extend/plugins/apc/" title="WordPress &gt; APC Object Cache Backend « WordPress Plugins">APC Object Cache Backend</a></li>
+<li><a href="http://wordpress.org/extend/plugins/wp-file-cache/" title="WordPress &gt; WP File Cache « WordPress Plugins">WP File Cache</a></li>
+		</ul>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+これらを導入することで、object cache されたデータを使いまわすことができます。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Memcached Object Cache</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+で、こいつの効果はと言うと...
+		</p>
+
+		<p class="slide deck-after" style="display:block;margin:0 auto 0;width:470px;">
+クエリー数が劇的に減少してますね<br />
+<img src="./images/debugbar_5.png" />
+<br />
+処理速度も、多少の改善が見られます<br />
+<img src="./images/debugbar_6.png" />
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Memcached Object Cache</h2>
+
+		<div class="content">
+
+		<p>
+ちなみに memcached サーバを別立てで用意している場合は wp-config.php に以下の記述を追加すればOK
+		</p>
+
+		<div class="slide deck-after">
+<pre><code>global $memcached_servers;
+$memcached_servers = array('192.168.0.2:11211');</code></pre>
+
+		<p>
+※別サーバが 192.168.0.2 で memcached のポートが 11211 の場合<br />
+&nbsp;複数サーバを指定することもできます。
+		</p>
+
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>PHP の実行結果をキャッシュ</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+そもそも、毎回 PHP で動的にページを組み立ててるから、処理に時間がかかるんじゃねーの？ってことで開発されたプラグインが有名なアレらです。
+		</p>
+
+		<ul class="slide deck-after" style="margin-top:1em;">
+<li><a href="http://wordpress.org/extend/plugins/wp-super-cache/" title="WordPress &gt; WP Super Cache « WordPress Plugins">WP Super Cache</a></li>
+<li><a href="http://wordpress.org/extend/plugins/w3-total-cache/" title="WordPress &gt; W3 Total Cache « WordPress Plugins">W3 Total Cache</a></li>
+		</ul>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+これらは、あまりにも有名なので説明は省きます。
+		</p>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+リバースプロキシを使えば、これらのプラグインを使わなくても WordPress の処理結果をキャッシュしておくことが簡単にできます。
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>リバースプロキシで、PHP の実行結果をキャッシュ</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+ここでは Nginx をリバースプロキシとして使用し WordPress の実行結果をキャッシュさせてみましょう。<br />
+もちろん Vanish とか、他のプロジェクトを使っても良いです。
+		</p>
+
+		<div class="slide deck-after">
+		<p>
+nginx.conf にこんな感じで記述します。
+		</p>
+<pre><code>http {
+  :
+  proxy_cache_path  /var/cache/nginx levels=1:2 keys_zone=czone:32m max_size=256m inactive=120m;
+  proxy_temp_path   /var/tmp/nginx;
+  proxy_cache_key   "$scheme://$host$request_uri$is_args$args";
+  proxy_set_header  Host               $host;
+  proxy_set_header  X-Real-IP          $remote_addr;
+  proxy_set_header  Remote-Addr        $remote_addr;
+  proxy_set_header  X-Forwarded-Host   $host;
+  proxy_set_header  X-Forwarded-Server $host;
+  proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
+  client_max_body_size 50m;
+  client_body_buffer_size 256k;
+  proxy_connect_timeout 30;
+  proxy_send_timeout 30;
+  proxy_read_timeout 60;
+  :</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>リバースプロキシで、PHP の実行結果をキャッシュ</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+<pre><code>server {
+  :
+  location / {
+    if ($http_cookie ~* "comment_author_[^=]*=([^%]+)%7C|wordpress_logged_in_[^=]*=([^%]+)%7C") {
+      set $do_not_cache 1;
+    }
+
+    proxy_no_cache     $do_not_cache;
+    proxy_cache_bypass $do_not_cache;
+
+    proxy_redirect off;
+    proxy_cache czone;
+    proxy_cache_key "$scheme://$host$request_uri$is_args$args";
+    proxy_cache_valid  200 10m;
+    proxy_cache_valid  404 5m;
+    proxy_pass http://backend;
+  }
+}</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>リバースプロキシで、PHP の実行結果をキャッシュ</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after" style="margin-top:1em;">
+WP Super Cache と Ktai Style を併用する場合、ケータイからのアクセスがあった時は WP Super Cache が動作しないようにしていると思います。<br />
+ケータイからのアクセスが有る程度多いサイトだと、これではもったいないですね。
+		</p>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+Nginx のプロキシキャッシュでは、ユーザーエージェントごとにキャッシュを生成することもできます。
+		</p>
+
+		<div class="slide deck-after">
+		<p>
+こんな感じですね。
+		</p>
+
+<pre><code>if ($http_user_agent ~* '(DoCoMo|J-PHONE|Vodafone|MOT-|UP\.Browser|DDIPOCKET|ASTEL|PDXGW|Palmscape|Xiino|sharp pda browser|Windows CE|L-mode|WILLCOM|SoftBank|Semulator|Vemulator|J-EMULATOR|emobile|mixi-mobile-converter)') {
+  set $mobile 1;
+}
+if ($http_user_agent ~* '(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)') {
+  set $mobile 2;
+}
+:
+proxy_cache_key "$scheme://$host$request_uri$is_args$args$mobile";</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+
+	<section class="slide">
+		<h2>そもそも発行される SQL クエリーが多い</h2>
+
+		<div class="content">
+<!---
+		<p style="display:block;margin:0 auto;width:800px;">
+<img src="./images/300_03.jpg" />
+		</p>
+--->
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Debug Bar の Queries タブで確認</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+総発行クエリー数は Debug Bar の Queries タブで確認できます。
+		</p>
+
+		<p>
+プラグインで解決できる場合もあります。
+		</p>
+
+		<p style="margin-top:1em;">
+<img src="./images/debugbar_1.png" />
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>DB Cache Reloaded Fix</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+DB Cache Reloaded Fix は SQL クエリーの結果をディスクにキャッシュしてくれるプラグインです。
+		</p>
+		<ul>
+<li><a href="http://wordpress.org/extend/plugins/db-cache-reloaded-fix/" title="WordPress &gt; DB Cache Reloaded Fix « WordPress Plugins">DB Cache Reloaded Fix</a></li>
+		</ul>
+		<p>
+日本語リソースは僕が作ったんで、もしおかしな訳を見つけたら、こっそり教えてください。
+		</p>
+
+		<p style="margin-top:1em;">
+<img src="./images/db-cache_1.png" />
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>DB Cache Reloaded Fix</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+このプラグインは MySQL に対して発行された SQL クエリーの処理結果をディスク上にキャッシュしておいて MySQL サーバに対するクエリー発行を軽減してくれます。
+		</p>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+ただし MySQL サーバ自体が適切にチューニングされていて、キャッシュから取ってくるより MySQL サーバから直接取ってくるほうが速い場合もあります。
+この辺は、良く見極めて使いましょう。
+		</p>
+
+		<p class="slide deck-after" style="display:block;margin:0 auto 0;width:470px;">
+クエリー数は減ったけど<br />
+<img src="./images/debugbar_3.png" />
+<br />
+処理時間は増えた<br />
+<img src="./images/debugbar_4.png" />
+		</p>
+
+		</div>
+	</section>
+
+<!---
+	<section class="slide">
+		<h2>MySQL サーバのチューニング</h2>
+
+		<div class="content">
+		<p style="display:block;margin:1em auto 0;width:800px;">
+<img src="./images/300_04.jpg" />
+		</p>
+
+		</div>
+	</section>
+--->
+
+	<section class="slide">
+		<h2>MySQL サーバのチューニング</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+MySQL サーバの現状を知るには MySQLTuner を使用すると便利です。<br />
+これは稼働中の MySQL の設定情報やログ情報からセキュリティ、パフォーマンスに関する診断結果と推奨情報を提供してくれる perl スクリプトです。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p>
+MySQLTuner をダウンロードしましょう。
+		</p>
+
+<pre><code>$ wget mysqltuner.pl</code></pre>
+
+		<p>
+余談ですが、これ面白いすよね。<br />
+http://mysqltuner.pl/ を http://mysqltuner.pl/mysqltuner.pl に302リダイレクトすることによって<br />
+「wget mysqltuner.pl」だけで mysqltuner.pl をダウンロードできるようにしてる。
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>MySQL サーバのチューニング</h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+実行して診断してみましょう。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+<pre><code>$ perl mysqltuner.pl
+
+ >>  MySQLTuner 1.2.0 - Major Hayden <major@mhtx.net>
+ >>  Bug reports, feature requests, and downloads at http://mysqltuner.com/
+ >>  Run with '--help' for additional options and output filtering
+Please enter your MySQL administrative login: xxxxxx
+Please enter your MySQL administrative password:
+
+-------- General Statistics --------------------------------------------------
+[--] Skipped version check for MySQLTuner script
+[OK] Currently running supported MySQL version 5.5.15-log
+[OK] Operating on 32-bit architecture with less than 2GB RAM
+
+  :
+  :
+-------- Recommendations -----------------------------------------------------
+General recommendations:
+    Run OPTIMIZE TABLE to defragment tables for better performance
+    MySQL started within last 24 hours - recommendations may be inaccurate
+    When making adjustments, make tmp_table_size/max_heap_table_size equal
+    Reduce your SELECT DISTINCT queries without LIMIT clauses
+Variables to adjust:
+    tmp_table_size (> 48M)
+    max_heap_table_size (> 48M)
+</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+
+
+	<section class="slide">
+		<h2>クライアントサイドのチューニング</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+クライアント側で重くなる原因は、データ量が多いとか色々考えられます。<br />
+この辺は「ハイパフォーマンス Web サイト」を読みましょう。
+		</p>
+		<p style="display:block;margin:1em auto 0;width:391px;">
+<a href="http://www.amazon.co.jp/%E3%83%8F%E3%82%A4%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9Web%E3%82%B5%E3%82%A4%E3%83%88-%E2%80%95%E9%AB%98%E9%80%9F%E3%82%B5%E3%82%A4%E3%83%88%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%99%E3%82%8B14%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB-Steve-Souders/dp/487311361X%3FSubscriptionId%3DAKIAIU4DT5KBIGKR6XJQ%26tag%3Ddogmatismandp-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D487311361X" title="Amazon で商品の詳細を確認する"><img src="./images/51hIDIWHmYL._SL640_.jpg" /></a>
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>Expiresヘッダーを追加しよう!</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+サーバサイドのチューニングの時にも紹介しましたが、Apache なら mod_expires を使いましょう。<br />
+Nginx なら、expires xxd って書いてあげるだけでよいです。
+		</p>
+<pre><code>http {
+ ：
+  server {
+    listen 80;
+    server_name  _;
+    root    /var/www/html;
+    # static files
+    location ~ .*\.(txt|xml|html?|jpe?g|JPE?G|gif|GIF|png|PNG|swf|SWF|wmv|WMV|flv|FLV|css|CSS|js|JS|inc|ico|gz) {
+      index   index.html index.htm;
+      <span style="color:red;">expires 14d;</span>
+      break;
+    }
+ ：
+  }
+ ：
+}</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>コンポーネントを圧縮しよう!</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+Apache なら mod_deflate を使いましょう。
+		</p>
+<pre><code>&lt;IfModule mod_deflate.c&gt;
+SetOutputFilter DEFLATE
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|ico)$ no-gzip dont-vary
+SetEnvIfNoCase Request_URI _\.utxt$ no-gzip
+#DeflateCompressionLevel 4
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/atom_xml
+AddOutputFilterByType DEFLATE application/x-javascript
+AddOutputFilterByType DEFLATE application/x-httpd-php
+&lt;/IfModule&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>コンポーネントを圧縮しよう!</h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+Nginx なら、こんな感じ。
+		</p>
+<pre><code>http {
+ ：
+  gzip              on;
+  gzip_http_version 1.0;
+  gzip_vary         on;
+  gzip_comp_level   6;
+  gzip_types        text/html text/xml text/css application/xhtml+xml application/xml application/rss+xml application/atom_xml application/x-javascript application/x-httpd-php;
+  gzip_disable      "MSIE [1-6]\.";
+ ：
+}</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>コードのサイズを圧縮する! </h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+僕の作ったプラグイン Head Cleaner が役に立つかもしれません。
+		</p>
+<ul>
+<li><a href="http://wordpress.org/extend/plugins/head-cleaner/" title="WordPress &gt; Head Cleaner « WordPress Plugins">Head Cleaner</a></li>
+</ul>
+		</div>
+
+		<div class="slide deck-after">
+		<p>
+また、以下のサイトでは、JavaScript を Minify してくれます。
+		</p>
+<ul>
+<li><a href="http://jscompress.com/" title="WordPress &gt; Head Cleaner « WordPress Plugins">http://jscompress.com/</a></li>
+</ul>
+		</div>
+
+		<p class="slide deck-after">
+こういったツールを使用して JavaScript や、css をコンパクトにしましょう。<br />
+ただ gzip 圧縮転送している場合は、これらで小さくしてもそんなにサイズ変わらなかったりするんですけどね...
+		</p>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>スクリプトの重複に気をつける!  </h2>
+
+		<div class="content">
+
+		<p class="slide deck-after">
+行儀の悪いプラグインやテーマを使っていると jQuery を複数読み込まれてしまうことがあります。
+		</p>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+WordPress には jQuery などの JavaScript ライブラリを複数読み込まないようにする仕組みがあります。
+		</p>
+
+		<p class="slide deck-after" style="margin-top:1em;">
+それが wp_enqueue_script() です。
+		</p>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p>
+jQuery を使用しているプラグインがある場合、テーマに直接
+		</p>
+<pre><code>&lt;script type='text/javascript' src='http://example.com/js/jquery.js'&gt;
+&lt;/script&gt;</code></pre>
+		<p>
+とかって書いておくと、jQuery が複数呼び出される場合があります。
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>スクリプトの重複に気をつける!  </h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+そういうときは、テーマテンプレートの header.php の冒頭に
+		</p>
+<pre><code>&lt;?php wp_enqueue_script('jquery'); ?&gt;</code></pre>
+		<p>
+と書いておくだけで良いです。
+		</p>
+		</div>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p>
+ただし、古いプラグインや行儀の悪いプラグインが、直接 head 部にスクリプトを書き出しているかもしれません。<br />
+これは修正してあげましょう。
+		</p>
+		</div>
+
+		</div>
+	</section>
+
+	<section class="slide">
+		<h2>CDN を使おう! </h2>
+
+		<div class="content">
+
+		<div class="slide deck-after">
+		<p>
+CDN を使って静的ファイルを配信するには、以下のプラグインが役に立つかもしれません。
+		</p>
+<ul>
+<li><a href="http://wordpress.org/extend/plugins/tantan-s3/" title="WordPress &gt; Amazon S3 for WordPress « WordPress Plugins">Amazon S3 for WordPress</a></li>
+</ul>
+		</p>
+これを使うことによって、静的ファイルを Amazon の CloudFront から配信することができます。
+		</p>
+		</div>
+
+		<div class="slide deck-after" style="margin-top:1em;">
+		<p>
+また、手っ取り早く jQuery だけ Google AJAX Libraries のモノを使わせることもできます。<br />
+テーマテンプレートの header.php の冒頭に、以下のように書いておきましょう。
+		</p>
+
+<pre><code>&lt;?php
+wp_deregister_script('jquery');
+wp_enqueue_script(
+  'jquery',
+  'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js',
+  array(),
+  '1.6.1');
+?&gt;</code></pre>
+		</div>
+
+		</div>
+	</section>
+
+<!---
+	<section class="slide">
+		<h2>さぁ、やってみよう</h2>
+
+		<div class="content">
+		<p style="display:block;margin:1em auto 0;width:800px;">
+<img src="./images/300_05.jpg" />
+		</p>
+
+		</div>
+	</section>
+--->
+
+	<section class="slide" id="final">
+		<h2>ご清聴ありがとうございました</h2>
+
+		<div class="content">
+		<p style="margin:3em;">
+			wokamoto ( OKAMOTO Wataru )<br />
+			blog: <a href="http://dogmap.jp/">http://dogmap.jp/</a><br />
+
+			twitter: <a href="http://twitter.com/wokamoto">http://twitter.com/wokamoto</a><br />
+			facebook: <a href="http://www.facebook.com/dogmap.jp">http://www.facebook.com/dogmap.jp</a>
+		</p>
+
+		<p style="margin:3em;">
+			今回のプレゼン資料は、下記URLで公開しています。<br />
+			<a href="http://dogmap.jp/wckobe2011/">http://dogmap.jp/wckobe2011/</a>
+
+		</p>
+
+		<div id="version">2011-09-11</div>
+
+		<div id="author">
+			<a href="http://dogmap.jp/" title="dogmap.jp">dogmap.jp</a>
+		</div>
+		</div>
+	</section>
+
+<!--
+	<a href="#" class="deck-prev-link deck-nav-disabled" title="Previous">←</a>
+	<a href="#sample" class="deck-next-link" title="Next">→</a>
+	
+	<p class="deck-status">
+		<span class="deck-status-current">1</span>
+		/
+		<span class="deck-status-total">15</span>
+	</p>
+-->
+</article>
+
+<footer>
+	<p>2011-09-11 <a href="http://kobe2011.wordcamp.jp/">WordCamp KOBE 2011</a></p>
+</footer>
+	
+<script src="js/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js">\x3C/script>')</script>
+	
+<script src="js/deck.core.js"></script>
+<script src="js/deck.goto.js"></script>
+<script src="js/deck.navigation.js"></script>
+<script src="js/deck.status.js"></script>
+<script src="js/deck.hash.js"></script>
+<script src="js/deck.menu.js"></script>
+<script src="js/home.js"></script>
+
+
+
+</body></html>

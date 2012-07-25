@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: short-link-maker.0.1.1\n"
+"POT-Creation-Date: 2009-10-26 15:48+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: WordPressPluginGuide.com <info@wppg.me>\n"
+"Language-Team: WPPG.me <info@wppg.me>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+# Description
+msgid "This is a plugin creating a shorter URL of post, page and media permalink."
+msgstr "Dit is een plugin voor het creëren van een kortere URL van een bericht, pagina of media permalink."
+
+#: ../short-link-maker.php:176
+msgid "Tweet this"
+msgstr "Tweet dit"
+
+#: ../short-link-maker.php:230
+#: ../short-link-maker.php:231
+#: ../short-link-maker.php:260
+msgid "Short link"
+msgstr "Korte link"
+
+#: ../short-link-maker.php:251
+msgid "Please publish to get Short links."
+msgstr "Gelieve te publiceren om korte links te verkrijgen."
+

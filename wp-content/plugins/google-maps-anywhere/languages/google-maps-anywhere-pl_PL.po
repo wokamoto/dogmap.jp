@@ -1,0 +1,192 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: google-maps-anywhere\n"
+"POT-Creation-Date: 2008-08-07 15:00+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Barbara Muszko <e-wsparcie@e-wsparcie.com.pl>\n"
+"Language-Team: e-wsparcie Barbara Muszko <e-wsparcie@e-wsparcie.com.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: POLAND\n"
+
+# description
+msgid "Add Google Maps to your posts and pages.(Only for WordPress 2.5+)"
+msgstr "Dodaj Google Maps do swojego wpisu i strony. (Tylko WordPress 2.5+)"
+
+msgid "http://maps.google.com/maps"
+msgstr "http://maps.google.com/maps"
+
+#: ../googlemaps-anywhere.php:229
+msgid "Move to the Google Maps."
+msgstr "Przejdź do Google Maps."
+
+#: ../googlemaps-anywhere.php:231
+#: ../googlemaps-anywhere.php:232
+#: ../googlemaps-anywhere.php:233
+#: ../googlemaps-anywhere.php:676
+#: ../googlemaps-anywhere.php:727
+#: ../googlemaps-anywhere.php:730
+#: ../googlemaps-anywhere.php:733
+msgid "Error: "
+msgstr "Błąd:"
+
+#: ../googlemaps-anywhere.php:231
+#: ../googlemaps-anywhere.php:676
+#: ../googlemaps-anywhere.php:727
+msgid "No panorama data was found."
+msgstr "Panoramicznych danych nie znaleziono."
+
+#: ../googlemaps-anywhere.php:232
+#: ../googlemaps-anywhere.php:730
+msgid "Flash doesn't appear to be supported by your browser."
+msgstr "Flash wydaje się nie być obsługiwany przez Twoją przeglądarkę."
+
+#: ../googlemaps-anywhere.php:233
+#: ../googlemaps-anywhere.php:733
+msgid "Unknown Error."
+msgstr "Nieznany błąd."
+
+#: ../googlemaps-anywhere.php:302
+msgid "Add Google Maps"
+msgstr "Dodaj Mapę Google"
+
+#: ../googlemaps-anywhere.php:334
+#: ../googlemaps-anywhere.php:580
+msgid "Place Name"
+msgstr "Nazwa miejsca"
+
+#: ../googlemaps-anywhere.php:335
+#: ../googlemaps-anywhere.php:581
+#: ../googlemaps-anywhere.php:823
+msgid "Width"
+msgstr "Szerokość"
+
+#: ../googlemaps-anywhere.php:336
+#: ../googlemaps-anywhere.php:582
+#: ../googlemaps-anywhere.php:824
+msgid "Height"
+msgstr "Wysokość"
+
+#: ../googlemaps-anywhere.php:338
+#: ../googlemaps-anywhere.php:584
+#: ../googlemaps-anywhere.php:828
+#: ../googlemaps-anywhere.php:833
+msgid "Lat"
+msgstr "Szerokość geograficzna"
+
+#: ../googlemaps-anywhere.php:339
+#: ../googlemaps-anywhere.php:585
+#: ../googlemaps-anywhere.php:829
+#: ../googlemaps-anywhere.php:834
+msgid "Lng"
+msgstr "Długość geograficzna"
+
+#: ../googlemaps-anywhere.php:341
+#: ../googlemaps-anywhere.php:590
+msgid "Zoom"
+msgstr "Powiększenie"
+
+#: ../googlemaps-anywhere.php:344
+#: ../googlemaps-anywhere.php:593
+msgid "Insert into Post"
+msgstr "Dodaj do wpisu"
+
+#: ../googlemaps-anywhere.php:349
+msgid "Key"
+msgstr "Klucz"
+
+#: ../googlemaps-anywhere.php:350
+msgid "Value"
+msgstr "Wartość"
+
+#: ../googlemaps-anywhere.php:353
+msgid "Add Custom Field"
+msgstr "Dodaj niestandardowe pole"
+
+#: ../googlemaps-anywhere.php:587
+msgid "Yaw"
+msgstr "Odchylenie"
+
+#: ../googlemaps-anywhere.php:588
+msgid "Pitch"
+msgstr "Kompresja"
+
+#: ../googlemaps-anywhere.php:795
+msgid "Done!"
+msgstr "Gotowe!"
+
+#: ../googlemaps-anywhere.php:798
+msgid "Please Enter Your Google Maps API Key"
+msgstr "Wpisz Twój klucz Google Maps API"
+
+#: ../googlemaps-anywhere.php:805
+msgid "Your Google Maps API Key"
+msgstr "Twój klucz Google Maps API "
+
+#: ../googlemaps-anywhere.php:808
+msgid "API Key"
+msgstr "Klucz API"
+
+#: ../googlemaps-anywhere.php:809
+#, php-format
+msgid "(don't have one? get one <a href=%s>here</a>)"
+msgstr "(Nie masz? Wygeneruj <a href=%s>tutaj</a>)"
+
+#: ../googlemaps-anywhere.php:813
+msgid "Current API Key"
+msgstr "Aktualny klcz API"
+
+#: ../googlemaps-anywhere.php:819
+msgid "Option"
+msgstr "Opcje"
+
+#: ../googlemaps-anywhere.php:822
+msgid "Default Size"
+msgstr "Domyślny rozmiar"
+
+#: ../googlemaps-anywhere.php:827
+msgid "Initial position <br />(Google Maps)"
+msgstr "Pozycja początkowa <br />(Mapy Google)"
+
+#: ../googlemaps-anywhere.php:832
+#: ../googlemaps-anywhere.php:837
+msgid "Initial position <br />(Street View)"
+msgstr "Pozycja początkowa <br />(Widok ulicy)"
+
+#: ../googlemaps-anywhere.php:838
+msgid "Google Maps URL"
+msgstr "URL Mapy Google"
+
+#: ../googlemaps-anywhere.php:844
+msgid "Update Options"
+msgstr "Aktualizuj ustawienia"
+
+#: ../googlemaps-anywhere.php:855
+#: ../googlemaps-anywhere.php:861
+#: ../googlemaps-anywhere.php:868
+#: ../googlemaps-anywhere.php:873
+msgid "Google Maps"
+msgstr "Mapy Google"
+
+#: ../googlemaps-anywhere.php:856
+#: ../googlemaps-anywhere.php:869
+msgid "Street View"
+msgstr "Widok z poziomu ulicy"
+
+#: ../googlemaps-anywhere.php:857
+#: ../googlemaps-anywhere.php:862
+#: ../googlemaps-anywhere.php:1110
+#: ../includes/common-controller.php:166
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: ../googlemaps-anywhere.php:1059
+msgid "Map of this location"
+msgstr "Mapa tej lokalizacji"
+
+#: ../googlemaps-anywhere.php:1102
+msgid "Google Maps Anywhere"
+msgstr "Google Maps Anywhere"
+

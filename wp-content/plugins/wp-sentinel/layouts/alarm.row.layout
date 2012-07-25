@@ -1,0 +1,5 @@
+<tr>
+	<td style='font-size: 10px;'>
+		- Variable <b>{VARIABLE}</b> of the {SCOPE} method triggered the filter <b>'{ALARM}'</b> for the content '<em>{CONTENT}</em>'.
+	</td>
+</tr>

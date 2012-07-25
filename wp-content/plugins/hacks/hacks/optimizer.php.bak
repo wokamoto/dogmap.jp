@@ -1,0 +1,97 @@
+<?php
+/*
+Plugin Name: table optimizer
+Plugin URI: 
+Description: optimize table
+Version: 0.0.2
+Author: wokamoto
+Author URI: http://dogmap.jp/
+Text Domain: optimizer
+Domain Path: lang
+
+ Released under the GPL license
+  http://www.gnu.org/copyleft/gpl.html
+
+  Copyright (c) 2009 - wokamoto - wokamoto1973@gmail.com
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+define('OPTIMIZER_INTERVAL', 24 * 60);
+define('OPTIMIZER_SCHEDULE_HANDLER', 'optimize_table');
+
+class OptimizeTable {
+
+	function optimize_table(){
+		global $wpdb, $table_prefix;
+
+		$tables = $wpdb->get_col('SHOW TABLES');
+		$pattern = '/^'. preg_quote($wpdb->prefix) . '/i';
+		foreach ( $tables as $table ) {
+			if ( preg_match( $pattern, $table ) ) {
+				$wpdb->query("OPTIMIZE TABLE $table");
+			}
+		}
+
+		$time_interval = OPTIMIZER_INTERVAL;
+		$this->schedule_single_event($time_interval);
+	}
+
+	// get wp-cron schedule
+	function _get_schedule($schedule_procname = OPTIMIZER_SCHEDULE_HANDLER) {
+		$schedule = array(
+			'procname' => '' ,
+			'enabled' => FALSE ,
+			'time' => '' ,
+		);
+
+		$crons = _get_cron_array();
+		if ( empty($crons) ) {
+			$schedule['text'] = 'Nothing scheduled.';
+		} else {
+			foreach ( $crons as $time => $tasks ) {
+				foreach ( $tasks as $procname => $task ) {
+					if ($procname === OPTIMIZER_SCHEDULE_HANDLER) {
+						$schedule['procname'] = $procname;
+						$schedule['time'] = $time;
+						$schedule['enabled'] = true;
+						break;
+					}
+				}
+				if ($schedule['enabled']) break;
+			}
+			unset($procname); unset($task);
+			unset($time); unset ($tasks);
+		}
+		unset($crons);
+
+		return ($schedule);
+	}
+
+	function schedule_single_event($time_interval = OPTIMIZER_INTERVAL) {
+		return (wp_schedule_single_event(time() + $time_interval * 60, OPTIMIZER_SCHEDULE_HANDLER));
+	}
+
+	function schedule_enabled($schedule_procname = OPTIMIZER_SCHEDULE_HANDLER) {
+		$schedule = $this->_get_schedule($schedule_procname);
+		return ($schedule['enabled']);
+	}
+}
+
+$optimizer = new OptimizeTable();
+if ( !$optimizer->schedule_enabled() ) $optimizer->schedule_single_event(0);
+add_action(OPTIMIZER_SCHEDULE_HANDLER, array(&$optimizer, 'optimize_table'));
+unset($optimizer);
+?>

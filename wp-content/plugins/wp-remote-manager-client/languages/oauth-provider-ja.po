@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: oauth-provider\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-26 14:46+0900\n"
+"PO-Revision-Date: 2011-07-27 13:48+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# description
+msgid "A plugin to allow WordPress to use an OAuth authenticator."
+msgstr "WordPress で OAuth 認証を使用できるようにするプラグインです。"
+
+#: ../oauth-provider.php:295
+msgid "Settings"
+msgstr "設定"
+
+#: ../oauth-provider.php:324
+#: ../oauth-provider.php:325
+#: ../oauth-provider.php:337
+#: ../oauth-provider.php:349
+msgid "OAuth Provider"
+msgstr "OAuth Provider"
+
+#: ../oauth-provider.php:338
+msgid "Consumers"
+msgstr "アプリケーション"
+
+#: ../oauth-provider.php:350
+msgid "Access Tokens"
+msgstr "アクセストークン"
+
+#: ../oauth-provider.php:383
+#: ../oauth-provider.php:439
+#: ../oauth-provider.php:460
+#: ../oauth-provider.php:544
+msgid "Done!"
+msgstr "完了"
+
+#: ../oauth-provider.php:392
+msgid "OAuth Provider Options"
+msgstr "OAuth Provider オプション"
+
+#: ../oauth-provider.php:441
+#: ../oauth-provider.php:445
+#: ../oauth-provider.php:462
+#: ../oauth-provider.php:546
+msgid "Failure!!"
+msgstr "エラー !!"
+
+#: ../oauth-provider.php:469
+msgid "OAuth Provider &raquo; Consumers"
+msgstr "OAuth Provider オプション &raquo; アプリケーション"
+
+#: ../oauth-provider.php:480
+#: ../oauth-provider.php:566
+msgid "Consumer Name"
+msgstr "アプリケーション名"
+
+#: ../oauth-provider.php:481
+#: ../oauth-provider.php:567
+msgid "Consumer Description"
+msgstr "アプリケーション概要"
+
+#: ../oauth-provider.php:482
+msgid "Consumer Key"
+msgstr "Consumer キー"
+
+#: ../oauth-provider.php:483
+msgid "Consumer Secret"
+msgstr "Consumer シークレット"
+
+#: ../oauth-provider.php:484
+msgid "Remove"
+msgstr "削除"
+
+#: ../oauth-provider.php:489
+msgid "Name"
+msgstr "名前"
+
+#: ../oauth-provider.php:490
+msgid "Description"
+msgstr "説明"
+
+#: ../oauth-provider.php:491
+msgid "Add Consumer"
+msgstr "アプリケーションの追加"
+
+#: ../oauth-provider.php:493
+msgid "Remove Consumer"
+msgstr "アプリケーションの削除"
+
+#: ../oauth-provider.php:552
+msgid "OAuth Provider &raquo; Access Tokens"
+msgstr "OAuth Provider オプション &raquo; アクセストークン"
+
+#: ../oauth-provider.php:568
+msgid "Access Key"
+msgstr "Access キー"
+
+#: ../oauth-provider.php:569
+msgid "Access Secret"
+msgstr "Access シークレット"
+
+#: ../oauth-provider.php:570
+msgid "Revoke"
+msgstr "許可を取り消す"
+
+#: ../oauth-provider.php:576
+msgid "Revoke Access"
+msgstr "許可を取り消す"
+
+#: ../oauth-provider.php:657
+msgid "Not Login"
+msgstr "ログインしていません"
+
+#: ../oauth-provider.php:687
+msgid "Authorize"
+msgstr "認証する"
+
+#: ../oauth-provider.php:695
+msgid "Allowed."
+msgstr "許可されました"
+
+#: ../oauth-provider.php:710
+msgid "Denied."
+msgstr "拒否されました"
+
+#: ../oauth-provider.php:714
+msgid "An application would like to connect to your account."
+msgstr "アプリケーションがアクセス許可を求めています"
+
+#: ../oauth-provider.php:716
+#, php-format
+msgid "The application &quot;%s&quot; would like the ability to access and update your data on &quot;%s&quot;."
+msgstr "アプリケーション &quot;%s&quot; は &quot;%s&quot; のあなたのアカウントに対してアクセス許可を求めています。"
+
+#: ../oauth-provider.php:721
+#, php-format
+msgid "Sign out if you want to connect to an account other than &quot;%s&quot;."
+msgstr "&quot;%s&quot; 以外のアカウントに対して許可したい場合は、一度ログアウトしてください。"
+
+msgid "Sign in if you want to connect to an account."
+msgstr "アプリケーションの接続を許可するにはログインしてください。"
+
+#: ../oauth-provider.php:725
+#, php-format
+msgid "Allow <strong>&quot;%s&quot;</strong> access?"
+msgstr "<strong>&quot;%s&quot;</strong> のアクセスを許可しますか？"
+
+#: ../oauth-provider.php:748
+msgid "Allow"
+msgstr "許可"
+
+#: ../oauth-provider.php:749
+msgid "Deny"
+msgstr "拒否"
+
+#: ../oauth-provider.php:789
+msgid "Unauthorized Access!"
+msgstr "認証に失敗しました。"
+
+#: ../oauth-provider.php:804
+msgid "Method Not Found!"
+msgstr "メソッドが見つかりませんでした。"
+
+msgid "Request Token not found!"
+msgstr "指定された Request トークンが見つかりませんでした。"
+
+msgid "Duplicate Name!"
+msgstr "アプリケーション名が重複しています。"
+
+msgid "Unauthorized Access Token!"
+msgstr "Access トークンが認証されていません。"
+

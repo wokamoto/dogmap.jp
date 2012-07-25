@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Head Cleaner\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-19 14:58+0900\n"
+"PO-Revision-Date: 2012-04-19 15:28+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# description
+msgid "Cleaning tags from your WordPress header and footer."
+msgstr "WordPress サイトの &lt;head&gt; の中身と、フッタ領域を整形しなおします。"
+
+#: ../head-cleaner.php:2178
+msgid "Head Cleaner"
+msgstr "Head Cleaner"
+
+#: ../head-cleaner.php:2189
+#: ../includes/common-controller.php:195
+msgid "Settings"
+msgstr "設定"
+
+#: ../head-cleaner.php:2250
+#: ../head-cleaner.php:2258
+#: ../head-cleaner.php:2266
+msgid "Done!"
+msgstr "完了！"
+
+#: ../head-cleaner.php:2279
+msgid "Head Cleaner Options"
+msgstr "Head Cleaner 設定"
+
+#: ../head-cleaner.php:2288
+msgid "CSS and JavaScript are cached on the server."
+msgstr "CSS と JavaScript を、サーバ上にキャッシュする"
+
+#: ../head-cleaner.php:2292
+msgid "CSS and JS are dynamically generated."
+msgstr "CSS, JS を動的生成する。"
+
+#: ../head-cleaner.php:2295
+msgid "Default media attribute applied to CSS."
+msgstr "CSS に適用するデフォルト media 属性"
+
+#: ../head-cleaner.php:2303
+msgid "Two or more CSS is combined."
+msgstr "複数の CSS を結合する"
+
+#: ../head-cleaner.php:2307
+msgid "CSS is optimized."
+msgstr "CSS を最適化する"
+
+#: ../head-cleaner.php:2311
+msgid "URLs of images in CSS will be converted into the data scheme URIs."
+msgstr "CSS に含まれる画像の URL を、データスキーマ URI に変換する"
+
+#: ../head-cleaner.php:2318
+msgid "Two or more JavaScript is combined."
+msgstr "複数の JavaScript を結合する"
+
+#: ../head-cleaner.php:2322
+msgid "JavaScript is minified."
+msgstr "JavaScript を小さくする"
+
+#: ../head-cleaner.php:2326
+msgid "Bottom JavaScript is combined, too."
+msgstr "フッタ領域の JavaScript も対象にする"
+
+#: ../head-cleaner.php:2333
+msgid "Put JavaScripts at the Bottom."
+msgstr "&lt;head&gt; 内の JavaScript を、フッタ領域に移動"
+
+#: ../head-cleaner.php:2337
+msgid "Use Google Ajax Libraries."
+msgstr "Google Ajax Libraries を利用する"
+
+#: ../head-cleaner.php:2346
+msgid "Add XML Declaration."
+msgstr "XML宣言を付与"
+
+#: ../head-cleaner.php:2350
+msgid "Add canonical tag."
+msgstr "メタタグ &quot;canonical&quot; を追加"
+
+#: ../head-cleaner.php:2359
+msgid "Add OGP(Open Graph Protocol) tags."
+msgstr "OGP(Open Graph Protocol) 対応のメタタグを追加"
+
+#: ../head-cleaner.php:2362
+msgid "OGP default image URL."
+msgstr "OGP にセットするデフォルト画像 (URLを指定)"
+
+#: ../head-cleaner.php:2370
+msgid "Add Last modified."
+msgstr "メタタグ &quot;Last Modified&quot; を追加"
+
+#: ../head-cleaner.php:2381
+msgid "Remove generator tag."
+msgstr "メタタグ &quot;generator&quot; を削除"
+
+#: ../head-cleaner.php:2385
+msgid "Remove RSD link tag."
+msgstr "リンクタグ &quot;RSD&quot; を削除"
+
+#: ../head-cleaner.php:2389
+msgid "Remove wlwmanifest link tag."
+msgstr "リンクタグ &quot;wlwmanifest&quot; を削除."
+
+#: ../head-cleaner.php:2396
+msgid "Remove IE Conditional Tag."
+msgstr "IEコンディショナルタグを削除"
+
+#: ../head-cleaner.php:2409
+msgid "Enabling \"<strong>paranoia mode</strong>\". Cut waste from the HTML and tries to minimize it."
+msgstr "&quot;パラノイアモード&quot; を有効にする。HTMLソースから無駄を省き、できるだけサイズを小さくしようとします。"
+
+#: ../head-cleaner.php:2413
+msgid "Debug mode"
+msgstr "デバッグモード"
+
+#: ../head-cleaner.php:2421
+msgid "Active Filters"
+msgstr "有効なフィルタ"
+
+#: ../head-cleaner.php:2424
+#: ../head-cleaner.php:2462
+msgid "Don't process!"
+msgstr "対象外"
+
+#: ../head-cleaner.php:2425
+#: ../head-cleaner.php:2463
+#: ../head-cleaner.php:2506
+msgid "Remove"
+msgstr "削除"
+
+#: ../head-cleaner.php:2426
+msgid "Head filters"
+msgstr "&lt;head&gt; 内の有効なフィルタ"
+
+#: ../head-cleaner.php:2428
+#: ../head-cleaner.php:2466
+msgid "Priority"
+msgstr "フィルタの優先順位"
+
+#: ../head-cleaner.php:2464
+msgid "Bottom filters"
+msgstr "フッタ領域の有効なフィルタ"
+
+#: ../head-cleaner.php:2502
+msgid "Active JavaScripts"
+msgstr "&lt;head&gt; 部で有効な JavaScript"
+
+#: ../head-cleaner.php:2505
+msgid "Move to footer"
+msgstr "フッタに移動"
+
+#: ../head-cleaner.php:2507
+msgid "JavaScripts"
+msgstr "JavaScript"
+
+#: ../head-cleaner.php:2521
+msgid "Update Options"
+msgstr "更新"
+
+#: ../head-cleaner.php:2527
+msgid "Remove all cache files"
+msgstr "キャッシュファイル削除"
+
+#: ../head-cleaner.php:2531
+msgid "All cache files are removed."
+msgstr "キャッシュフォルダ内のファイルをすべて削除する。"
+
+#: ../head-cleaner.php:2532
+msgid "Remove All Cache Files"
+msgstr "削除"
+
+#: ../head-cleaner.php:2537
+msgid "Uninstall"
+msgstr "アンインストール"
+
+#: ../head-cleaner.php:2541
+msgid "All the settings of &quot;Head Cleaner&quot; are deleted."
+msgstr "&quot;Head Cleaner&quot; の設定をすべて消去する。"
+
+#: ../head-cleaner.php:2542
+msgid "Delete Options"
+msgstr "削除"
+
+#: ../head-cleaner.php:3108
+msgid "There is no excerpt because this is a protected post."
+msgstr "この投稿は保護されているので抜粋文はありません。"
+

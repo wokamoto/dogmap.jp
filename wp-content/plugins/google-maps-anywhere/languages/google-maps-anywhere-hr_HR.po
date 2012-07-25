@@ -1,0 +1,196 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: googlemaps-anywhere\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-24 11:07+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: ATRIUM <marijan@atrium.hr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Croatian\n"
+"X-Poedit-Country: CROATIA\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# description
+msgid "Add Google Maps to your posts and pages.(Only for WordPress 2.5+)"
+msgstr ""
+
+msgid "http://maps.google.com/maps"
+msgstr "http://www.google.com/maps"
+
+#: ../googlemaps-anywhere.php:229
+msgid "Move to the Google Maps."
+msgstr "Premjesti u Google Maps."
+
+#: ../googlemaps-anywhere.php:231
+#: ../googlemaps-anywhere.php:232
+#: ../googlemaps-anywhere.php:233
+#: ../googlemaps-anywhere.php:676
+#: ../googlemaps-anywhere.php:727
+#: ../googlemaps-anywhere.php:730
+#: ../googlemaps-anywhere.php:733
+msgid "Error: "
+msgstr "Greška:"
+
+#: ../googlemaps-anywhere.php:231
+#: ../googlemaps-anywhere.php:676
+#: ../googlemaps-anywhere.php:727
+msgid "No panorama data was found."
+msgstr "Nisu nađeni podaci za panoramu."
+
+#: ../googlemaps-anywhere.php:232
+#: ../googlemaps-anywhere.php:730
+msgid "Flash doesn't appear to be supported by your browser."
+msgstr "Čini se da flash nije podržan na vašem web pregledniku."
+
+#: ../googlemaps-anywhere.php:233
+#: ../googlemaps-anywhere.php:733
+msgid "Unknown Error."
+msgstr "Nepoznata greška."
+
+#: ../googlemaps-anywhere.php:302
+msgid "Add Google Maps"
+msgstr "Dodaj Google Maps"
+
+#: ../googlemaps-anywhere.php:334
+#: ../googlemaps-anywhere.php:580
+msgid "Place Name"
+msgstr "Umetni ime"
+
+#: ../googlemaps-anywhere.php:335
+#: ../googlemaps-anywhere.php:581
+#: ../googlemaps-anywhere.php:823
+msgid "Width"
+msgstr "Širina"
+
+#: ../googlemaps-anywhere.php:336
+#: ../googlemaps-anywhere.php:582
+#: ../googlemaps-anywhere.php:824
+msgid "Height"
+msgstr "Visina"
+
+#: ../googlemaps-anywhere.php:338
+#: ../googlemaps-anywhere.php:584
+#: ../googlemaps-anywhere.php:828
+#: ../googlemaps-anywhere.php:833
+msgid "Lat"
+msgstr "Geo. širina"
+
+#: ../googlemaps-anywhere.php:339
+#: ../googlemaps-anywhere.php:585
+#: ../googlemaps-anywhere.php:829
+#: ../googlemaps-anywhere.php:834
+msgid "Lng"
+msgstr "Geo. dužina"
+
+#: ../googlemaps-anywhere.php:341
+#: ../googlemaps-anywhere.php:590
+msgid "Zoom"
+msgstr "Zoom"
+
+#: ../googlemaps-anywhere.php:344
+#: ../googlemaps-anywhere.php:593
+msgid "Insert into Post"
+msgstr "Umetni u članak"
+
+#: ../googlemaps-anywhere.php:349
+msgid "Key"
+msgstr "Ključ"
+
+#: ../googlemaps-anywhere.php:350
+msgid "Value"
+msgstr "Vrijednost"
+
+#: ../googlemaps-anywhere.php:353
+msgid "Add Custom Field"
+msgstr "Dodaj prilagođeno polje"
+
+#: ../googlemaps-anywhere.php:587
+msgid "Yaw"
+msgstr "Kut"
+
+#: ../googlemaps-anywhere.php:588
+msgid "Pitch"
+msgstr "Nagib"
+
+#: ../googlemaps-anywhere.php:795
+msgid "Done!"
+msgstr "Gotovo!"
+
+#: ../googlemaps-anywhere.php:798
+msgid "Please Enter Your Google Maps API Key"
+msgstr "Molim unesite Vaš Google Maps API ključ"
+
+#: ../googlemaps-anywhere.php:805
+msgid "Your Google Maps API Key"
+msgstr "Vaš Google Maps API ključ"
+
+#: ../googlemaps-anywhere.php:808
+msgid "API Key"
+msgstr "API ključ"
+
+#: ../googlemaps-anywhere.php:809
+#, php-format
+msgid "(don't have one? get one <a href=%s>here</a>)"
+msgstr "(nemate ga? nabavite ga <a href=%s>ovdje</a>)"
+
+#: ../googlemaps-anywhere.php:813
+msgid "Current API Key"
+msgstr "Trenutni API ključ"
+
+#: ../googlemaps-anywhere.php:819
+msgid "Option"
+msgstr "Opcija"
+
+#: ../googlemaps-anywhere.php:822
+msgid "Default Size"
+msgstr "Zadana veličina"
+
+#: ../googlemaps-anywhere.php:827
+msgid "Initial position <br />(Google Maps)"
+msgstr "Inicijalna pozicija <br />(Google Maps)"
+
+#: ../googlemaps-anywhere.php:832
+#: ../googlemaps-anywhere.php:837
+msgid "Initial position <br />(Street View)"
+msgstr "Inicijalna pozicija <br />(Pogled ulice)"
+
+#: ../googlemaps-anywhere.php:838
+msgid "Google Maps URL"
+msgstr "Google Maps URL"
+
+#: ../googlemaps-anywhere.php:844
+msgid "Update Options"
+msgstr "Opcije ažuriranja"
+
+#: ../googlemaps-anywhere.php:855
+#: ../googlemaps-anywhere.php:861
+#: ../googlemaps-anywhere.php:868
+#: ../googlemaps-anywhere.php:873
+msgid "Google Maps"
+msgstr "Google Maps"
+
+#: ../googlemaps-anywhere.php:856
+#: ../googlemaps-anywhere.php:869
+msgid "Street View"
+msgstr "Pogled ulice"
+
+#: ../googlemaps-anywhere.php:857
+#: ../googlemaps-anywhere.php:862
+#: ../googlemaps-anywhere.php:1110
+#: ../includes/common-controller.php:166
+msgid "Settings"
+msgstr "Postavke"
+
+#: ../googlemaps-anywhere.php:1059
+msgid "Map of this location"
+msgstr "Karta ove lokacije"
+
+#: ../googlemaps-anywhere.php:1102
+msgid "Google Maps Anywhere"
+msgstr "Google Maps Anywhere"
+

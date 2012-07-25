@@ -1,0 +1,314 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-amazon\n"
+"POT-Creation-Date: 2008-06-17 14:51+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "WP-Amazon adds the ability to search and include items from Amazon to your entries.  This plugin adds a button called \"Amazon\" on the post page.  Make sure to configure the plugin before using. This Plugin was based on WP-Amazon Plugin 1.3.2 by Rich Manalang"
+msgstr ""
+
+msgid "Options saved."
+msgstr ""
+
+msgid "General Options"
+msgstr ""
+
+msgid "Default Country"
+msgstr ""
+
+msgid "Which Amazon country site would you like as your default?  Currently, Amazon's E-Commerce Service works with the following countries: Canada, France, Germany, Great Britain, Japan, and United States"
+msgstr ""
+
+msgid "Default Country:"
+msgstr ""
+
+msgid "Canada"
+msgstr ""
+
+msgid "France"
+msgstr ""
+
+msgid "Great Britain"
+msgstr ""
+
+msgid "Germany"
+msgstr ""
+
+msgid "Japan"
+msgstr ""
+
+msgid "United States"
+msgstr ""
+
+msgid "United Kingdom"
+msgstr ""
+
+msgid "Associates ID"
+msgstr ""
+
+msgid "Amazon has an affiliate program called Amazon Associates.  This program allows you to earn money for refering customers to Amazon. To apply for the Associates Program, visit the <a href=\"http://www.amazon.com/associates\">Amazon Associates website</a> for details."
+msgstr ""
+
+msgid "You can chose to have WP-Amazon apply your Associate ID to any Amazon products you post via WP-Amazon &mdash; just specify your Associate ID here."
+msgstr ""
+
+msgid "Associate ID:"
+msgstr ""
+
+msgid "Secret Key:"
+msgstr ""
+
+msgid "Amazon E-Commerce Service (ECS) Subscription ID &amp; Secret Key"
+msgstr ""
+
+msgid "Amazon's E-Commerce Service is what makes this WordPress plugin possible.  Amazon ECS developers must use an ECS Subscription ID &amp; Secret Key in order to access Amazon's web service."
+msgstr ""
+
+msgid "You don't need to change this Subscription ID to use WP-Amazon, you can simply use the ID provided."
+msgstr ""
+
+msgid "Subscription ID:"
+msgstr ""
+
+msgid "This version of WP-Amazon is %1$s and the latest version is %2$s. %3$s"
+msgstr ""
+
+msgid "Update Options"
+msgstr ""
+
+msgid "Update Options &raquo;"
+msgstr ""
+
+msgid "WP-Amazon Options"
+msgstr ""
+
+msgid "Amazon"
+msgstr ""
+
+msgid "Insert item from Amazon.com"
+msgstr ""
+
+msgid "Blended"
+msgstr ""
+
+msgid "All Products"
+msgstr ""
+
+msgid "Apparel"
+msgstr ""
+
+msgid "Baby"
+msgstr ""
+
+msgid "Beauty"
+msgstr ""
+
+msgid "Books"
+msgstr ""
+
+msgid "Classical"
+msgstr ""
+
+msgid "Classical Music"
+msgstr ""
+
+msgid "DigitalMusic"
+msgstr ""
+
+msgid "Digital Music"
+msgstr ""
+
+msgid "DVD"
+msgstr ""
+
+msgid "Electronics"
+msgstr ""
+
+msgid "ForeignBooks"
+msgstr ""
+
+msgid "Foreign Books"
+msgstr ""
+
+msgid "GourmetFood"
+msgstr ""
+
+msgid "Gourmet Food"
+msgstr ""
+
+msgid "HealthPersonalCare"
+msgstr ""
+
+msgid "Health &amp; Personal Care"
+msgstr ""
+
+msgid "HomeGarden"
+msgstr ""
+
+msgid "Home &amp; Garden"
+msgstr ""
+
+msgid "Jewelry"
+msgstr ""
+
+msgid "Kitchen"
+msgstr ""
+
+msgid "Magazines"
+msgstr ""
+
+msgid "Miscellaneous"
+msgstr ""
+
+msgid "Music"
+msgstr ""
+
+msgid "MusicalInstruments"
+msgstr ""
+
+msgid "Musical Instruments"
+msgstr ""
+
+msgid "MusicTracks"
+msgstr ""
+
+msgid "Music Tracks"
+msgstr ""
+
+msgid "OfficeProducts"
+msgstr ""
+
+msgid "Office Products"
+msgstr ""
+
+msgid "OutdoorLiving"
+msgstr ""
+
+msgid "Outdoor Living"
+msgstr ""
+
+msgid "PCHardware"
+msgstr ""
+
+msgid "PC Hardware"
+msgstr ""
+
+msgid "Photo"
+msgstr ""
+
+msgid "Restaurants"
+msgstr ""
+
+msgid "Software"
+msgstr ""
+
+msgid "SoftwareVideoGames"
+msgstr ""
+
+msgid "Software/Video Games"
+msgstr ""
+
+msgid "SportingGoods"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Toys"
+msgstr ""
+
+msgid "VHS"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Video Games"
+msgstr ""
+
+msgid "VideoGames"
+msgstr ""
+
+msgid "Watches"
+msgstr ""
+
+msgid "Wireless"
+msgstr ""
+
+msgid "WirelessAccessories"
+msgstr ""
+
+msgid "Wireless Accessories"
+msgstr ""
+
+msgid "Results for"
+msgstr ""
+
+msgid "%s (%s matches)"
+msgstr ""
+
+msgid "%s (%s total results)"
+msgstr ""
+
+msgid "Click here for more information on this product"
+msgstr ""
+
+msgid "Link only"
+msgstr ""
+
+msgid "Link with small image"
+msgstr ""
+
+msgid "Link with medium image"
+msgstr ""
+
+msgid "Link with large image"
+msgstr ""
+
+msgid "Add to HTML Post"
+msgstr ""
+
+msgid "Close Window"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "ASIN"
+msgstr ""
+
+msgid "View product details at Amazon"
+msgstr ""
+
+msgid "Search Amazon"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Go"
+msgstr ""
+
+msgid "How to Include?"
+msgstr ""
+
+msgid "HTML Code"
+msgstr ""
+
+msgid "Uninstall"
+msgstr ""
+
+msgid "All the settings of &quot;wp-amazon&quot; are deleted."
+msgstr ""
+
+msgid "Delete Options &raquo;"
+msgstr ""
+

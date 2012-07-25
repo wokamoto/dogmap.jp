@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: short-link-maker\n"
+"POT-Creation-Date: 2009-10-26 15:48+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Rian van Spaandonk <rian.vanspaandonk@pangaea.nl>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+# Description
+msgid "This is a plugin creating a shorter URL of post, page and media permalink."
+msgstr "Dieses Plugin erstellt eine kuerzere URL-Adresse einer Nachricht, Seite oder eines Media-Permalinks."
+
+#: ../short-link-maker.php:176
+msgid "Tweet this"
+msgstr "Dies twittern"
+
+#: ../short-link-maker.php:230
+#: ../short-link-maker.php:231
+#: ../short-link-maker.php:260
+msgid "Short link"
+msgstr "Kurzer Link"
+
+#: ../short-link-maker.php:251
+msgid "Please publish to get Short links."
+msgstr "Sie muessen veroeffentlichen um kurze Links zu bekommen."
+

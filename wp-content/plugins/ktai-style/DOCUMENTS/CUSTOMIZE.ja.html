@@ -1,0 +1,892 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Ktai Style サイト設定とテンプレートの改造</title>
+<style type="text/css">
+h1 {text-align:center;}
+h2 {color:white; background: maroon;}
+h3 {width:50%; color: white; background: maroon;}
+h3 a {color:lightblue;}
+h4 {width:48%; border-bottom:dotted 1px maroon; border-left:solid 12px maroon; padding-left:3px;}
+dt {font-weight:bold; background: #ffcccc; margin-right:25%;}
+dd {margin-bottom:0.5em;}
+li {line-height:1.5em;}
+.navi {text-align:center;}
+strong, del {background-color:#ccc;}
+pre {color:#230;padding:3px;border:solid gray 1px;line-height:100%;}
+</style>
+</head>
+<body>
+<h1>Ktai Style マニュアル</h1>
+<p class="navi">[ <a href="../README.ja.html">はじめに</a> | <a href="HISTORY.ja.html">改版履歴</a> | <a href="CUSTOMIZE.ja.html">サイト設定とテンプレートの改造</a> | <a href="ADMIN.ja.html">ウェブログ管理機能</a> | <a href="Q_and_A.ja.html">よくある質問と答え</a> ]</p>
+<h2>サイト設定とテンプレートの改造</h2>
+<p>ここでは、携帯サイトの見た目を変更する方法を説明します。管理画面での設定による方法と、携帯表示用テンプレートの改造による方法があります。</p>
+
+<h3 id="preferences">管理パネルの「携帯表示」設定</h3>
+<h4 id="themes">テーマ</h4>
+<p>使用するテーマを選択します。初期状態では以下の6つのテーマがあります。「スタイルシート利用」と書かれたテーマは、mova, ソフトバンク PDC、ウィルコムにおいて、白抜き文字部分が反映されず、少し貧弱な表示になります。</p>
+<ul>
+<li>Default: Ktai Style のデフォルトテーマ。home.php を削除すればタイトルのみ羅列のコンパクトな見栄えになります</li>
+<li>Classic: まおう氏の <a href="http://hrlk.com/script/mobile-eye-plus/">Mobile Eye+</a> に似たテーマ</li>
+<li>Green: 緑色ベースの明るいテーマ。スタイルシート利用。蝶のアイコン (icon.gif) の他に、羽根 (icon-feather.gif)・向日葵 (icon-sunflower.gif) を添付しており、差し替えて使用可能です。</li>
+<li>Loving: ピンクベースの可愛らしいテーマ。スタイルシート利用。ゴシック風のフレームを使うヘッダ (header.php) の他に、ラッパから星が吹き出す可愛いヘッダ (header-bugle.php)・くちびると星を散らばめた派手なヘッダ (header-lip.php) を添付しており、ファイル名を差し替えて使用可能です。</li>
+<li>Monolith: 灰色ベースのシックなテーマ。スタイルシート利用。</li>
+<li>Redportal: <a href="http://blog.livedoor.com/">livedoor Blog</a> に類似させた赤色ベースのテーマ</li>
+</ul>
+<p>携帯電話キャリアごとにテーマを変更できますが、通常は「共通テーマと同じ」のままで構いません。</p>
+<h4 id="behavior">動作</h4>
+<p>携帯サイトの見栄えを変更できます。</p>
+<dl>
+<dt>コメントフォームや投稿内容での絵文字入力</dt>
+<dd>コメントフォームや、携帯管理画面での投稿内容において、携帯電話絵文字を使えるようにします。「許す」を選択すると、絵文字を検出して <code>&lt;img localsrc="NNN" /&gt;</code> のフォーマットに変換します。「認めない」を選択すると絵文字を削除します。</dd>
+<dt>コメントとピン通知  (トラックバック/ピンバック)</dt>
+<dd>デフォルトでは、各記事および最新コメント一覧において、コメントとトラックバック・ピンバックを混在して表示しますが、二者を分離できます (トラックバックとピンバックは分離しません)。<br />
+なお、各記事についている「コメントn件」の件数については、コメントとトラックバックを合わせた数です (分離はできません)。</dd>
+<dt>コメント投稿者の端末識別情報</dt>
+<dd>「送信が必須」を選ぶと、ログインしていない場合、ドコモ、au、ソフトバンク、イー・モバイル音声端末からのコメント投稿時に、端末識別情報 (iモードID、EZ番号、ユーザーID 等) を送信しないと受け付けられなくなります。また、送信された端末 ID は、ユーザーエージェントの後に付与してデータベースに保存されます。管理パネルのコメント編集画面 (PC では WordPress 2.5 以降のみ) で確認できます。もしくは、phpMyAdmin 等で wp_comments テーブルの comment_agent カラムを見れば確認できます。
+<ul>
+<li>Term ID: 電話機製造番号</li>
+<li>USIM ID: USIM ID</li>
+<li>Sub ID : 契約者ID (iモードID、EZ番号、ユーザーID など)</li>
+</ul>
+なお、ウィルコム端末、その他端末 (スマートフォン、PSP 等) では、「送信が必須」にしても端末 ID なしでコメント可能です。また、ログインしている場合は、端末識別情報なしにコメント可能です。<br />
+「必須でない」の場合、端末識別情報の検出を行なわず、データベースへの保存も行いません。<br />
+<strong>*** 注意 ***</strong>「送信を必須」にしても、フルブラウザ・PC サイトビューアー等に切り換えれば端末識別情報なしにコメントできるため、回避可能です。また、端末識別情報は、他のサイトにも同じ ID が送信されるという繊細な個人情報です。これを蒐集することは他人の個人情報を保存するというリスクが発生します。荒らしに悩んでいるなど、リスクよりもメリットが大きい場合でない限り「必須にする」を選択しないことをおすすめします。</dd>
+<dt>直接リンクを張るサイト</dt>
+<dd>このフィールドに記入された URL へのリンクは、中継ページ経由のリンクにせず普通にリンク (直接リンク) します。携帯電話対応サイトの URL を記入すると便利です。この設定を使わずに、それぞれの a 要素に class="ktai" と記載しても、直接リンクするようになります。なお、特定のブログサービスおよび <a href="http://www.sixapart.jp/docs/tech/mobile_link_discovery_ja.html">Mobile Link Discovery</a> を埋め込んでいるサイトは、自動的に携帯版サイトを検出しますので、このフィールドに URL を書く必要はありません。</dd>
+</dl>
+<p id="del_ext">※バージョン 0.97 以降、外部サイトへのリンクは原則として残すことにしました。もし、外部サイトへのリンクを一律に削除したい場合は、使用している携帯テーマの functions.php に以下のコードを入れてください。</p>
+<pre>&lt;?php
+function ks_delete_external_links($link_html, $href, $label, $icon) {
+	return $label;
+}
+add_filter('ktai_external_link', 'ks_delete_external_links', 90, 4)
+?&gt;</pre>
+<p>逆に、外部リンクを一律に直接リンクしたい場合は、使用している携帯テーマの functions.php に以下のコードを入れてください。</p>
+<pre>&lt;?php
+function ks_direct_external_link($link_html, $href, $label, $icon) {
+    return '&lt;a href="' . attribute_escape($href) . '"&gt;' . $label . '&lt;/a&gt;';
+}
+add_filter('ktai_external_link', 'ks_direct_external_link', 90, 4);
+?&gt;</pre>
+<h4 id="text_color">文字色</h4>
+<p>要所要所の文字色を変更できます。設定値は #rrggbb の16進表記で記述します。HTML では一般的な書式です。値を入力すると、リアルタイムに色見本が変更され、色の確認がしやすくなっています。なお、Ktai Style の標準テーマ以外では設定が反映されない場合があります。</p>
+<ul>
+<li>記事タイトル一覧の横に表示する日付</li>
+<li>記事本文に表示する投稿者・日付</li>
+<li>コメント種別 (コメント／トラックバック／ピンバック)</li>
+<li>PC 向けサイトへのリンク文字列</li>
+</ul>
+<p>※背景色・通常の文字色・リンク色・訪問済みリンク色は、設定画面ではなく、テーマの header.php を改造してください。bgcolor, text, link, alink, vlink 属性を入れた body 要素をコメント化して準備してありますので、既存の body 要素と入れ換え、属性値を設定すれば OK です。使わない属性値は削除してください。なお、text 要素を設定した場合、iモード絵文字はデフォルトの色ではなく、すべて text 属性で指定した色になってしまいます。デフォルトの絵文字色を生かしたい場合は text 属性は使わないでください。</p>
+<h4 id="date_format">投稿・コメントの日時書式</h4>
+<p>投稿やコメントの日付および時刻書式を変更できます。WordPress 一般設定の日付書式は、原則として使っていません (記事タイトルの上に表示する日付は一般設定を適用)。</p>
+<p>これは、「今年の日付は年を省略して表示する」「今日の日付は時刻のみ表示する」という短縮処理を行うためです。したがって、それぞれの状況に応じて書式を設定する必要があります。</p>
+<p>フォーマットに使う文字列は WordPress の設定画面と同じ (PHP の <code>date()</code> 関数と同じ) です。</p>
+<dl>
+<dt>去年以前の日時</dt>
+<dd>デフォルトでは <code>Y-m-d</code> という ISO フォーマットです。スラッシュ区切りや日本語表記に変更して構いません。なお、年・月・日を示す文字それぞれが含まれる必要があります。<br />
+OK な例: <code>Y/m/d , Y年n月j日, M jS, Y</code><br />
+ダメな例: <code>n/j, Y年n月</code></dd>
+<dt>今年の日時</dt>
+<dd>デフォルトでは、スラッシュ区切りの月日と時分を表示する <code>n/j H:i</code> という書式です。年省略では ISO フォーマットは不自然なためです。少なくとも月・日を示す文字列それぞれが含まれる必要があります。時分は省略可能です。</dd>
+<dt>今日の日時</dt>
+<dd>投稿やコメントが今日の場合のフォーマットです。デフォルトは秒を省略した <code>H:i</code> となります。日または時が必須です。</dd>
+</dl>
+
+<h3 id="template">テンプレートの改造</h3>
+<p>本プラグインのテンプレートは、WordPress のテーマとほぼ同じ構造です。このため、WordPress のテーマを制作・改造したことがあれば、同じ要領で改造することができます。<a href="http://wppluginsj.sourceforge.jp/ktai_style/howto/color-change/">附属テーマの色を変更する改造</a>をウェブで解説していますので、こちらも参照ください。</p>
+<p>独自のテーマを作るときは、既存テーマのフォルダーを複製して好きな名前を付け、その複製に対して作業してください。default テーマを直接改造することは避けてください。独自テーマは、wp-content/ktai-themes/ ディレクトリーを作成して、そこに格納することをおすすめします。また、style.css を開いて、テーマ名称などを独自のものに変更しておいてください (style.css の書式は後述)。ktai-style/themes/ ディレクトリーに入れたものは、プラグインを自動アップデートすると消されます。</p>
+<p>なお、プラグインのソースコードおよびテンプレートは原則として英数字のみで記述されています。改造時に日本語文字列を入れる場合は、「ウェブログの文字コードと同じコード」(たいてい UTF-8) で保存してください (Mac, Windows のテキストエディターの場合、英数字のみのファイルに日本語を追加すると Shift_JIS で保存することが多いため要注意!!)。</p>
+<p>併用する他のプラグインは、携帯電話表示のとき動作しないものがあります。この場合、header.php で <code>ks_wp_head()</code> の引数を <code>KTAI_DO_PC_HEAD</code> に変更したり、footer.php で <code>ks_wp_footer()</code> の引数を <code>KTAI_DO_PC_HEAD</code> に変更すると動作する場合があります (デフォルトではこれらの引数は <code>KTAI_NONE_PC_HEAD</code>)。</p>
+<p>Green, Loving, Monolith, Redportal テーマは、それぞれの header.php でカラーテーマを定義しています。ここを変更すると、罫線色、見出しの背景色などを一括して変更できます。ただし、シングルポスト (single.php) やコメント一覧 (comments.php) などで、独自に色を定義している場合もあります。</p>
+<p>Green, Loving テーマでは、アイコン画像・フレーム画像の代替品を添付しています。デフォルトの蝶アイコンやゴシック風フレームと差し替えれば利用可能です。画像ファイル名を変更するか、header.php でファイル名を指定する部分を変更するかしてください。Loving テーマの場合、フレーム画像を変更するのは少し難しいため、header.php 自体を置き換えるようにしています (header-bugle.php, header-lip.php を header.php にリネームする)。</p>
+
+<h3 id="templates">附属テンプレートファイル一覧</h3>
+<h4 id="wp-standard">WordPress 標準テンプレート</h4>
+<dl>
+<dt id="style_css">style.css</dt>
+<dd>テーマの名称、配布元、説明、バージョン、作者、ライセンス、動作する Ktai Style のバージョンを記述するために使用しています。バージョン 1.00 から必須のテンプレートとなりました (存在しない場合携帯テーマとして認識されません)。一部のテーマではスタイルシートとしても使用しています。詳しい書式は以下の通りです。<ul>
+  <li><strong>Theme Name:</strong> テーマ名称 (必須)。日本語文字列も使えます。</li>
+  <li><strong>Theme URI:</strong> 配布元 URI (オプション)</li>
+  <li><strong>Version:</strong> バージョン (オプション)。x.y.z 形式を推奨します。</li>
+  <li><strong>Description:</strong> 説明 (オプション)。日本語文字列も使えます。</li>
+  <li><strong>Author:</strong> 作者名 (オプション)。日本語文字列も使えます。</li>
+  <li><strong>Author URI:</strong> 作者のウェブサイト URI (オプション)</li>
+  <li><strong>Requires:</strong> 必須とする Ktai Style, WordPress バージョン (オプション)。現時点では、ここに記載した値による動作チェックは行なっていません。</li>
+  <li><strong>License:</strong> ライセンス (オプション)。WordPress および Ktai Style と同様の GPL v2 を推奨します。少なくとも、テンプレートファイル (PHP ファイル) は GPL v2 と互換のライセンスにしてください。それ以外の、画像やスタイルシート (css ファイル) だけを再配布不可のライセンスとするのは可能です (この場合、1つのテーマ内に複数のライセンスが混在します)。</li>
+</ul></dd>
+<dt id="header_php">header.php</dt>
+<dd>ページヘッダの表示用。<code>add_action('wp_head');</code> を利用しているプラグインの場合、このテンプレートにある <code>ks_wp_head()</code> の引数を <code>KTAI_DO_PC_HEAD</code> に変更すると動作するようになります。<br />
+多くのテーマで、<code>$ks_settings</code> 引数にてカラースキームおよびページ表示オプションを定義しています。カラースキームは、テンプレートファイルで <code>$ks_settings</code> 引数の使用箇所を探してみれば使い方が分かると思います。ページ表示オプション (<code>$ks_settings['list_pages']</code>) は、menu_pages.php テンプレート (後述) およびフッターでページ一覧を表示するときに使う <code>wp_list_pages(), ks_pages_menu()</code> に与えるオプションです。ソート順 (<code>sort_column</code>)、除外するページ ID (<code>exclude</code>) などを指定すると便利でしょう。</dd>
+<dt id="footer_php">footer.php</dt>
+<dd>ページフッタの表示用。<code>add_action('wp_footer');</code> を利用しているプラグインの場合、このテンプレートにある <code>ks_wp_footer()</code> の引数を <code>KTAI_DO_PC_HEAD</code> に変更すると動作するようになります。</dd>
+<dt id="index_php">index.php</dt>
+<dd>フロントページ・検索ページなどに用いられる、必須のテンプレートです (存在しない場合携帯テーマとして認識されません)。投稿タイトルを一覧する表示スタイルです。</dd>
+<dt id="home_php">home.php</dt>
+<dd>フロントページ (トップページ) 専用です。このテンプレートがあるとき、フロントページには index.php の代わりに使います。Default テーマのみ存在し、「1番目の記事は本文を表示、2番目以降はタイトルのみ羅列」というデザインを実現しています。</dd>
+<dt id="archive_php">archive.php</dt>
+<dd>アーカイブページ (年日付別／カテゴリー別／投稿者別など) 表示用です。記事タイトルだけ表示します。このテンプレートがないときは index.php で代用します。</dd>
+<dt id="page_php">page.php</dt>
+<dd>固定ページ表示用。このテンプレートがないときは index.php で代用します。</dd>
+<dt id="single_php">single.php</dt>
+<dd>投稿の単独表示用。このテンプレートがないときは index.php で代用しますが、デフォルトの index.php ではコメント一覧やコメント投稿フォームが出ないため、実質的に必須のテンプレートです。</dd>
+<dt id="comments_php">comments.php</dt>
+<dd>コメント一覧／コメント投稿フォーム表示用。コメント閲覧・投稿を行うためには必須のテンプレートです。single.php から <code>comments_template()</code> タグで呼び出されます。</dd>
+<dt id="functions_php">functions.php</dt>
+<dd>テーマ用の独自関数定義ファイル。テーマによっては、テーマ独自の言語リソースや全角カタカナ→半角カナ変換を行うフィルターを設定したりしています。</dd>
+</dl>
+<p>以上は WordPress の仕様に従って呼び出されます。もし、category-10.php というテンプレートを追加すれば、カテゴリー ID = 10 のアーカイブにはこのテンプレートが利用されます。</p>
+<h4 id="page_templates">ページテンプレートの使い方</h4>
+<p>固定ページに独自のページテンプレートを割り当てている場合、携帯表示でも同じファイル名のページテンプレートが自動的に呼び出されます。例えば、PC 向けの Default テーマでは links.php というファイル名でブログロールを表示するテンプレート (リンクテンプレート) がありますが、これを使用している場合、携帯テーマに links.php というファイル名のテンプレートを作っておけば、それが呼び出されます。ちなみに、携帯用リンクテンプレートを作るには、(後述の) menu_links.php の複製を作って links.php というファイル名にすれば OK です。</p>
+<h4 id="plugin-specific">本プラグイン独自テンプレート</h4>
+<p>以後は本プラグイン独自のテンプレートです。 ウェブログ直下の URL に「?menu=XXXX」というクエリー文字列を付けると呼び出されます。使用しているテーマに該当の menu_XXXX.php ファイルが存在しない場合、Default テーマの同一名のファイルが呼び出されます。<br />
+例: http://blog.example.jp/?menu=months</p>
+<dl>
+<dt id="menu_months_php">menu_months.php</dt>
+<dd>年月アーカイブの一覧表示用。?menu=months で呼び出し。?menu=months&amp;y=NNNN とすると NNNN 年のみのアーカイブになります。</dd>
+<dt id="menu_years_php">menu_years.php</dt>
+<dd>年別アーカイブの一覧表示用。?menu=years で呼び出し。ここで年を選択すると、その年だけの月別アーカイブ (?menu=months&amp;y=NNNN) に遷移します。<br />デフォルトではこのテンプレートは使われていません。footer.php の、<code>ks_blogurl(false) . '?menu=months'</code>の部分を <code>ks_blogurl(false) . '?menu=years'</code> に変更すれば、アーカイブが年別の表示になります。</dd>
+<dt id="menu_cats_php">menu_cats.php</dt>
+<dd>カテゴリー一覧表示用。?menu=cats で呼び出し。</dd>
+<dt id="menu_tags_php">menu_tags.php</dt>
+<dd>タグ一覧表示用。?menu=tags で呼び出し。</dd>
+<dt id="menu_pages_php">menu_pages.php</dt>
+<dd>ページ一覧表示用?menu=pages で呼び出し。テーマによっては、このテンプレートを呼び出すリンクはありません。</dd>
+<dt id="menu_links_php">menu_links.php</dt>
+<dd>ブックマーク (ブログロール) 一覧表示用。?menu=links で呼び出し。附属テンプレートではこのテンプレートを呼び出すリンクはありません。footer.php などに、<br />
+<code>&lt;a href="&lt;?php ks_blogurl(); ?&gt;?menu=links"&gt;リンク&lt;/a&gt;</code><br /> 
+のように記載すれば使用できます。</dd>
+<dt id="menu_comments_php">menu_comments.php</dt>
+<dd>最近のコメント表示用。?menu=comments で呼び出し。デフォルトでは、コメントとトラックバック・ピンバックを混在して表示しますが、設定で分離表示が可能です。</dd>
+<dt id="redir_php">redir.php</dt>
+<dd>外部サイト接続確認および、外部サイトへのリンクエラー画面のテンプレートです。ktai_style/redir.php ファイルでリンク先に携帯サイトがあるかを確認 (Mobile Link Discovery の検出) したのち、自動的に呼び出されます (URL に pconly=true パラメータがある場合は携帯サイトの確認を行いません)。ktai_redir 独自フィルターフックでも表示内容を書き換え可能ですが、本テンプレートでは、より柔軟なカスタマイズが可能です。redir テンプレートが使われるのは、以下の5通りの場合があります。独自テンプレートタグ <code><a href="#ks_redir_has">ks_redir_has()</a>, <a href="ks_redir_get">ks_redir_get()</a>, <a href="ks_redir_same_host">ks_redir_same_host()</a></code> を利用して、どの状況かを判断して適切な内容を表示させてください。<ul>
+<li id="redir_no_mobile"><strong>指定したページに携帯版が見つからなかった場合: </strong><br />
+<code>ks_redir_get('full_url')</code> に PC サイトの URL あり。<code>ks_redir_get('mobile_url')</code> が NULL、<code>ks_redir_same_host()</code> が false</li>
+<li id="redir_different_host"><strong>指定したページに携帯版が見つかったものの、PC サイトとホスト名が異なる場合: </strong><br />
+<code>ks_redir_get('full_url')</code> に PC サイトの URL あり。<code>ks_redir_get('mobile_url')</code> に携帯サイトの URL あり。<code>ks_redir_same_host()</code> が false</li>
+<li id="redir_different_path"><strong>指定したページに携帯版が見つかって、かつ PC サイトとパスが異なる場合: </strong><br />
+デフォルトでは、この場合は redir テンプレートが呼ばれず、自動的に携帯サイトにリダイレクトされます。ただし、テーマの functions.php や my-hacks.php などで定数 KTAI_ALWAYS_RELAY_PAGE が true にセットされていれば、リダイレクトをせずに redir.php テンプレートを使用することができます。<br />
+<code>ks_redir_get('full_url')</code> に PC サイトの URL あり。<code>ks_redir('mobile_url')</code> に携帯サイトの URL あり。<code>ks_redir_same_host()</code> が true</li>
+<li id="redir_same_url"><strong>指定したページに携帯版が見つかって、かつ PC サイトと URL が同じ場合: </strong><br />
+デフォルトでは、この場合は redir テンプレートが呼ばれず、自動的に携帯サイトにリダイレクトされます。ただし、テーマの functions.php や my-hacks.php などで定数 KTAI_ALWAYS_RELAY_PAGE が true にセットされていれば、リダイレクトをせずに redir.php テンプレートを使用することができます。<br />
+<code>ks_redir_get('full_url')</code> に PC サイトの URL あり。<code>ks_redir_get('mobile_url')</code> に携帯サイトの URL あり (<code>ks_redir_get('full_url')</code> と同じ値)。<code>ks_redir_same_host()</code> が true</li>
+<li id="redir_bad_nonce"><strong>redir.php に必要なノンス文字列が正しくなかった場合: </strong><br />
+redir.php の悪用を防ぐため、12時間ごとに変化するノンス文字列を必要としていますが、時間切れ等でこれが検出できなかった場合はエラーを表示させます。<br />
+<code>ks_redir_get('full_url'), ks_redir_get('mobile_url'), ks_redir_same_host()</code> すべて NULL または false</li>
+</ul>
+redir.php に対して、そもそもノンス文字列が与えられなかった場合は、悪用と判断して、redi.php 自体が 400 Bad Request エラーを返します。redir テンプレートは呼び出されません (KTAI_ALWAYS_RELAY_PAGE で動作を変更することはできません)。</dd>
+</dl>
+<p>上記の他、テーマディレクトリーの配下に、独自の menu_XXX.php ファイル (XXX は英小文字、数字とアンダースコア(_) のみ) を作れば、?menu=XXX というクエリーが有効になります。例えば、menu_popular.php というファイルを作って、人気記事をリストするようなテンプレートとしておけば、http://blog.example.jp/?menu=popular などの URL で人気記事を出すページが作れます。PC 向けテーマではサイドバーに入れているものを、携帯版では独立したページに切り出して提供するなどの構成が可能です。</p>
+
+<h4 id="pictograms">絵文字の使い方</h4>
+<p>テンプレートや投稿本文で以下の XHTML タグを使えば絵文字を挿入できます。EZweb の絵文字と同じ仕様です。<br />
+<code>&lt;img localsrc="999" alt="代替文字" /&gt;</code><br />
+localsrc 属性に絵文字番号 (上記の場合 999)、alt 属性は絵文字の代替文字です (PC やスマートフォンなど絵文字非搭載の端末向け)。絵文字番号は以下のものが使えますが、EZweb 絵文字番号を使うことを推奨します。単なるアイコンなど代替文字が必要ない場合は、alt 属性を省略せずに、中身なしの alt 属性 (<code>alt=""</code>) を入れてください (省略した場合は既定の代替文字が入ってしまいます)。</p>
+<table border="1">
+<tr><th>サービス</th><th style="width:6.5em;">値</th><th>説明</th></tr>
+<tr><td><a href="http://www.au.kddi.com/ezfactory/tec/spec/3.html">EZweb</a></td><td>1〜822</td><td>10進数で EZweb 絵文字番号にそのまま対応</td></tr>
+<tr><td><a href="http://developers.softbankmobile.co.jp/dp/tool_dl/web/picword_top.php">SoftBank</a></td><td>se001〜se53e</td><td>s を除いた部分は16進数4ケタで、ソフトバンク絵文字の UNICODE 値に対応。</td></tr>
+<tr><td><a href="http://www.nttdocomo.co.jp/service/imode/make/content/pictograph/index.html">i-mode</a></td><td>d001〜d276</td><td>d を除いた部分は10進数。1〜176 は基本絵文字、201〜276 は拡張絵文字 1〜76 に対応。</td></tr>
+<tr><td rowspan="2"><a href="http://www.willcom-inc.com/ja/service/contents_service/club_air_edge/for_phone/homepage/">WILLCOM</a></td><td>d001〜d276</td><td>i-mode と同じ</td></tr>
+<tr><!-- td/td --><td>wf040〜wf15f</td><td>w を除いた部分は16進数4ケタで、ウィルコム絵文字の Shift_JIS コードに対応</td></tr>
+<tr><td rowspan="2"><a href="http://emobile.jp/tech/browser.html">EMnet</a></td><td>001〜d276</td><td>i-mode と同じ</td></tr>
+<tr><!-- td/td --><td>e253〜e278</td><td>e を除いた部分は10進数で、イー・モバイル絵文字 253〜278 に対応。</td></tr>
+</table>
+<p>ドコモ端末、ソフトバンク端末に対しては、似たような絵文字に自動的に変換されます。ウィルコム端末については、ウィルコム独自絵文字で似た絵文字があればそれを使い、なければ i モード互換絵文字に変換します。変換テーブルは独自のもので、キャリア公式のものとは微妙に異なっています。具体的な変換内容についてはソースコード (emobile.php, ezweb.php, i-mode.php, softbank.php, willcom.php) を参照してください。</p>
+<p>PC やスマートフォンで閲覧した場合、絵文字は alt 文字列の内容に置換されます。alt 属性が存在しない場合、既定の代替文字を使います (services.php で定義)。</p>
+<h4 id="use_images">投稿やページの画像をそのまま表示させる</h4>
+<p>投稿やページでの画像 (img 要素) は、より小さいサムネールにするか (3G, ウィルコム, スマートフォン等)、リンクに変換します (PDC 端末) が、携帯電話でも画像をそのまま表示させたい場合は、その img 要素に <br />
+&nbsp;&nbsp;&nbsp;&nbsp;<code>class="ktai"</code><br />
+という属性を追加してください。すでに class 属性があるなら、既存の class の後ろに空白を入れて ktai と書けばよいです。<br />
+&nbsp;&nbsp;&nbsp;&nbsp;例: <code>&lt;img src="/qr.png" class="noframe ktai" /&gt;</code></p>
+<p>なお、画像のサイズが大きくてページの全体サイズが携帯端末の表示容量を越える場合は、画像を alt テキストの内容に置換して容量制限に収まるようにしています。複数の画像がある場合は、後ろの画像から順にテキスト化されます (前の画像を極力残します)。</p>
+<p>ただし、画像サイズのチェックはウェブログ内の画像 (uploads フォルダー配下、プラグイン用画像、テーマ用画像など) に限られ、外部サイトの画像は対象外です。外部サイトの画像に <code>class="ktai"</code> を付けて表示させた場合、携帯端末の容量制限を越えてしまう可能性があります。</p>
+<h4 id="png_gif">PNG, GIF 自動切り替え機能</h4>
+<p>JPEG 画像は、ほぼすべての端末で表示できますが、PNG 画像は i-mode (ドコモ) で表示できず、GIF 画像は Softbank の PDC 端末で表示できません。Ktai Style では、端末に応じてどちらか適切なフォーマットの画像を表示させることができます。</p>
+<p>PNG や GIF 画像を使いたい場合は、同じファイル名で PNG フォーマット、GIF フォーマットの画像をそれぞれ用意してください。そして、img 要素の src 属性では、PNG 画像か GIF 画像どちらかを呼び出してください。PNG 画像の呼び出しは i-mode において GIF 画像に、GIF 画像の呼び出しはソフトンバク PDC において PNG 画像に変更されます。</p>
+<div>例: <code>&lt;img src="&lt;?php ks_theme_url(); ?&gt;title.png" class="ktai" /&gt;</code><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ i-mode では title.gif を読み込む</div>
+<div>例: <code>&lt;img src="&lt;?php ks_theme_url(); ?&gt;map.gif" class="ktai" /&gt;</code><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ ソフトバンクでは map.png を読み込む</div>
+<p>※Ktai Style 1.10 から、PNG, GIF どちらかの画像から片方の画像を作るようにしました。それでも、あらかじめ title.png, title.gif や map.gif, map.png それぞれを作っておくことをおすすめします (特に携帯テーマ用の画像の場合)。</p>
+<h4 id="inline_error">コメント項目不足時エラーのインライン表示</h4>
+<p>default, compact, redportal テーマでは、WordPress の標準動作と異なり、コメント投稿時に必須事項 (コメント本文、名前、携帯電情報など) が記入されてないとき、コメントフォームを再び表示してその上部にエラーを出します (エラーのインライン表示)。classic テーマは、WordPress 標準の動作である、エラー画面に遷移となります。この場合、携帯電話の機種によっては、前の画面に戻ったとき、入力内容が消えてしまうことがあります。</p>
+<p>エラーをインライン表示にするには、submit ボタンを <code>ks_inline_error_submit()</code> テンプレートタグを使って出力します。</p>
+<dl>
+<dt>default テーマの場合</dt>
+<dd><code>&lt;?php ks_inline_error_submit(__('Say It!')); ?&gt;</code></dd>
+<dt>classic テーマの場合</dt>
+<dd><code>&lt;input type="submit" name="submit" value="&lt;?php _e('Say It!'); ?&gt;" /&gt;</code></dd>
+</dl>
+<h4 id="stylesheet">スタイルシートの利用</h4>
+<p>ドコモ FOMA, EZweb の WAP2.0 対応機、ソフトバンク 3G など、最近の端末ではスタイルシートにも対応しています。EZweb は、<code>media="handheld"</code> 指定によって独立したスタイルシートを作成できます。i-mode 用 CSS (i-CSS) は各要素に style 属性を付与したインライン形式しか対応しておらず、HTTP ヘッダで application/xhtml+xml を名乗る必要があります (text/html ではスタイルシートが無効になります)。</p>
+<p>Ktai Style は、デフォルトではスタイルシートを使わず、HTTP ヘッダでは text/html を出力しています。しかし、<code>ks_use_appl_xhtml()</code> テンプレートタグを使うことにより、ドコモ FOMA, EZweb の WAP2.0 対応機、ソフトバンク 3G において、HTTP ヘッダで application/xhtml+xml を出力し、body, h1 hr, font 要素などの特定の属性を style 属性に変換します。</p>
+<ul>
+<li>body bgcolor 等を &lt;style&gt;body {background: なんちゃら}&lt;/style&gt; に変換</li>
+<li>a name を a id に変換</li>
+<li>h1 (,h2, ... ,h6) align="center" 等を h1 style="text-align:center" 等に変換</li>
+<li>hr color="blue" 等 を hr style="color:blue;border-color:blue;" 等に変換。</li>
+<li>hr width="90%" 等を hr style="width:90%" 等に変換。</li>
+<li>hr align="left" 等を hr style="float:left" 等に変換。</li>
+<li>font size, font color 等を span style="font-size... や span style="font-color... に変換。</li>
+<li>input 要素の istyle 属性を style="-wap-input-format:*M" (EZweb, SoftBank, EMNet) もしくは style="-wap-input-format:&quot;*&lt;ja:h&gt;&quot;" (i-mode) 等に変換</li>
+</ul>
+<p>Ktai Style のテンプレートタグは、従来式の HTML 記述 (font color="blue" など) となっていますが、この変換機構によりスタイルシート記述に対応するようになります。すなわち、スタイルシートに対応しない端末と、対応する端末を自動判別して最適な出力とできます。</p>
+
+<h3 id="filtering">フィルタ対象タグ一覧</h3>
+<p>WordPress が提供するテンプレートタグのうち、以下のものは本プラグインが出力をフィルタして表示を簡略化しています。</p>
+<dl>
+<dt><code>the_title()</code></dt>
+<dd>パスワード保護された投稿の場合、「保護された投稿: 」または「保護中:」の文字列を「マル秘」絵文字に差し替えます。また、携帯管理画面では、「非公開:」の文字列を「鍵」の絵文字に差し替えます。</dd>
+<dt><code>the_content()</code></dt>
+<dd>投稿本文を携帯電話向けに変換して出力します。ただし、携帯電話用テンプレートでは、後述の <code>ks_content()</code> を使ってください (<code>the_content()</code> はパスワード保護された投稿に非対応のため)。</dd>
+<dt><code>the_excerpt(), get_the_excerpt</code></dt>
+<dd>投稿の抜粋を画面に出力もしくは取得します。抜粋を設定していない場合、投稿本文から、del, style 要素の中身および JavaScript を削除し、マルチバイト文字を考慮して300バイトの抜粋を作成します。</dd>
+<dt><code>comments_template()</code></dt>
+<dd>PC 向けサイトのコメントテンプレートの代わりに携帯用テンプレートを読み込みます。</dd>
+<dt><code>comment_text()</code></dt>
+<dd>コメント内容を携帯電話向けに簡略化して出力します。</dd>
+<dt><code>get_permalink()</code></dt>
+<dt><code>get_page_link()</code></dt>
+<dt><code>get_attachment_link()</code></dt>
+<dt><code>get_year_link()</code></dt>
+<dt><code>get_month_link()</code></dt>
+<dt><code>get_day_link()</code></dt>
+<dt><code>get_category_link()</code></dt>
+<dt><code>get_tag_link()</code></dt>
+<dt><code>wp_list_cats()</code></dt>
+<dt><code>wp_list_categories()</code></dt>
+<dt><code>wp_list_pages()</code></dt>
+<dd>すべて title 属性, rel 属性を除去し、href 属性のリンク先からホスト名を削除します。</dd>
+</dl>
+
+<h4 id="actions">独自アクションフック一覧</h4>
+<p>Ktai Style 独自のアクションフックを用意しています。以下のようなコードを、携帯テーマの functions.php, 独立したプラグインファイル(後述)、もしくは my-hacks.php に記述すれば利用可能です。</p>
+<div><code>add_action('ktai_init_pc', 'フック関数名');</code></div>
+<p>WordPress 2.8 以降の場合、my-hacks.php を有効にするのは難しいため、以下のような内容をテキストファイル (ファイル名は ks_hooks.php など *.php とする) に書き出すことで独立したプラグインを作成します。それを wp-content/plugins ディレクトリーにアップロードし、プラグイン管理画面で有効にすれば OK です。複数のカスタマイズを1つのファイルにまとめても構いません。</p>
+<pre>&lt;php 
+/*
+Plugin Name: Ktai Style Hooks
+Version: 1.80
+*/
+add_action('ktai_init_pc', 'フック関数名');
+/* その他カスタマイズ内容 */
+?&gt;</pre>
+<dl>
+<dt id="ktai_init_mobile">ktai_init_mobile</dt>
+<dd>携帯電話でアクセスしたときの初期化処理に、独自処理を追加するためのアクションです。</dd>
+<dt id="ktai_init_pc">ktai_init_pc</dt>
+<dd>PCでアクセスしたときの初期化処理に、独自処理を追加するためのアクションです。</dd>
+<dt id="ktai_wp_head">ktai_wp_head</dt>
+<dd>携帯テーマの header.php で <code>ks_wp_head()</code> の内部で実行されるアクションです。wp_head アクションの携帯版です。</dd>
+<dt id="ktai_wp_head">ktai_wp_footer</dt>
+<dd>携帯テーマの header.php で <code>ks_wp_footer()</code> の内部で実行されるアクションです。wp_footer アクションの携帯版です。</dd>
+</dl>
+
+<h4 id="filters">独自フィルターフック一覧</h4>
+<p>Ktai Style 独自のフィルターフックを用意しています。以下のようなコードを、携帯テーマの functions.php, 独立したプラグインファイル、もしくは my-hacks.php に記述すれば利用可能です。</p>
+<div><code>add_filter('ktai_raw_content', 'フック関数名');</code></div>
+<p>複数の引数がある場合は、優先順位 (デフォルトは10) および引数の数を指定する必要があります。</p>
+<div><code>add_filter('ktai_convert_link', 'フック関数名', 10, 4);</code></div>
+<dl>
+<dt id="ktai_detect_agent">ktai_detect_agent</dt>
+<dd>引数: <code>$ktai, $ua</code><br />
+携帯端末の判別結果をフィルターします。<code>$ktai</code> は端末ごとのオブジェクトです (PC と判別された場合は NULL)。<code>$ua</code> はユーザーエージェント文字列です。判別結果を変更する場合は、既存の <code>$ktai</code> オプジェクトを破棄してから、新たなオブジェクトを生成して返り値とします。例えば、iPhone, iPod touch を「その他端末」として判別させる場合は以下の通りとします。
+<pre>&lt;?php
+function ks_detect_iphone($ktai, $ua) {
+	if (preg_match('/\(iP(hone|od);/', $ua)) {
+		if ($ktai) {
+			unset($ktai);
+		}
+		$ktai = new KtaiService_Other($ua);
+	}
+	return $ktai;
+}
+add_filter('ktai_detect_agent', 'ks_detect_iphone', 10, 2);
+?&gt;</pre>
+<strong>※重要</strong>このフィルターを使うフック関数および呼び出し用の <code>add_filter()</code> は、my-hacks.php に記述するか、独立したプラグインファイルとして記述する必要があります。他のフィルターと異なり、携帯テーマの functions.php に入れても読まれません (携帯テーマの functions.php を読む前に携帯端末の判別を行うため)。<br />
+※ WP-Cache, WP Super Cache を併用する場合は、patch-wpcache.php, patch-supercache-ktaistyle.php のユーザーエージェント判別部分も修正する必要があります。</dd>
+<dt id="ktai_mobile_search_ip">ktai_mobile_search_ip</dt>
+<dd>引数: <code>$search_ip</code><br />
+モバイル向け検索エンジンの IP アドレス一覧の配列をフィルターします。アドレス一覧に追加したりできます。</dd>
+<dt id="ktai_smiley_table">ktai_smiley_table</dt>
+<dd>引数: <code>$smiles</code><br />
+WordPress のスマイリーを携帯電話絵文字に変換するテーブルをフィルターします。このフィルターを使えば、スマイリーアイコンを追加した場合、それに対応する携帯絵文字を追加することが可能になります。<code>$smiles</code> は配列で、キーはスマイリーのファイル名 (icon_XXXX.gif) で、値は現在閲覧しているキャリアに対応した絵文字の文字コード (ソフトバンクの場合ウェブコード) です。たいていの場合、フィルター関数では、<code>is_ktai()</code> を使ってキャリア別に処理する必要があるでしょう。例えば以下のようにします。
+<pre>&lt;?php
+function ks_correct_smiley($smiles) {
+	switch (is_ktai()) {
+	case 'DoCoMo' :
+		$smiles['icon_question.gif'] = KtaiService_DoCoMo::$pics['d159']; // use "!?"
+		break;
+	}
+	return $smiles;
+}
+add_filter('ktai_smiley_table', 'ks_correct_smiley');
+?&gt;</pre></dd>
+<dt id="ktai_pictogram_table">ktai_pictogram_table</dt>
+<dd>引数: <code>$trans</code><br />
+絵文字用を示す <code>&lt;img localsrc="XXXX" /&gt;</code> フォーマットから実際の絵文字に変換するときのテーブルをフィルターします。<code>$trans</code> は配列で、キーは絵文字番号 (XXXX 部分)、値は現在閲覧しているキャリアに対応した絵文字の文字コード (ソフトバンクの場合ウェブコード) です。</dd>
+<dt id="ktai_convert_pict_other">ktai_convert_pict_other</dt>
+<dd>引数: <code>$converted, $number, $alt, $charset</code><br />
+PC および「その他」端末での閲覧時、携帯電話絵文字を文字列に変換した結果をフィルターします。<code>$converted</code> は Ktai Style 既定の代替文字列に置き換えた結果、<code>$number</code> は絵文字番号、<code>$alt</code> は <code>&lt;img localsrc...</code> に書かれた alt 文字列です。空の alt 文字列ならば空文字列が、alt が存在しなければ NULL が入ります。<code>$charset</code> は <code>$converted, $alt</code> の文字コードです (スマートフォン等「その他」端末では SJIS-win, PC の場合はウェブログの文字列 (たいてい UTF-8) です。PC でもフィルターを使うためには、my-hacks.php もしくは独立したプラグインファイルにフィルタ関数および add_filter を書く必要があります。</dd>
+<dt id="ktai_raw_content">ktai_raw_content</dt>
+<dd>引数: <code>$buffer</code><br />
+テンプレートによって作成された直後のページ内容をフィルターできます。文字コードはウェブログの文字コードのままです (たいていは UTF-8)。UTF-8 そのままで記述されているハートマーク等を数値実体参照に置換する処理は、このフックに処理用関数を割り当てて行なっています。</dd>
+<dt id="ktai_encoding_converted">ktai_encoding_converted</dt>
+<dd>引数: <code>$buffer</code><br />
+文字コードを携帯電話用に変換後、ページ分割前の内容をフィルターできます。絵文字 (実体参照で記述されたハートマーク等も含む) や顔文字の変換、余分な XHTML タグや改行コードの削除はこのフックにそれぞれの処理関数を割り当てることで実施しています。優先順位 10 でフィルター追加した場合、これらの処理が終わった後の内容をフィルターすることになります。</dd>
+<dt id="ktai_split_page">ktai_split_page</dt>
+<dd>引数: <code>$buffer, $page_num</code><br />
+ページ分割を行うためのフィルターです。ページ分割処理は、このフックにページ分割関数を割り当てることで行なっています。<code>$buffer</code> は出力用 XHTML、<code>$page_num</code> は現在のページ番号 (最初のページは1) です。携帯電話各社に応じた HTML/XHTML タグ最適化は、このフックに10以上の優先順位を持つフィルターを追加することで行なってください。ページ分割前に li, dt, dd, option などの閉じタグ削除を行なっても、ページ分割処理で補完されてしまうためです。</dd>
+<dt id="ktai_allowedtags">ktai_allowedtags</dt>
+<dd>引数: <code>$allowedtags</code><br />
+ページ分割時に、使用を許可する XHTML タグの一覧をフィルターできます。デフォルトのタグ一覧は kses.php で定義していますので、追加したいタグを適宜修正してください。例えば、フィルター関数で<br />
+<code>$allowedtags['style'] = array();</code><br />
+とすれば style 要素が使えるようになります。</dd>
+<dt id="ktai_split_page_navi">ktai_split_page_navi</dt>
+<dd>引数: <code>$navi, $prev, $num, $next</code><br />
+携帯用ページ分割のナビゲーションメニューをフィルターします。すべての引数はウェブログの文字コードと同じ (たいてい UTF-8) で、<code>$navi</code> は、メニュー用 HTML、<code>$prev</code> は1つ目の変数で「*. 前へ」のリンク HTML、<code>$num</code> は2つ目の変数で現在のページ数、<code>$next</code> は3つ目の変数で「次へ.#」のリンク HTML です。</dd>
+<dt id="ktai_login_logo">ktai_login_logo</dt>
+<dd>引数: <code>$html, $url, $ext</code><br />
+ログイン画面に出る WordPress ロゴの出力をフィルターします。<code>$html</code> は出力用HTML, <code>$url</code> はロゴの URL、<code>$ext</code> は、閲覧している端末に応じた画像拡張子 (png または gif) です。WordPress ロゴをサイトのロゴに差し替えたいときに使えます。</dd>
+<dt id="ktai_die_logo">ktai_die_logo</dt>
+<dd>引数: <code>$html, $url, $ext</code><br />
+外部サイトへの中継ページ、コメント投稿時のエラー画面、管理画面での確認画面等で、画面上部に出る WordPress ロゴの出力をフィルターします。<code>$html</code> は出力用HTML, <code>$url</code> はロゴの URL、<code>$ext</code> は、閲覧している端末に応じた画像拡張子 (png または gif) です。WordPress ロゴをサイトのロゴに差し替えたいときに使えます。</dd>
+<dt id="ktai_redir">ktai_redir</dt>
+<dd>引数: <code>$html, $full_url, $mobile_url</code><br />
+i-mode, EZweb, Yahoo! ケータイ閲覧時に外部サイトに移動する際に出る中継ページの文言をフィルターします (<a href="Q_and_A.ja.html#external">使用例</a>)。<br />
+<code>$html</code> はXHTML で記述された内容、<code>$full_url</code> はジャンプ先 URL、<code>$mobile_url</code> は発見された携帯サイトの URL です (ジャンプ先 URL とホスト名が異なるときのみ設定。ホスト名が同一のときは中継ページが出ずに自動的にリダイレクトします。常に中継ページを出したいときは、定数 KTAI_ALWAYS_RELAY_PAGE を true として設定してください)。<br />
+$full_url は常に設定されますが、$mobile_url は、NULL／$full_url とホスト部が違う URL／$full_url とホストは同じだがパスが違う URL ／$full_url と同一 URL、の4通りがあります。これらにより、$html の中身が異なることに注意してください。</dd>
+<dt id="ktai_redir_error">ktai_redir_error</dt>
+<dd>引数: <code>$html</code><br />
+外部サイトの中継スクリプトがエラーとなったときの文言をフィルターします。中継スクリプトを使うときには12時間ごとに変化するノンス文字列が必要なため、時間が経ち過ぎたときや、でたらめなノンス文字列の場合はノンスの確認に失敗し、エラーとなります。</dd>
+<dt id="ktai_leave_scheme">ktai_leave_scheme</dt>
+<dd>引数: <code>$schemes</code><br />
+中継ページ経由のリンクとせず、通常リンクのままとする URI スキーム一覧 (配列) をフィルターできます。フィルター関数で<br />
+<code>unset($schemes['tel-av:']);</code><br />
+とすると tel-av スキームのリンクは中継ページ経由になります。</dd>
+<dt id="ktai_external_link">ktai_external_link</dt>
+<dd>引数: <code>$link_html, $href, $label, $icon</code><br />
+外部サイトへのリンク変換処理をフィルターします。<code>$link_html</code> は Ktai Style による処理後のリンクHTML, <code>$href</code> はリンク先 URL, <code>$label</code> はリンク文字列 (XHTML)、<code>$icon</code> は外部サイトを示す絵文字アイコン (img 要素)です。携帯電話キャリアや種別を知りたい場合は、<code>is_ktai(), ks_service_type()</code> を使ってください。</dd>
+<dt id="ktai_mobile_same_url">ktai_mobile_same_url</dt>
+<dd>引数: <code>$url_pat</code><br />
+同じ URL で PC ／携帯両対応できるサイトの URL 正規表現リストをフィルターします。デフォルトの URL リストは、URL が共用になっているサイト、PC 向け URL に携帯電話でアクセスしたら別 URL にリダイレクトされるサイトのどちらも含まれます。デフォルトのサイト一覧に追加する場合は以下のようにします。追加する URL は正規表現であることに注意してください。
+<pre>&lt;?php
+function ks_add_mobile_sites($url_pat) {
+	$url_pat[] = 'http://blog\.example\.jp/';
+	return $url_pat;
+}
+add_filter('ktai_mobile_same_url', 'ks_add_mobile_sites');
+?&gt;</pre></dd>
+<dt id="ktai_none_mobile_url">ktai_none_mobile_url</dt>
+<dd>引数: <code>$url_pat</code><br />
+上記 mobile_same_url のパターンにマッチするものの、中継ページを出させたい URL の正規表現リストをフィルターします。このパターンにマッチした場合、携帯版の存在確認をしないで、必ず中継ページを出します。<br />
+このフィルターは、"http://www.cocolog-nifty.com/" を除外するために用意したものです。mobile_same_url には <code>http://[-\w]+.(cocolog|air|moe|tea|txt|way)-nifty\.com/</code> というパターンがあって、ココログのフロントページである http://www.cocolog-nifty.com/ もマッチしてしまいます。しかし、この URL 配下のページは完全に携帯対応しておらず、中継ページなしでリダイレクトするのはふさわしくありません。といって、正規表現で www.cocolog-nifty.com だけ外す記述は難しいため、除外サイトを設定する、という手段を用意しました。mobile_same_url フィルターで追加した URL パターンで似た状況があれば、none_mobile_url フィルターも使ってみてください。</dd>
+<dt id="ktai_convert_links">ktai_convert_links</dt>
+<dd>引数: <code>$link_html, $orig_html, $href, $label</code><br />
+a 要素によるハイパーリンクの変換処理をフィルターします。<code>$link_html</code> は Ktai Style による処理後のリンク HTML、<code>$orig_html</code> は処理前の a 要素そのもの、<code>$href</code> はリンク先 URL、<code>$label</code> はリンク文字列です。フィルター結果を NULL にすると、a 要素の変換処理が行なわれなくなります。</dd>
+<dt id="ktai_image_to_link">ktai_image_to_link</dt>
+<dd>引数: <code>$image_html, $orig_html, $src</code><br />
+img 要素による画像を、より小さいサムネールやリンクに変換する処理をフィルターします。$image_html は Ktai Style による変換後の HTML、<code>$image</code> は変換前の img 要素そのもの、<code>$src</code> は画像のソース URL です。フィルター結果を NULL にすると、画像からリンクへの変換処理が行なわれなくなります (画像がそのまま表示される)。</dd>
+<dt id="ktai_image_inline_setting">ktai_image_inline_setting</dt>
+<dd>引数: <code>$image_inline</code><br />
+3G 端末、ウィルコム、スマートフォン等で、画像をインライン表示させるかどうかデフォルト状態をフィルターします。3G 端末、ウィルコム、スマートフォン等でアクセスし、かつ、管理画面で「3G 端末, ウィルコム, スマートフォン等での画像表示」が「画像を表示」に設定されていれば、<code>$image_inline</code> が true となっています。この値をそのまま返すと、画像をインライン表示します。常に false を返せば、端末によらず、「画像をリンクにする」がデフォルトになります。逆に、常に true を返すと、2G 端末でも画像をインライン表示してしまいます (おすすめしません)。フィルター関数の例は以下の通りです。
+<pre>&lt;?php
+function ks_image_link_default($image_inline) {
+	return false;
+}
+add_filter('ktai_image_inline_setting', 'ks_image_link_default');
+?&gt;</pre></dd>
+<dt id="ktai_thumbnail_max_size">ktai_thumbnail_max_size</dt>
+<dd>引数: <code>$size</code><br />
+携帯用サムネールの長辺側サイズをフィルターします。デフォルトは 96 です。これを変更しても、すでに作成ずみのサムネールは変わりませんので、「<a href="../README.ja.html#purge">プラグインの撤去</a>」の説明に従って、既存の携帯サムネールを削除してください。</dd>
+<dt id="ktai_direct_link_image_size">ktai_direct_link_image_size</dt>
+<dd>引数: <code>$size</code><br />
+元画像へのリンクを、「元画像(xxxKB)」というテキストリンクにするか、携帯サムネールへリンクにするかを判断する画像サイズをフィルターします。デフォルトは 75KB (76800 バイト) です。</dd>
+<dt id="ktai_switch_inline_images">ktai_switch_inline_images</dt>
+<dd>引数: <code>$menu, $before, $after, $color</code><br />
+「画像を表示する／リンクに変換」の切り替えメニューをフィルターします。<code>$menu</code> は切り替えメニュー HTML、<code>$before, $after</code> は切り替えメニューの前後につく XHTML (<code>ks_switch_inline_images()</code> の引数)、<code>$color</code> はリンクの色指定です。</dd>
+<dt id="ktai_image_alignment">ktai_image_alignment</dt>
+<dd>引数: <code>$html, $align, $margin, $style</code><br />
+画像要素 (img タグ) の回り込みに関する HTML 出力をフィルターします。<code>$html</code> は img 要素の HTML タグ全体。<code>$align</code> は回り込みの指定 (alignleft, alignright, alignnone)、<code>$margin</code> はマージン値、<code>$style</code> は img 要素に追加したスタイル記述です (端末によって style 属性の場合と、align 属性の場合があります)。回り込みを解除するには、<br />
+<code>$html = $style ? str_replace($style, '', $html) : $html;</code><br />
+とやれば可能です。</dd>
+<dt id="ktai_switch_pc_view">ktai_switch_pc_view</dt>
+<dd>引数: <code>$menu, $path, $before, $after, $color</code><br />
+「PC 表示にする」の切り替えメニューをフィルターします。<code>$menu</code> は切り替えメニュー HTML、<code>$path</code> は現在 URI のパス部分 (URI のスラッシュ以降)、<code>$before, $after</code> は切り替えメニューの前後につく XHTML (<code>switch_pc_view()</code> の引数)、<code>$color</code> はリンクの色指定です。</dd>
+<dt id="ktai_switch_mobile_view_css">ktai_switch_mobile_view_css</dt>
+<dd>引数: <code>$style</code><br />
+PC 表示に変更後に出る「携帯表示にする」の切り替えメニュー部分に適用されるスタイルシートをフィルターします。<code>$style</code> は XHTML の head 要素に入るスタイルシートそのもの (&lt;style type="text/css"&gt; などの style タグは含みません)。デフォルトのスタイルでは、PC 表示が崩れてしまうときにフィルターを利用して見栄えを調整してください。</dd>
+<dt id="ktai_switch_mobile_view">ktai_switch_mobile_view</dt>
+<dd>引数: <code>$menu, $path</code><br />
+PC 表示に変更後に出る「携帯表示にする」の切り替えメニューをフィルターします。<code>$menu</code> は切り替えメニュー HTML、<code>$path</code> は現在 URI のパス部分 (URI のスラッシュ以降) です。</dd>
+</dl>
+
+<p>上記フックでは既定のフィルターを定義していますが、以下の通りにして削除することも可能です。</p>
+<pre>remove_filter('ktai_raw_content', array($Ktai_Style->ktai, 'shrink_pre_encode'), 9);
+remove_filter('ktai_encoding_converted', array($Ktai_Style->ktai, 'shrink_pre_split'), 5);
+remove_filter('ktai_encoding_converted', array($Ktai_Style->ktai, 'replace_smiley'), 7);
+remove_filter('ktai_encoding_converted', array($Ktai_Style->ktai, 'convert_pict'), 9);
+remove_filter('ktai_split_page', array($Ktai_Style->shrinkage, 'add_image_inline'), 7);
+remove_filter('ktai_split_page', array($Ktai_Style->shrinkage, 'split_page'), 9, 2);
+remove_filter('ktai_split_page', array($Ktai_Style->ktai, 'shrink_post_split'), 15);
+remove_filter('ktai_split_page', array($Ktai_Style->shrinkage, 'trim_images'), 20);</pre>
+
+<h4 id="tags">独自タグ一覧</h4>
+<p>出力される XHTML が簡略化されたテンプレートタグを用意しています。これらの関数はテンプレートが読み込まれる直前に有効となるため、他のプラグインでは、そのプラグインが <code>add_action(), add_filter()</code> で追加したコールバック関数の中でのみ使えます。</p>
+<dl>
+<dt id="ks_option"><code>ks_option($name)</code></dt>
+<dd>本プラグインのオプション設定値を返します。<br />
+<code>$name</code>: オプション名</dd>
+<dt id="ks_post_password_required"><code>ks_post_password_required($post)</code></dt>
+<dd>投稿がパスワード保護されていて、かつ、パスワードが未入力・正しくないとき true になります。パスワード保護されていないか、正しいパスワードが入力されていれば false になります。WordPress の投稿ループの中では引数が省略できますが、そうでない場合は引数に <code>$post</code> (投稿 ID もしくは post オブジェクト) を与えてください。</dd>
+<dt id="ks_service_type"><code>ks_service_type()</code></dt>
+<dd>携帯キャリアごとのサービス名を返します。i-mode (ドコモ) の場合 mova, FOMA のいずれか、EZweb (KDDI) の場合 HDML, WAP2.0 のいずれか、ソフトバンクの場合 PDC, 3G のいずれか、ウィルコムの場合 AIR-EDGE、イー・モバイルの場合 EMnet という値になります。ディズニー・モバイルは ソフトバンク 3G とみなします。</dd>
+<dt id="ks_is_flat_rate"><code>ks_is_flat_rate()</code></dt>
+<dd>閲覧中の端末が定額パケット通信に対応しているなら true を返します。具体的には、各社 3G 端末、ウィルコム、スマートフォン、「その他」端末 (mova, ソフトバンク PDC 以外) の場合 true となります。</dd>
+<dt id="ks_cookie_available"><code>ks_cookie_available()</code></dt>
+<dd>閲覧中の端末がクッキーに対応しているなら true を返します。具体的には、EZweb (WAP, HTML)、ソフトバンク 3G、ウィルコム、イー・モバイル、スマートフォンなど「その他」端末の場合 true となります。false になるのは、ドコモ 3G/PDC、ソフトバンク PDC となります。</dd>
+<dt id="ks_ext_css_available"><code>ks_ext_css_available()</code></dt>
+<dd>閲覧中の端末が外部 CSS ファイルに対応しているなら true を返します。具体的には、EZweb (WAP)、ソフトバンク 3G、イー・モバイル、スマートフォンなど「その他」端末の場合 true となります。false になるのは、ドコモ 3G/PDC、EZweb (HDML)、ソフトバンク PDC、ウィルコムとなります。</dd>
+<dt id="ks_in_network"><code>ks_in_network($allow_search_engine)</code></dt>
+<dd>i-mode, EZweb, Yahoo! ケータイ, ウィルコム, EMnet 各社のネットワークからアクセスしている場合 true になります。スマートフォン等でのアクセスや、携帯電話のユーザーエージェントを名乗ってインターネットからアクセスしている場合は false になります。できるだけ最新情報に追随するよう配慮していますが、電話キャリアが突然新しい IP アドレスを追加することがある (携帯電話からアクセスしているのに、false と判定される可能性がある) ため、ご注意ください。<br />
+<code>$allow_search_engine</code>: true にすると、各種モバイル向け検索エンジンのクロールでも true を返します (デフォルトは false)。</dd>
+<dt id="ks_is_menu"><code>ks_is_menu($type)</code></dt>
+<dd><code>$type</code> が指定されていない場合、menu_XXXX.php を使用した出力の場合 true を返します。<code>is_home()</code> は、menu_XXXX.php を使った出力の場合でも true になってしまうため、必要に応じて <code>is_home() &amp;&amp; ! ks_is_menu()</code> といったコードを使ってください。<br />
+<code>$type</code>に値を入れた場合、その値に対応する menu_XXXX.php を使用しているかどうかの判定になります。例えば、<code>ks_is_menu('comments')</code> は menu_comments.php を使用した出力の場合 true となります。</dd>
+<dt id="ks_is_front"><code>ks_is_front()</code></dt>
+<dd>サイトの最初のページかどうかを判断します。<code>is_home()</code> かつ1ページ目であれば true となります。独自テンプレートである menu_XXXX.php (年月アーカイブ／カテゴリー一覧／タグクラウド／ページ一覧／ブログロール／最近のコメント) を表示しているときは false になります。</dd>
+<dt id="ks_is_comments_list"><code>ks_is_comments_list()</code></dt>
+<dd>コメント一覧ページであれば true になります。</dd>
+<dt id="ks_is_comment_post"><code>ks_is_comment_post()</code></dt>
+<dd>コメント投稿ページであれば true になります。</dd>
+<dt id="ks_is_comments"><code>ks_is_comments()</code></dt>
+<dd>コメント一覧ページまたはコメント投稿ページであれば true になります。</dd>
+<dt id="ks_is_image_inline"><code>ks_is_image_inline()</code></dt>
+<dd>各社 3G 端末、ウィルコム、スマートフォン等で、画像をインライン表示させる状態のとき true になります。関数名は <code>ks_is_inline_image()</code> <strong>ではない</strong>ことに注意してください。</dd>
+<dt id="ks_added_image"><code>ks_added_image()</code></dt>
+<dd>テーマや他のプラグインで、投稿本文やページ本文に画像を追加したとき、この関数を呼ぶ必要があります。さもないと、「画像を表示／リンクに変換」のメニューが出ません。</dd>
+<dt id="ks_has_inline_images"><code>ks_has_inline_images()</code></dt>
+<dd>ページ中のインライン画像の枚数を返します。この値が1以上かつ <code>ks_is_image_inline()</code> が true のとき「画像を表示する／リンクに変換」のメニューが出ます。</dd>
+<dt id="ks_is_redir"><code>ks_is_redir()</code></dt>
+<dd>redir.php テンプレートを使用している場合に true、していない場合に false を返します。</dd>
+<dt id="ks_header"><code>ks_header()</code></dt>
+<dd>ヘッダーを出力します (<code>get_header()</code> は使えません)。</dd>
+<dt id="ks_footer"><code>ks_footer()</code></dt>
+<dd>フッターを出力します (<code>get_footer()</code> は使えません)。</dd>
+<dt id="ks_wp_head"><code>ks_wp_head($pc_head)</code></dt>
+<dd>独自アクション ktai_wp_head を実行します。<code>$pc_head</code> が KTAI_DO_PC_HEAD (== true) の場合、WordPress 標準テンプレートタグ <code>wp_head()</code> も実行しますが、スタイルシートや JavaScript の出力は抑制されます。デフォルトでは KTAI_NONE_PC_HEAD のため、wp_head() は実行されません。<code>wp_head()</code> の実行を前提とするプラグインを併用するとき、KTAI_DO_PC_HEAD に変更してください。</dd>
+<dt id="ks_wp_footer"><code>ks_wp_footer($pc_footer)</code></dt>
+<dd>独自アクション ktai_wp_footerを実行します。<code>$pc_footer</code> が KTAI_DO_PC_HEAD (== true) の場合、WordPress 標準テンプレートタグ <code>wp_footer()</code> を実行しますが、スタイルシートや JavaScript の出力は抑制されます。デフォルトでは KTAI_NONE_PC_HEAD のため、wp_footer() は実行されません。<code>wp_footer()</code> の実行を前提とするプラグインを併用するとき、KTAI_DO_PC_HEAD に変更してください。</dd>
+<dt id="ks_blogurl"><code>ks_blogurl($echo)</code></dt>
+<dd>ウェブログの URL を出力します。ホスト名を省略した絶対パスに変換し、末尾にスラッシュが付きます。<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_siteurl"><code>ks_siteurl($echo)</code></dt>
+<dd>WordPress がインストールされている URL を出力します。ホスト名を省略した絶対パスに変換し、末尾にスラッシュが付きます。<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_plugin_url"><code>ks_plugin_url($echo)</code></dt>
+<dd>プラグインのあるディレクトリにアクセスできる URL を出力します。末尾にスラッシュが付きます。<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_get_theme"><code>ks_get_theme($echo)</code></dt>
+<dd>現在の携帯電話用テーマの名前を取得します。<br />
+<code>$echo:</code> true の場合、画面に出力します。false の場合、関数の返り値とします (デフォルト)。</dd>
+<dt id="ks_get_theme_directory"><code>ks_get_theme_directory($echo)</code></dt>
+<dd>現在の携帯電話用テーマがあるディレクトリーを取得します。末尾にスラッシュが付きます。<br />
+<code>$echo:</code> true の場合、画面に出力します。false の場合、関数の返り値とします (デフォルト)。</dd>
+<dt id="ks_theme_url"><code>ks_theme_url($echo)</code></dt>
+<dd>携帯電話用テーマのディレクトリーにアクセスできる URL を出力します。末尾にスラッシュが付きます。<br />
+<code>$echo:</code> true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_admin_url"><code>ks_admin_url($echo)</code></dt>
+<dd>管理画面にログインしたときの最上位 URL を出力します。末尾にスラッシュが付きます。<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_login_link"><code>ks_login_link($before, $after, $echo, $accesskey, $label)</code></dt>
+<dd>ktai_style/admin ディレクトリーがあれば、ログイン画面へのリンクを出力します。末尾にスラッシュが付きます<br />
+<code>$before</code>: リンクの前に出力する文字列<br />
+<code>$after</code>: リンクの後ろに出力する文字列<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+<code>$accesskey</code>: アクセスキー文字列 (オプション)<br />
+<code>$label</code>: 「ログイン」を示す文字列。デフォルトは「ログイン」('Log in' に対するローカライズ文字列) です。<br />
+※引数は、<code>'before=|&amp;accesskey=0'</code> のようなクエリー文字列、<code>array('before' =&gt; '|', 'accesskey' =&gt; '0')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_get_login_url"><code>ks_get_login_url($echo, $redirect)</code></dt>
+<dd>ログイン用の URL を返します。<br />
+<code>$echo</code>: true の場合、画面に出力します。false の場合、関数の返り値とします (デフォルト)。<br />
+<code>$redirect</code>: ログイン後にリダイレクトする URL (オプション)</dd>
+<dt id="ks_get_logout_url"><code>ks_get_logout_url($echo, $redirect)</code></dt>
+<dd>ログアウト用の URL を返します。<br />
+<code>$echo</code>: true の場合、画面に出力します。false の場合、関数の返り値とします (デフォルト)。<br />
+<code>$redirect</code>: ログアウト後にリダイレクトする URL (オプション)</dd>
+<dt id="ks_is_loggedin"><code>ks_is_loggedin()</code></dt>
+<dd>携帯電話でログインしている場合、ユーザー ID を返します。ログインしていない場合 false を返します。</dd>
+<dt id="ks_session_id_form"><code>ks_session_id_form()</code></dt>
+<dd>コメントフォームなどで、ログイン中のセッション ID を引き継ぐための HTML を出力します。</dd>
+<dt id="ks_check_wp_version"><code>ks_check_wp_version($version, $operator)</code></dt>
+<dd>WordPress のバージョンをチェックします。バージョンが <code>$version</code> が <code>$operator</code> に合致する場合 true となります。WordPress ME の場合、「ME」という文字列を除いた数字部分を使用します。</dd>
+<dt id="ks_term_name"><code>ks_term_name($echo, $detect_search_engine)</code></dt>
+<dd>携帯電話の機種名を取得・表示します。不明時は N/A という文字列になります。au の場合、デバイス ID ではなく、一般的な機種名に変換します。検索エンジンの場合は検索エンジンの名称 (Googlebot-Mobile 等) になります。<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+<code>$detect_search_engine</code>: true の場合、検索エンジンの名前を取得します (デフォルト)。false の場合、検索エンジンが名乗る携帯端末の名前を取得します。</dd>
+<dt id="ks_use_appl_xhtml"><code>ks_use_appl_xhtml()</code></dt>
+<dd>ドコモ FOMA, EZweb (WAP2.0), ソフトバンク 3G およびディズニー・モバイルのとき、HTTP ヘッダーの MIME タイプを application/xhtml+xml に変更し、以下の html 要素を出力します。また、font 要素の color 属性を span 要素の style 属性に変換するなど、いくつかの XHTML 属性をスタイルシートに変換します (詳細は「↑<a href="#stylesheet">スタイルシートの利用</a>」を参照)。<br />
+<code>&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;</code><br />
+header.php の先頭で使い、かつ、&lt;html&gt; という記述は消しておく必要があります。でないと html 要素がダブって文法違反になります。</dd>
+<dt id="ks_applied_appl_xhtml"><code>ks_applied_appl_xhtml()</code></dt>
+<dd><code>ks_use_appl_xhtml()</code> を使っているとき、MIME タイプが application/xhtml+xml に変更されている (== ドコモ FOMA, EZweb (WAP2.0), ソフトバンク 3G, EMnet およびディズニー・モバイルで閲覧している) なら true を返します。</dd>
+<dt id="ks_force_text_html"><code>ks_force_text_html()</code></dt>
+<dd>MIME タイプを text/html に強制します。header.php の先頭で使う必要があります。</dd>
+<dt id="ks_mimetype"><code>ks_mimetype()</code></dt>
+<dd>携帯電話サイトの MIME タイプを出力します。</dd>
+<dt id="ks_charset"><code>ks_charset()</code></dt>
+<dd>携帯電話サイトの文字コードを出力します。</dd>
+<dt id="ks_fix_encoding_form"><code>ks_fix_encoding_form()</code></dt>
+<dd>入力フォームにおいて、文字化け防止のための文字コード判別用隠しフィールドを追加します。</dd>
+<dt id="ks_detect_encoding"><code>ks_detect_encoding()</code></dt>
+<dd>文字コード判別用隠しフィールドをもとに、文字コードを判別します。入力フォームの処理部分で使います。</dd>
+<dt id="ks_mb_get_form"><code>ks_mb_get_form($key, $charset)</code></dt>
+<dd>フォームの値をウェブログ文字コード (たいてい UTF-8) に変換して返します。携帯電話絵文字がある場合、<code>&lt;img localsrc="XXXX" /&gt;</code> の型式に変換されます。フォームには、<code>ks_fix_encoding_form()</code> で文字コード判別用隠しフィールドを埋め込んでおいてください。wp-settings.php で行なわれる magic_quote 処理は残されます。</dd>
+<dt id="ks_convert_kana"><code>ks_convert_kana($buffer)</code></dt>
+<dd>(いわゆる)全角の英数字を半角に変換します。<br />
+<code>$buffer</code>: 変換する文字列。</dd>
+<dt id="ks_is_required_term_id"><code>ks_is_required_term_id()</code></dt>
+<dd>端末 ID を要求している状態ならば true になります。具体的には、管理画面で「コメント投稿者の端末 ID 送信を必須とする」を「はい」にしていて、かつ、閲覧者がドコモ／au／ソフトバンク／イー・モバイル音声端末の場合を示します。</dd>
+<dt id="ks_require_term_id_form"><code>ks_require_term_id_form($action, $method)</code></dt>
+<dd>端末 ID を要求するフォームを作ります。<br />
+<code>$action:</code> フォームの送信先<br />
+<code>$method:</code> post, get のいずれか</dd>
+<dt id="ks_inline_error_submit"><code>ks_inline_error_submit($value)</code></dt>
+<dd>必須項目不足などのエラーをインライン表示するコメントフォームを作るための送信ボタンを出力します。<br />
+<code>$value:</code> 送信ボタンの表示内容 (デフォルトは <code>_e('Say It!')</code> です)</dd>
+<dt id="ks_do_comment_form_action"><code>ks_do_comment_form_action()</code></dt>
+<dd>コメントフォームで <code>do_action('comment_form', $post->ID);></code> を実行し、そのアクションで行なわれた画面出力を携帯電話向けに軽量化します。</dd>
+<dt id="ks_title"><code>ks_title($echo)</code></dt>
+<dd>ページのタイトルを出力します。<code>wp_title()</code> を短くしたものになります。<br />
+<code>$echo</code>: true のとき画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_page_title"><code>ks_page_title($logo_file, $echo, $before, $after, $before_logo, $after_logo)</code></dt>
+<dd>ページのタイトルを &lt;h1&gt; 要素付きで出力します。シングルポストのときは出力しません。<br />
+<code>$logo_file</code>:ロゴ画像のファイル名を与えます。。ロゴ画像はテーマディレクトリー直下においてください。GIF 画像の場合は同じ名前の PNG 画像ファイルを、PNG 画像の場合は同じ名前の GIF 画像ファイルを作成しておいてください。<br />
+<code>$echo</code>: true のとき画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+<code>$before</code>: タイトルを文字出力するとき、前に付ける HTML を指定します。<br />
+<code>$after</code>: タイトルを出力するとき、前に付ける HTML を指定します。文字、ロゴ画像共通です。<br />
+<code>$before_logo</code>: タイトルとしてロゴ画像を出力するとき、前に付ける HTML を指定します。省略すると <code>&lt;h1 align="center"&gt;</code> となります。<br />
+<code>$after_logo</code>: タイトルとしてロゴ画像を出力するとき、後に付ける HTML を指定します。省略すると <code>$after</code> と同じになります。<br />
+※引数は、<code>'logo_file=logo.png&amp;echo=false'</code> のようなクエリー文字列、<code>array('logo_file' =&gt; 'logo.png', 'echo' =&gt; false)</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_content"><code>ks_content($more_link_text, $stripteaser, $more_file, $strip_length, $echo)</code></dt>
+<dd>投稿本文を携帯電話向けに変換して出力します。del, style 要素の中身および JavaScript を削除／画像はより小さいサムネールもしくはリンクに変換／外部サイトへのリンクを中継ページ経由に変換／拙作の <a href="http://wppluginsj.sourceforge.jp/ktai_location/">Ktai Location</a> が挿入した位置情報 URL を削除など。<br />
+<code>$more_link_text</code>: 「続きを読む...」の文字列を指定します。<br />
+<code>$stripteaser</code>: 「続きを読む...」より手前を削除するとき true を指定します。<br />
+<code>$more_file</code>: (現在未使用のオプションです)<br />
+<code>$strip_length</code>: 本文をカットするバイト数を指定します。マルチバイト文字列および HTML タグの途中で切れないよう切り詰められます。<br />
+<code>$echo</code>: true のとき画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'strip_length=100&amp;echo=0'</code> のようなクエリー文字列、または <code>array('more_link_text' =&gt; __('(more...)'), 'echo' =&gt; false)</code> のような配列で与えることも可能です。<br />
+</dd>
+<dt id="ks_get_content"><code>ks_get_content($more_link_text, $stripteaser, $more_file, $strip_length)</code></dt>
+<dd>携帯電話向けに変換する前の投稿本文を返します。the_content フィルターがかかっていないため、ショートコードや他のプラグインによる本文変換が処理されていません (WordPress 標準の <code>get_the_content()</code> と同様)。the_content フィルターをかけた結果が必要な場合は <code>ks_content('echo=0')</code> を利用してください。<br />
+<code>$more_link_text</code>: 「続きを読む...」の文字列を指定します。<br />
+<code>$stripteaser</code>: 「続きを読む...」より手前を削除するとき true を指定します。<br />
+<code>$more_file</code>: (現在未使用のオプションです)<br />
+<code>$strip_length</code>: 本文をカットするバイト数を指定します。マルチバイト文字列および HTML タグの途中で切れないよう切り詰められます。</dd>
+<dt id="ks_excerpt"><code>ks_excerpt($strip_length, $echo)</code></dt>
+<dd>投稿の抜粋を決められたバイト数で出力もしくは取得します。バイト数指定ができる以外は WordPress 標準の <code>the_excerpt(), get_the_excerpt()</code> と同じです。<br />
+<code>$strip_length</code>: 抜粋をカットするバイト数を指定します。マルチバイト文字列および HTML タグの途中で切れないよう切り詰められます。<br />
+<code>$echo</code>: true のとき画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_check_password"><code>ks_check_password($message)</code></dt>
+<dd>パスワード保護された投稿かどうか確認します。保護されていないか、正しいパスワードが入力されれば、NULL を返します。保護されていて、かつ、パスワードが正しくなければパスワード入力フォームを返します。<br />
+<code>$message</code>: 入力フォームの上に出すメッセージ</dd>
+<dt id="ks_cut_html"><code>ks_cut_html($content, $length, $start, $charset)</code></dt>
+<dd>HTML 文字列を指定した文字数に収まるように短かくします。HTML タグの途中およびマルチバイト文字列の途中で切らないよう前後は調整されます。内部的には <code>mb_strcut()</code> を用いています。<br />
+<code>$content</code>: HTML 文字列<br />
+<code>$length</code>: 切り取るバイト数<br />
+<code>$start</code>: 開始位置 (デフォルトは 0)<br />
+<code>$charset</code>: 文字エンコーディング (デフォルトはウェブログの文字エンコーディング)</dd>
+<dt id="ks_time"><code>ks_time($year, $month_date, $today)</code></dt>
+<dd>現在日時に応じて適切に短縮した投稿日時を出力します。投稿日と現在が同じ年ならば年を省略、同じ年月日ならば年月日を省略します。日だけの表示はおかしいので、年月だけが同じのときは、年だけの省略となります。フォーマットに使う文字列は PHP の <code>date()</code> 関数と同じです。引数を省略すると、プラグイン設定画面に入力したフォーマットとなります。<br />
+<code>$year</code>: 去年以前の日時 (少なくとも年月日を表示)<br />
+<code>$month_date</code>: 今年の日時 (少なくとも月日を表示)<br />
+<code>$today</code>: 今日の日時 (少なくとも日または時を表示)</dd>
+<dt id="ks_get_time"><code>ks_get_time($year, $month_date, $today)</code></dt>
+<dd>現在日時に応じて適切に短縮した投稿日時を返します。引数は <code>ks_time()</code> と同じです。</dd>
+<dt id="ks_mod_time"><code>ks_mod_time($year, $month_date, $today)</code></dt>
+<dd>現在日時に応じて適切に短縮した修正日時を出力します。投稿日と現在が同じ年ならば年を省略、同じ年月日ならば年月日を省略します。日だけの表示はおかしいので、年月だけが同じのときは、年だけの省略となります。フォーマットに使う文字列は PHP の <code>date()</code> 関数と同じです。引数を省略すると、プラグイン設定画面に入力したフォーマットとなります。<br />
+<code>$year</code>: 去年以前の日時 (少なくとも年月日を表示)<br />
+<code>$month_date</code>: 今年の日時 (少なくとも月日を表示)<br />
+<code>$today</code>: 今日の日時 (少なくとも日または時を表示)</dd>
+<dt id="ks_get_mod_time"><code>ks_get_mod_time($year, $month_date, $today)</code></dt>
+<dd>現在日時に応じて適切に短縮した修正日時を返します。引数は <code>ks_mod_time()</code> と同じです。</dd>
+<dt id="ks_comment_datetime"><code>ks_comment_datetime($year, $month_date, $today)</code></dt>
+<dd>現在日時に応じて適切に短縮したコメント日時を出力します。コメント日と現在が同じ年ならば年を省略、同じ年月日ならば年月日を省略します。日だけの表示はおかしいので、年月だけが同じのときは、年だけの省略となります。フォーマットに使う文字列は PHP の <code>date()</code> 関数と同じです。引数を省略すると、プラグイン設定画面に入力したフォーマットとなります。<br />
+<code>$year</code>: 去年以前の日時 (少なくとも年月日を表示)<br />
+<code>$month_date</code>: 今年の日時 (少なくとも月日を表示)<br />
+<code>$today</code>: 今日の日時 (少なくとも日または時を表示)</dd>
+<dt id="ks_get_comment_datetime"><code>ks_get_comment_datetime($year, $month_date, $today)</code></dt>
+<dd>現在日時に応じて適切に短縮したコメント日時を返します。引数は <code>ks_comment_datetime()</code> と同じです。</dd>
+<dt id="ks_comment_author_link"><code>ks_comment_author_link($echo)</code></dt>
+<dd>コメント投稿者へのリンクを出力します。<code>comment_author_link()</code> とほぼ同じ動作ですが、i-mode、EZweb、Yahoo! ケータイのときはリンクが中継ページ経由のものになります。<br />
+<code>$echo</code>: true のとき画面に出力します (デフォルト)。false の場合、関数の返り値とします。</dd>
+<dt id="ks_pict_number"><code>ks_pict_number($num, $echo)</code></dt>
+<dd>数字の絵文字を返します。<br />
+<code>$num</code>: 出力したい数字 (0〜9)。10 を与えると 0 を出力します。-1 以下の数値または11以上の数値を与えると□ (四角) を出力します。数字以外の値では何も返しません。<br />
+<code>$echo</code>: true の場合、画面に出力します。false の場合、関数の返り値とします (デフォルト)。</dd>
+<dt id="ks_ordered_link"><code>ks_ordered_link($count, $max, $link, $label, $format, $hide_over_max, $echo)</code></dt>
+<dd>携帯電話の絵文字を使った数字付きリストの出力を行います。リンク先を指定すると、その数字がアクセスキーとして使えるリンクになります。使用例は index.php を参照してください。<br />
+<code>$count</code>: 出力したい数字。accesskey 用の番号にもなります。空文字列を与えると、絵文字数字が出なくなります。<br />
+<code>$max</code>: 絵文字を使う最大値。これより <code>$count</code> が大きければ、絵文字の代わりに □ (四角) になります。オプションの <code>$hide_over_max</code> を true にすると、最大値を越えたときは何も出力しません。<br />
+<code>$link</code>: リンク先 URL (必須)<br />
+<code>$label</code>: リンク文字列。この引数を省略すると、閉じタグ (&lt;/a&gt;) は出力しません。<br />
+<code>$format</code>: フォーマット文字列。「<code>%link</code>」という文字列を含めておくと、その部分がリンク先 URL とリンク文字列を使ったリンクとなります。デフォルトは、「<code>%link</code>」という文字列そのものがフォーマット文字列となります。<br />
+<code>$hide_over_max</code>: 数字が最大値を越えたとき、何も出力しない場合は true にします。false の場合は □ (四角) を出力します (デフォルト)。
+<code>$echo</code>: 画面に出力する場合は true とします (デフォルト)。画面出力せず関数の帰り値とする場合は false とします。<br />
+※引数は、<code>'count=5&amp;max=10'</code> のようなクエリー文字列、<code>array('count' =&gt; 5, 'max' =&gt; 10)</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_link_pages"><code>ks_link_pages($args = '')</code></dt>
+<dd><code>wp_link_pages()</code> の代わりとなる、分割ページ用ナビゲートタグです。パスワード保護された投稿で認証ずみの場合は、アンカーリンクではなく、隠しフィールドにパスワードを埋め込んだフォームボタンが表示されます。このため、パスワードの再入力なしにページ遷移が可能です。<br />
+<code>$args</code>: 各種パラメーター (<code>wp_link_pages()</code> と同じ仕様)</dd>
+<dt id="ks_pagenum"><code>ks_pagenum($before, $after, $echo)</code></dt>
+<dd>指定したコンテンツが複数ページに分かれている場合、現在のページ番号を出力します。1ページのみの場合は何も出力されません。例えば、2007年9月の記事が2ページに渡る場合、1/2, 2/2 などと表示されます。<br />
+<code>$before</code>: 前に置く HTML 文字列<br />
+<code>$after</code>: 後に置く HTML 文字列<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('before' =&gt; '&lt;br /&gt;')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_previous_post_link"><code>ks_previous_post_link($format, $link, $in_same_cat, $excluded_categories, $accesskey, $echo)</code></dt>
+<dd>前の投稿へのナビゲーションリンクを出力します。引数は <code>previous_post_link()</code> と同じものに、<code>$accesskey, $echo</code> が追加されています。<br />
+<code>$format</code>: アンカー文字列書式 (デフォルトは <code>&lt;img localsrc="7" alt="&amp;laquo; "&gt;*.%link</code>)<br />
+<code>$link</code>: リンク文字列書式。<code>%title</code> なら投稿タイトル (デフォルト)、<code>%date</code> なら投稿日時。<br />
+<code>$in_same_cat</code>: true なら同じカテゴリーの投稿に絞り込み、false なら絞り込みなし (デフォルト)<br />
+<code>$excluded_categories</code>: リンク先として除外するカテゴリー ID<br />
+<code>$accesskey</code>: アクセスキー文字 (デフォルトは *)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('link' =&gt; '%title')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_next_post_link"><code>ks_next_post_link($format, $link, $in_same_cat, $excluded_categories, $accesskey, $echo)</code></dt>
+<dd>次の投稿へのナビゲーションリンクを出力します。引数は <code>next_post_link()</code> と同じものに、<code>$accesskey, $echo</code> が追加されています。<br />
+<code>$format</code>: アンカー文字列書式 (デフォルトは <code>#.%link&lt;img localsrc="8" alt=" &amp;raquo;"&gt;</code>)<br />
+<code>$link</code>: リンク文字列書式。<code>%title</code> なら投稿タイトル (デフォルト)、<code>%date</code> なら投稿日時。<br />
+<code>$in_same_cat</code>: true なら同じカテゴリーの投稿に絞り込み、false なら絞り込みなし (デフォルト)<br />
+<code>$excluded_categories</code>: リンク先として除外するカテゴリー ID<br />
+<code>$accesskey</code>: アクセスキー文字 (デフォルトは #)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('link' =&gt; '%title')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_previous_posts_link"><code>ks_previous_posts_link($label, $accesskey, $echo)</code></dt>
+<dd>前ページへのナビゲーションリンクを出力します。<br />
+<code>$label</code>: リンク文字列 (デフォルトは <code>&lt;img localsrc="7" alt="&amp;laquo; "&gt;*.前</code>)<br />
+<code>$accesskey</code>: アクセスキー文字 (デフォルトは *)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('label' =&gt; '*.Prev')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_next_posts_link"><code>ks_next_posts_link($label, $accesskey, $max_page, $echo)</code></dt>
+<dd>次ページへのナビゲーションリンクを出力します。<br />
+<code>$label</code>: リンク文字列 (デフォルトは <code>#.次&lt;img localsrc="8" alt=" &amp;raquo;"&gt;</code>)<br />
+<code>$accesskey</code>: アクセスキー文字 (デフォルトは #)<br />
+<code>$max_page</code>: 最大ページ数 (通常は指定不要)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('label' =&gt; 'Next.#')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_posts_nav_link"><code>ks_posts_nav_link($sep, $before, $after, $prev_label, $next_label, $prev_key, $next_key, $echo)</code></dt>
+<dd>前後のページへのナビゲーションリンクを出力します。前後のページがないときは何も出力しません。<br />
+<code>$sep</code>: 間に挟まれる分離文字列 (デフォルトは | )<br />
+<code>$before</code>: ナビゲーションの前に付ける HTML 文字列<br />
+<code>$after</code>: ナビゲーションの後ろに付ける HTML 文字列<br />
+<code>$prev_label</code>: 前ページを示す文字列 (デフォルトは <code>&lt;img localsrc="7" alt="&amp;laquo; "&gt;*.前</code>)<br />
+<code>$next_label</code>: 次ページを示す文字列 (デフォルトは <code>#.次&lt;img localsrc="8" alt=" &amp;raquo;"&gt;</code>)<br />
+<code>$prev_key</code>: 前ページのアクセスキー文字 (デフォルトは *)<br />
+<code>$next_key</code>: 次ページアクセスキー文字 (デフォルトは #)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('prev_key' =&gt; '4', 'next_key' =&gt; '6')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_posts_nav_multi"><code>ks_posts_nav_multi($num, $first, $last, $prev_key, $next_key, $echo)</code></dt>
+<dd>複数の前後ページおよび先頭・末尾ページへのナビゲーションリンクを出力します。accesskey は表示されませんが前後ページへ移動に対応しています。<br />
+<code>$num</code>: 前後何ページリンクするかの数 (デフォルトは 3)<br />
+<code>$first</code>: 「先頭」を示す文字列<br />
+<code>$last</code>: 「末尾」を示す文字列<br />
+<code>$prev_key</code>: 前ページのアクセスキー文字 (デフォルトは *)<br />
+<code>$next_key</code>: 次ページアクセスキー文字 (デフォルトは #)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('prev_key' =&gt; '4', 'next_key' =&gt; '6')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_posts_nav_dropdown"><code>ks_posts_nav_dropdown($before, $after, $show_all_limit, $echo)</code></dt>
+<dd>ポップアップ (ドロップダウン) 式のページナビゲーションを出力します。ページ数が <code>$show_all_limit</code >よりも多い場合は、前後 &plusmn;1, &plusmn;2, &plusmn;3, &plusmn;4, &plusmn;5, &plusmn;10, &plusmn;20, &plusmn;50, &plusmn;100, &plusmn;200, &plusmn;500, &plusmn;1000,... ページだけに絞ります。<br />
+<code>$before</code>: 前に置く HTML 文字列<br />
+<code>$after</code>: 後に置く HTML 文字列<br />
+<code>$min_pages</code>: メニューを出力するページ数下限 (デフォルトは 2)<br />
+<code>$show_all_limit</code>: すべてのページを出力するページ数上限 (デフォルトは 13)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'min_pages=3'</code> のようなクエリー文字列、<code>array('before' =&gt; '&lt;br /&gt;')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_get_comments_list_link"><code>ks_get_comments_list_link($id)</code></dt>
+<dd>コメント一覧ページを示す URL を返します。<br />
+<code>$id</code>: 対象とする投稿 ID。投稿ループの中では空でよい。</dd>
+<dt id="ks_get_comment_link"><code>ks_get_comment_link($comment, $args)</code></dt>
+<dd>個別のコメントへのリンク URL を返します。<br />
+<code>$comment</code>: 対象とするコメントオブジェクトまたは ID。<br />
+<code>$args</code>: オプション。WordPress 2.7 以降のみ有効です。<code>get_comment_link()</code> の第2引数に与えるオプションと同じです。クエリー文字列または配列を与えます。</dd>
+<dt id="ks_comments_link"><code>ks_comments_link($icon, $zero, $one, $more, $none, $sec, $accesskey, $before, $after, $echo)</code></dt>
+<dd>コメント数を表示し、コメント一覧へのリンクとして出力します。<br />
+<code>$icon</code>: リンクの前に置く絵文字。&lt;img localsrc="NNN" /&gt; のような XHTML を渡します。NULL を渡すとデフォルトの「メモ用紙」絵文字になります。絵文字なしにするには空文字列 '' を渡してください。<br />
+<code>$zero</code>: コメントなしを示す HTML 文字列。空文字列 ('') を与えると、コメントなしのときコメント数表示自体を行いません。NULL を与えるとデフォルト文字列 (「コメントなし」) を用います。<strong>※HTML エスケープ済の文字列を渡してください。</strong><br />
+<code>$one</code>: コメント1件を示す文字列。空文字列 ('') を与えると、コメント1件のときコメント数表示自体を行いません。NULL を与えるとデフォルト文字列 (「コメント1件」) を用います。<strong>※HTML エスケープ済の文字列を渡してください。</strong><br />
+<code>$more</code>: コメント2件以上を示す HTML 文字列。「%」があればコメント数に置換されます。空文字列 ('') を与えると、コメント2件以上のときコメント数表示自体を行いません。NULL を与えるとデフォルト文字列 (「コメント%件」) を用います。<strong>※HTML エスケープ済の文字列を渡してください。</strong><br />
+<code>$none</code>: コメント停止中を示す HTML 文字列。これを表示する場合、コメント一覧ページへのリンクはされません。空文字列 ('') を与えると、コメント停止中しのときコメント数表示自体を行いません。NULL を与えるとデフォルト文字列 (「コメント停止中」) を用います。<strong>※HTML エスケープ済の文字列を渡してください。</strong><br />
+<code>$sec</code>: パスワード保護している投稿を示す HTML 文字列。空文字列 ('') を与えると、パスワード保護のときコメント数表示自体を行いません。NULL を与えるとデフォルト文字列 (「コメントを見る(要パスワード)」) を用います。<br />
+<code>$accesskey</code>: アクセスキー文字列 (デフォルトはなし)<br />
+<code>$before</code>: 前に置く HTML 文字列<br />
+<code>$after</code>: 後に置く HTML 文字列<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>array('zero' =&gt; __('No Comments'), 'one' =&gt; __('1 Comment'))</code> のような配列で与えることも可能です。この場合、以下のパラメーターも指定可能です。<br />
+<code>icon_zero</code>: コメントなしの場合の絵文字 XHTML<br />
+<code>icon_one</code>: コメント1件の場合の絵文字 XHTML<br />
+<code>icon_more</code>: コメント2件以上の場合の絵文字 XHTML<br />
+<code>icon_none</code>: コメント停止中の場合の絵文字 XHTML<br />
+<code>icon_sec</code>: パスワード保護中の場合の絵文字 XHTML</dd>
+<dt id="ks_comments_post_url"><code>ks_comments_post_url($id)</code></dt>
+<dd>コメント投稿フォームへのリンク URL を返します。<br />
+<code>$id</code>: 投稿 ID</dd>
+<dt id="ks_comments_post_link"><code>ks_comments_post_link($label, $before, $after, $icon, $accesskey, $echo)</code></dt>
+<dd>コメント投稿フォームへのリンクを出力します。<br />
+<code>$label</code>: リンク用 HTML 文字列。<strong>※HTML エスケープ済の文字列を渡してください。</strong><br />
+<code>$before</code>: リンクの前に置く文字列 (絵文字等)<br />
+<code>$after</code>: リンクの後に置く文字列<br />
+<code>$icon</code>: リンク先説明の前に置く絵文字 (デフォルトは鉛筆の絵)<br />
+<code>$accesskey</code>: アクセスキー文字 (デフォルトはなし)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('before' =&gt; '&lt;br /&gt;', 'accesskey' =&gt; '1')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_back_to_post"><code>ks_back_to_post($icon, $label, $accesskey, $echo)</code></dt>
+<dd>記事に戻るリンクを出力します。<br />
+<code>$icon</code>: リンクの前に置く絵文字<br />
+<code>$label</code>: リンク用 HTML 文字列。<strong>※HTML エスケープ済の文字列を渡してください。</strong><br />
+<code>$accesskey</code>: アクセスキー文字 (デフォルトはなし)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'echo=0'</code> のようなクエリー文字列、<code>array('label' =&gt; 'Back', 'accesskey' =&gt; '0')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_separete_comments"><code>ks_separete_comments($comments, $order)</code></dt>
+<dd>コメントを、通常のコメントとピン受信 (トラックバックとピンバック) に分離して返します。<br />
+<code>$comments</code>: コメントの配列<br />
+<code>$order</code>: コメントを時系列順。'asc' なら古い順 (デフォルト)、'desc' なら新しい順になります。</dd>
+<dt id="ks_get_recent_comments"><code>ks_get_recent_comments($num, $type, $group_by_post)</code></dt>
+<dd>最新コメント一覧を配列で返します。デフォルトでは2次元配列になります (後述)。<br />
+<code>$num</code>: コメント表示数<br />
+<code>$type</code>: コメントの種類を示す文字列<br />
+&nbsp;&nbsp;(なし): コメント・トラックバック・ピンバックを混在<br />
+&nbsp;&nbsp;comment: コメントのみ<br />
+&nbsp;&nbsp;trackback: トラックバックのみ<br />
+&nbsp;&nbsp;pingback: ピンバックのみ<br />
+&nbsp;&nbsp;trackback+pingback または pings: トラックバックとピンバックを混在<br />
+<code>$group_by_post</code>: コメントを投稿ごとにまとめるかどうか (デフォルト true)。true の場合、同じコメントへの投稿をまとめて、2次元配列とします。1次元目は投稿 ID をキーとしたコメントオブジェクトの配列です。false の場合、コメントオブジェクトの配列です。<br />
+※引数は、<code>'num=20'</code> のようなクエリー文字列、<code>array('num' =&gt; 20, 'type' =&gt; 'pings')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_category"><code>ks_category($separator, $parents, $color, $echo)</code></dt>
+<dd>表示している投稿が属するカテゴリーの一覧を出力します。<br />
+<code>$separator</code>: カテゴリーごとの区切り文字列。<br />
+<code>$parents</code>: 未使用です。(the_category フィルターとの互換性のために存在)<br />
+<code>$color</code>: リンク色指定 (HTML 16 色の名前もしくは #RRGGBB の16進)<br />
+<code>$echo</code>:  true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'color=white'</code> のようなクエリー文字列、<code>array('color' =&gt; 'white', 'echo' =&gt; false)</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_dropdown_categories"><code>ks_dropdown_categories($args)</code></dt>
+<dd>カテゴリー一覧をポップアップメニュー (プルダウンメニュー) で表示します。<code>wp_dropdown_categories()</code> の結果から、余計な空白や class 属性を除去して出力します。<br />
+<code>$args</code>: <code>wp_dropdown_categories()</code> と同じ仕様のパラメーター。デフォルトでは ID 順で「すべて」を含み、投稿数を表示します。</dd>
+<dt id="ks_tags"><code>ks_tags($before, $after, $separator)</code></dt>
+<dd>表示している投稿に付与されているタグ一覧を出力します。タグが付いてないときは何も出力しません。<br />
+<code>$before:</code> 一覧の前に置く文字列 (絵文字等)<br />
+<code>$after:</code> 一覧の後に置く文字列<br />
+<code>$separator:</code> タグごとの区切り文字列<br />
+<code>$color</code>: リンク色指定 (HTML 16 色の名前もしくは #RRGGBB の16進)<br />
+<code>$echo</code>:  true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'color=white'</code> のようなクエリー文字列、<code>array('color' =&gt; 'white', 'echo' =&gt; false)</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_tag_cloud"><code>ks_tag_cloud($args)</code></dt>
+<dd>タグクラウドを出力します。<code>wp_tag_cloud()</code> と同じ動作をしますが、余計な空白や title 属性、rel 属性などを除去しています。独自に、リンク色指定ができる <code>color</code> 引数を定義しています。</dd>
+<dt id="ks_get_archives"><code>ks_get_archives($args)</code></dt>
+<dd>アーカイブ一覧を出力します。<code>wp_get_archives()</code> の結果から、余計な空白や title 属性を除去して出力します。<br />
+<code>$arg: ks_get_archives()</code> と同じ仕様のパラメーター。ただし、WordPress 2.6 以前でも echo パラメーターが有効です (echo=0 で文字列として取得)。</dd>
+<dt id="ks_list_bookmarks"><code>ks_list_bookmarks($args)</code></dt>
+<dd>ブックマーク(ブログロール)一覧を出力します。<code>wp_list_bookmarks()</code> の結果から、余計な空白や class, title, rel 属性を除去して出力します。<br />
+<code>$arg: wp_list_bookmarks()</code> (または <code>get_links_list()</code>) と同じ仕様のパラメーター</dd>
+<dt id="ks_dropdown_archives"><code>ks_dropdown_archives($args)</code></dt>
+<dd>アーカイブ一覧をポップアップメニュー (プルダウンメニュー) で出力します。<code>wp_get_archives()</code> の結果から、余計な空白や title 属性を除去して出力します。<br />
+<code>$arg: ks_get_archives()</code> と同じ仕様のパラメーター。ただし、WordPress 2.6 以前でも echo パラメーターが有効です (echo=0 で文字列として取得)。</dd>
+<dt id="ks_list_bookmarks"><code>ks_list_bookmarks($args)</code></dt>
+<dd>ブックマーク(ブログロール)一覧を出力します。<code>wp_list_bookmarks()</code> の結果から、余計な空白や class, title, rel 属性を除去して出力します。<br />
+<code>$arg: wp_list_bookmarks()</code> (または <code>get_links_list()</code>) と同じ仕様のパラメーター</dd>
+<dt id="ks_pages_menu"><code>ks_pages_menu($sep, $before, $after, $args)</code></dt>
+<dd>固定ページへのナビゲーションを出力します。デフォルトは親ページのみです。子ページが存在する場合、親ページ一覧のあとに、「ページ一覧ページ」(menu_pages.php) へのリンクが出ます。<br />
+<code>$sep</code>: 項目ごとの区切り<br />
+<code>$before</code>: 前に付ける HTML タグ<br />
+<code>$after</code>: 後ろに付ける HTML タグ<br />
+<code>$args</code>: 表示用パラメーター。<code>get_pages()</code> の引数が使えます。見せたくないページがある場合、exclude=MM,NN として見せたくないページの page_id を与えることが可能です (MM, NN がページ ID)。さらに、'parent_only=0' とすると、すべてのページをリストアップし、'echo=0' を入れると出力するかわりに HTML を返り値とします。<br />
+※すべての引数をまとめてクエリー文字列／配列としても構いません。例えば <code>'sep=|&amp;exclude=14,15'</code> もしくは <code>array('before' =&gt; '&lt;br /&gt;', 'echo' =&gt; false)</code> などとできます。</dd>
+<dt id="ks_get_admin_user"><code>ks_get_admin_user($user_id)</code></dt>
+<dd>管理者ユーザーを取得します。返り値は WP_User オブジェクトです。<br />
+<code>$user_id</code>: ユーザー ID。省略すると、user_id が一番小さい、管理者権限のあるユーザーを自動的に探します。</dd>
+<dt id="ks_switch_pc_view"><code>ks_switch_pc_view($before, $after, $color)</code></dt>
+<dd>スマートフォン等「その他」端末の場合、PC 表示に切り替えるかリンクを出力します。<br />
+<code>$before</code>: リンクの前に置く文字列<br />
+<code>$after</code>: リンクの後に置く文字列<br />
+<code>$color</code>: リンク色指定 (HTML 16 色の名前もしくは #RRGGBB の16進)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'color=white'</code> のようなクエリー文字列、<code>array('before' => '|', 'color' => 'white')</code> のような配列で与えることも可能です。</dd>
+<dt id="ks_switch_inline_images"><code>ks_switch_inline_images($before, $after, $color)</code></dt>
+<dd>各社 3G, ウィルコム, スマートフォン等で、画像をインライン表示するかリンクに変換するかの切り替えメニューを出力します。<br />
+<code>$before</code>: メニューの前に置く文字列<br />
+<code>$after</code>: メニューの後に置く文字列<br />
+<code>$color</code>: リンク色指定 (HTML 16 色の名前もしくは #RRGGBB の16進)<br />
+<code>$echo</code>: true の場合、画面に出力します (デフォルト)。false の場合、関数の返り値とします。<br />
+※引数は、<code>'color=white'</code> のようなクエリー文字列、<code>array('before' => '|', 'color' => 'white')</code> のような配列で与えることも可能です。</dd>
+</dl>
+
+<h4 id="redir_templates">リダイレクトテンプレート専用タグ</h4>
+<p>リダイレクトテンプレート redir.php でのみ使えるテンプレートタグです。<a href="#redir_php">redir.php テンプレート</a>の解説も参照してください。なお、<code><a href="#ks_is_redir">ks_is_redir()</a></code> はどこでも使えるので上で解説ずみです。</p>
+<dl>
+<dt id="ks_redir_get"><code>ks_redir_get($key)</code></dt>
+<dd>リダイレクトにかかわる変数を得ます。<code>$key</code> には以下の値が使えます。<br />
+<code>url</code>: リダイレクト先 URL。リダイレクト先が現在と同じホストなど http:// が省ける場合は、/ から始まる絶対パス形式になります。<br />
+<code>full_url</code>: リダイレクト先 URL。http:// が必ず付く長い形式です。<br />
+<code>mobile_url</code>: リダイレクト先の携帯サイト URL </dd>
+<dt id="ks_redir_has"><code>ks_redir_has($key)</code></dt>
+<dd>リダイレクトにかかわる変数およびその値が存在するかを確認します。存在すれば true, 存在しなければ false になります (<code>isset() && ! empty()</code> です)。<code>$key</code> に使える値は <code>ks_redir_get()</code> と同じです。</dd>
+<dt id="ks_redir_same_host"><code>ks_redir_same_host()</code></dt>
+<dd>リダイレクト先が、PC 向けサイトと携帯向けサイトのホスト (FQDN)、ポート番号、スキーム (http か https か) がすべて同一なら true、いずれかが違う場合は false になります。URL が同一でなくても / 以下のパスだけが違う場合は true になります。</dd>
+</dl>
+
+<h4 id="splitting">ページ分割機能用タグ</h4>
+<dl>
+<dt><code>&lt;!--start paging--&gt;</code></dt>
+<dt><code>&lt;!--end paging--&gt;</code></dt>
+<dd>ページ分割機能において、分割対象領域を示します。この2つに挟まれた区間が分割され、前者より上／後者より下にある XHTML コードはすべてのページに出力されます (共通領域)。1ページ中に start paging が2か所あるときは先に出た方が、end paging が2か所あるときは後に出た方が適用されます。前者が存在しないときは &lt;body&gt; タグ、後者が存在しないときは「&lt;hr /&gt;&lt;a name="tail"」または「&lt;hr /&gt;&lt;div&gt;&lt;a name="tail"」という文字列もしくは &lt;/body&gt; タグを代わりに使います。<br />
+なお、共通領域が広くて分割に使えるバイト数があまりに少ないとき (256 バイト未満) は、強制的に &lt;body&gt;〜ページ終端を分割対象とします。</dd>
+<dt><code>&lt;!--start paging[after]--&gt;</code></dt>
+<dt><code>&lt;!--start paging[before,after]--&gt;</code></dt>
+<dt><code>&lt;!--end paging[before]--&gt;</code></dt>
+<dt><code>&lt;!--end paging[before,after]--&gt;</code></dt>
+<dd>上記のように start paging, end paging にパラメータを与えた場合、分割時に付与される罫線 (&lt;hr /&gt;) を、与えたパラメータに差し替えられます。パラメータは、シングル／ダブルクォートで囲む必要はありません。例えば、<br />
+<code>&lt;!--start paging[&lt;hr color="&lt;?php echo $ks_settings['hr_color']; ?&gt;" /&gt;]--&gt;</code><br/>
+とすれば、header.php で定義した罫線の色を用いた罫線要素になります。<br />
+start paging で引数1つのときは after のみ指定、end paging で引数1つのときは before のみ指定となることに注意してください。分割時の罫線を出したくないときは、before, after ともに空の指定、つまり <code>&lt;!--start paging[,]--&gt;</code> としてください。</dd>
+</dl>
+
+<h3 id="relate_with_other_plugins">他のプラグインとの連携</h3>
+<p>他のプラグインにおいて、PC 向け出力か携帯電話出力かを区別できるよう、以下の関数を用意しています。</p>
+<dl>
+<dt><code>is_ktai()</code></dt>
+<dd>携帯電話出力なら、事業者名を返します。DoCoMo, KDDI, SoftBank, WILLCOM, EMOBILE, Unknown のいずれかです。ディズニー・モバイルは SoftBank になります。</dd>
+<dd>引数に 'type' を与えると、サービス種別を返します。返り値は <code>ks_service_type()</code> と同じです。</dd>
+<dd>引数に 'flat_rate' を与えると、パケット定額制に対応しているかどうかを返します。<code>ks_is_flat_rate()</code> と同じ動作です。</dd>
+<dd>引数に 'search_engine' を与えると、検索エンジンからのアクセスかどうかを判別します (UserAgent ベースの判定)。検索エンジンの場合、クローラー名になります。対応している検索エンジンは、Googlebot, Yahoo! Japan (J-SRD, J_MBS), LD_mobile_bot, ichiro/mobile goo, frout.jp, Baiduspider です。</dd>
+</dl>
+<p>本プラグインが有効・無効にかかわらずエラーが出ないよう、次のようにして使ってください。</p>
+<pre>if (function_exists('is_ktai') &amp;&amp; is_ktai()) { ?&gt;
+&lt;img localsrc="334" alt="[new] " /&gt;
+&lt;?php }</pre>
+
+<p>次は、携帯電話<strong>でない</strong>場合にスタイルシートを追加する例です。この判別方法は、Mobile Eye+ を使っている場合や、<a href="http://wphoneplugin.org/">WPhone Admin Plugin</a> をインストールしている場合にも対応します。</p>
+<pre>if ((! function_exists('is_mobile') || ! is_mobile()) 
+ &amp;&amp; (! function_exists('is_ktai')   || ! is_ktai())) { ?&gt;
+&lt;style type="text/css" media="all"&gt;
+.locationurl { display:none; }
+&lt;/style&gt;
+&lt;?php }</pre>
+
+<p>以前は、原則として <code>is_mobile()</code> 関数を提供し、WPhone Admin Plugin が存在するときのみ、名前の衝突を避けるため <code>is_ktai()</code> に名前を変えていました。</p>
+<p>しかし、WPhone プラグインの提供する is_mobile() 関数はソフトバンク PDC 端末を検出しないことが判明したため、<code>is_mobile()</code> だけで携帯電話かどうかの判定を行うことができず、<code>is_ktai()</code> 関数も併用する必要が出てしまいました (具体的なコードは上記の通り)。</p>
+<p>そうなると、Mobile Eye+ との互換性を取るために、Mobile Eye+ でも使っている関数名である <code>is_mobile()</code> という名前にする、という措置も無意味となってしまいました。このため、バージョン 0.98 より <code>is_ktai()</code> 関数に一本化することとしました。</p>
+<p># WPhone Admin Plugin の作りが悪い、とも言えますね ;-)</p>
+
+<h3 id="distribution">再配布について</h3>
+
+<p>Ktai Style 附属テーマを改造した携帯テーマは、Ktai Style のライセンスである GPL v2 と互換性のあるライセンスを適用する必要があります。「再配布禁止」など、矛盾する制約を追加することはできません。</p>
+<p>ただし、アイコン画像・背景画像を独自に作成した場合、その画像については好きなライセンスを設定することができます。したがって、「PHP のテンプレート部分は GPL。CSS スタイルシートおよび画像ファイルは再配布不可」という複合ライセンスを設定してみてください。</p>
+<p>もしくは、Ktai Style の附属テーマを参考に、スクラッチで携帯テーマを記述しても構いません。この場合、著作権はすべてあなたに属するため、好きなライセンスを設定できます。ただし、テンプレートファイルから Ktai Style および WordPress の API を呼び出すことが必須ですから、GPL (もしくは互換性のあるライセンス) が適用されるべきと考えられます。</p>
+<p>ちなみに、GPL は有償で配布することが可能ですが、再配布を禁止できないこと、利用用途に制約をかけられないこと (アダルトサイトで使用禁止にできない等) が特徴です。</p>
+
+<p>以上</p>
+</body>
+</html>

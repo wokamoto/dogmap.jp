@@ -1,0 +1,198 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: simple-tweet\n"
+"POT-Creation-Date: 2010-02-15 10:32+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Marcis G <zhr@tut.by>\n"
+"Language-Team: P.Clausnitzer <pat.clausnitzer@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Belarusian\n"
+"X-Poedit-Country: BELARUS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+# Description
+msgid "This is a plugin creating a new tweet including a URL of new post on your wordpress."
+msgstr "Гэтая убудова стварае новыя твіты, уключаючыя УРЛ вашага паста ў WP"
+
+#: ../simple-tweet.php:388
+msgid "Simple Tweet"
+msgstr "Simple Tweet (Прастой Твіт)"
+
+#: ../simple-tweet.php:395
+msgid "Settings"
+msgstr "Налады"
+
+#: ../simple-tweet.php:441
+#, php-format
+msgid "blogged: %1$s - %2$s"
+msgstr "заблогена %1$s - %2$s"
+
+#: ../simple-tweet.php:446
+#, php-format
+msgid "RT @%1$s: %2$s - %3$s %4$s"
+msgstr "RT @%1$s: %2$s - %3$s %4$s"
+
+#: ../simple-tweet.php:455
+msgid "Tweet this!"
+msgstr "Затвітэріть!"
+
+#: ../simple-tweet.php:813
+#: ../simple-tweet.php:839
+#: ../simple-tweet.php:850
+msgid "Done!"
+msgstr "Зроблена!"
+
+#: ../simple-tweet.php:856
+#: ../simple-tweet.php:884
+msgid "Simple Tweet Options"
+msgstr "Опцыі Simple Tweet"
+
+#: ../simple-tweet.php:863
+msgid "Update Options &raquo;"
+msgstr "Абнавіць опцыі &raquo;"
+
+#: ../simple-tweet.php:868
+msgid "Uninstall"
+msgstr "Выдаліць"
+
+#: ../simple-tweet.php:871
+msgid "Delete all the settings of &quot;Simple Tweet&quot;."
+msgstr "Выдаліць усе налады &quot;Simple Tweet&quot;."
+
+#: ../simple-tweet.php:872
+msgid "Delete Options &raquo;"
+msgstr "Выдаліць опцыі &raquo;"
+
+#: ../simple-tweet.php:1001
+#: ../simple-tweet.php:1059
+msgid "Twitter OAuth"
+msgstr "Twitter аўтарызацыя"
+
+#: ../simple-tweet.php:1003
+msgid "<a href=\"http://wppluginsj.sourceforge.jp/simple-tweet/simple-tweet-oauth-en/\" title=\"WordPress Plugins/JSeries ? Simple Tweet OAuth Setting\">OAuth Setting</a>"
+msgstr "<a href=\"http://wppluginsj.sourceforge.jp/simple-tweet/simple-tweet-oauth-en/\" title=\"WordPress Plugins/JSeries ? Simple Tweet OAuth Setting\">Налады аўтарызацыі</a>"
+
+#: ../simple-tweet.php:1010
+msgid "Get Consumer Key"
+msgstr "Атрымаць ключ карыстача"
+
+#: ../simple-tweet.php:1011
+msgid "Applications Using Twitter"
+msgstr "Прыкладанні выкарыстаюць Твітэр"
+
+#: ../simple-tweet.php:1014
+msgid "Consumer Key"
+msgstr "Карыстацкі ключ"
+
+#: ../simple-tweet.php:1018
+msgid "Consumer Secret"
+msgstr "Карыстацкі сакрэт"
+
+#: ../simple-tweet.php:1034
+msgid "OAuth"
+msgstr "Аўтарызацыя OAuth"
+
+#: ../simple-tweet.php:1035
+msgid "Click on the link to go to twitter to authorize your account."
+msgstr "Націсніце на спасылку для пераходу да аўтарызацыі акаўнта Твітэра"
+
+#: ../simple-tweet.php:1039
+msgid "PIN"
+msgstr "ПІН"
+
+#: ../simple-tweet.php:1046
+msgid "OAuth reset"
+msgstr "Скід OAuth "
+
+#: ../simple-tweet.php:1062
+msgid "Twitter OAuth supports PHP5 or later."
+msgstr "OAuth Твітэр падтрымлівае PHP5 і вышэй"
+
+#: ../simple-tweet.php:1069
+#: ../simple-tweet.php:1171
+msgid "Twitter ID"
+msgstr "Twitter ID"
+
+#: ../simple-tweet.php:1073
+#: ../simple-tweet.php:1135
+msgid "User Name"
+msgstr "Імя карыстача"
+
+#: ../simple-tweet.php:1077
+msgid "Password"
+msgstr "Пароль"
+
+#: ../simple-tweet.php:1081
+msgid "If you would like to change the password type a new one. Otherwise leave this blank."
+msgstr "Калі вы жадаеце змяніць пароль, увядзіце новы. Інакш пакіньце поле пустым."
+
+#: ../simple-tweet.php:1091
+msgid "Tweet text"
+msgstr "Тэкст твіта"
+
+#: ../simple-tweet.php:1096
+msgid "Tweet without Permalink"
+msgstr "Твіт без сталай спасылкі"
+
+#: ../simple-tweet.php:1113
+msgid "Short Link"
+msgstr "Кароткая спасылка"
+
+#: ../simple-tweet.php:1116
+msgid "Compress Permalink"
+msgstr "Сціснутая спасылка"
+
+#: ../simple-tweet.php:1136
+msgid "bit.ly API Key"
+msgstr "bit.ly API ключ"
+
+#: ../simple-tweet.php:1139
+msgid "Other Service"
+msgstr "Іншы сэрвіс"
+
+#: ../simple-tweet.php:1145
+msgid "Separator between message and Permalink"
+msgstr "Падзельнік паміж паведамленнем і сталай спасылкай"
+
+#: ../simple-tweet.php:1153
+msgid "Add \"Tweet this\" link"
+msgstr "Дадаць \"Затвітэріть\" спасылку"
+
+#: ../simple-tweet.php:1158
+msgid "Tweet this link"
+msgstr "Затвітэріть гэтую спасылку"
+
+#: ../simple-tweet.php:1163
+msgid "Tweet this text"
+msgstr "Затвітэріть гэты тэкст"
+
+#: ../simple-tweet.php:1170
+msgid "The following characters are converted respectively."
+msgstr "Наступныя знакі будуць канвертаваныя адпаведна."
+
+#: ../simple-tweet.php:1172
+msgid "Site Name"
+msgstr "Імя сайта"
+
+#: ../simple-tweet.php:1173
+msgid "Post No."
+msgstr "Нумар паста"
+
+#: ../simple-tweet.php:1174
+msgid "Post Title"
+msgstr "Назоў паста"
+
+#: ../simple-tweet.php:1175
+msgid "Post Excerpt"
+msgstr "Вытрымка паста"
+
+#: ../simple-tweet.php:1176
+msgid "Permalink"
+msgstr "Сталая спасылка"
+
+#: ../simple-tweet.php:1185
+msgid "Output log? (debug mode)"
+msgstr "Знешні часопіс? (рэжым адладкі)"
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>jquery.lightpop.js サンプル</title>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="jquery.lightpop.min.js"></script>
+</head>
+
+<body>
+<div id="content">
+<h1>jquery.lightpop.js サンプル</h1>
+
+<p>
+<a href="http://jquery.com/" title="jQuery: The Write Less, Do More, JavaScript Library">jQuery</a>用のプラグイン<a href="http://dogmap.jp/2007/12/22/jquerylightpopjs/" title="jQuery.lightpop.js : 独断と偏見の何でもレビュー">jQuery.lightpop.js</a>のサンプルです。
+使用方法・ダウンロードは<a href="http://dogmap.jp/2007/12/22/jquerylightpopjs/" title="jQuery.lightpop.js : 独断と偏見の何でもレビュー">こちら</a>からどうぞ。
+</p>
+
+<h2>画像 サンプル</h2>
+<p class="sample">
+
+<a href="sample_media/pict01.jpg" rel="lightbox" title="画像１"><img src="sample_media/pict01.jpg" alt="画像１" width="160px" height="120px" /></a><br clear="all" />
+<code>&lt;a href=&quot;sample_media/pict01.jpg&quot; rel=&quot;lightbox&quot; title=&quot;画像１&quot;&gt;&lt;img src=&quot;sample_media/pict01.jpg&quot; alt=&quot;画像１&quot; width=&quot;160px&quot; height=&quot;120px&quot; /&gt;&lt;/a&gt;</code><br />
+<a href="sample_media/pict02.jpg?width=320&amp;height=240" rel="lightbox" title="画像２"><img src="sample_media/pict02.thumbnail.jpg" alt="画像２" /></a><br clear="all" />
+<code>&lt;a href=&quot;sample_media/pict02.jpg?width=320&amp;height=240&quot; rel=&quot;lightbox&quot; title=&quot;画像２&quot;&gt;&lt;img src=&quot;sample_media/pict02.thumbnail.jpg&quot; alt=&quot;画像２&quot; /&gt;&lt;/a&gt;</code><br />
+
+<a href="sample_media/pict03.jpg" rel="lightbox" title="画像３">画像３テキストリンク</a><br />
+<code>&lt;a href=&quot;sample_media/pict03.jpg&quot; rel=&quot;lightbox&quot; title=&quot;画像３&quot;&gt;画像３テキストリンク&lt;/a&gt;</code><br />
+
+背景を白の透過画像にし、デザインされたフレーム画像で囲む。<br />
+<code>$('a[rel*=lightbox]').lightpop({overlayBgColor:'#FFF',contentFrameType:'box'});</code><br />
+</p>
+
+<h2>動画ファイル サンプル</h2>
+
+<p class="sample">
+<a href="sample_media/video.flv?width=320&amp;height=240" title="flv サンプル" class="video">flv サンプル</a><br />
+<code>&lt;a href=&quot;sample_media/video.flv?width=320&amp;height=240&quot; title=&quot;flv サンプル&quot; class=&quot;video&quot;&gt;flv サンプル&lt;/a&gt;</code><br />
+
+<code>$('a.video').lightpop();</code><br />
+</p>
+
+<h2>特記事項</h2>
+<p>
+リンクタグの URL の後ろに width=640&amp;height=480 のようにサイズをつけると、対象の画像or動画ファイルのサイズを指定できます。<br />
+例： &lt;a href="http://example.com/hoge.jpg?width=640&amp;height=480"&gt;<br />
+<br />
+
+画像・動画サイトへのリンクについては、これを指定しなくても大丈夫ですが、動画ファイル・Ajax 表示 については指定するようにしてください。<br />
+</p>
+
+</div>
+
+<script type="text/javascript">//<![CDATA[
+// jQuery Lightpop
+$(function(){
+ $('a[rel*=lightbox]').lightpop({overlayBgColor:'#FFF',contentFrameType:'box'});
+ $('a.video').lightpop();
+});
+//]]></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: feedback-champuru\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-07-14 18:36+0900\n"
+"PO-Revision-Date: 2010-07-22 09:30+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Description
+#: ../feedback-champuru.php:6
+msgid "This plugin makes WordPress Comment boisterous adding feedbacks of Twitter, Social Bookmarks and so on."
+msgstr "Twitterや、はてなブックマーク、delicious などのソーシャルブックマークのコメントをチャンプルーして、WordPress コメントを賑やかにします。"
+
+#: ../feedback-champuru.php:56
+msgid "Trackback"
+msgstr "トラックバック"
+
+#: ../feedback-champuru.php:59
+msgid "Pingback"
+msgstr "ピンバック"
+
+#: ../feedback-champuru.php:62
+#: ../feedback-champuru.php:1085
+msgid "Tweet"
+msgstr "Tweet"
+
+#: ../feedback-champuru.php:65
+#: ../feedback-champuru.php:1091
+msgid "Hatena Bookmark"
+msgstr "はてなブックマーク"
+
+#: ../feedback-champuru.php:68
+#: ../feedback-champuru.php:1097
+msgid "Delicious"
+msgstr "Delicious"
+
+#: ../feedback-champuru.php:71
+#: ../feedback-champuru.php:1106
+msgid "livedoor Clip"
+msgstr "livedoor Clip"
+
+#: ../feedback-champuru.php:74
+#: ../feedback-champuru.php:1112
+msgid "Buzzurl"
+msgstr "Buzzurl"
+
+#: ../feedback-champuru.php:77
+#: ../feedback-champuru.php:1118
+msgid "FriendFeed"
+msgstr "FriendFeed"
+
+#: ../feedback-champuru.php:354
+#: ../feedback-champuru.php:355
+msgid "Feedback Champuru"
+msgstr "Feedback Champuru"
+
+#: ../feedback-champuru.php:365
+msgid "Settings"
+msgstr "設定"
+
+#: ../feedback-champuru.php:1054
+#: ../feedback-champuru.php:1064
+msgid "Done!"
+msgstr "完了"
+
+#: ../feedback-champuru.php:1073
+msgid "Feedback Champuru Options"
+msgstr "Feedback Champuru のオプション"
+
+#: ../feedback-champuru.php:1077
+msgid "Comment Sources"
+msgstr "フィードバック取得元"
+
+#: ../feedback-champuru.php:1125
+msgid "Basic Settings"
+msgstr "基本的な設定"
+
+#: ../feedback-champuru.php:1133
+msgid "icon cache enabled"
+msgstr "アイコン・キャッシュをサーバに保存する"
+
+#: ../feedback-champuru.php:1142
+msgid "SPAM check enabled"
+msgstr "スパムチェックを有効にする"
+
+#: ../feedback-champuru.php:1151
+msgid "Save Changes"
+msgstr "変更を保存"
+
+#: ../feedback-champuru.php:1158
+msgid "Uninstall"
+msgstr "アンインストール"
+
+#: ../feedback-champuru.php:1162
+msgid "All the settings of &quot;Feedback Champuru&quot; are deleted."
+msgstr "&quot;Feedback Champuru&quot; の設定を、すべて消去する。"
+
+#: ../feedback-champuru.php:1164
+msgid "Delete Options"
+msgstr "保存したオプションの削除"
+
+#: ../feedback-champuru.php:502
+msgid "This comment was originally posted on %s."
+msgstr "このコメントは、元々 %s にポストされました。"
+

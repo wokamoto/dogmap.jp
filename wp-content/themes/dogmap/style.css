@@ -1,0 +1,1224 @@
+@charset "UTF-8";
+/*
+Theme Name:dogmap
+Theme URI:
+Version:1.0.6
+Description:2 Column theme
+Author:wokamoto
+*/
+/* Style Clear */
+body, div, dl, dt, dd, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+
+ol {
+  margin: 0 0 0 1.5em;
+  padding: 0;
+  list-style: decimal;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+fieldset, img {
+  border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-style: normal;
+  font-weight: normal;
+}
+
+caption, th {
+  text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+q:before, q:after {
+  content: '';
+}
+
+abbr, acronym, img, object {
+  border: medium none;
+}
+
+/* common element */
+body {
+  width: 100%;
+  height: 100%;
+  color: #333;
+  text-align: left;
+  font-size: .9em;
+  line-height: 1.5;
+  background: #5c6a74 url(http://static.dogmap.jp/images/icons/bg1.gif);
+  font-family: Lucida Grande,Tahoma,Verdana,Arial,"ヒラギノ角ゴ Pro W3",メイリオ,"ＭＳ Ｐゴシック",IPAPGothic,sans-serif;
+  margin: 0;
+  padding: 1em 0;
+  text-align: center;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
+a, a:link, a:visited {
+  color: #5C6A74;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #3B3B3B;
+  text-decoration: underline;
+}
+
+a.rss_feed {
+  padding-left: 20px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -642px;
+  height: 16px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+small {
+  font-size: .8em;
+  line-height: 1.5em;
+}
+
+big {
+  font-size: 1.4em;
+  line-height: 1.6em;
+}
+
+big.large {
+  font-size: 1.8em;
+  line-height: 2em;
+}
+
+big.huge {
+  font-size: 2.2em;
+  line-height: 2.5em;
+}
+
+p.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+p.right {
+  text-align: right;
+}
+
+p.left {
+  text-align: left;
+}
+
+blockquote {
+  border: 1px solid gray;
+  background-color: #FFFFF0;
+  margin: .25em;
+  padding: .5em;
+}
+
+pre {
+  border: 1px solid gray;
+  background-color: #F9F7ED;
+  overflow: scroll;
+  width: auto;
+  _width: 95%;
+  _overflow: scroll;
+  margin: 0 .5em;
+  padding: 0 .5em;
+}
+
+blockquote pre {
+  overflow: auto;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+code {
+  font-family: MS Gothic,monospace;
+  white-space: pre;
+}
+
+em {
+  font-style: italic;
+}
+
+cite {
+  display: block;
+  width: 100%;
+  text-align: right;
+  font-style: italic;
+}
+
+input, textarea {
+  color: #3B3B3B;
+  border: 1px solid #d6d3d3;
+  background-color: #FFF;
+  padding: .1em;
+}
+
+input:hover, textarea:hover, input:focus, textarea:focus {
+  border: 1px solid #939793;
+}
+
+/* page wrap */
+#outer {
+  width: 96%;
+  background: #FFF;
+  text-align: left;
+  margin: 1em auto;
+  padding: .5em;
+}
+
+/* header */
+#header {
+  padding: .25em;
+  height: 90px;
+  background: black url(http://static.dogmap.jp/images/icons/dogmap.jpg) no-repeat top right;
+}
+
+#header form {
+  padding: 0.1em 0.25em;
+}
+
+#headercontent {
+  padding: 1em .5em;
+  font-variant: small-caps;
+}
+
+#headercontent h1, #headercontent h1 a, #headercontent h1 a:hover {
+  text-shadow: 0 -1px 0 #333333, 1px 0 0 #333333, 0 1px 0 #333333, -1px 0 0 #333333, 0 -2px 0 #333333, 2px 0 0 #333333, 0 2px 0 #333333, -2px 0 0 #333333, 0 -3px 10px #eeeeee, 3px 0 10px #eeeeee, 0 3px 10px #eeeeee, -3px 0 10px #eeeeee;
+}
+
+#headercontent h1 {
+  color: #E4E4E4;
+  font-size: 2em;
+  font-weight: 700;
+  font-family: 'Trebuchet MS',Verdana,Sans-Serif;
+}
+
+#headercontent h1 a {
+  color: #E4E4E4;
+}
+
+#headercontent h1 a:hover {
+  color: #FFF;
+}
+
+#headercontent .description {
+  color: #E4E4E4;
+  font-size: .9em;
+  font-weight: 400;
+  margin-top: .5em;
+  margin-left: 1em;
+  text-shadow: 1px 1px 3px #AAA;
+}
+
+#menu {
+  font-size: .9em;
+  background: black url(http://static.dogmap.jp/images/icons/borders.png) repeat-x scroll left bottom;
+  margin-bottom: 1em;
+  padding: .5em 0;
+}
+
+#menu ul {
+  clear: both;
+}
+
+#menu ul li {
+  display: inline;
+}
+
+#menu ul li a {
+  color: #E4E4E4;
+  text-decoration: none;
+  font-variant: small-caps;
+  padding: 1em 4.5em 2em .5em;
+}
+
+#menu ul li a:hover {
+  color: #FFF;
+}
+
+/* content */
+/* #content {width:80%;float:left;border-right:solid 1px #E4E4E4;background-color:#FFF;margin-bottom:.5em;clear:both;} */
+#content {
+  width: 75%;
+  float: left;
+  border-right: solid 1px #E4E4E4;
+  background-color: #FFF;
+  margin-bottom: .5em;
+  clear: both;
+}
+
+.divider {
+  width: 99%;
+  height: 20px;
+  background: white url(http://static.dogmap.jp/images/icons/borders.png) repeat-x left -54px;
+  clear: both;
+  margin: 0 auto;
+  text-shadow: 1px 1px 2px #BBB;
+}
+
+.navigation {
+  text-align: center;
+  clear: both;
+}
+
+.contentbar {
+  margin: .5em 1em;
+}
+
+.contentbar h2 {
+  color: #5C6A74;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+.contentbar h3 {
+  margin: 1.5em 0 0;
+}
+
+.contentbar ul, .contentbar ol {
+  margin: .1em .1em .1em 2em;
+}
+
+.contentbar li {
+  margin: 1em .1em .1em 1em;
+}
+
+.contentbar .divider {
+  width: 100%;
+  height: 34px;
+  margin: 0;
+}
+
+/* entry title */
+.contentbar .contenttitleinfo h2 {
+  color: #E4E4E4;
+}
+
+.contentbar .contenttitleinfo h2 a {
+  background: transparent;
+  color: #E4E4E4;
+  text-shadow: 1px 1px 3px #999;
+}
+
+.contentbar .contenttitleinfo h2 a:hover {
+  color: #E4E4E4;
+  text-shadow: 1px 1px 3px #999;
+}
+
+.contentbar .contenttitleinfo div {
+  background: black url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat right -15px;
+  height: 23px;
+  border-top: solid #000 2px;
+  border-bottom: solid #000 2px;
+  padding: .2em .5em;
+}
+
+.contentbar .contenttitleinfo .author1 {
+  background-position: right -15px;
+}
+
+.contentbar .contenttitleinfo .author2 {
+  background-position: right -73px;
+}
+
+.contentbar .contenttitleinfo .author3 {
+  background-position: right -131px;
+}
+
+.contentbar .contenttitleinfo .author4 {
+  background-position: right -189px;
+}
+
+.contentbar .contenttitleinfo .author5 {
+  background-position: right -247px;
+}
+
+.contentbar .contenttitleinfo .author6 {
+  background-position: right -305px;
+}
+
+.contentbar .contenttitleinfo .author7 {
+  background-position: right -15px;
+}
+
+.contentarea {
+  clear: both;
+  padding: 0 0 1em;
+}
+
+/* entry info (date and writer) */
+.details {
+  float: right;
+}
+
+/* entry */
+.entry {
+  clear: both;
+}
+
+.entry h2, .entry h3 {
+  border-top: 1px solid #d6d3d3;
+  margin-bottom: .5em;
+  color: #444;
+  text-shadow: 1px 1px 2px #AAA;
+}
+
+.entry h2 {
+  font-size: 1.2em;
+}
+
+.entry h3 {
+  font-size: 1.1em;
+}
+
+.entry img, .entry object {
+  margin: 0 .5em 1em;
+}
+
+.entry img.wp-smiley {
+  margin: 0;
+  padding: 0;
+}
+
+.entry img.web-thumbnail {
+  margin: 0 5px;
+}
+
+.entry ul, .entry ol, .entry ol ul {
+  margin: 0;
+  padding: 0 .5em .5em 0;
+}
+
+.entry ul li {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat left -1046px;
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 .2em 20px;
+}
+
+.entry ol li {
+  margin: 0 0 0 2em;
+  padding: 0 0 0.5em;
+};
+}
+
+.entry ol ul li {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat left -1046px;
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 .2em 20px;
+}
+
+.entry a {
+  font-weight: 700;
+}
+
+.entry a.videopop {
+  padding-left: 20px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -867px;
+}
+
+.entry a.videopop-asf, .entry a.videopop-avi, .entry a.videopop-mpg, .entry a.videopop-wmv {
+  padding-left: 20px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -867px;
+}
+
+.entry a.videopop-3gp, .entry a.videopop-mp4, .entry a.videopop-mov {
+  padding-left: 20px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -777px;
+}
+
+.entry a.videopop-rm {
+  padding-left: 20px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -822px;
+}
+
+.entry a.videopop-swf, .entry a.videopop-flv {
+  padding-left: 20px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -732px;
+}
+
+.entry a[href^=http\:\/\/www\.youtube\.com\/watch], .entry a[href^=http\:\/\/jp\.youtube\.com\/watch] {
+  padding-left: 20px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -687px;
+}
+
+.entry a:hover img {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+}
+
+.entry a.more-link {
+  text-align: left;
+  font-size: .9em;
+  margin-left: 10px;
+  padding-left: 11px;
+  text-decoration: none;
+  clear: both;
+  font-weight: 400;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -15px -480px;
+}
+
+.entry table.border_on {
+  color: #666;
+  border: 1px solid #CCC;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+
+.entry table.border_on th {
+  border-right: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+  background-color: #E1E2E6;
+  text-align: center;
+  padding: 5px;
+}
+
+.entry table.border_on td {
+  border-right: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+  background-color: #EFF2F3;
+  padding: 5px;
+}
+
+.entry p {
+  clear: both;
+  padding: .5em 0;
+}
+
+.entry blockquote {
+  clear: both;
+  margin: .5em 0;
+  padding: 0 .5em;
+}
+
+.entry div.postreachclickcomments {
+  float: left;
+  clear: both;
+}
+
+/* entry info light */
+.controls {
+  clear: both;
+}
+
+.controls ul {
+  padding: .5em 0;
+}
+
+.controls ul li {
+  display: inline;
+  font-size: .9em;
+}
+
+.controls ul li a {
+  background-image: url(http://static.dogmap.jp/images/icons/icons-sprites.png);
+  background-repeat: no-repeat;
+  background-position: left;
+  padding: 0 .5em 0 1.5em;
+}
+
+.controls ul li.permalink a {
+  background-position: -15px -521px;
+}
+
+.controls ul li.comments a {
+  background-position: -15px -401px;
+}
+
+.controls ul li.trackbacks a {
+  background-position: -15px -561px;
+}
+
+.controls ul li.readmore a {
+  background-position: -15px -441px;
+}
+
+.controls ul li.categories a {
+  background-position: -15px -361px;
+}
+
+.controls ul li.edit a {
+  background-position: -15px -481px;
+  float: right;
+}
+
+.controls ul li.technoratitags a {
+  padding: 0 .25em;
+}
+
+/* entry info detail */
+.postmeta {
+  font-size: .8em;
+  border-bottom: 1px solid #eee;
+  margin-left: 2em;
+  margin-bottom: 2em;
+  padding: 2px;
+}
+
+.postmeta dl {
+  clear: both;
+}
+
+.postmeta dl dt {
+  clear: both;
+  width: 120px;
+  display: block;
+  float: left;
+}
+
+.postmeta dl dt, .postmeta dl dd {
+  border-top: 1px solid #eee;
+}
+
+.postmeta dl.controls dt {
+  padding: 2px;
+}
+
+.postmeta dl.controls dd {
+  margin-left: 120px;
+  padding: 2px;
+}
+
+.postmeta dl.controls dd a {
+  text-decoration: none;
+}
+
+.postmeta dl.controls dd img {
+  vertical-align: middle;
+}
+
+.postmeta dl.controls dd input {
+  border: 1px solid #ccc;
+}
+
+.postmeta dl.controls dd p {
+  display: inline;
+  padding-right: .5em;
+}
+
+.postmeta dl.controls dd p.author {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat scroll -15px -1031px;
+  padding-left: 1.5em;
+}
+
+.postmeta dl.controls dd p.documents, .postmeta dl.controls dd p.edit, .postmeta dl.controls dd p.location {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat scroll -15px -480px;
+  padding-left: 1.5em;
+}
+
+.postmeta dl.controls dd p.comments {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat scroll -15px -401px;
+  padding-left: 1.5em;
+}
+
+.postmeta dl.controls dd p.trackbacks {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat scroll -15px -561px;
+  padding-left: 1.5em;
+}
+
+.postmeta dl.controls dd p.categories, .postmeta dl.controls dd p.tags {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat scroll -15px -361px;
+  padding-left: 1.5em;
+}
+
+/* related post */
+.related-post, #wpjr {
+  clear: both;
+}
+
+.related-post ul, #wpjrelated, #wpjrelated_fr {
+  margin: 0 0 0 2em;
+  padding: 0 .5em .5em 0;
+}
+
+.related-post ul li, #wpjrelated li, #wpjrelated_fr li {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -41px -439px;
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 .2em 13px;
+}
+
+/* popular post */
+.popular-post {
+  margin-left: .5em;
+}
+
+.popular-post ul {
+  margin: 0;
+  padding: 0 .5em .5em 0;
+}
+
+.popular-post ul li a {
+  font-weight: 400;
+}
+
+.popular-post ul li {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat -41px -439px;
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 .2em 13px;
+}
+
+/* trackbacks */
+ul.trackback-list {
+  list-style-type: none;
+  clear: both;
+  margin: 0 0 1.5em;
+  padding: 0;
+}
+
+ul.trackback-list li {
+  border-bottom: 1px solid #d6d3d3;
+}
+
+ul.trackback-list li img.web-thumbnail {
+  margin: 0 5px;
+}
+
+.trackback-time {
+  color: #555;
+  text-align: right;
+  margin-top: 2px;
+  margin-right: 10px;
+}
+
+.trackback-post {
+  color: #555;
+  font-size: .9em;
+  text-align: left;
+  padding-left: 41px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icon-trackbacks.gif) no-repeat 28px 3px;
+}
+
+/* comments */
+ul.comment-list {
+  list-style-type: none;
+  clear: both;
+  margin: 0 0 1.5em;
+  padding: 0;
+}
+
+ul.comment-list ul.children {
+  background: transparent url(http://static.dogmap.jp/images/icons/comment_reply.gif) no-repeat scroll 0 1.75em;
+  margin: 0 0 0 1em;
+}
+
+.comment {
+  width: auto;
+  margin: 0 .25em 1.5em;
+}
+
+.comment .hd {
+  background: transparent url(http://static.dogmap.jp/images/icons/comment_hd.gif) no-repeat 0 0;
+  font-size: 1px;
+  height: 5px;
+}
+
+.comment .hd .c {
+  background: transparent url(http://static.dogmap.jp/images/icons/comment_hd_c.gif) no-repeat right 0;
+  font-size: 1px;
+  height: 5px;
+}
+
+.comment .bd {
+  background: transparent url(http://static.dogmap.jp/images/icons/comment_bd.gif) repeat-y 0 0;
+}
+
+.comment .bd .c {
+  background: transparent url(http://static.dogmap.jp/images/icons/comment_bd_c.gif) repeat-y right 0;
+  padding: 0 10px;
+}
+
+.comment .ft {
+  background: transparent url(http://static.dogmap.jp/images/icons/comment_ft.gif) no-repeat 0 0;
+}
+
+.comment .ft .c {
+  height: 15px;
+  background: transparent url(http://static.dogmap.jp/images/icons/comment_ft_c.gif) no-repeat right 0;
+}
+
+.comment-time {
+  color: #555;
+  text-align: right;
+  margin-top: 2px;
+  margin-right: 10px;
+}
+
+.comment-body p {
+  clear: both;
+  padding: .5em 0;
+}
+
+.comment-body blockquote {
+  clear: both;
+  margin: .5em 0;
+  padding: 0 .5em;
+}
+
+.comment-body ul li {
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat left -1046px;
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 .2em 20px;
+}
+
+.comment-body ol li {
+  margin: 0 0 0 2em;
+  padding: 0;
+}
+
+.comment-post {
+  color: #555;
+  font-size: .9em;
+  text-align: left;
+  padding-left: 41px;
+  padding-top: 5px;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat 13px -986px;
+}
+
+.comment-post-author {
+  color: #555;
+  font-size: .9em;
+  text-align: left;
+  padding-left: 41px;
+  padding-top: 5px;
+  width: auto;
+  background: transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) no-repeat 13px -1026px;
+}
+
+.tweet .comment-body {
+  background: transparent url(http://static.dogmap.jp/images/icons/sbm_t.gif) no-repeat right 0;
+  padding-right: 35px;
+}
+
+.hatena .comment-body {
+  background: transparent url(http://static.dogmap.jp/images/icons/sbm_h.gif) no-repeat right 0;
+  padding-right: 35px;
+}
+
+.delicious .comment-body {
+  background: transparent url(http://static.dogmap.jp/images/icons/sbm_d.gif) no-repeat right 0;
+  padding-right: 35px;
+}
+
+.livedoor .comment-body {
+  background: transparent url(http://static.dogmap.jp/images/icons/sbm_l.gif) no-repeat right 0;
+  padding-right: 35px;
+}
+
+.buzzurl .comment-body {
+  background: transparent url(http://static.dogmap.jp/images/icons/sbm_b.gif) no-repeat right 0;
+  padding-right: 35px;
+}
+
+.friendfeed .comment-body {
+  background: transparent url(http://static.dogmap.jp/images/icons/sbm_f.gif) no-repeat right 0;
+  padding-right: 35px;
+}
+
+.googleplus .comment-body {
+  background: transparent url(http://static.dogmap.jp/images/icons/sbm_g.png) no-repeat right 0;
+  padding-right: 35px;
+}
+
+
+/* comment form */
+#commentform input, #commentform textarea {
+  font: .9em Lucida Grande,Verdana,Arial,Sans-Serif;
+  padding: 2px;
+}
+
+#commentform input {
+  background: white url(http://static.dogmap.jp/images/icons/fade-butt.png) repeat-x 0 -2px;
+  margin: 3px 2px 2px;
+}
+
+#commentform textarea {
+  width: 95%;
+}
+
+#commentform #author, #commentform #email, #commentform #url {
+  background: #fff;
+  margin-bottom: 3px;
+}
+
+#commentform #submit {
+  margin-bottom: 3px;
+}
+
+#trackback-uri, #trackback-uri:hover, #trackback-uri:focus {
+  width: 95%;
+}
+
+/* sidebar */
+/* #r_sidebar {width:19.5%;float:right;background-color:#FFF;} */
+#r_sidebar {
+  width: 24.5%;
+  float: right;
+  background-color: #FFF;
+  margin: 0 auto .5em;
+}
+
+.sidebar {
+  font-size: .8em;
+  margin: 0 .25em;
+}
+
+.sidebar h3 {
+  color: #E4E4E4;
+  font-size: 1.1em;
+  border-top: solid #000 2px;
+  background: transparent url(http://static.dogmap.jp/images/icons/borders.png) repeat-x scroll left -175px;
+  margin: .5em 0;
+  padding: .2em .5em;
+}
+
+.sidebar h3:first-letter {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.sidebar h3:hover {
+  color: #FFF;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  margin: .1em 0 .1em .5em;
+}
+
+.sidebar ul ul li {
+  text-align: left;
+  border-bottom: 1px dotted #cecece;
+  text-decoration: none;
+  margin-bottom: .2em;
+  padding-bottom: .2em;
+}
+
+.sidebar ul ul li p {
+  padding: .2em 0 .3em;
+}
+
+#categories-list ul {
+  list-style-type: none;
+  margin: .1em 0 .1em .5em;
+}
+
+#categories-list ul li {
+  text-align: left;
+  border-bottom: 1px dotted #cecece;
+  text-decoration: none;
+  margin: 0 0 .2em 0;
+  padding: 0 0 .2em 0;
+}
+
+#categories-list ul.children li {
+  border-bottom: medium none;
+  margin: 0;
+}
+
+/* footer */
+#footer {
+  color: #FFF;
+  font-size: .8em;
+  background: black url(http://static.dogmap.jp/images/icons/borders.png) repeat-x left -312px;
+  margin: .5em 0 0;
+  padding: .25em;
+}
+
+#footer a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  color: #FFF;
+  text-decoration: underline;
+}
+
+#footer .left {
+  text-align: left;
+  padding: 1em .5em .2em;
+}
+
+#footer .right {
+  text-align: right;
+  padding: 1em .5em .2em;
+}
+
+/* Popularity Contest */
+/*
+dl.akpc_pop dt,dl.akpc_pop dd {position:relative;}
+dl.akpc_pop dd {float:left;display:block;width:123px;height:12px;}
+dl.akpc_pop dd div {float:left;position:relative;text-align:right;}
+dl.akpc_pop dd div strong {position:absolute;right:0;text-align:left;}
+.entry dl.akpc_pop {float:right;margin:0;padding:0;}
+.entry dl.akpc_pop dt {float:left;display:block;line-height:12px;margin-right:17px;font-size:.75em;text-align:right;width:123px;height:12px;}
+.entry dl.akpc_pop dd {background:url(http://static.dogmap.jp/images/icons/icons-sprites.png) -15px -912px;margin:0 0 15px;padding:0;}
+.entry dl.akpc_pop dd div {background:url(http://static.dogmap.jp/images/icons/icons-sprites.png) -15px -953px;height:12px;width:75%;}
+.entry dl.akpc_pop dd div strong {font-size:.75em;top:-2px;}
+.postmeta dl.akpc_pop {border-top:1px solid #eeeeee;}
+.postmeta dl.akpc_pop dt,.postmeta dl.akpc_pop dd {border-top:medium none;padding:2px;width:123px;}
+.postmeta dl.akpc_pop dd {background:transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) repeat scroll -13px -908px;margin:0 0 0 5px;}
+.postmeta dl.akpc_pop dd div {background:transparent url(http://static.dogmap.jp/images/icons/icons-sprites.png) repeat scroll -15px -951px;height:14px;}
+.postmeta dl.akpc_pop dd div strong {font-size:.9em;}
+* html dl.akpc_pop dd{float:none;}
+*/
+/* bookmark comment view */
+/*
+.hatena-bcomment-view{background-color:#fff;border-top:1px solid #CCC;border-left:1px solid #CCC;border-right:solid 1px #999;border-bottom:solid 1px #999;position:absolute!important;display:none;word-break:break-all;word-wrap:break-word;width:400px;text-align:left;margin:0!important;padding:0!important;font-weight:normal!important;font-size:90%;z-index:100;color:#000!important;}
+.hatena-bcomment-title{margin:0!important;padding:3px 5px!important;text-indent:0!important;}
+.hatena-bcomment-title img{vertical-align:middle!important;margin:2px 2px 2px 4px!important;}
+.hatena-bcomment-view ul{width:auto;overflow:auto;overflow-y:auto;border-top:1px solid #5279E7;background-color:#edf1fd;list-style-type:none;padding:5px 8px!important;margin:0!important;line-height:150%;}
+.hatena-bcomment-view ul li{text-indent:0!important;margin:0!important;padding:0 0 2px 0!important;font-size:90%;background:transparent!important;}
+.hatena-bcomment-view ul li span.hatena-bcomment-tag a{color:#6365CE;font-family:"Arial",sans-serif;margin:0 3px;}
+.hatena-bcomment-view ul li img{vertical-align:middle!important;margin:0 2px!important;}
+.hatena-bcomment-view-icon{cursor:pointer;}
+*/
+/* tag cloud */
+ul.st-tag-cloud li {
+  background: transparent;
+  display: inline;
+}
+
+/* for paginate links */
+.navigation .current, .navigation a {
+  margin-top: .5em;
+  padding: 2px .4em;
+  background: transparent;
+  border: solid 1px #ccc;
+  text-decoration: none;
+  font-size: .75em;
+  font-weight: bold;
+}
+
+.navigation .current, .navigation a:hover {
+  color: white;
+  background: black;
+  font-weight: bold;
+}
+
+/* search */
+#search {
+  background: url(http://static.dogmap.jp/images/icons/search.png) left top no-repeat;
+  display: block;
+  width: 240px;
+  height: 32px;
+}
+
+#search input {
+  display: block;
+  float: left;
+}
+
+#search .text {
+  border: none;
+  background: none;
+  width: 190px;
+  color: #464646;
+  padding: 12px 8px;
+  font-size: .8em;
+}
+
+#search .submit {
+  background: none;
+  border: none;
+  margin-top: 9px;
+  width: 28px;
+  cursor: pointer;
+}
+
+.entry .search input {
+  background: white url(http://static.dogmap.jp/images/icons/fade-butt.png) repeat-x 0 -2px;
+  margin: 3px 2px 2px;
+}
+
+input.text {
+  background: #fff none;
+}
+
+/* Google search */
+#goog-wm li.search-goog {
+  display: block;
+}
+
+#goog-wm-qt {
+  background: #fff none;
+}
+
+/* contact 7 */
+.wpcf7 input, .wpcf7 textarea {
+  font: .9em Lucida Grande,Verdana,Arial,Sans-Serif;
+  padding: 2px;
+}
+
+.wpcf7 input {
+  background: white url(http://static.dogmap.jp/images/icons/fade-butt.png) repeat-x 0 -2px;
+  margin: 3px 2px 2px;
+}
+
+.wpcf7 .wpcf7-form-control-wrap input {
+  background: #fff none;
+}
+
+.wpcf7 textarea {
+  width: 95%;
+}
+
+/* .wpcf7 img.ajax-loader {display:none;} */
+.wpcf7-form label small {
+  display: block;
+  float: left;
+  width: 17em;
+  clear: both;
+}
+
+/* syntaxhighlighter */
+.lang-name {
+  color: #000;
+  font-weight: bold;
+  margin: 0.25em 0 -0.75em;
+  padding: 0;
+  line-height: .25em;
+}
+
+.syntaxhighlighter {
+  overflow: scroll;
+}
+
+/* Rounded Corner */
+body {
+  background: #F7F7F7 none repeat scroll 0 0;
+}
+
+#header, #menu, #content, #r_sidebar, #footer, #footer .clear {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+#outer, #header, #footer {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -opera-border-radius: 10px;
+  -khtml-border-radius: 10px;
+}
+
+#outer {
+  border: 1px solid #DFDFDF;
+  min-height: 600px;
+}
+
+#header {
+  height: 100px;
+}
+
+#menu {
+  margin-top: -10px;
+}
+
+#footer {
+  height: 55px;
+  background: #000000;
+  padding: .25em 0;
+}
+
+#footer .clear {
+  background: black url(http://static.dogmap.jp/images/icons/borders.png) repeat-x scroll left -312px;
+  height: 15px;
+  top: -55px;
+}
+
+img.ajax-loader {
+  margin: 0;
+  visibility: hidden;
+}
+
+.googlemaps img, .googlemaps object {
+  margin: 0;
+  padding: 0;
+}
+
+img#wpstats {
+  display: none;
+}
+
+.categories_search select {
+  display: inline;
+  margin-right: .25em;
+  float: left;
+  height: 22px;
+}
+
+.search_result ul {
+  clear: both;
+}
+
+/* zenback */
+.zenback-keywords, .zenback-entries, .zenback-links, #zenback-news, .zenback-twitter {
+  font-size: .8em;
+  line-height: 1.2em;
+}
+
+/*
+.entry blockquote {
+  position: relative;
+  display : inline-block;
+}
+.entry blockquote:after {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  bottom:15px;
+  right:10px;
+  left:auto;
+  width:50%;
+  height:20%;
+  -webkit-box-shadow : 0 15px 10px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow : 0 15px 10px rgba(0, 0, 0, 0.7);
+  box-shadow : 0 15px 10px rgba(0, 0, 0, 0.7);
+  -webkit-transform : rotate(5deg);
+  -moz-transform : rotate(5deg);
+  -o-transform : rotate(5deg);
+  transform : rotate(5deg);
+}
+*/

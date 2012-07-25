@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Ktai Style よくある質問と答え</title>
+<style type="text/css">
+h1 {text-align:center;}
+h2 {color:white; background: maroon;}
+h3 {width:50%; color: white; background: maroon;}
+h3 a {color:lightblue;}
+h4 {width:48%; border-bottom:dotted 1px maroon; border-left:solid 12px maroon; padding-left:3px;}
+dt {font-weight:bold; background: #ffcccc; margin-right:25%;}
+dd {margin-bottom:0.5em;}
+li {line-height:1.5em;}
+.navi {text-align:center;}
+strong, del {background-color:#ccc;}
+pre {color:#230;padding:3px;border:solid gray 1px;line-height:100%;}
+</style>
+</head>
+<body>
+<h1>Ktai Style マニュアル</h1>
+<p class="navi">[ <a href="../README.ja.html">はじめに</a> | <a href="HISTORY.ja.html">改版履歴</a> | <a href="CUSTOMIZE.ja.html">サイト設定とテンプレートの改造</a> | <a href="ADMIN.ja.html">ウェブログ管理機能</a> | <a href="Q_and_A.ja.html">よくある質問と答え</a> ]</p>
+<h2>よくある質問と答え</h2>
+<p>Ktai Style に関して、附属ドキュメントに掲載されていない疑問点やノウハウなどを掲載します。ここにない質問があれば、まず、附属ドキュメントをよく読んでみてください。それでも解決できなければ、作者にメールするか、WordPress 日本語フォーラム の「<a href="http://ja.forums.wordpress.org/forum/5">プラグイン</a>」で質問してください。</p>
+
+<h3 id="install">インストール関連</h3>
+<dl>
+<dt id="fatal">プラグインを有効にすると "Fatal Error" になる</dt>
+<dd>以下の点を確認してください。<ul>
+  <li>サーバーの PHP バージョンが 5.0 以降であるか確認してください。Ktai Style は PHP 4 には対応していません。以下のエラーが出るときは確実にサーバーの PHP が 4.x です。
+<pre>Parse error: syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or ‘}’
+in /****/wp-content/plugins/ktai-style/ktai_style.php on line 51</pre>
+サーバーが PHP5 を提供していても、自身が利用しているサービス／ドメイン名では PHP4 のままであることも多いので、よく確認してください。</li>
+  <li>プラグインの有効化を PC から行なうことが必要です。<a href="https://addons.mozilla.org/ja/firefox/addon/59">User Agent Switcher</a>, <a href="https://addons.mozilla.org/ja/firefox/addon/8519">FireMobileSimulator</a> 等でブラウザーのユーザーエージェントが携帯電話になっていないかを確認してください。携帯電話やスマートフォンからプラグインを有効にしようとすると、<code>auth_redirect()</code> 関数を二重定義することになってエラーになります。</li>
+  <li>もし、<a href="http://wordpress.org/extend/plugins/events-calendar/">Events Calendar</a> をインストールしている場合、関数の二重定義エラーが発生します。これは Events Calendar の実装が悪いのが原因なので、当該プラグインを停止してください。</li>
+</ul></dd>
+<dt>wp-content/plugins ディレクリーにファイルを入れるだけでいいのか</dt>
+<dd>はい、wordpress のルートディレクトリーにインストールするファイルはありません。Mobile Eye, <a href="http://hrlk.com/script/mobile-eye-plus/">Mobile Eye+</a>, <a href="http://linux.matchy.net/archives/38">MobilePressNEO</a> と違って、コメント受け付けスクリプト comments_post.phpも ktai_style フォルダーに入れてあります。</dd>
+<dt id="prefpane">管理画面の設定をどう変更すればいいか分からない</dt>
+<dd>管理画面の「携帯表示」での設定は変更しなくてもそのまま使えます。初期状態で万人向けの設定に最適化されていますので、よく分からない場合はそのままで結構です。</dd>
+<dt id="pc_theme_default">PC 版テーマが default に戻る</dt>
+<dd>Ktai Style バージョン 1.00 から、携帯テーマで style.css を必須にしました。自作携帯テーマを作っている場合、バージョン 0.99 以前からのアップグレードを行うときには、あらかじめ、自作テーマに style.css を入れる必要があります。入れていない場合、WordPress コアが「不正なテーマ」と判断して、(ちょっと変ですが) PC 版テーマを default に戻してしまいます。(バージョン1.00 のみ。バージョン 1.01 以後 PC テーマは変更されません)<br />
+自作テーマを使っていないのに、PC 版テーマが default に戻る場合は、お使いの携帯テーマで index.php, style.css の両方のファイルが存在するか確認してください。</dd>
+<dt id="wpcache">WP Cache, WP Super Cache 等のキャッシュプラグインと併用したい</dt>
+<dd>インストール手順の「<a href="../README.ja.html#wpcache">WP-Cache と併用する場合</a>」または「<a href="../README.ja.html#supercache">WP Suer Cache と併用する場合</a>」を参照してください。なお、「<a href="http://hrlk.com/2007/08/25/mobile-eye-plus_wp-cache/">Mobile Eye+とWP-Cacheを併用する</a>」のテクニックは、Ktai Style では不具合が起きます (携帯キャリアごとに絵文字が違ったり、分割位置が違うため)。</dd>
+<dt id="ktaiurl">携帯サイトの URL を別にしたい</dt>
+<dd>Ktai Style の現在のバージョンでは困難です。Ktai Style は、WordPress コアがリクエスト URL を解析し、テンプレートを呼び出す段階で携帯サイト用テンプレートに差し替える仕組みになっているためです。閲覧者の利便性を考えると、PC版／携帯版サイトの URL が同一である方が優れています。最近の検索エンジンは同一 URL にPC版／携帯版がある状況を理解しているので SEO 的にも問題ありません。</dd>
+</dl>
+
+<h3 id="spec">仕様に関して</h3>
+<dl>
+<dt id="saving">パケット節約はどう行なっているか</dt>
+<dd>Ktai Style は、パケット節約のため、以下のような XHTML 書き換えを行っています。相当なパケット数削減となると考えています。<ul>
+<li>限定した XHTML 要素・属性以外は全て削除します (残す要素・属性は kses.php の <code>allowed_tags</code> で定義)。例えば、a 要素では title 属性、rel 属性を削除して href 属性のみ残します。</li>
+<li>画像へリンク先・ウェブログの内部リンク先は、「http://.../」のホスト部分を削除して絶対パスに変換。</li>
+<li>改行コードも大幅に削除</li>
+<li>(PDC 端末では) img 要素 (画像) は画像ファイルへのリンクに変更。3G 端末では、ウェブログ配下の画像は、より小さいサムネールを作成して表示。</li>
+<li>原則としてカタカナの半角化は行なっていません。(削減できるバイト数が少ない割に可読性が落ちるため)</li>
+</ul></dd>
+<dt id="load">サーバーへの負荷はどれぐらいか</dt>
+<dd>ウェブログコンテンツの読み込みは、WordPress の標準 API を使っているため、PC 向けサイトを表示するときの負荷とほぼ同等です。<a href="http://www.hazama.nu/pukiwiki/index.php?MT4i">MT4i</a> のように携帯版だけ負荷が高くなるという現象は、おそらく発生しません。(ちなみに、Mobile Eye, Mobile Eye+, MobilePress の負荷も Ktai Style とほぼ同様です)</dd>
+</dl>
+
+<h3 id="trouble">問題が発生したときは</h3>
+<dl>
+<dt id="white">携帯電話で閲覧すると白紙画面になる</dt>
+<dd><ul>
+  <li>PHP のバージョン が 5.0 以降であるか確認してください。また、他のプラグインをすべて停止して動作するか確認してください。それでも解決しない場合は、ウェブサーバー (Apache 等) で Ktai Style に関するエラーが出ているか調べて、出ていればその箇所を作者に報告頂けると幸いです。</li>
+  <li>PHP に割り当てるメモリー容量が少ないと異常終了することがあります。WordPress 2.5 以降では自動的に PHP のメモリ割り当てを 32MB 以上に増量しますが、サーバーによっては低いままのことがあります。</li>
+  <li><a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a> の「タイトル書き換え」機能と相性が悪いことが報告されています。Ktai Style バージョン 1.33  以降で対策していますが、もし問題が発生するようなら、All in One SEO Pack を使わないか、少なくとも「タイトル書き換え機能」をオフにしてみてください。</li>
+  <li><a href="http://wordpress.org/extend/plugins/events-calendar/">Events Calendar</a> をインストールしていると、関数の二重定義が発生してエラーになります。Events Calendar の実装が凶悪なのが原因なため、当該プラグインの停止を検討してください。</li>
+  <li><a href="http://wordpress.org/extend/plugins/admin-ssl-secure-admin/">Admin SSL</a> プラグインとは共存できません。携帯電話でアクセス時、<code>check_admin_referer()</code> 関数が二重定義となる PHP エラーが発生します。WordPress 2.6 以降、<a href="http://codex.wordpress.org/Administration_Over_SSL">標準で管理機能への SSL アクセスが可能</a>ですので、それを利用するようにしてください。</li>
+</ul></dd>
+<dt id="psp_blackout">PlayStation Portable で閲覧したら真っ黒になる</dt>
+<dd>PlayStation Portable で閲覧すると真っ黒になることがあります。お使いの携帯テーマで、body 要素に空の内容の bgcolor 属性があると発生します。bgcolor を適切に設定するか、何も色を指定しない単純な &lt;body&gt; という記述に修正してみてください (Ktai Style 1.33 からは附属テーマを適切な記述にしています)。</dd>
+<dt id="internal_error">携帯電話でコメントしたりログインすると Internal Server Error になる</dt>
+<dd>PHP を CGI 動作している場合に、携帯電話でコメントしたりログインすると Internal Server Error になるときは、PHP のファイルに実行権限が与えられていません。comments-post.php, login.php, redir.php, wp-admin/*.php のバーミッションを 705 もしくは 755 にしてください (wp-admin/ は、配下の PHP ファイルをすべて変更します)。</dd>
+<dt id="post_garble">携帯電話で閲覧すると文字化けする</dt>
+<dd>サーバーの php.ini や .htaccess で <code>mbstring.encoding_translation = Off</code> かつ <code>mbstring.http_output = pass</code> にしてください。Ktai Style は、携帯電話向けに Shift_JIS コードに変換していますが、<code>encoding_translation = On</code> で <code>http_output</code> が UTF-8 や EUC-JP になっていると、それらの文字コードに再変換されてしまい、携帯電話で見ると化けてしまいます。</dd>
+<dt id="theme_garble">携帯テーマを改造したら文字化けした</dt>
+<dd>携帯電話での出力は Shift_JIS ですが、携帯テーマは、PC 版テーマと同じ文字コード (たいていは UTF-8) で記述してください。Shift_JIS で保存すると文字化けします。テンプレートファイルはほとんど英数字のため、テキストエディターによっては、日本語文字列を追加したとき Shift_JIS で保存してしまうことがあります。UTF-8 (BOM なし) で保存されるよう、ご留意ください。</dd>
+<dt id="comment_garble">コメント投稿すると文字化けする</dt>
+<dd>Ktai Style 0.99 以降にアップグレードすれば解決します。また、言語リソース (ktai_style-ja.mo) が読み込まれているか確認してください。管理画面の「携帯表示」や、携帯電話画面が所々英語になっていれば、読み込まれていません。wp-config.php の WPLANG が "ja" であるか確認してください。"ja_UTF" のまま使っている場合、ktai_style-ja.mo を ktai_style-ja_UTF.mo にリネームしてください。</dd>
+<dt id="english">携帯電話で閲覧すると英語になっている個所がある</dt>
+<dd>wp-config.php の WPLANG が "ja" であるか確認してください。WordPress ME 2.1.x 以前からのアップグレードで、"ja_UTF" のまま使っている場合、ktai_style-ja.mo を ktai_style-ja_UTF.mo にリネームしてください。<br />
+EUC-JP 環境の場合、EUC-JP 用の言語リソースを作る必要があります (1.70 から EUC-JP の言語リソース添付はやめました)。ktai_style-ja.po を ktai_style-ja_EUC.po にリネームし、2箇所ある「utf-8」を「euc-jp」に変更し、かつ、文字コードを EUC-JP に変換します。そして、Poedit もしくは msgfmt コマンドで mo ファイルを生成してください。</dd>
+<dt id="accesslog">アクセスログに記録が残らない</dt>
+<dd>デフォルトでは、<a href="http://www.navision-blog.de/counterize-ii-english/">Counterize II プラグイン</a>など、アクセスを記録するプラグインでログが残らないことがあります。お使いのテーマの header.php で <code>ks_wp_head()</code> の引数を KTAI_NONE_PC_HEAD から KTAI_DO_PC_HEAD に変更してください。プラグインによっては、footer.php で <code>ks_wp_footer()</code> の引数を KTAI_NONE_PC_HEAD から KTAI_DO_PC_HEAD に変更する必要があるかもしれません。<br />
+<a href="http://wppluginsj.sourceforge.jp/i18n-ja_jp/wordpress-com-stats/">WordPress.com stats</a> のように JavaScript でアクセス記録を取るプラグインは、JavaScript が実行されない携帯電話 (ドコモ、au など) からの訪問が記録されません。</dd>
+<dt id="link_error">リンクをクリックすると「外部サイトへのリンクエラー」になる</dt>
+<dd>外部サイト接続確認用スクリプトの redir.php の悪用を防ぐため、正しい _wpnonce パラメーターを与えないとエラーになります。_wpnonce パラメーターは 12 時間ごとに更新されるため、画面メモなどで保存したページから外部サイトへのリンクを辿った場合、_wpnonce が無効となってしまい、こういう現象が発生します。ページを再読み込みさせてからリンクを辿ってください。</dd>
+<dt id="inlineimage">3G 端末で見ても画像がインライン表示されない</dt>
+<dd>3G 端末, ウィルコム, スマートフォン等で見たとき画像がインライン表示されない場合は以下の点を確認してください。<ul>
+  <li>ウェブログ配下の画像であるか (外部サイトの画像は従来通りリンクへの変換です)。</li>
+  <li>当該画像が入っているディレクトリーに、WordPress (ウェブサーバー) からの書き込み権限があるか。wp-content/uploads 配下のディレクトリーのパーミッションが 757 になっていないと縮小画像が作成できず、インライン表示もされません。</li>
+  <li>当該画像の img 要素で alt 属性が空になっていたり、width, height 属性の値が 1 になっていないか。この場合、適切な alt 文字列を補完してやったり、適切な width, height 値を与えてやれば画像が出ます。WordPress 2.5 のメディアアップロードは、デフォルトでは「キャプション」(== alt 属性用の文字列) が空白ですので、何も指定しない場合、alt="" という img 要素を作ってしまいます。</li>
+  <li>PHP に GD が組み込まれているか確認してください。GD がない場合は画像の縮小処理ができないため、すべてリンクになります。GD がないと、WordPress の利用自体が不便になるため、サーバー管理者に PHP の再インストールを要求してみてください。</li>
+</ul>どうしても原因不明の場合、inc/shrinkage.php の10行目にあるコメント (KTAI_SHRINKAGE_DEBUG) を外してデバッグモードにしてください。この場合、サムネール作成時のエラーがブラウザーに表示されますので、その内容と shrinkage.php のソースコードを突き合わせて原因を調べてみてください。</dd>
+<dt id="no_image_switch">画像を表示する／リンクに変換のメニューが出ない</dt>
+<dd>3G 端末等でアクセスしたとき、画面下部に「画像を表示する／リンクに変換」のメニューが出ない場合は、使用しているテーマの footer.php に <code>&lt;?php ks_switch_inline_images(); ?&gt;</code> が記述されているか確認してください。挿入位置などは、default テーマの footer.php を参考にしてみてください。</dd>
+</dl>
+
+<h3 id="theme">携帯サイトの見栄えやテーマ作成に関して</h3>
+<dl>
+<dt id="use_header_image">ヘッダ画像を入れたい</dt>
+<dd>まず、ヘッダ画像を作ります。多くの端末で見られるよう、画像サイズは横幅160ピクセル、縦幅36ピクセルぐらい、ファイルサイズは 2KB 前後に留めてください。JPEG 型式もしくは、PNG, GIF の両方の型式を作って、自作テーマのフォルダに入れます。次に、header.php において <code>&lt;h1&gt;&lt;?php echo get_bloginfo('name'); ?&gt;&lt;/h1&gt;</code> と書かれている部分を以下のように置き換えてください (ヘッダ画像のファイル名は適宜読み替えること)。
+<pre>&lt;h1 align="center"&gt;&lt;img src="&lt;?php ks_theme_url(); ?&gt;logo.png" alt="&lt;?php echo get_bloginfo('name'); ?&gt;" /&gt;&lt;/h1&gt;</pre>
+<code>ks_page_title()</code>関数を使っている場合、ヘッダ画像のファイル名を引数として与えるだけでよいです。
+<pre>&lt;?php ks_page_title('logo.gif'); ?&gt;</pre></dd>
+<dt id="footer_notice">フッターの "Converted by Ktai Style Plugin." を消していいのか</dt>
+<dd>はい。これは著作権表示ではないため、削除しても Ktai Style のライセンス (GPL) に違反しません。単に Ktai Style の宣伝のために付与しているものです ;-)</dd>
+<dt id="numposts">1画面に表示される投稿数を変えたい</dt>
+<dd>PC 用管理画面の「表示設定」で、「1 ページ内の投稿数」を変更してください。ページ番号つき URL (http://blog.example.jp/page/3/ のような URL) でも、PC と携帯の表示を同じにするために、携帯電話だけ表示数を減らすことはできません。</dd>
+<dt id="halfwidth">カタカナを半角カナに変換させたい</dt>
+<dd>携帯テーマの functions.php に以下のコードを記載してください。functions.php がないときは、新規のテキストファイルとして作成するか、Classic テーマの functions.php を複製してください。
+<pre>&lt;?php 
+if (! defined('KTAI_ADMIN_MODE')) {
+	add_filter('ktai_raw_content', 'ks_convert_kana');
+}
+?&gt;</pre></dd>
+<dt id="bigger_thumb">Ktai Style が作るサムネールを大きくしたい</dt>
+<dd>shrinkage.php にある define 文のどれかを修正するか、ktai_thumbnail_max_size 独自フィルターを使うと可能です。ただし、すでに作成されたサムネールのサイズは変わりません (サーバー上に生成ずみのため)。なお、サイズは変更しないことを推奨します。最大 96 ピクセルは小さいと感じられるかもしれませんが、複数の画像がある場合などを考えると、これより大きい場合はスムーズに表示できなかったり、パケット料金が嵩むなどの問題が出るかもしれません。</dd>
+<dt id="keep_amazon">Amazon の画像をそのまま表示したい</dt>
+<dd>デフォルトでは、外部サイトの画像はリンクに変換されるため、Amazon アフィリエイトの画像もリンクになります。これを画像そのまま表示させるには、ktai_image_to_link フックを使います。以下のようなコードを、使用している携帯テーマの functions.php に追加してください (functions.php がなければ作る)。「http://ecx.images-amazon.com/images/」の部分は、実際に挿入される画像 URL にあわせて適宜修正してください。
+<pre>&lt;?php 
+function ks_keep_amazon_image($replace, $orig, $src) {
+	if (preg_match('#^http://ecx.images-amazon.com/images/#', $src)) {
+		$replace = $orig;
+	}
+	return $replace;
+}
+add_filter('ktai_image_to_link', 'ks_keep_amazon_image', 10,3);
+?&gt;</pre></dd>
+<dt id="career">携帯電話キャリアや端末種別を区別させたい</dt>
+<dd>携帯電話キャリアはテンプレートタグ <code>is_ktai()</code> の返り値で判別できます (DoCoMo, KDDI, SoftBank, WILLCOM, EMOBILE, Unknown のいずれか)。端末種別はテンプレートタグ <code>ks_service_type()</code> または <code>is_ktai('type')</code> の返り値で判別できます。iモード の場合 mova, FOMA のいずれか、EZweb の場合 HDML, WAP2.0 のいずれか、ソフトバンクの場合 PDC, 3G のいずれか、ウィルコムの場合 AIR-EDGE、イー・モバイルの場合 EMnet という値になります。ディズニー・モバイルは ソフトバンク 3G とみなします。</dd>
+<dt id="wzero3">ウィルコム用テーマを設定しても W-ZERO3 シリーズで適用されない</dt>
+<dd>ウィルコム用テーマは音声端末 (WX シリーズなど) のみ適用されます。W-ZERO3 シリーズは Windows Mobile 採用のスマートフォンなので、ウィルコムではなく「その他」端末扱いとなり、共通設定テーマが適用されます。</dd>
+<dt id="emone">イー・モバイル用テーマを設定しても EM・ONE, EMONSTER, Touch Diamond で適用されない</dt>
+<dd>イー・モバイル用テーマは、通常の音声端末 (2010年3月時点では H11T, H11HW, H12HW, H31IA のみ) に適用されます。EM・ONE, EMONSTER, Touch Diamond は Windows Mobile 採用のスマートフォンなので、「その他」端末扱いとなり、共通設定テーマが適用されます。</dd>
+<dt id="stylesheet">スタイルシートを使いたい</dt>
+<dd>各社 3G 端末は、限定的ながらスタイルシートに対応しています。ただし、ドコモ旧端末 (iモードブラウザ1) のスタイルシート対応 (i-CSS) は、インライン CSS にしか対応していません。Ktai Style では、header.php の1行目に <code>&lt;?php ks_use_appl_xhtml(); ?&gt;</code> と書けば、スタイルシートに対応できます (<a href="CUSTOMIZE.html#stylesheet">スタイルシートの利用方法</a>)。<br />
+ただし、自作テーマに直接スタイルシートを書いた場合、旧端末用に変換はされません。この場合、mova, ソフトバンク PDC 用テーマと、FOMA, EZweb, ソフトバンク 3G, ウィルコム, イー・モバイル用テーマそれぞれ2種類を作って、設定で使い分ける必要があります。</dd>
+<dt id="popupcats">MT4i みたいに、カテゴリーのポップアップメニュー (プルダウンメニュー) を付けたい</dt>
+<dd>携帯テーマを改造すれば可能です。index.php で <code>ks_dropdown_categories()</code>を使って以下のようなコードを入れれば OK です。ただし、カテゴリー切り替えメニューはパケット数を消費するため、mova, ソフトバンク PDC など表示サイズが厳しい端末で常にページ分割が発生するという不便が出ます。このため、こういうインターフェースを使うことはおすすめしません。どうしても使用する場合は、カテゴリー数を15個以下にして1ページに表示する投稿数を10件程度にしてください。
+<pre>&lt;form action="&lt;?php ks_blogurl(); ?&gt;"&gt;&lt;div align="center"&gt;
+&lt;?php ks_dropdown_categories(); ?&gt;&lt;input type="submit" value="選択" /&gt;
+&lt;/div&gt;&lt;/form&gt;&lt;hr /&gt;</pre></dd>
+<dt id="google-adsense">モバイル Google Adsense を入れたい</dt>
+<dd>特に問題なく使用できるようです。Google の説明に従って適用してください。</dd>
+<dt id="google-analytics">モバイル Google Analytics を入れたい</dt>
+<dd>PHP 用の解析コードを <a href="http://analytics-ja.blogspot.com/2010/02/expanded-mobile-reporting.html">Google の説明通り</a>に入れてもうまく動作しません。2箇所問題があるためです。まず、携帯用 header.php はグローバルスコープではないため、<code>$GA_ACCOUNT, $GA_PIXEL</code> 変数に global 宣言が必要なこと。次に footer.php に入れるコードが PHP ショートタグ形式なこと (<code>&lt;?= $googleAnalyticsImageUrl; ?&gt;</code> になっている) です。<br />
+Ktai Style 2 以降のテーマでは、functions.php に以下のようなコードを書いて <code>ks_wp_footer()</code> にフックすることがおすすめです。(googleAnalyticsGetImageUrl 関数は Google から最新のものを入手して使ってください)
+<pre>  // Copyright 2009 Google Inc. All Rights Reserved.
+<strong>global $GA_ACCOUNT, $GA_PIXEL;</strong> // Change by IKEDA Yuriko
+	$GA_ACCOUNT = "MO-XXXXXXXX-X";
+	$GA_PIXEL = "/ga.php";
+
+function googleAnalyticsGetImageUrl() {
+	global $GA_ACCOUNT, $GA_PIXEL;
+	$url = "";
+	$url .= $GA_PIXEL . "?";
+	$url .= "utmac=" . $GA_ACCOUNT;
+	$url .= "&utmn=" . rand(0, 0x7fffffff);
+	$referer = $_SERVER["HTTP_REFERER"];
+	$query = $_SERVER["QUERY_STRING"];
+	$path = $_SERVER["REQUEST_URI"];
+	if (empty($referer)) {
+		$referer = "-";
+	}
+	$url .= "&utmr=" . urlencode($referer);
+	if (!empty($path)) {
+		$url .= "&utmp=" . urlencode($path);
+	}
+	$url .= "&guid=ON";
+	return str_replace("&", "&amp;", $url);
+}
+ 
+function show_googleAnalyticsGetImageUrl() {
+	$googleAnalyticsImageUrl = googleAnalyticsGetImageUrl();
+	<strong>echo '&lt;img src="' . $googleAnalyticsImageUrl . '" /&gt;';</strong> // Change by IKEDA Yuriko
+}
+// Added by IKEDA Yuriko
+<strong>add_action('ktai_wp_footer', 'show_googleAnalyticsGetImageUrl');</strong>
+</pre></dd>
+<dt id="ktaionly">携帯専用ブログにしたい</dt>
+<dd>以下の内容を新規のテキストファイル ks_reject_pc.php として作成します (独立したプラグインとなります)。これを wp-content/plugins にアップロードし、プラグイン管理画面から「Ktai Style Reject PC」プラグインを有効にすれば可能です。以下の14行目〜17行目を入れるかわりに、使用するテーマの footer.php で <code>ks_switch_pc_view()</code> を呼び出す部分を削除しても構いません (6行目〜13行目は必須です)。
+<pre>&lt;?php 
+/*
+Plugin Name: Ktai Style Reject PC
+Version: 1.0.0
+*/
+function ks_reject_pc() {
+	$url = parse_url(get_bloginfo('wpurl') . '/');
+	if (! preg_match('!^' . preg_quote($url['path'], '!') 
+	. 'wp-(admin/|login|includes/)!', $_SERVER['REQUEST_URI'])) {
+		exit();
+	}
+}
+add_action('ktai_init_pc', 'ks_reject_pc');
+function ks_delete_switch_pc($html) {
+	return NULL;
+}
+add_filter('ktai_switch_pc_view', 'ks_delete_switch_pc');
+?&gt;</pre></dd>
+<dt id="ktainetwork">携帯電話ネットワークからのアクセスに限定したい</dt>
+<dd>携帯電話ネットワークからのアクセスに限定する (== PC から携帯電話のユーザーエージェントを名乗ってのアクセスを弾く) には、<code>ks_in_network()</code> テンプレートタグを使い、これが TRUE かどうかを判定すればよいです。ただし、突然 IP アドレス帯域が増えることがあるため、誤判定する可能性があることにご注意ください。携帯電話ネットワーク外のアクセス時に白紙ページを出すならば、以下のコードを携帯テーマの functions.php に書いてください。
+<pre>&lt;?php 
+function ks_deny_out_of_network() {
+	global $Ktai_Style;
+	if ($Ktai_Style->ktai &amp;&amp; ! $Ktai_Style->ktai->in_network()) {
+		exit();
+	}
+}
+add_filter('template_redirect', 'ks_deny_out_of_network', 8);
+?&gt;</pre></dd>
+<dt id="external">外部サイトへのリンクを通勤ブラウザ等の変換サービス経由にしたい</dt>
+<dd>次の2通りの方法が可能です。<ul>
+  <li>ktai_external_link フックに独自の変換関数を割り当ててリンク先 URL を変更すれば、いきなり変換サービス経由リンクにできます。</li>
+  <li>redir.php テンプレートを作成します。作成方法は <a href="CUSTOMIZE.ja.html#redir_php">redir.php テンプレートの使い方</a>を参照するか、 Classic, Green, Monolith テーマを参考にしてください。</li>
+</ul></dd>
+<dt id="pc_pictogram">PC 閲覧時に携帯電話絵文字を画像で出したい</dt>
+<dd>Ktai Style は、今のところiモード絵文字に対応する画像を収録しており、PC 閲覧時に絵文字を画像として表示します。しかし、EZweb, Yahoo! ケータイ向け絵文字の画像はありません。iモードに似た絵文字であれば画像表示できますが、EZweb や Yahoo! ケータイのみ存在する絵文字は代替文字になってしまいます。<br />
+ただし、ご自身で、携帯電話各社が提供する絵文字の利用許可を取り、Ktai Style で使うことは可能です。例えば、利用中テーマに各キャリアごとのディレクトリーを作成し、10進数の絵文字番号 (ウィルコムは16進数3ケタ) をファイル名とした画像ファイルを収納した場合は、以下のようなコードを使えば可能です。このコードを使うには、新規のテキストファイル ks_other_pict.php に内容を記載し(独立したプラグインとなります)、wp-content/plugins にアップロードし、プラグイン管理画面から「Ktai Style Other Pict」プラグインを有効にします。
+<pre>&lt;?php 
+/*
+Plugin Name: Ktai Style Other Pict
+Version: 1.0.0
+*/
+function ks_other_pict($converted, $number, $alt, $charset) {
+	$image = '';
+	$pictdir = ks_theme_url(false);
+	if (preg_match('/^d(\d+)$/', $number, $n)) {
+		$image = '&lt;img src="' . $pictdir . "imode/{$n[1]}.gif" . '" alt="' . $alt . '" /&gt;';
+	} elseif (preg_match('/^(\d+)$/', $number, $n)) {
+		$image = '&lt;img src="' . $pictdir . "ezweb/{$n[1]}.png" . '" alt="' . $alt . '" /&gt;';
+	} elseif (preg_match('/^se([0-5])([\da-f]+)$/', $number, $n)) {
+		$offset = array(0, 90, 180, 270, 347, 423);
+		$num = $offset[$n[1]] + hexdec($n[2]);
+		$image = '&lt;img src="' . $pictdir . "softbank/$num.png" . '" alt="' . $alt . '" /&gt;';
+	} elseif (preg_match('/^wf([01][\da-f]+)$/', $number, $n)) {
+		$image = '&lt;img src="' . $pictdir . "willcom/{$n[1]}.png" . '" alt="' . $alt . '" /&gt;';
+	} elseif (preg_match('/^e(\d+)$/', $number, $n)) {
+		$image = '&lt;img src="' . $pictdir . "emobile/{$n[1]}.png" . '" alt="' . $alt . '" /&gt;';
+	} else {
+		$image = is_null($alt) ? $converted : $alt;
+	}
+	return $image;
+}
+add_filter('ktai_convert_pict_other', 'ks_other_pict', 10, 4);
+?&gt;</pre>
+※各キャリアに類似した絵文字画像を配布しているサイトがありますが、使用については自己責任でお願いします。自社の携帯絵文字を無許可で利用できるキャリア、商用利用では申請が必要なキャリアもあるようです。</dd>
+</dl>
+
+<p>以上</p>
+</body>
+</html>

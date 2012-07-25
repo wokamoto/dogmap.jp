@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kougaburari\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-05 17:16+0900\n"
+"PO-Revision-Date: 2010-02-05 17:16+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../kougaburari.php:175
+#: ../kougaburari.php:227
+#: ../kougaburari.php:231
+#: ../kougaburari.php:450
+#: ../kougaburari.php:478
+#: ../kougaburari.php:482
+#: ../kougaburari.php:493
+msgid "Slide Show"
+msgstr "ぶらり光画部"
+
+#: ../kougaburari.php:407
+msgid "Title:"
+msgstr "タイトル:"
+
+#: ../kougaburari.php:413
+msgid "Width"
+msgstr "画像の幅"
+
+#: ../kougaburari.php:417
+msgid "Height"
+msgstr "画像の高さ"
+
+#: ../kougaburari.php:421
+msgid "Count"
+msgstr "枚数"
+
+#: ../kougaburari.php:429
+msgid "Effect"
+msgstr "エフェクト"
+
+#: ../kougaburari.php:433
+msgid "Timeout(Millisecond)"
+msgstr "表示時間(ミリ秒)"
+
+#: ../kougaburari.php:437
+msgid "Speed(Millisecond)"
+msgstr "切替速度(ミリ秒)"
+
+#: ../includes/common-controller.php:170
+msgid "Settings"
+msgstr "設定"
+

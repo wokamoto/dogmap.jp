@@ -1,0 +1,193 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Head Cleaner\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-11 16:15+0900\n"
+"PO-Revision-Date: \n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: Romania\n"
+"Language-Team: Web Geeks\n"
+"Last-Translator: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# description
+msgid "Cleaning tags from your WordPress header and footer."
+msgstr "Curăţarea etichetele de la antetul şi subsolul WordPress."
+
+#: ../head-cleaner.php:2028
+msgid "Head Cleaner"
+msgstr "Head Cleaner"
+
+#: ../head-cleaner.php:2039
+#: ../includes/common-controller.php:187
+msgid "Settings"
+msgstr "Setări"
+
+#: ../head-cleaner.php:2096
+#: ../head-cleaner.php:2104
+#: ../head-cleaner.php:2112
+msgid "Done!"
+msgstr "Adoptată!"
+
+#: ../head-cleaner.php:2124
+msgid "Head Cleaner Options"
+msgstr "Head Cleaner opÅ£iuni"
+
+#: ../head-cleaner.php:2133
+msgid "CSS and JavaScript are cached on the server."
+msgstr "CSS si JavaScript sunt memorate în cache pe server."
+
+#: ../head-cleaner.php:2137
+msgid "CSS and JS are dynamically generated."
+msgstr "CSS si JS sunt generate dinamic."
+
+#: ../head-cleaner.php:2140
+msgid "Default media attribute applied to CSS."
+msgstr "Atribut de media implicit aplicat CSS."
+
+#: ../head-cleaner.php:2148
+msgid "Two or more CSS is combined."
+msgstr "Două sau mai multe CSS este combinat."
+
+#: ../head-cleaner.php:2152
+msgid "CSS is optimized."
+msgstr "CSS este optimizat."
+
+#: ../head-cleaner.php:2156
+msgid "URLs of images in CSS will be converted into the data scheme URIs."
+msgstr "URL-uri de imagini in CSS vor fi convertite în sistemul de date URI."
+
+#: ../head-cleaner.php:2163
+msgid "Two or more JavaScript is combined."
+msgstr "Două sau mai multe JavaScript este combinat."
+
+#: ../head-cleaner.php:2167
+msgid "JavaScript is minified."
+msgstr "JavaScript este minified."
+
+#: ../head-cleaner.php:2171
+msgid "Bottom JavaScript is combined, too."
+msgstr "Jos JavaScript este combinat, prea."
+
+#: ../head-cleaner.php:2178
+msgid "Put JavaScripts at the Bottom."
+msgstr "Pune JavaScripts la partea de jos."
+
+#: ../head-cleaner.php:2182
+msgid "Use Google Ajax Libraries."
+msgstr "UtilizaÅ£i Google Ajax biblioteci."
+
+#: ../head-cleaner.php:2191
+msgid "Add XML Declaration."
+msgstr "Adauga XML Declaraţie."
+
+#: ../head-cleaner.php:2195
+msgid "Add canonical tag."
+msgstr "Adăugaţi tag-canonic."
+
+#: ../head-cleaner.php:2199
+msgid "Add OGP(Open Graph Protocol) tags."
+msgstr "Adauga OGP (Protocolul de la graficul Deschidere) tag-uri."
+
+#: ../head-cleaner.php:2206
+msgid "Add Last modified."
+msgstr "Adauga Ultima modificare."
+
+#: ../head-cleaner.php:2217
+msgid "Remove generator tag."
+msgstr "Eliminaţi eticheta generator."
+
+#: ../head-cleaner.php:2221
+msgid "Remove RSD link tag."
+msgstr "Eliminaţi link tag RSD."
+
+#: ../head-cleaner.php:2225
+msgid "Remove wlwmanifest link tag."
+msgstr "Eliminaţi eticheta wlwmanifest link-ul."
+
+#: ../head-cleaner.php:2232
+msgid "Remove IE Conditional Tag."
+msgstr "Scoateţi Tag IE condiţionată."
+
+#: ../head-cleaner.php:2245
+msgid "Enabling \"<strong>paranoia mode</strong>\". Cut waste from the HTML and tries to minimize it."
+msgstr "Activarea \"paranoia modul <strong> </strong>\". Tăiaţi deşeuri de HTML şi încearcă să-l minimalizeze."
+
+#: ../head-cleaner.php:2249
+msgid "Debug mode"
+msgstr "Modul Debug"
+
+#: ../head-cleaner.php:2257
+msgid "Active Filters"
+msgstr "Filtre active"
+
+#: ../head-cleaner.php:2260
+#: ../head-cleaner.php:2298
+msgid "Don't process!"
+msgstr "Nu proces!"
+
+#: ../head-cleaner.php:2261
+#: ../head-cleaner.php:2299
+#: ../head-cleaner.php:2342
+msgid "Remove"
+msgstr "Eliminare"
+
+#: ../head-cleaner.php:2262
+msgid "Head filters"
+msgstr "Filtre de cap"
+
+#: ../head-cleaner.php:2264
+#: ../head-cleaner.php:2302
+msgid "Priority"
+msgstr "Prioritate"
+
+#: ../head-cleaner.php:2300
+msgid "Bottom filters"
+msgstr "Filtre de jos"
+
+#: ../head-cleaner.php:2338
+msgid "Active JavaScripts"
+msgstr "Active JavaScripts"
+
+#: ../head-cleaner.php:2341
+msgid "Move to footer"
+msgstr "Trece la subsol"
+
+#: ../head-cleaner.php:2343
+msgid "JavaScripts"
+msgstr "JavaScript-uri"
+
+#: ../head-cleaner.php:2357
+msgid "Update Options"
+msgstr "actualizaţi Opţiuni"
+
+#: ../head-cleaner.php:2363
+msgid "Remove all cache files"
+msgstr "Eliminaţi toate fişierele cache"
+
+#: ../head-cleaner.php:2367
+msgid "All cache files are removed."
+msgstr "Toate fişierele cache sunt eliminate."
+
+#: ../head-cleaner.php:2368
+msgid "Remove All Cache Files"
+msgstr "Şterge toate fişierele cache"
+
+#: ../head-cleaner.php:2373
+msgid "Uninstall"
+msgstr "Dezinstalare"
+
+#: ../head-cleaner.php:2377
+msgid "All the settings of \"Head Cleaner\" are deleted."
+msgstr "Toate setările \"Cleaner cap\" se elimină."
+
+#: ../head-cleaner.php:2378
+msgid "Delete Options"
+msgstr "Ştergeţi Opţiuni"
+
+#: ../head-cleaner.php:2860
+msgid "There is no excerpt because this is a protected post."
+msgstr "Nu este nici un fragment, deoarece acesta este un post protejat."
+

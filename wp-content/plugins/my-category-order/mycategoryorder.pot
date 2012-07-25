@@ -1,0 +1,209 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/my-category-order\n"
+"POT-Creation-Date: 2009-11-24 08:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: mycategoryorder.php:17 mycategoryorder.php:94 mycategoryorder.php:202
+msgid "My Category Order"
+msgstr ""
+
+#: mycategoryorder.php:39 mycategoryorder.php:126
+msgid "Order Categories"
+msgstr ""
+
+#: mycategoryorder.php:40
+msgid "Support Forum"
+msgstr ""
+
+#: mycategoryorder.php:41 mycategoryorder.php:102
+msgid "Donate"
+msgstr ""
+
+#: mycategoryorder.php:82
+msgid "Categories updated successfully."
+msgstr ""
+
+#: mycategoryorder.php:102
+msgid ""
+"If you like my plugin please consider donating. Every little bit helps me "
+"provide support and continue development."
+msgstr ""
+
+#: mycategoryorder.php:102
+msgid "No thanks, hide this"
+msgstr ""
+
+#: mycategoryorder.php:107
+msgid ""
+"Choose a category from the drop down to order subcategories in that category "
+"or order the categories on this level by dragging and dropping them into the "
+"desired order."
+msgstr ""
+
+#: mycategoryorder.php:113
+msgid "Return to parent category"
+msgstr ""
+
+#: mycategoryorder.php:119 mycategoryorder.php:123
+msgid "Order Subcategories"
+msgstr ""
+
+#: mycategoryorder.php:134
+msgid "Click to Order Categories"
+msgstr ""
+
+#: mycategoryorder.php:162
+msgid "Updating Category Order..."
+msgstr ""
+
+#: mycategoryorder.php:201
+msgid "Enhanced Category widget provided by My Category Order"
+msgstr ""
+
+#: mycategoryorder.php:207
+msgid "Categories"
+msgstr ""
+
+#: mycategoryorder.php:235
+msgid "Select Category"
+msgstr ""
+
+#: mycategoryorder.php:327
+msgid "Order By:"
+msgstr ""
+
+#: mycategoryorder.php:329
+msgid "My Order"
+msgstr ""
+
+#: mycategoryorder.php:330
+msgid "Name"
+msgstr ""
+
+#: mycategoryorder.php:331
+msgid "Count"
+msgstr ""
+
+#: mycategoryorder.php:332
+msgid "ID"
+msgstr ""
+
+#: mycategoryorder.php:333
+msgid "Slug"
+msgstr ""
+
+#: mycategoryorder.php:334
+msgid "Term Group"
+msgstr ""
+
+#: mycategoryorder.php:338
+msgid "Order:"
+msgstr ""
+
+#: mycategoryorder.php:340
+msgid "Ascending"
+msgstr ""
+
+#: mycategoryorder.php:341
+msgid "Descending"
+msgstr ""
+
+#: mycategoryorder.php:345
+msgid "Title:"
+msgstr ""
+
+#: mycategoryorder.php:347
+msgid "Default to Categories."
+msgstr ""
+
+#: mycategoryorder.php:350
+msgid "Exclude:"
+msgstr ""
+
+#: mycategoryorder.php:352 mycategoryorder.php:357 mycategoryorder.php:362
+msgid "Category IDs, separated by commas."
+msgstr ""
+
+#: mycategoryorder.php:355
+msgid "Exclude Tree:"
+msgstr ""
+
+#: mycategoryorder.php:360
+msgid "Include:"
+msgstr ""
+
+#: mycategoryorder.php:365
+msgid "Child Of:"
+msgstr ""
+
+#: mycategoryorder.php:367
+msgid "Only display children of this Category ID."
+msgstr ""
+
+#: mycategoryorder.php:370
+msgid "Feed Text:"
+msgstr ""
+
+#: mycategoryorder.php:372
+msgid "Text for RSS Feed"
+msgstr ""
+
+#: mycategoryorder.php:375
+msgid "Feed Image:"
+msgstr ""
+
+#: mycategoryorder.php:377
+msgid "URL to RSS Image, copy url of this image"
+msgstr ""
+
+#: mycategoryorder.php:380
+msgid "Number to Display:"
+msgstr ""
+
+#: mycategoryorder.php:382
+msgid "Max number of categories to display"
+msgstr ""
+
+#: mycategoryorder.php:385
+msgid "Depth:"
+msgstr ""
+
+#: mycategoryorder.php:387
+msgid "0 = All, -1 = Flat, 1 = Top Level Only, n = display n levels"
+msgstr ""
+
+#: mycategoryorder.php:391
+msgid "Show As Dropdown"
+msgstr ""
+
+#: mycategoryorder.php:393
+msgid "Show Last Updated"
+msgstr ""
+
+#: mycategoryorder.php:395
+msgid "Show Count"
+msgstr ""
+
+#: mycategoryorder.php:397
+msgid "Hide Empty"
+msgstr ""
+
+#: mycategoryorder.php:399
+msgid "Use Desc as Title"
+msgstr ""
+
+#: mycategoryorder.php:401
+msgid "Show Hierarchical"
+msgstr ""

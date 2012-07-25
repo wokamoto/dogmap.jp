@@ -1,0 +1,232 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Head Cleaner\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-14 14:48+0900\n"
+"PO-Revision-Date: 2010-02-15 18:09+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# description
+msgid "Cleaning tags from your WordPress header and footer."
+msgstr ""
+
+#: ../head-cleaner.php:1504
+msgid "Head Cleaner"
+msgstr "Чыстка загалоўка"
+
+#: ../head-cleaner.php:1513
+#: ../includes/common-controller.php:175
+msgid "Settings"
+msgstr "Налады"
+
+#: ../head-cleaner.php:1609
+#: ../head-cleaner.php:1619
+#: ../head-cleaner.php:1629
+msgid "Done!"
+msgstr "Гатова!"
+
+#: ../head-cleaner.php:1641
+msgid "Head Cleaner Options"
+msgstr "Налады чысткі загалоўка"
+
+#: ../head-cleaner.php:1649
+msgid "CSS and JavaScript are cached on the server."
+msgstr "CSS і JavaScript кэшуюцца на гэтым серверы"
+
+#: ../head-cleaner.php:1653
+msgid "Put JavaScripts at the Bottom."
+msgstr "Уставіць JavaScripts у бакавічцы."
+
+#: ../head-cleaner.php:1657
+msgid "CSS and JS are dynamically generated."
+msgstr "CSS і JS дынамічна ствараюцца. "
+
+#: ../head-cleaner.php:1665
+msgid "Two or more CSS is combined."
+msgstr "Два ці больш CSS камбінуюцца"
+
+#: ../head-cleaner.php:1669
+msgid "CSS is optimized."
+msgstr "CSS аптымізаваны"
+
+#: ../head-cleaner.php:1672
+msgid "Default media attribute applied to CSS."
+msgstr "Звычайны media атрыбут прымацаваны да CSS"
+
+#: ../head-cleaner.php:1681
+msgid "Two or more JavaScript is combined."
+msgstr "Два ці больш JavaScript камбінуюцца"
+
+#: ../head-cleaner.php:1685
+msgid "JavaScript is minified."
+msgstr "JavaScript мінімізаваны. "
+
+#: ../head-cleaner.php:1689
+msgid "Bottom JavaScript is combined, too."
+msgstr "Бакавы JavaScript таксам камбінуецца."
+
+#: ../head-cleaner.php:1696
+#, fuzzy
+msgid "gzip compress to CSS and JS."
+msgstr ""
+
+#: ../head-cleaner.php:1708
+#, fuzzy
+msgid "Add XML Declaration."
+msgstr ""
+
+#: ../head-cleaner.php:1712
+#, fuzzy
+msgid "Add canonical tag."
+msgstr ""
+
+#: ../head-cleaner.php:1716
+#, fuzzy
+msgid "Remove IE Conditional Tag."
+msgstr ""
+
+#: ../head-cleaner.php:1723
+msgid "Remove generator tag."
+msgstr "Выдаліць генератар тэгаў"
+
+#: ../head-cleaner.php:1727
+msgid "Remove RSD link tag."
+msgstr "Выдаліць тэг RSD лінка"
+
+#: ../head-cleaner.php:1731
+msgid "Remove wlwmanifest link tag."
+msgstr "Выдаліць тэг wlwmanifest."
+
+#: ../head-cleaner.php:1738
+msgid "Debug mode"
+msgstr "Рэжым наладкі"
+
+#: ../head-cleaner.php:1751
+msgid "The CSS optimization settings"
+msgstr "Наладкі аптымізацыі CSS"
+
+#: ../head-cleaner.php:1753
+msgid "Compression (code layout):"
+msgstr "Кампрэсія (код):"
+
+#: ../head-cleaner.php:1755
+msgid "Highest (no readability, smallest size)"
+msgstr "Вышэйшы (не чытабельна, меншыя памеры)"
+
+#: ../head-cleaner.php:1756
+msgid "High (moderate readability, smaller size)"
+msgstr "Высокі (умерана чытабельна, малыя памеры)"
+
+#: ../head-cleaner.php:1757
+msgid "Standard (balance between readability and size)"
+msgstr "Стандартны (баланс паміж чытабельнасцю і памерамі)"
+
+#: ../head-cleaner.php:1758
+msgid "Low (higher readability)"
+msgstr "Нізкая (вышэйшая чытабельнасць)"
+
+#: ../head-cleaner.php:1761
+msgid "Optimise shorthands"
+msgstr "Аптымізаваць скарочанні"
+
+#: ../head-cleaner.php:1763
+msgid "All optimisations"
+msgstr "Усе віды аптымізацыі"
+
+#: ../head-cleaner.php:1764
+msgid "Safe optimisations"
+msgstr "Беражлівая аптымізацыя"
+
+#: ../head-cleaner.php:1765
+msgid "Don't optimise"
+msgstr "Не аптымізаваць"
+
+#: ../head-cleaner.php:1770
+msgid "Compress colors"
+msgstr "Сціснуць колеры"
+
+#: ../head-cleaner.php:1773
+msgid "Compress font-weight"
+msgstr "Сціснуць жырнасць шрыфтоў"
+
+#: ../head-cleaner.php:1776
+msgid "Remove unnecessary backslashes"
+msgstr "Выдаліць неіснуючыя дужкі"
+
+#: ../head-cleaner.php:1784
+msgid "Active Filters"
+msgstr "Актыўныя фільтры"
+
+#: ../head-cleaner.php:1787
+#: ../head-cleaner.php:1824
+msgid "Don't process!"
+msgstr "Выключыць тэму"
+
+#: ../head-cleaner.php:1788
+#: ../head-cleaner.php:1825
+msgid "Remove"
+msgstr "Выдаліць"
+
+#: ../head-cleaner.php:1789
+msgid "Head filters"
+msgstr "Галоўныя фільтры"
+
+#: ../head-cleaner.php:1791
+#: ../head-cleaner.php:1828
+msgid "Priority"
+msgstr "Прыярытэт"
+
+#: ../head-cleaner.php:1826
+msgid "Bottom filters"
+msgstr "Бакавыя фільтры"
+
+#: ../head-cleaner.php:1863
+msgid "Active JavaScripts"
+msgstr "Актываваць avaScripts"
+
+#: ../head-cleaner.php:1866
+msgid "Move to footer"
+msgstr "Перамясціць у падвал"
+
+#: ../head-cleaner.php:1867
+msgid "JavaScripts"
+msgstr "JavaScript"
+
+#: ../head-cleaner.php:1878
+msgid "Update Options"
+msgstr "Абнавіць налады"
+
+#: ../head-cleaner.php:1883
+msgid "Remove all cache files"
+msgstr "Выдаліць усе кэшаваныя файлы"
+
+#: ../head-cleaner.php:1886
+msgid "All cache files are removed."
+msgstr "Усе кэшаваныя файлы выдалены"
+
+#: ../head-cleaner.php:1887
+msgid "Remove All Cache Files"
+msgstr "Выдаліць усе кэшаваныя файлы"
+
+#: ../head-cleaner.php:1892
+msgid "Uninstall"
+msgstr "Дэінстэляваць"
+
+#: ../head-cleaner.php:1895
+msgid "All the settings of &quot;Head Cleaner&quot; are deleted."
+msgstr "Усе налады &quot;Head Cleaner&quot; выдалены"
+
+#: ../head-cleaner.php:1896
+msgid "Delete Options"
+msgstr "Выдаліць налады"
+

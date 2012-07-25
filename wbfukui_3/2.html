@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>VPS って何？ - wokamoto</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<link rel="stylesheet" href="css/zoomooz.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/shCore.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/shThemeDefault.css" type="text/css" media="screen">
+<style type="text/css" media="screen">/*<![CDATA[*/
+.syntaxhighlighter code{display:inline;}
+.screenshot {
+/* opacity: 0.6; */
+width: 100%;
+height: 100%;
+background-color: transparent;
+background-repeat: no-repeat;
+background-position: 0 0;
+background-attachment: scroll;
+}
+
+.syntaxhighlighter .line {
+font-size:90%;
+}
+/*]]>*/</style>
+</head>
+
+<body>
+
+<!---------------------------------------------------------------------------------------->
+	<div class="section section-title" style="margin-top:0">
+		<h2>VPS って何？</h2>
+		<p style="display:block;padding:1.5em 1em 0;font-size:200%">
+			そもそも VPS って何でしょう？<br />
+			なにそれ、美味しいの？
+		</p>
+	</div>
+
+	<div class="section odd">
+		<h2>VPS (Virtual private server) とは</h2>
+		<p style="display:block;padding:1.5em 0 0;font-size:200%">
+			1台の物理的なサーバの中に構築された論理的な(仮想の)サーバです。
+		</p>
+		<p style="display:block;font-size:200%">
+			外側から見た場合、普通のサーバと同じように使えます。
+		</p>
+	</div>
+
+	<div class="section even">
+		<p style="display:block;padding:1.5em 0 0;">
+			<img src="images/vps.png" align="right" style="margin-left:.5em;width:593;height:411" />
+		</p>
+	</div>
+
+	<div class="section odd">
+		<h2>共用レンタルサーバと比べてのメリットは？</h2>
+		<p style="display:block;padding:1.5em 0 0;font-size:150%">
+			専用サーバと同じように root 権限がもらえるため、様々なチューニングが可能です。
+		</p>
+		<p style="display:block;font-size:150%">
+			専用サーバと違い、一台のサーバを丸々借りるわけではないので、費用も比較的安価に済ませることができます。
+		</p>
+		<p style="display:block;font-size:150%">
+			また、サーバが欲しい時に素早く調達できるというメリットもあります。
+		</p>
+	</div>
+
+	<div class="section even">
+		<h2>注意する点は？</h2>
+		<p style="display:block;padding:1.5em 0 0;font-size:150%">
+			Apache などの Web サーバや PHP 等、すべて自分でインストールする必要があります。
+		</p>
+		<p style="display:block;font-size:150%">
+			各種セキュリティ設定やソフトウエアのアップデートは、共有レンタルサーバのようにホスティング会社に丸投げって訳にはいきません。
+		</p>
+		<p style="display:block;font-size:150%">
+			ほっておくとセキュリティホール突かれて乗っ取られる危険もあります。
+			VPS で運営するのであれば、適切なセキュリティ設定と日々のログ監視が必要になります。
+		</p>
+	</div>
+
+	<div class="section odd">
+		<p><a href="3.html">構成例</a></p>
+	</div>
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/sylvester.js"></script>
+<script type="text/javascript" src="js/jquery.zoomooz.js"></script>
+
+<script type="text/javascript">/*<![CDATA[*/
+jQuery(function($) {
+	$(".section").click(function(evt) {
+		$(this).zoomTo({targetsize:0.85, duration:600});
+		evt.stopPropagation();
+	});
+	$(document).click(function(evt) {
+		$("body").zoomTo({targetsize:1.0});
+		evt.stopPropagation();
+	});
+
+	$(".section:last").unbind('click').click(function(evt) {
+		$('.section').fadeOut('normal',function(){
+			location.href='3.html';
+		});
+	});
+	$(".section:first").zoomTo({targetsize:0.85, duration:600});
+});
+/*]]>*/</script>
+</html>

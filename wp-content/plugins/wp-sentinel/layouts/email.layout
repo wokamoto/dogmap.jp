@@ -1,0 +1,9 @@
+The {DATE} has been detected an attack to your blog from the following remote computer :
+IP Address : {ADDRESS}
+Username   : {USERNAME}
+Rererer    : {REFERER}
+User-Agent : {USERAGENT}
+
+Attack details follow :
+
+{ALARM_ROWS}

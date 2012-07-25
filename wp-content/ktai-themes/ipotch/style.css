@@ -1,0 +1,49 @@
+/*  
+Theme Name: iPotch
+Theme URI: http://wppluginsj.sourceforge.jp/ktai_style/themes/
+Description: iPhone-like theme.
+Version: 1.2.0
+Author: IKEDA Yuriko
+Author URI: http://www.yuriko.net/cat/wordpress/
+Requires: Ktai Style 2.0.0, WordPress 2.6
+License: GPL v2
+*/
+
+.box {
+	background-color:white;
+	margin:6px;
+	padding:6px;
+	border:1px solid gray;
+}
+
+.cbox {
+	background-color:white;
+	margin:6px;
+	padding:6px;
+	text-align:center;
+	border:1px solid gray;
+}
+
+.nbox {
+	margin:6px;
+}
+
+.num {
+	font-size:x-large;
+}
+
+.comment {
+	background-color:white;
+	margin:6px;
+	padding:6px;
+	border:1px solid gray;
+}
+
+
+.pings {
+	background-color:#f8f8f8; /* same color at ipotch_comment() at functions.php */
+	margin:6px;
+	padding:6px;
+	border:1px dotted gray;
+}
+

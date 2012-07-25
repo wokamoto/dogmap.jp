@@ -1,0 +1,145 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: commenters-info\n"
+"POT-Creation-Date: 2009-04-10 17:17+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#description
+msgid "The aggregate information and list the commenter."
+msgstr ""
+
+#: ../commenters-info.php:156
+#: ../commenters-info.php:921
+#: ../commenters-info.php:1091
+#: ../commenters-info.php:1201
+#: ../commenters-info.php:1311
+#: ../commenters-info.php:1429
+#: ../commenters-info.php:1519
+msgid "Commenters information"
+msgstr ""
+
+#: ../commenters-info.php:214
+#: ../commenters-info.php:263
+msgid "Commenters Ranking"
+msgstr ""
+
+#: ../commenters-info.php:247
+msgid "Max Comemnters"
+msgstr ""
+
+#: ../commenters-info.php:251
+msgid "Gravatar size (px)"
+msgstr ""
+
+#: ../commenters-info.php:856
+msgid "Commenters list"
+msgstr ""
+
+#: ../commenters-info.php:857
+msgid "Browsers summary"
+msgstr ""
+
+#: ../commenters-info.php:858
+msgid "Plathome summary"
+msgstr ""
+
+#: ../commenters-info.php:859
+msgid "Browsers + Plathome summary"
+msgstr ""
+
+#: ../commenters-info.php:860
+msgid "Trackbacks summary"
+msgstr ""
+
+#: ../commenters-info.php:861
+msgid "Location summary"
+msgstr ""
+
+#: ../commenters-info.php:935
+#: ../commenters-info.php:960
+#: ../commenters-info.php:974
+msgid "Twitter ID"
+msgstr ""
+
+#: ../commenters-info.php:937
+#: ../commenters-info.php:962
+#: ../commenters-info.php:976
+#: ../commenters-info.php:1117
+#: ../commenters-info.php:1124
+#: ../commenters-info.php:1227
+#: ../commenters-info.php:1234
+#: ../commenters-info.php:1337
+#: ../commenters-info.php:1344
+#: ../commenters-info.php:1451
+#: ../commenters-info.php:1458
+#: ../commenters-info.php:1545
+#: ../commenters-info.php:1552
+msgid "Count"
+msgstr ""
+
+#: ../commenters-info.php:938
+#: ../commenters-info.php:963
+#: ../commenters-info.php:977
+msgid "Last Comment"
+msgstr ""
+
+#: ../commenters-info.php:941
+msgid "Ascending order"
+msgstr ""
+
+#: ../commenters-info.php:942
+msgid "Descending order"
+msgstr ""
+
+#: ../commenters-info.php:962
+#: ../commenters-info.php:976
+msgid "(comments / pingbacks)"
+msgstr ""
+
+#: ../commenters-info.php:1101
+#: ../commenters-info.php:1211
+#: ../commenters-info.php:1321
+#: ../commenters-info.php:1529
+msgid "with blog owner"
+msgstr ""
+
+#: ../commenters-info.php:1102
+#: ../commenters-info.php:1212
+#: ../commenters-info.php:1322
+#: ../commenters-info.php:1530
+msgid "without blog owner"
+msgstr ""
+
+#: ../commenters-info.php:1116
+#: ../commenters-info.php:1123
+msgid "Browser"
+msgstr ""
+
+#: ../commenters-info.php:1226
+#: ../commenters-info.php:1233
+msgid "Plathome"
+msgstr ""
+
+#: ../commenters-info.php:1336
+#: ../commenters-info.php:1343
+msgid "Browser + Plathome"
+msgstr ""
+
+#: ../commenters-info.php:1450
+#: ../commenters-info.php:1457
+msgid "Blog Tool"
+msgstr ""
+
+#: ../commenters-info.php:1544
+#: ../commenters-info.php:1551
+msgid "Country"
+msgstr ""
+
+msgid "other"
+msgstr ""
+

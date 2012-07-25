@@ -1,0 +1,53 @@
+# Copyright (C) 2010 The WPBooster CDN Client
+# This file is distributed under the same license as the The WPBooster CDN Client package.
+msgid ""
+msgstr ""
+"Project-Id-Version: The WPBooster CDN Client 1.2.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wpbooster-cdn-client\n"
+"POT-Creation-Date: 2012-06-30 18:05:20+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: wpbooster-cdn-client.php:152
+msgid "Please input WP Booster API Key: "
+msgstr ""
+
+#: wpbooster-cdn-client.php:153
+msgid "<a href=\"http://wpbooster.net/cpanel\">Sign In</a>"
+msgstr ""
+
+#: wpbooster-cdn-client.php:163
+msgid "The WP Booster CDN"
+msgstr ""
+
+#: wpbooster-cdn-client.php:168
+msgid "WP Booster CDN is running..."
+msgstr ""
+
+#: wpbooster-cdn-client.php:170
+msgid "WP Booster CDN is stopped."
+msgstr ""
+
+#: wpbooster-cdn-client.php:177
+msgid "http://wpbooster.net/cpanel/"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "The WPBooster CDN Client"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Deliver static files from WPBooster CDN."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Digitalcube Co,.Ltd (Takayuki Miyauchi)"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://wpbooster.net/"
+msgstr ""

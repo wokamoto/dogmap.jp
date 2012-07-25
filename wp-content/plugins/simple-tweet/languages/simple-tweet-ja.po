@@ -1,0 +1,205 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: simple_tweet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-25 18:44+0900\n"
+"PO-Revision-Date: 2011-01-25 18:46+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Description
+msgid "This is a plugin creating a new tweet including a URL of new post on your wordpress."
+msgstr "WordPress に新規投稿した際、自動的に Twitter に通知するプラグインです。"
+
+#: ../simple-tweet.php:452
+msgid "Simple Tweet"
+msgstr "Simple Tweet"
+
+#: ../simple-tweet.php:459
+msgid "Settings"
+msgstr "設定"
+
+#: ../simple-tweet.php:506
+#, php-format
+msgid "blogged: %1$s - %2$s"
+msgstr "ブログにエントリ: %1$s - %2$s"
+
+#: ../simple-tweet.php:511
+#, php-format
+msgid "RT @%1$s: %2$s - %3$s %4$s"
+msgstr "RT @%1$s: %2$s - %3$s %4$s"
+
+#: ../simple-tweet.php:520
+msgid "Tweet this!"
+msgstr "ツイート"
+
+#: ../simple-tweet.php:906
+#: ../simple-tweet.php:932
+#: ../simple-tweet.php:943
+msgid "Done!"
+msgstr "完了"
+
+#: ../simple-tweet.php:949
+#: ../simple-tweet.php:978
+msgid "Simple Tweet Options"
+msgstr "Simple Tweet の設定"
+
+#: ../simple-tweet.php:956
+msgid "Update Options &raquo;"
+msgstr "設定を更新 &raquo;"
+
+#: ../simple-tweet.php:961
+msgid "Uninstall"
+msgstr "アンインストール"
+
+#: ../simple-tweet.php:964
+msgid "Delete all the settings of &quot;Simple Tweet&quot;."
+msgstr "&quot;Simple Tweet&quot; の設定をすべて消去する。"
+
+#: ../simple-tweet.php:965
+msgid "Delete Options &raquo;"
+msgstr "設定を削除 &raquo;"
+
+#: ../simple-tweet.php:1109
+#: ../simple-tweet.php:1171
+msgid "Twitter OAuth"
+msgstr "Twitter OAuth"
+
+#: ../simple-tweet.php:1111
+msgid "<a href=\"http://wppluginsj.sourceforge.jp/simple-tweet/simple-tweet-oauth-en/\" title=\"WordPress Plugins/JSeries » Simple Tweet OAuth Setting\">OAuth Setting</a>"
+msgstr "<a href=\"http://wppluginsj.sourceforge.jp/simple-tweet/simple-tweet-oauth/\" title=\"WordPress Plugins/JSeries » Simple Tweet OAuth Setting\">OAuth 設定方法</a>"
+
+#: ../simple-tweet.php:1118
+msgid "Get Consumer Key"
+msgstr "Consumer Key を取得"
+
+#: ../simple-tweet.php:1119
+msgid "Applications Using Twitter"
+msgstr "Twitter にアプリケーションを登録する"
+
+#: ../simple-tweet.php:1122
+msgid "Consumer Key"
+msgstr "Consumer Key"
+
+#: ../simple-tweet.php:1126
+msgid "Consumer Secret"
+msgstr "Consumer Secret"
+
+#: ../simple-tweet.php:1130
+msgid "What's a tweet"
+msgstr "ツイートしたい内容"
+
+#: ../simple-tweet.php:1131
+msgid "Please set the contents tweet in \"<a href=\"profile.php#simple-tweet\">your profile</a>\""
+msgstr "「<a href=\"profile.php#simple-tweet\">あなたのプロフィール</a>」画面で、ツイートする内容を設定してください。"
+
+#: ../simple-tweet.php:1146
+msgid "OAuth"
+msgstr "OAuth"
+
+#: ../simple-tweet.php:1147
+msgid "Click on the link to go to twitter to authorize your account."
+msgstr "アカウントを承認するためにリンクをクリックして Twitter に移動します。"
+
+#: ../simple-tweet.php:1151
+msgid "PIN"
+msgstr "PIN"
+
+#: ../simple-tweet.php:1158
+msgid "OAuth reset"
+msgstr "OAuth のリセット"
+
+#: ../simple-tweet.php:1174
+msgid "Twitter OAuth supports PHP5 or later."
+msgstr "Twitter OAuth は PHP5 以降でのみ利用できます。"
+
+#: ../simple-tweet.php:1206
+msgid "Tweet text"
+msgstr "Twitter でツイートする言葉"
+
+#: ../simple-tweet.php:1211
+msgid "Tweet without Permalink"
+msgstr "Twitter でツイートする言葉にパーマリンクを含まない"
+
+#: ../simple-tweet.php:1232
+msgid "Short Link"
+msgstr "短縮URL"
+
+#: ../simple-tweet.php:1235
+msgid "Compress Permalink"
+msgstr "パーマリンクを圧縮する"
+
+#: ../simple-tweet.php:1248
+#: ../simple-tweet.php:1253
+msgid "User Name"
+msgstr "ユーザー名"
+
+#: ../simple-tweet.php:1249
+msgid "bit.ly API Key"
+msgstr "bit.ly API キー"
+
+#: ../simple-tweet.php:1254
+msgid "j.mp API Key"
+msgstr "j.mp API キー"
+
+#: ../simple-tweet.php:1263
+msgid "Other Service"
+msgstr "他の短縮URLサービス"
+
+#: ../simple-tweet.php:1269
+msgid "Separator between message and Permalink"
+msgstr "Twitter でツイートする言葉とパーマリンクの間にセットするセパレータ"
+
+#: ../simple-tweet.php:1277
+msgid "Add \"Tweet this\" link"
+msgstr "記事本文に &quot;Tweet this&quot; リンクを挿入する"
+
+#: ../simple-tweet.php:1282
+msgid "Tweet this link"
+msgstr "&quot;Tweet this&quot; リンクの内容"
+
+#: ../simple-tweet.php:1287
+msgid "Tweet this text"
+msgstr "&quot;Tweet this&quot; リンクに表示するテキスト"
+
+#: ../simple-tweet.php:1294
+msgid "The following characters are converted respectively."
+msgstr "以下の文字は変換されてツイートされます。"
+
+#: ../simple-tweet.php:1295
+msgid "Twitter ID"
+msgstr "Twitter アカウント"
+
+#: ../simple-tweet.php:1296
+msgid "Site Name"
+msgstr "サイト名"
+
+#: ../simple-tweet.php:1297
+msgid "Post No."
+msgstr "ポスト番号"
+
+#: ../simple-tweet.php:1298
+msgid "Post Title"
+msgstr "タイトル"
+
+#: ../simple-tweet.php:1299
+msgid "Post Excerpt"
+msgstr "ポスト内容の抜粋"
+
+#: ../simple-tweet.php:1300
+msgid "Permalink"
+msgstr "パーマリンク"
+
+#: ../simple-tweet.php:1310
+msgid "Output log? (debug mode)"
+msgstr "ログを書き出しますか？（デバッグモード）"
+

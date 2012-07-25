@@ -1,0 +1,212 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Head Cleaner\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-09 17:56+0900\n"
+"PO-Revision-Date: 2010-02-15 18:09+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: tolingo <support@tolingo.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# description
+msgid "Cleaning tags from your WordPress header and footer."
+msgstr ""
+
+#: ../head-cleaner.php:1405
+msgid "Head Cleaner"
+msgstr "Head Cleaner"
+
+#: ../head-cleaner.php:1414
+#: ../includes/common-controller.php:166
+msgid "Settings"
+msgstr "Ajustes"
+
+#: ../head-cleaner.php:1501
+#: ../head-cleaner.php:1511
+#: ../head-cleaner.php:1521
+msgid "Done!"
+msgstr "¡Listo!"
+
+#: ../head-cleaner.php:1533
+msgid "Head Cleaner Options"
+msgstr "Opciones de Head Cleaner"
+
+#: ../head-cleaner.php:1541
+msgid "CSS and JavaScript are cached on the server."
+msgstr "CSS y Javascript están almacenados en la memoria caché del servidor."
+
+#: ../head-cleaner.php:1545
+msgid "Put JavaScripts at the Bottom."
+msgstr "Coloque los JavaScripts al final."
+
+#: ../head-cleaner.php:1549
+msgid "CSS and JS are dynamically generated."
+msgstr "CSS y JS se generan dinámicamente."
+
+#: ../head-cleaner.php:1557
+msgid "Two or more CSS is combined."
+msgstr "Se combinan dos o más CSS."
+
+#: ../head-cleaner.php:1561
+msgid "CSS is optimized."
+msgstr "El CSS está optimizado."
+
+#: ../head-cleaner.php:1564
+msgid "Default media attribute applied to CSS."
+msgstr "Atributos de medios por defecto aplicados al CSS."
+
+#: ../head-cleaner.php:1573
+msgid "Two or more JavaScript is combined."
+msgstr "Se combinan dos o más JavaScripts."
+
+#: ../head-cleaner.php:1577
+msgid "JavaScript is minified."
+msgstr "JavaScript está minimizado."
+
+#: ../head-cleaner.php:1581
+msgid "Bottom JavaScript is combined, too."
+msgstr "El final de JavaScript también está combinado."
+
+#: ../head-cleaner.php:1589
+msgid "Remove generator tag."
+msgstr "Eliminar el generador de etiquetas."
+
+#: ../head-cleaner.php:1593
+msgid "Remove RSD link tag."
+msgstr "Eliminar la etiqueta del vínculo RSD."
+
+#: ../head-cleaner.php:1597
+msgid "Remove wlwmanifest link tag."
+msgstr "Eliminar la etiqueta del vínculo wlwmanifest."
+
+#: ../head-cleaner.php:1604
+msgid "Debug mode"
+msgstr "Modo de depuración"
+
+#: ../head-cleaner.php:1617
+msgid "The CSS optimization settings"
+msgstr "Ajustes de optimización del CSS"
+
+#: ../head-cleaner.php:1619
+msgid "Compression (code layout):"
+msgstr "Compresión (configuración del código):"
+
+#: ../head-cleaner.php:1621
+msgid "Highest (no readability, smallest size)"
+msgstr "Máximo (ilegible, tamaño más pequeño)"
+
+#: ../head-cleaner.php:1622
+msgid "High (moderate readability, smaller size)"
+msgstr "Elevado (legibilidad moderada, tamaño menor)"
+
+#: ../head-cleaner.php:1623
+msgid "Standard (balance between readability and size)"
+msgstr "Estándar (balance entre legibilidad y tamaño)"
+
+#: ../head-cleaner.php:1624
+msgid "Low (higher readability)"
+msgstr "Bajo (legibilidad más alta)"
+
+#: ../head-cleaner.php:1627
+msgid "Optimise shorthands"
+msgstr "Optimizar abreviaturas"
+
+#: ../head-cleaner.php:1629
+msgid "All optimisations"
+msgstr "Todas las optimizaciones"
+
+#: ../head-cleaner.php:1630
+msgid "Safe optimisations"
+msgstr "Guardar optimizaciones"
+
+#: ../head-cleaner.php:1631
+msgid "Don't optimise"
+msgstr "No optimizar"
+
+#: ../head-cleaner.php:1636
+msgid "Compress colors"
+msgstr "Comprimir colores"
+
+#: ../head-cleaner.php:1639
+msgid "Compress font-weight"
+msgstr "Comprimir el peso de la fuente"
+
+#: ../head-cleaner.php:1642
+msgid "Remove unnecessary backslashes"
+msgstr "Eliminar barras invertidas innecesarias"
+
+#: ../head-cleaner.php:1650
+msgid "Active JavaScripts"
+msgstr "Activar Java Scripts"
+
+#: ../head-cleaner.php:1653
+msgid "Move to footer"
+msgstr "Mover hacia el pie de página"
+
+#: ../head-cleaner.php:1654
+msgid "JavaScripts"
+msgstr "JavaScripts"
+
+#: ../head-cleaner.php:1666
+msgid "Active Filters"
+msgstr "Activar filtros"
+
+#: ../head-cleaner.php:1669
+#: ../head-cleaner.php:1706
+msgid "Don't process!"
+msgstr "Abandonar al sujeto"
+
+#: ../head-cleaner.php:1670
+#: ../head-cleaner.php:1707
+msgid "Remove"
+msgstr "Eliminar"
+
+#: ../head-cleaner.php:1671
+msgid "Head filters"
+msgstr "Filtros de encabezado"
+
+#: ../head-cleaner.php:1673
+#: ../head-cleaner.php:1710
+msgid "Priority"
+msgstr "Prioridad"
+
+#: ../head-cleaner.php:1708
+msgid "Bottom filters"
+msgstr "Filtros al final"
+
+#: ../head-cleaner.php:1744
+msgid "Update Options"
+msgstr "Actualizar opciones"
+
+#: ../head-cleaner.php:1749
+msgid "Remove all cache files"
+msgstr "Eliminar todos los ficheros de la memoria caché"
+
+#: ../head-cleaner.php:1752
+msgid "All cache files are removed."
+msgstr "Todos los ficheros se han eliminado."
+
+#: ../head-cleaner.php:1753
+msgid "Remove All Cache Files"
+msgstr "Eliminar todos los ficheros de la memoria caché"
+
+#: ../head-cleaner.php:1758
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: ../head-cleaner.php:1761
+msgid "All the settings of &quot;Head Cleaner&quot; are deleted."
+msgstr "Todos los ajustes de \"Head cleaner\" han sido borrados."
+
+#: ../head-cleaner.php:1762
+msgid "Delete Options"
+msgstr "Borrar opciones"
+

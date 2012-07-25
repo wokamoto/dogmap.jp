@@ -1,0 +1,96 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-remote-manager-client\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-05 14:23+0900\n"
+"PO-Revision-Date: 2012-03-05 17:39+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Description:
+msgid "This plugin enables the web application \"WP Remote Manage\" to manage your sites using OAuth authorization for connection between the web application and your sites."
+msgstr "WEB アプリケーション「WP Remote Manager」から OAuth 接続して WordPress サイトを管理するためのプラグインです。"
+
+msgid "\"WP Remote Manager\" is a web app that Unifying management of multiple WordPress sites."
+msgstr "WEB アプリケーション「WP Remote Manager」は、複数のWordPressサイトのステータスを一元管理します。"
+
+#: ../plugin.php:127
+#, php-format
+msgid "Activate your PIN at %s!"
+msgstr "%s で、あなたの PIN を有効にしてください！"
+
+#: ../plugin.php:128
+#: ../plugin.php:145
+msgid "WP Remote Manager"
+msgstr "WP Remote Manager"
+
+#: ../plugin.php:146
+msgid "WPRM"
+msgstr "WPRM"
+
+#: ../plugin.php:154
+msgid "Access Tokens &gt; WP Remote Manager"
+msgstr "アクセストークン &gt; WP Remote Manager"
+
+#: ../plugin.php:155
+#: ../includes/class-oauth-provider.php:549
+msgid "Access Tokens"
+msgstr "アクセストークン"
+
+#: ../plugin.php:164
+msgid "Total Backup &gt; WP Remote Manager"
+msgstr "Total Backup &gt; WP Remote Manager"
+
+#: ../plugin.php:165
+msgid "Total Backup"
+msgstr "Total Backup"
+
+#: ../plugin.php:178
+msgid "Option &gt; WP Remote Manager"
+msgstr "Option &gt; WP Remote Manager"
+
+#: ../plugin.php:179
+msgid "Option"
+msgstr "Option"
+
+#: ../plugin.php:216
+msgid "Done!"
+msgstr "完了"
+
+#: ../plugin.php:218
+msgid "Failure!!"
+msgstr "エラー !!"
+
+#: ../plugin.php:224
+msgid "WP Remote Manager &raquo; Access Tokens"
+msgstr "WP Remote Manager &raquo; アクセストークン"
+
+#: ../plugin.php:235
+msgid "Revoke Access"
+msgstr "許可を取り消す"
+
+#: ../plugin.php:241
+msgid "Consumer Name"
+msgstr "アプリケーション名"
+
+#: ../plugin.php:242
+msgid "Consumer Description"
+msgstr "アプリケーション概要"
+
+#: ../plugin.php:243
+msgid "Access Key"
+msgstr "Access キー"
+
+#: ../plugin.php:244
+msgid "Access Secret"
+msgstr "Access シークレット"
+

@@ -1,0 +1,7 @@
+DO NOT place new themes in this folder. Because, this folder may be overwriiten 
+by automatic upgrade process. Please create `wp-content/ktai-themes` directory 
+and use it.
+
+このフォルダーに新しいテーマを置かないでください。なぜなら、このフォルダーは自動
+アップグレードによって上書きされることがあるためです。「wp-content/ktai-themes」
+ディレクトリーを作成して、そこを使ってください。

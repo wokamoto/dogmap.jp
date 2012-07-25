@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: feed-template-customize\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-28 14:30+0900\n"
+"PO-Revision-Date: 2011-06-28 14:32+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# description
+msgid "This plugin modifies RSS feeds and ATOM feeds as you want."
+msgstr "このプラグインを使用すると RSS フィードや ATOM フィードを自由に変更できます。"
+

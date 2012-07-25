@@ -1,0 +1,212 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-lightpop\n"
+"POT-Creation-Date: 2008-07-14 15:25+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "LightPop"
+msgstr ""
+
+msgid "<strong>Done!</strong>"
+msgstr ""
+
+msgid "WP-LightPop Options"
+msgstr ""
+
+msgid "jQuery Type"
+msgstr ""
+
+msgid "Add Header"
+msgstr ""
+
+msgid "Target Element"
+msgstr ""
+
+msgid "Post Class"
+msgstr ""
+
+msgid "Each class makes it to the group."
+msgstr ""
+
+msgid "Frame type"
+msgstr ""
+
+msgid "Border Size"
+msgstr ""
+
+msgid "Border"
+msgstr ""
+
+msgid "Default box"
+msgstr ""
+
+msgid "Emboss"
+msgstr ""
+
+msgid "Drop shadow"
+msgstr ""
+
+msgid "Shadow in the inside"
+msgstr ""
+
+msgid "Double shadow"
+msgstr ""
+
+msgid "Detainment of corner"
+msgstr ""
+
+msgid "Original design"
+msgstr ""
+
+msgid "Box Image path"
+msgstr ""
+
+msgid "Border left Image path"
+msgstr ""
+
+msgid "Border right Image path"
+msgstr ""
+
+msgid "Link icon"
+msgstr ""
+
+msgid "Before link"
+msgstr ""
+
+msgid "Set link to title"
+msgstr ""
+
+msgid "Overlay"
+msgstr ""
+
+msgid "Background color"
+msgstr ""
+
+msgid "Opacity"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Border CSS"
+msgstr ""
+
+msgid "Container"
+msgstr ""
+
+msgid "Border size"
+msgstr ""
+
+msgid "Resize speed"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Max Width"
+msgstr ""
+
+msgid "Max Height"
+msgstr ""
+
+msgid "Prev button"
+msgstr ""
+
+msgid "Next button"
+msgstr ""
+
+msgid "Close button"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
+msgid "Blank"
+msgstr ""
+
+msgid "Image path"
+msgstr ""
+
+msgid "width"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "Default text"
+msgstr ""
+
+msgid "text of"
+msgstr ""
+
+msgid "Key bind"
+msgstr ""
+
+msgid "to Prev"
+msgstr ""
+
+msgid "to Next"
+msgstr ""
+
+msgid "to Close"
+msgstr ""
+
+msgid "FLV player path"
+msgstr ""
+
+msgid "More options"
+msgstr ""
+
+msgid "Update Options"
+msgstr ""
+
+msgid "Uninstall"
+msgstr ""
+
+msgid "Delete Options"
+msgstr ""
+
+msgid "Options of each Link Type"
+msgstr ""
+
+msgid "Enable"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Other Params"
+msgstr ""
+
+msgid "YouTube"
+msgstr ""
+
+msgid "Metacafe"
+msgstr ""
+
+msgid "LiveLeak"
+msgstr ""
+
+msgid "GoogleVideo"
+msgstr ""
+
+msgid "ifilm"
+msgstr ""
+
+msgid "Dailymotion"
+msgstr ""
+
+msgid "superdeluxe"
+msgstr ""
+
+msgid "nicovideo"
+msgstr ""
+

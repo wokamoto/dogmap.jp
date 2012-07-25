@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>WP-Sentinel Ban</title>
+	
+<style type="text/css">
+   body {
+   		font-family: Verdana, Geneva, sans-serif; 
+   		font-size: 12px; 
+   		background-color: #fff;
+   }
+   
+   #main_table {
+   		border: 3px dotted red; 
+   		background-color: #FEDAE0; 
+   		padding: 10px; 
+   		-moz-border-radius: 15px; 
+   		border-radius: 15px;
+   		width: 30%;	
+   		display: block;
+   		margin-left: 35%;
+   		margin-top: 15%;
+   }
+   
+   #warning {
+		color: red;
+		font-weight: bold;
+		text-align: center;
+		padding-bottom: 20px;
+   }
+</style>
+
+</head>
+<body>
+
+<table id="main_table">
+	<tr>
+		<td id="warning"><h1><blink>!!! WARNING !!!</blink></h1></td>
+	</tr>
+	<tr>
+		<td align="center">
+		Due to suspicious activities, you are temporarily banned from this site.
+		</td>
+	</tr>
+</table>
+</body>
+</html>
