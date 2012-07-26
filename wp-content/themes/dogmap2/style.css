@@ -195,3 +195,17 @@ ul#wpjrelated {
 .syntaxhighlighter {
   overflow: scroll;
 }
+
+/* my clipping */
+.my-clip {
+  position: relative;
+  display: block;
+  top: -3em;
+}
+
+/* my clipping */
+.my-clip {
+  position: relative;
+  display: block;
+  top: -3em;
+}

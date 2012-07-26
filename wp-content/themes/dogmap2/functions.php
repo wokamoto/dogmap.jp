@@ -12,7 +12,7 @@ load_theme_textdomain(
 //**********************************************************************************
 if ( !is_admin() ) {
     wp_enqueue_style( 'twentytwelve-style', get_template_directory_uri() . '/style.css', array(), '20120725' );
-    wp_enqueue_style( 'twentytwelve-child-style', get_stylesheet_uri(), array('twentytwelve-style'), '20120725' );
+    wp_enqueue_style( 'twentytwelve-child-style', get_stylesheet_uri(), array('twentytwelve-style'), '20120726' );
 }
 
 //**********************************************************************************
