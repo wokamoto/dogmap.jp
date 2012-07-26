@@ -3,7 +3,7 @@
 Plugin Name: The WP Booster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
-Version: 1.2.1
+Version: 1.2.2
 Author URI: http://wpbooster.net/
 Domain Path: /languages
 Text Domain: wpbooster-cdn-client
@@ -45,7 +45,7 @@ private $cdn = 'cdn.wpbooster.net';
 private $api = 'http://api.wpbooster.net/check_host/%s';
 private $key = 'wpboosterapikey';
 private $is_active = 'wpbooster-is-active';
-private $exp = 86400;
+private $exp = 3600;
 
 function __construct()
 {
