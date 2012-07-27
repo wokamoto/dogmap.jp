@@ -23,7 +23,9 @@ wp-content/plugins/feedlogger/data/*
 readme.html
 readme-ja.html
 license.txt
-error/
-images/
-slickspeed/
+/error/
+/images/
+/slickspeed/
 *.bak
+*.log
+*.tmp
