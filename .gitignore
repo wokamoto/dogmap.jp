@@ -26,6 +26,7 @@ license.txt
 /error/
 /images/
 /slickspeed/
+.svn/
 *.bak
 *.log
 *.tmp
