@@ -1,10 +1,5 @@
 .htaccess
 robots.txt
-googleb*.html
-y_key_*.html
-feed_fetch_test.html
-ga_tracking.js
-get_the_archives.php
 crossdomain.xml
 sitemap.xml
 sitemap.xml.gz
@@ -12,6 +7,7 @@ wp-*.php
 xmlrpc.php
 wp-admin/
 wp-includes/
+wp-content/languages/
 wp-content/uploads/
 wp-content/blogs.dir/
 wp-content/upgrade/*
@@ -20,9 +16,9 @@ wp-content/cache/*
 wp-content/cache/supercache/*
 wp-content/videopop/
 wp-content/plugins/feedlogger/data/*
-readme.html
-readme-ja.html
-license.txt
+/readme.html
+/readme-ja.html
+/license.txt
 /error/
 /images/
 /slickspeed/
@@ -33,6 +29,13 @@ license.txt
 /wckobe2011/
 /wctokyo2011/
 /wcyokohama/
+/*.html
+/*.js
+/*.css
+/*.php
+/*.png
+/*.jpg
+/*.ico
 .svn/
 *.bak
 *.log
