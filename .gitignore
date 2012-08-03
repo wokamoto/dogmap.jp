@@ -1,10 +1,10 @@
 .htaccess
 robots.txt
 crossdomain.xml
-sitemap.xml
-sitemap.xml.gz
-wp-*.php
-xmlrpc.php
+/sitemap.xml
+/sitemap.xml.gz
+/wp-*.php
+/xmlrpc.php
 wp-admin/
 wp-includes/
 wp-content/db-config.ini
