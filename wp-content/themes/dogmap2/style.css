@@ -10,7 +10,7 @@ Version:        0.3.1
 
 #masthead hgroup
 {
-  background: url("http://static.dogmap.jp/images/icons/dogmap.jpg") no-repeat scroll right top black;
+  background: url("images/dogmap.jpg") no-repeat scroll right top black;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;

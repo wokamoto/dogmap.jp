@@ -109,6 +109,7 @@ add_action('init', function () {
 //**********************************************************************************
 // static.dogmap.jp に変換
 //**********************************************************************************
+/*
 function content_static_URI( $content ) {
 	$content_url = untrailingslashit(site_url('/wp-content/'));
 	$includes_url = untrailingslashit(site_url('/wp-includes/'));
@@ -139,6 +140,7 @@ add_filter( 'head-cleaner/pre_html_cleaner', 'content_static_URI' );
 add_filter( 'head-cleaner/footer_cleaner', 'content_static_URI' );
 add_filter( 'the_excerpt', 'content_static_URI', 11, 1 );
 add_filter( 'the_content', 'content_static_URI', 11, 1 );
+*/
 
 //**********************************************************************************
 // ヘッダーの link を削除
