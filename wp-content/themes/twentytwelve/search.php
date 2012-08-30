@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-	<section id="primary">
+	<section id="primary" class="site-content">
 		<div id="content" role="main">
 
 		<?php if ( have_posts() ) : ?>
@@ -32,7 +32,7 @@ get_header(); ?>
 			<article id="post-0" class="post no-results not-found">
 				<header class="entry-header">
 					<h1 class="entry-title"><?php _e( 'Nothing Found', 'twentytwelve' ); ?></h1>
-				</header><!-- .entry-header -->
+				</header>
 
 				<div class="entry-content">
 					<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'twentytwelve' ); ?></p>

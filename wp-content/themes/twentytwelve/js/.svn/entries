@@ -1,18 +1,18 @@
-8
+10
 
 dir
-20197
+21659
 http://core.svn.wordpress.org/trunk/wp-content/themes/twentytwelve/js
 http://core.svn.wordpress.org
 
 
 
-2012-02-28T19:17:04.063619Z
-20017
+2012-08-28T02:18:43.120699Z
+21639
 lancewillett
 
 
-svn:special svn:externals svn:needs-lock
+
 
 
 
@@ -26,18 +26,73 @@ svn:special svn:externals svn:needs-lock
 
 1a063a9b-81f0-0310-95a4-ce76da25c4cd
 
+theme-customizer.js
+file
+
+
+
+
+2012-08-30T02:18:35.122523Z
+2b5517ceff48c94785babdbf70dccd26
+2012-08-28T02:18:43.120699Z
+21639
+lancewillett
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1080
+
 html5.js
 file
 
 
 
 
-2012-03-16T02:20:56.000000Z
-6f69fefab008b5ac52914973f1e644d6
-2012-02-06T22:23:41.681177Z
-19842
-matt
-has-props
+2012-08-30T02:18:35.123524Z
+45a6734a5b5708eb13b82fb9ce4a4c69
+2012-08-23T23:39:57.368906Z
+21603
+lancewillett
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2487
 
 navigation.js
 file
@@ -45,9 +100,31 @@ file
 
 
 
-2012-03-16T02:20:56.000000Z
-b49168683e5aecb1c31a296c4a38a3cc
-2012-02-28T19:17:04.063619Z
-20017
+2012-08-30T02:18:35.123524Z
+30ec3282255f984d7759cc5b15ff6c58
+2012-08-25T16:50:05.728947Z
+21616
 lancewillett
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+873
 

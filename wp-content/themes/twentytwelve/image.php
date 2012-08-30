@@ -9,19 +9,19 @@
 
 get_header(); ?>
 
-	<div id="primary" class="image-attachment">
+	<div id="primary" class="site-content">
 		<div id="content" role="main">
 
 		<?php while ( have_posts() ) : the_post(); ?>
 
-				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<article id="post-<?php the_ID(); ?>" <?php post_class( 'image-attachment' ); ?>>
 					<header class="entry-header">
 						<h1 class="entry-title"><?php the_title(); ?></h1>
 
 						<footer class="entry-meta">
 							<?php
 								$metadata = wp_get_attachment_metadata();
-								printf( __( '<span class="meta-prep meta-prep-entry-date">Published </span> <span class="entry-date"><time class="entry-date" datetime="%1$s" pubdate>%2$s</time></span> at <a href="%3$s" title="Link to full-size image">%4$s &times; %5$s</a> in <a href="%6$s" title="Return to %7$s" rel="gallery">%8$s</a>', 'twentytwelve' ),
+								printf( __( '<span class="meta-prep meta-prep-entry-date">Published </span> <span class="entry-date"><time class="entry-date" datetime="%1$s" pubdate>%2$s</time></span> at <a href="%3$s" title="Link to full-size image">%4$s &times; %5$s</a> in <a href="%6$s" title="Return to %7$s" rel="gallery">%8$s</a>.', 'twentytwelve' ),
 									esc_attr( get_the_date( 'c' ) ),
 									esc_html( get_the_date() ),
 									esc_url( wp_get_attachment_url() ),
@@ -35,7 +35,7 @@ get_header(); ?>
 							<?php edit_post_link( __( 'Edit', 'twentytwelve' ), '<span class="edit-link">', '</span>' ); ?>
 						</footer><!-- .entry-meta -->
 
-						<nav id="image-navigation" role="navigation">
+						<nav id="image-navigation" class="navigation" role="navigation">
 							<span class="previous-image"><?php previous_image_link( false, __( '&larr; Previous', 'twentytwelve' ) ); ?></span>
 							<span class="next-image"><?php next_image_link( false, __( 'Next &rarr;', 'twentytwelve' ) ); ?></span>
 						</nav><!-- #image-navigation -->

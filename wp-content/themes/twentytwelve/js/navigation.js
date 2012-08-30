@@ -3,39 +3,27 @@
  *
  * Handles toggling the navigation menu for small screens.
  */
-jQuery( document ).ready( function( $ ) {
-	var masthead = $( '#masthead' ),
-	    timeout = false;
+( function() {
+	var button = document.getElementById( 'site-navigation' ).getElementsByTagName( 'h3' )[0],
+	    menu   = document.getElementById( 'site-navigation' ).getElementsByTagName( 'ul' )[0];
 
-	$.fn.smallMenu = function() {
-		masthead.find( '.site-navigation' ).removeClass( 'main-navigation' ).addClass( 'main-small-navigation' );
-		masthead.find( '.site-navigation h3' ).removeClass( 'assistive-text' ).addClass( 'menu-toggle' );
+	if ( undefined == button || undefined == menu )
+		return false;
 
-		$( '.menu-toggle' ).click( function() {
-			masthead.find( '.menu' ).toggle();
-			$( this ).toggleClass( 'toggled-on' );
-		} );
+	button.onclick = function() {
+		if ( -1 == menu.className.indexOf( 'nav-menu' ) )
+			menu.className = 'nav-menu';
+
+		if ( -1 != button.className.indexOf( 'toggled-on' ) ) {
+			button.className = button.className.replace( ' toggled-on', '' );
+			menu.className = menu.className.replace( ' toggled-on', '' );
+		} else {
+			button.className += ' toggled-on';
+			menu.className += ' toggled-on';
+		}
 	};
 
-	// Check viewport width on first load.
-	if ( $( window ).width() < 600 )
-		$.fn.smallMenu();
-
-	// Check viewport width when user resizes the browser window.
-	$( window ).resize( function() {
-		var browserWidth = $( window ).width();
-
-		if ( false !== timeout )
-			clearTimeout( timeout );
-
-		timeout = setTimeout( function() {
-			if ( browserWidth < 600 ) {
-				$.fn.smallMenu();
-			} else {
-				masthead.find( '.site-navigation' ).removeClass( 'main-small-navigation' ).addClass( 'main-navigation' );
-				masthead.find( '.site-navigation h3' ).removeClass( 'menu-toggle' ).addClass( 'assistive-text' );
-				masthead.find( '.menu' ).removeAttr( 'style' );
-			}
-		}, 200 );
-	} );
-} );
+	// Hide menu toggle button if menu is empty.
+	if ( ! menu.childNodes.length )
+		button.style.display = 'none';
+} )();

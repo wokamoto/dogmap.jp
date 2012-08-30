@@ -88,7 +88,7 @@ function add_print_scripts() {
 add_action('wp_print_scripts', 'add_print_scripts');
 
 add_action('wp_head', create_function( '', 
-	'echo \'<link rel="dns-prefetch" href="//static.dogmap.jp">\'."\n";echo \'<link rel="dns-prefetch" href="//stats.wordpress.com">\'."\n";'
+	'echo \'<link rel="dns-prefetch" href="//s0.wp.com">\'."\n";'
 ));
 
 //**********************************************************************************
@@ -241,3 +241,47 @@ if ( function_exists('init_my_clip_text') ) {
 	init_my_clip_text('clip', 'clipped');
 }
 });
+
+//**********************************************************************************
+// Custome Search
+//**********************************************************************************
+function custom_search_taxonomy_username($search, $wp_query) {
+	global $wpdb;
+
+	// サーチページ以外だったら終了
+	if (!$wp_query->is_search)
+		return;
+	if (!isset($wp_query->query_vars))
+		return;
+
+	// ユーザー名とか、タグ名・カテゴリ名も検索対象に
+	$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : '');
+	if ( count($search_words) > 0 ) {
+		$search = '';
+		foreach ( $search_words as $word ) {
+			if ( !empty($word) ) {
+				$search_word = $wpdb->escape("%{$word}%");
+				$search .= " AND (
+ ({$wpdb->prefix}posts.post_title LIKE '{$search_word}')
+ OR ({$wpdb->posts}.post_content LIKE '{$search_word}')
+ OR {$wpdb->posts}.ID in (
+ select distinct r.object_id
+ from {$wpdb->term_relationships} r
+ inner join {$wpdb->term_taxonomy} tt on r.term_taxonomy_id = tt.term_taxonomy_id
+ inner join {$wpdb->terms} t on tt.term_id = t.term_id
+ where t.name like '$search_word' OR t.slug like '$search_word' OR tt.description like '$search_word')
+ OR {$wpdb->posts}.post_author in (
+ select distinct ID
+ from {$wpdb->users}
+ where display_name like '$search_word')
+)";
+			}
+		}
+	}
+
+	if ( function_exists('dbgx_trace_var') )
+		dbgx_trace_var($search);
+
+	return $search;
+}
+add_filter('posts_search','custom_search_taxonomy_username', 1, 2);
