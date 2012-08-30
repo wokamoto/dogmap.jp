@@ -31,8 +31,6 @@ if ( !is_admin() ) {
 //**********************************************************************************
 // 制御用定数
 //**********************************************************************************
-define('WRITE_BACK', false);
-define('CONTENT_CACHE_USE_OBJ_CACHE', false);
 if (!defined('GM_ANYWHERE_DEBUG_MODE'))
 	define('GM_ANYWHERE_DEBUG_MODE', true);
 
