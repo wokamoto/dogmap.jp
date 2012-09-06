@@ -6,6 +6,7 @@ function flamingo_map_meta_cap( $caps, $cap, $user_id, $args ) {
 	$meta_caps = array(
 		'flamingo_edit_contacts' => 'edit_users',
 		'flamingo_edit_contact' => 'edit_users',
+		'flamingo_delete_contact' => 'edit_users',
 		'flamingo_edit_inbound_messages' => 'edit_users',
 		'flamingo_delete_inbound_message' => 'edit_users',
 		'flamingo_delete_inbound_messages' => 'edit_users' );

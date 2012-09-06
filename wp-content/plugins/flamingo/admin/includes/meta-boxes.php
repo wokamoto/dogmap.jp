@@ -5,6 +5,18 @@ function flamingo_contact_submit_meta_box( $post ) {
 <div class="submitbox" id="submitlink">
 <div id="major-publishing-actions">
 
+<div id="delete-action">
+<?php
+	if ( current_user_can( 'flamingo_delete_contact', $post->id ) ) {
+		$delete_text = __( 'Delete', 'flamingo' );
+
+		$delete_link = admin_url(
+			sprintf( 'admin.php?page=flamingo&post=%s&action=delete', $post->id ) );
+		$delete_link = wp_nonce_url( $delete_link, 'flamingo-delete-contact_' . $post->id );
+
+?><a class="submitdelete deletion" href="<?php echo $delete_link; ?>" onclick="if (confirm('<?php echo esc_js( sprintf( __( "You are about to delete this contact '%s'\n 'Cancel' to stop, 'OK' to delete." ), $post->email ) ); ?>')) {return true;} return false;"><?php echo esc_html( $delete_text ); ?></a><?php } ?>
+</div>
+
 <div id="publishing-action">
 <?php if ( ! empty( $post->id ) ) : ?>
 	<input name="save" type="submit" class="button-primary" id="publish" tabindex="4" accesskey="p" value="<?php echo esc_attr( __( 'Update Contact', 'flamingo' ) ); ?>" />
@@ -152,7 +164,7 @@ function flamingo_inbound_fields_meta_box( $post ) {
 <?php foreach ( (array) $post->fields as $key => $value ) : $alt = 0; ?>
 <tr<?php $alt = 1 - $alt; echo $alt ? ' class="alt"' : ''; ?>>
 <td class="field-title"><?php echo esc_html( $key ); ?></td>
-<td class="field-value"><?php echo wpautop( esc_html( $value ) ); ?></td>
+<td class="field-value"><?php echo flamingo_htmlize( $value ); ?></td>
 </tr>
 <?php endforeach; ?>
 

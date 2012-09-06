@@ -34,3 +34,12 @@ table.message-fields td.field-title {
 	font-weight: bold;
 	width: 24%;
 }
+
+table.message-fields td.field-value ul {
+	margin: 0;
+}
+
+table.message-fields td.field-value li {
+	list-style: disc;
+	margin-left: 1em;
+}

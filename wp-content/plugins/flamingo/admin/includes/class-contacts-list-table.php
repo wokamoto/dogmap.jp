@@ -19,8 +19,8 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 
 	function __construct() {
 		parent::__construct( array(
-			'singular' => 'contact',
-			'plural' => 'contacts',
+			'singular' => 'post',
+			'plural' => 'posts',
 			'ajax' => false ) );
 	}
 
@@ -79,7 +79,7 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 
 	function get_bulk_actions() {
 		$actions = array(
-			'send_mail' => __( 'Send Mail', 'flamingo' ) );
+			'delete' => __( 'Delete', 'flamingo' ) );
 
 		return $actions;
 	}
@@ -111,6 +111,8 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 
 			submit_button( __( 'Filter', 'flamingo' ),
 				'secondary', false, false, array( 'id' => 'post-query-submit' ) );
+
+			submit_button( __( 'Export', 'flamingo' ), 'secondary', 'export', false );
 		}
 ?>
 </div>

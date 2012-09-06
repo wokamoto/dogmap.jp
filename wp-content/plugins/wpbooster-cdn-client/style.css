@@ -1,0 +1,36 @@
+#wpbooster-cdn-client
+{
+    width: 900px;
+}
+
+#wpbooster-cdn-client .hndle
+{
+    cursor: default;
+}
+
+#wpbooster-cdn-client .postbox.half
+{
+    width: 440px;
+}
+
+#wpbooster-cdn-client .postbox.align-left
+{
+    float: left;
+}
+
+#wpbooster-cdn-client .postbox.align-right
+{
+    float: right;
+}
+
+.balance
+{
+    line-height: 70px;
+    text-align: right;
+}
+
+.balance .number
+{
+    font-size: 70px;
+}
+

@@ -64,6 +64,8 @@ function flamingo_admin_updated_message() {
 	if ( ! empty( $_REQUEST['message'] ) ) {
 		if ( 'contactupdated' == $_REQUEST['message'] )
 			$updated_message = esc_html( __( 'Contact updated.', 'flamingo' ) );
+		elseif ( 'contactdeleted' == $_REQUEST['message'] )
+			$updated_message = esc_html( __( 'Contact deleted.', 'flamingo' ) );
 		elseif ( 'inboundtrashed' == $_REQUEST['message'] )
 			$updated_message = esc_html( __( 'Messages trashed.', 'flamingo' ) );
 		elseif ( 'inbounduntrashed' == $_REQUEST['message'] )
@@ -117,6 +119,89 @@ function flamingo_load_contact_admin() {
 		}
 
 		wp_safe_redirect( $redirect_to );
+		exit();
+	}
+
+	if ( 'delete' == $action && ! empty( $_REQUEST['post'] ) ) {
+		if ( ! is_array( $_REQUEST['post'] ) )
+			check_admin_referer( 'flamingo-delete-contact_' . $_REQUEST['post'] );
+		else
+			check_admin_referer( 'bulk-posts' );
+
+		$deleted = 0;
+
+		foreach ( (array) $_REQUEST['post'] as $post ) {
+			$post = new Flamingo_Contact( $post );
+
+			if ( empty( $post ) )
+				continue;
+
+			if ( ! current_user_can( 'flamingo_delete_contact', $post->id ) )
+				wp_die( __( 'You are not allowed to delete this item.', 'flamingo' ) );
+
+			if ( ! $post->delete() )
+				wp_die( __( 'Error in deleting.', 'flamingo' ) );
+
+			$deleted += 1;
+		}
+
+		if ( ! empty( $deleted ) )
+			$redirect_to = add_query_arg( array( 'message' => 'contactdeleted' ), $redirect_to );
+
+		wp_safe_redirect( $redirect_to );
+		exit();
+	}
+
+	if ( ! empty( $_GET['export'] ) ) {
+		$sitename = sanitize_key( get_bloginfo( 'name' ) );
+
+		$filename = ( empty( $sitename ) ? '' : $sitename . '-' )
+			. sprintf( 'flamingo-contact-%s.csv', date( 'Y-m-d' ) );
+
+		header( 'Content-Description: File Transfer' );
+		header( "Content-Disposition: attachment; filename=$filename" );
+		header( 'Content-Type: text/xml; charset=' . get_option( 'blog_charset' ), true );
+
+		$labels = array(
+			__( 'Email', 'flamingo' ), __( 'Full name', 'flamingo' ),
+			__( 'First name', 'flamingo' ), __( 'Last name', 'flamingo' ) );
+
+		echo flamingo_csv_row( $labels );
+
+		$args = array(
+			'posts_per_page' => -1,
+			'orderby' => 'meta_value',
+			'order' => 'ASC',
+			'meta_key' => '_email' );
+
+		if ( ! empty( $_GET['s'] ) )
+			$args['s'] = $_GET['s'];
+
+		if ( ! empty( $_GET['orderby'] ) ) {
+			if ( 'email' == $_GET['orderby'] )
+				$args['meta_key'] = '_email';
+			elseif ( 'name' == $_GET['orderby'] )
+				$args['meta_key'] = '_name';
+		}
+
+		if ( ! empty( $_GET['order'] ) && 'asc' == strtolower( $_GET['order'] ) )
+			$args['order'] = 'ASC';
+
+		if ( ! empty( $_GET['contact_tag_id'] ) )
+			$args['contact_tag_id'] = explode( ',', $_GET['contact_tag_id'] );
+
+		$items = Flamingo_Contact::find( $args );
+
+		foreach ( $items as $item ) {
+			$row = array(
+				$item->email,
+				$item->get_prop( 'name' ),
+				$item->get_prop( 'first_name' ),
+				$item->get_prop( 'last_name' ) );
+
+			echo "\r\n" . flamingo_csv_row( $row );
+		}
+
 		exit();
 	}
 

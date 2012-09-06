@@ -172,6 +172,16 @@ class Flamingo_Contact {
 		return '';
 	}
 
+	public function delete() {
+		if ( empty( $this->id ) )
+			return;
+
+		if ( $post = wp_delete_post( $this->id, true ) )
+			$this->id = 0;
+
+		return (bool) $post;
+	}
+
 }
 
 ?>
