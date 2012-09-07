@@ -19,6 +19,7 @@ closedir();
 //**********************************************************************************
 // Nginx Cache Controller で消す URL キーを追加
 //**********************************************************************************
+/*
 add_filter('nginxchampuru_get_cache', 'nginxchampuru_get_cache', 10, 2);
 function nginxchampuru_get_cache($key, $url = null) {
     global $nginxchampuru;
@@ -35,6 +36,7 @@ function nginxchampuru_get_cache($key, $url = null) {
     }
     return $nginxchampuru->get_cache_file($keys);
 }
+*/
 
 //**********************************************************************************
 // 翻訳の書き換え
@@ -94,6 +96,7 @@ add_action('wp_head', create_function( '',
 //**********************************************************************************
 // Ktai Style 修正
 //**********************************************************************************
+/*
 add_action('init', function () {
 	global $Ktai_Style;
 	if ( isset($Ktai_Style) && is_feed() ) {
@@ -105,6 +108,7 @@ add_action('init', function () {
 		remove_action('rss2_item', array(&$Ktai_Style, 'show_mobile_url_rss2_item'));
 	}
 });
+*/
 
 //**********************************************************************************
 // static.dogmap.jp に変換

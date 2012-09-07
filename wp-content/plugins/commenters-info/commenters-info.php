@@ -791,6 +791,9 @@ img.commentersinfo {float:none;margin-right:0;margin-top:0;}
 				$comment_date = ( isset($commenters[$key]['comment_date']) ? $commenters[$key]['comment_date'] : $comment_date );
 			}
 
+			if ( !is_array($commenters[$key]) )
+				$commenters[$key] = array();
+
 			$commenters[$key]['user_id']      = $user_id;
 			$commenters[$key]['author']       = $author;
 			$commenters[$key]['email']        = $email;
