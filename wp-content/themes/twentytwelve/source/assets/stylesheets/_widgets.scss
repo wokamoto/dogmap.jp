@@ -1,0 +1,45 @@
+/* widgets.css.scss
+ * All widget styling
+ * ------------------------------------------------------------------ */
+.widget ul ul {
+	@include rem('margin-left', $vbase/2);
+}
+.widget_recent_entries .post-date {
+	color: lighten($font-color, 40);
+	@include rem('font-size', 11px);
+	@include rem('margin-left', 12px);
+}
+#wp-calendar {
+	margin: 0;
+	width: 100%;
+	@include rem('font-size', 13px);
+	line-height: ($evbase/13);
+	color: lighten($font-color, 14);
+	th,
+	td,
+	caption {
+		text-align: left;
+	}
+	#next {
+		@include rem('padding-right', $vbase);
+		text-align: right;
+	}
+}
+.widget_search {
+	label {
+		display: block;
+		@include rem('font-size', 13px);
+		line-height: ($evbase/13);
+	}
+	input[type="text"] {
+		@include rem('padding', 6px);
+		font-family: inherit;
+		border: 1px solid #ccc;
+		@include border-radius();
+	}
+}
+.widget_rss {
+	li {
+		@include rem('margin', $vbase/2 0);
+	}
+}

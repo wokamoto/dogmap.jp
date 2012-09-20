@@ -1,0 +1,266 @@
+/* scaffolding.css.scss
+ * Basic structure
+ * ------------------------------------------------------------------ */
+
+/*---------------------------------------------------------
+ Body, links, basics
+------------------------------------------------------------ */
+html {
+	font-size: 87.5%;
+}
+body {
+	@include rem('font-size', $fsize);
+	font-family: $font-stack;
+	text-rendering: optimizeLegibility;
+	color: $font-color;
+}
+a {
+	outline: none;
+	color: $link-color;
+	&:hover {
+		color: $link-color-hover;
+	}
+}
+.skip-link,
+.assistive-text {
+	display: none;
+}
+/*---------------------------------------------------------
+	Page structure
+------------------------------------------------------------ */
+#page {
+	@include rem('padding', 0 $vbase);
+	background-color: #fff;
+	@media screen and (min-width: 600px) {
+		@include clear();
+		margin: 0 auto;
+		@include rem('max-width', 960px)
+	}
+}
+body.custom-background #page {
+	@media screen and (min-width: 960px) {
+		@include rem('padding', 0 40px);
+		@include rem('margin-top', $vbase2);
+		@include rem('margin-bottom', $vbase2);
+		@include box-shadow(0 2px 6px rgba( 100, 100, 100, .3));
+	}
+}
+#main {
+	@include clear();
+}
+#primary {
+	@include rem('margin', $vbase 0 0);
+	@media screen and (min-width: 600px) {
+		float: left;
+		width: percentage(625/960);
+	}
+}
+@media screen and (min-width: 600px) {
+	body.page-template-full-width-page-php #primary,
+	body.page-template-homepage-php #primary,
+	body.single-attachment #primary {
+		width: 100%;
+	}
+}
+#secondary {
+	@include rem('margin', $vbase 0 0);
+	@media screen and (min-width: 600px) {
+		float: right;
+		width: percentage(250/960);
+	}
+}
+/*---------------------------------------------------------
+	Header
+------------------------------------------------------------ */
+.site-header {
+	@include rem('padding', $vbase 0);
+	hgroup {
+		h1,
+		h2 {
+			text-align: center;
+			@media screen and (min-width: 600px) {
+				text-align: left;
+			}
+			a {
+				color: lighten($font-color, 5);
+				display: block;
+				text-decoration: none;
+				&:hover {
+					color: $link-color;
+				}
+			}
+		}
+		h1 {
+			@include rem('font-size', $vbase);
+			line-height: ($evbase2/24);
+			@media screen and (min-width: 600px) {
+				@include rem('font-size', 26px );
+				line-height: ($evbase2/26);
+			}
+		}
+		h2 {
+			font-weight: normal;
+			@include rem('font-size', 13px );
+			line-height: ($evbase/13);
+			color: lighten($font-color, 20);
+		}
+	}
+}
+.header-image {
+	@include rem('margin-top', $vbase);
+}
+
+/*---------------------------------------------------------
+	Navigation Menu
+------------------------------------------------------------ */
+nav.main-navigation {
+	display: inline-block;
+	@include rem('margin-top', $vbase);
+	width: 100%;
+	@include rem('font-size', 12px);
+	border-top: $divider;
+	border-bottom: $divider;
+	ul {
+		margin: 0;
+		text-indent: 0;
+	}
+	li ul li {
+		padding-left: 0;
+	}
+	li a, 
+	li {
+		display: inline-block;
+		text-decoration: none;
+		.main-small-navigation {
+			display: list-item;
+		}
+	}
+	li a {
+		text-transform: uppercase;
+		color: lighten($font-color, 15);
+		&:hover {
+			color: darken($font-color, 30);
+		}
+	}
+	li {
+		@include rem('margin-right', 40px);
+		position: relative;
+		a {
+			border-bottom: 0;
+			line-height: ($evbase2/13);
+		}
+	}
+// Submenu
+	li ul {
+		display: none;
+		position: absolute;
+		top: 100%;
+		padding: 0;
+		margin: 0;
+		z-index: 1;
+	}
+	li ul ul {
+		top: 0;
+		left: 100%;
+	}
+	ul li:hover > ul {
+		display: block;
+		border-left: 0;
+	}
+	li ul li, 
+	li ul li a {
+		text-align: center;
+	}
+	li ul li a {
+		background: #efefef;
+		border-bottom: $divider;
+		display: block;
+		@include rem('font-size', 11px);
+		line-height: ($evbase/11);
+		@include rem('padding', 8px 10px);
+		@include rem('width', 120px);
+	}
+	li ul li a:hover {
+		background: #e3e3e3;
+		color: $font-color;
+	}
+	.current-menu-item > a,
+	.current-menu-ancestor > a,
+	.current_page_item > a,
+	.current_page_ancestor > a {
+		color: lighten($font-color, 12);
+		font-weight: bold;
+	}
+}
+// Small menu
+nav[role="navigation"].main-small-navigation {
+	@include rem('margin-top', $vbase);
+	text-align: center;
+	li {
+		@include rem('margin-top', $vbase);
+		@include rem('font-size', 12px);
+		line-height: ($evbase/12);
+		float: none;
+	}
+	a {
+		color: lighten($font-color, 10);
+		&:hover {
+			color: $link-color;
+		}
+	}
+}
+.menu-toggle {
+	display: inline-block;
+	@include rem('padding', 4px 10px);
+}
+.main-small-navigation .menu {
+	display: none;
+}
+
+/*---------------------------------------------------------
+	Banner
+------------------------------------------------------------ */
+section[role="banner"] {
+	@include rem('margin-bottom', $vbase2);
+}
+/*---------------------------------------------------------
+	Sidebar
+------------------------------------------------------------ */
+#secondary aside {
+	@include rem('margin-bottom', $vbase2 );
+	h3 {
+		@include rem('margin-bottom', $vbase );
+	}
+	p,
+	li {
+		@include rem('font-size', 13px);
+		line-height: ($evbase/13);
+	}
+	a {
+		color: lighten($font-color, 20);
+		&:hover {
+			color: $link-color;
+		}
+	}
+}
+/*---------------------------------------------------------
+	Footer
+------------------------------------------------------------ */
+footer[role="contentinfo"] {
+	clear: both;
+	@include clear();
+	@include rem('max-width', 960px);
+	@include rem('margin-top', $vbase);
+	margin-left: auto;
+	margin-right: auto;
+	@include rem('padding', $vbase 0);
+	border-top: $divider;
+	a {
+		@include rem('font-size', 12px);
+		line-height: ($evbase/12);
+		color: lighten($font-color, 14);
+		&:hover {
+			color: $link-color;
+		}
+	}
+}

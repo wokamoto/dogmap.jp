@@ -186,7 +186,8 @@ img {
 
 /* Shared Post Format styling */
 article.format-quote footer.entry-meta,
-article.format-link footer.entry-meta {
+article.format-link footer.entry-meta,
+article.format-status footer.entry-meta {
 	font-size: 11px;
 	font-size: 0.785714286rem;
 	line-height: 2.181818182;
@@ -437,9 +438,12 @@ html {
 body {
 	font-size: 14px;
 	font-size: 1rem;
-	font-family: "Open Sans", Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 	text-rendering: optimizeLegibility;
 	color: #444;
+}
+body.custom-font-enabled {
+	font-family: "Open Sans", Helvetica, Arial, sans-serif;
 }
 a {
 	outline: none;
@@ -523,7 +527,6 @@ a:hover {
 	font-size: 12px;
 	font-size: 0.857142857rem;
 	line-height: 1.42857143;
-	float: none;
 }
 .main-navigation a {
 	color: #5e5e5e;
@@ -548,13 +551,10 @@ section[role="banner"] {
 
 /* Sidebar */
 .widget-area .widget {
-	overflow: hidden;
-	-moz-hyphens: auto;
-	-ms-word-break: break-all;
+	word-wrap: break-word;
 	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
 	hyphens: auto;
-	word-break: break-all;
-	word-break: break-word;
 	margin-bottom: 48px;
 	margin-bottom: 3.428571429rem;
 }
@@ -580,6 +580,9 @@ section[role="banner"] {
 footer[role="contentinfo"] {
 	border-top: 1px solid #ededed;
 	clear: both;
+	font-size: 12px;
+	font-size: 0.857142857rem;
+	line-height: 2;
 	max-width: 960px;
 	max-width: 68.571428571rem;
 	margin-top: 24px;
@@ -588,12 +591,8 @@ footer[role="contentinfo"] {
 	margin-right: auto;
 	padding: 24px 0;
 	padding: 1.714285714rem 0;
-	overflow: hidden;
 }
 footer[role="contentinfo"] a {
-	font-size: 12px;
-	font-size: 0.857142857rem;
-	line-height: 2;
 	color: #686868;
 }
 footer[role="contentinfo"] a:hover {
@@ -718,8 +717,6 @@ article.sticky .featured-post {
 	margin: 0 0 24px;
 	margin: 0 0 1.714285714rem;
 	line-height: 1.714285714;
-	text-align: justify;
-	text-justify: distribute;
 }
 .entry-content ol,
 .comment-content ol,
@@ -749,14 +746,20 @@ article.sticky .featured-post {
 }
 .entry-content li,
 .comment-content li {
-	margin: 0 0 0 24px;
-	margin: 0 0 0 1.714285714rem;
+	margin: 0 0 0 36px;
+	margin: 0 0 0 2.571428571rem;
 }
 .entry-content blockquote,
 .comment-content blockquote {
+	margin-bottom: 24px;
+	margin-bottom: 1.714285714rem;
 	padding: 24px;
 	padding: 1.714285714rem;
 	font-style: italic;
+}
+.entry-content blockquote p:last-child,
+.comment-content blockquote p:last-child {
+	margin-bottom: 0;
 }
 .entry-content code,
 .comment-content code {
@@ -878,9 +881,8 @@ footer.entry-meta {
 	line-height: 1.846153846;
 	color: #777;
 }
-footer .edit-link {
-	margin: 24px 0;
-	margin: 1.714285714rem 0;
+.single-author .entry-meta .by-author {
+	display: none;
 }
 
 
@@ -908,8 +910,10 @@ footer .edit-link {
 /* =Single image attachment view
 -------------------------------------------------------------- */
 
-.image-attachment div.attachment {
+.article.attachment {
 	overflow: hidden;
+}
+.image-attachment div.attachment {
 	text-align: center;
 }
 .image-attachment div.attachment p {
@@ -943,18 +947,19 @@ article.format-aside h1 a:hover {
 }
 article.format-aside .aside {
 	padding: 24px 24px 0;
-	padding: 1.714285714rem 1.714285714rem 0;
+	padding: 1.714285714rem;
 	background: #d2e0f9;
 	border-left: 22px solid #a8bfe8;
 }
 article.format-aside p {
-	margin: 0;
-	padding-bottom: 24px;
-	padding-bottom: 1.714285714rem;
 	font-size: 13px;
 	font-size: 0.928571429rem;
 	line-height: 1.846153846;
 	color: #4a5466;
+}
+article.format-aside blockquote:last-child,
+article.format-aside p:last-child {
+	margin-bottom: 0;
 }
 
 
@@ -972,6 +977,9 @@ article.format-image footer h2 {
 	font-size: 11px;
 	font-size: 0.785714286rem;
 	line-height: 2.181818182;
+}
+article.format-image footer a h2 {
+	font-weight: normal;
 }
 
 /* Link posts */
@@ -1018,6 +1026,17 @@ article.format-quote .entry-content blockquote {
 	background: #efefef;
 }
 
+/* Status posts */
+.format-status .entry-content p {
+	margin-right: 48px;
+	margin-right: 3.428571429rem;
+}
+.format-status div.avatar {
+	float: right;
+	margin-left: 14px;
+	margin-left: 1rem;
+}
+
 
 /* =Comments
 -------------------------------------------------------------- */
@@ -1033,7 +1052,6 @@ article.format-quote .entry-content blockquote {
 .comments-area article {
 	margin: 24px 0;
 	margin: 1.714285714rem 0;
-	overflow: hidden;
 }
 .comments-area article header {
 	margin: 0 0 48px;
@@ -1098,11 +1116,6 @@ article.format-quote .entry-content blockquote {
 	border-radius: 3px;
 	border: 1px solid #007cbd;
 }
-.comments-area article p {
-	margin: 24px 0;
-	margin: 1.714285714rem 0;
-	line-height: 1.714285714;
-}
 .comments-area li.bypostauthor cite span {
 	position: absolute;
 	margin-left: 5px;
@@ -1155,7 +1168,6 @@ a.comment-reply-link:hover {
 #respond form p {
 	margin: 11px 0;
 	margin: 0.785714286rem 0;
-	overflow: hidden;
 }
 #respond form p.logged-in-as {
 	margin-bottom: 24px;
@@ -1300,11 +1312,6 @@ img#wpstats {
 
 /* Minimum width of 600 pixels. */
 @media screen and (min-width: 600px) {
-	.entry-content p,
-	.entry-summary p {
-		text-align: left;
-		text-justify: auto;
-	}
 	#author-avatar {
 		float: left;
 		margin-top: 8px;

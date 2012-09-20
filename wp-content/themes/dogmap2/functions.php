@@ -55,3 +55,13 @@ add_filter('get_comment_author_link', function($link){
 		$link .= '&nbsp;<span class="commenters-info">' . $commenters_info->get_commenters_info() . '</span>';
 	return $link;
 });
+
+//**********************************************************************************
+// link rel=’prev’ および link rel=’next’ を投稿だけで表示する
+//**********************************************************************************
+function remove_adjacent_posts_rel_link_wp_head() {
+	if ( ! is_single() ) {
+		remove_filter( 'wp_head', 'adjacent_posts_rel_link_wp_head' );
+	}
+}
+add_action( 'wp_head', 'remove_adjacent_posts_rel_link_wp_head', 0 );

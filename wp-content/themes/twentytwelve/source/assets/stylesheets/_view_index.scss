@@ -1,0 +1,216 @@
+/* index.css.scss
+ * Basic post styling
+ * ------------------------------------------------------------------ */
+/*---------------------------------------------------------
+	Basic post styling
+------------------------------------------------------------ */
+.entry-meta {
+	clear: both;
+}
+header.entry-header {
+	@include rem('margin-bottom', $vbase);
+	img.wp-post-image {
+		@include rem('margin-bottom', $vbase);
+	}
+	.entry-title {
+		@include rem('font-size', 20px);
+		line-height: ($evbase/20);
+		font-weight: normal;
+		a {
+			text-decoration: none;
+		}
+		@media screen and (min-width: 600px) {
+			@include rem('font-size', 22px);
+			line-height: ($evbase/22);
+		}
+	}
+	.entry-format {
+		@include rem('margin-top', $vbase);
+		font-weight: normal;
+	}
+	.comments-link {
+		@include rem('margin-top', $vbase);
+		@include rem('font-size', 13px);
+		line-height: ($evbase/13);
+		color: lighten($font-color, 20);
+	}
+}
+.comments-link,
+.entry-meta {
+	a {
+		color: lighten($font-color, 20);
+		&:hover {
+			color: $link-color;
+		}
+	}
+}
+article.sticky {
+	.featured-post {
+		@include rem('margin-bottom', $vbase);
+		@include rem('padding', 0 5px);
+		@include rem('font-size', 11px);
+		line-height: ($evbase/11);
+		text-align: center;
+	}
+	@media screen and (min-width: 600px) {
+		header.entry-header {
+			@include clear();
+			float: left;
+			max-width: percentage(460/625);
+		}
+		.featured-post {
+			float: right;
+			text-align: left;
+		}
+		.entry-content {
+			clear: both;
+		}
+	}
+}
+.entry-content {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@include rem('margin', $vbase 0);
+		line-height: $lheight;
+	}
+	h1 {
+		@include rem('font-size', 21px);
+		line-height: ($evbase/16);
+	}
+	h2 {
+		@include rem('font-size', 18px);
+		line-height: ($evbase/15);
+	}
+	h3 {
+		@include rem('font-size', 16px);
+		line-height: ($evbase/13);
+	}
+	h4 {
+		@include rem('font-size', 14px);
+		line-height: ($evbase/13);
+	}
+	h5 {
+		@include rem('font-size', 13px);
+		line-height: ($evbase/13);
+	}
+	h6 {
+		@include rem('font-size', 12px);
+		line-height: ($evbase/13);
+	}
+	p {
+		@include rem('margin', 0 0 $vbase 0);
+		line-height: $lheight;
+	}
+	img {
+		&.alignleft {
+			float: left;
+			@include rem('margin', 0 $vbase 0 0);
+		}
+	}
+	ol, ul {
+		@include rem('margin', 0 0 $vbase 0);
+		line-height: $lheight;
+	}
+	ul ul, ol ol, ul ol, ol ul {
+		margin-bottom: 0;
+	}
+	ul {
+		list-style: disc outside;
+	}
+	ol {
+		list-style: decimal outside;
+	}
+	li {
+		@include rem('margin', 0 0 0 $vbase);
+	}
+	blockquote {
+		@include rem('padding', $vbase);
+		font-style: italic;
+	}
+	code {
+		font-family: Consolas, Monaco, Lucida Console, monospace;
+		@include rem('font-size', 12px);
+		line-height: ($evbase/12);
+	}
+	pre {
+		@include rem('margin', $vbase 0);
+		@include rem('padding', $vbase);
+		line-height: $lheight;
+		font-family: Consolas, Monaco, Lucida Console, monospace;
+		@include rem('font-size', 12px);
+		line-height: ($evbase/12);
+		overflow: auto;
+		code {
+			display: block;
+		}
+	}
+	abbr, acronym, dfn {
+		border-bottom: 1px dotted #666;
+		cursor: help;
+	}
+	address {
+		display: block;
+		@include rem('margin', 0 0 $vbase);
+	}
+	img.alignleft {
+		@include rem('margin', $vbase/2 $vbase $vbase/2 0);
+	}
+	img.alignright {
+		@include rem('margin', $vbase/2 0 $vbase/2 $vbase);
+	}
+	img.aligncenter {
+		@include rem('margin-top', $vbase/2);
+		@include rem('margin-bottom', $vbase/2);
+	}
+	iframe {
+		@include rem('margin-bottom', $vbase);
+	}
+	dl {
+		@include rem('margin', 0 $vbase);
+	}
+	dt {
+		font-weight: bold;
+	}
+	dd {
+		@include rem('margin-bottom', $vbase );
+	}
+	table {
+		border-bottom: 1px solid #ededed;
+		@include rem('margin', 0 0 $vbase);
+		width: 100%;
+	}
+	th {
+		color: #666;
+		@include rem('font-size', 10px);
+		font-weight: bold;
+		letter-spacing: 0.1em;
+		line-height: ($evbase/13);
+		text-transform: uppercase;
+	}
+	td {
+		border-top: 1px solid #ededed;
+		padding: 6px 10px 6px 0;
+	}
+}
+#content article {
+	@include rem('padding-bottom', $vbase );
+	@include rem('margin-bottom', 72px );
+	border-bottom: 4px double #ededed;
+}
+.page-links {
+	clear: both;
+	line-height: $lheight;
+}
+footer.entry-meta {
+	@include rem('margin-top', $vbase);
+	@include rem('font-size', 13px);
+	line-height: ($evbase/13);
+	color: lighten($font-color, 20);
+}
+footer .edit-link {
+	@include rem('margin', $vbase 0);
+}

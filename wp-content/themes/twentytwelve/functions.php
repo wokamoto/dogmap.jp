@@ -58,7 +58,7 @@ function twentytwelve_setup() {
 	add_theme_support( 'automatic-feed-links' );
 
 	// This theme supports a variety of post formats.
-	add_theme_support( 'post-formats', array( 'aside', 'image', 'link', 'quote' ) );
+	add_theme_support( 'post-formats', array( 'aside', 'image', 'link', 'quote', 'status' ) );
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menu( 'primary', __( 'Primary Menu', 'twentytwelve' ) );
@@ -102,6 +102,12 @@ function twentytwelve_scripts_styles() {
 
 	/*
 	 * Loads our special font CSS file.
+	 *
+ 	 * To disable in a child theme, use wp_dequeue_style()
+ 	 * function mytheme_dequeue_fonts() {
+ 	 *     wp_dequeue_style( 'twentytwelve-fonts' );
+ 	 * }
+	 * add_action( 'wp_enqueue_scripts', 'mytheme_dequeue_fonts', 11 );
  	 */
 	$protocol = is_ssl() ? 'https' : 'http';
 	wp_enqueue_style( 'twentytwelve-fonts', "$protocol://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700", array(), null );
@@ -330,11 +336,11 @@ function twentytwelve_entry_meta() {
 
 	// Translators: 1 is category, 2 is tag, 3 is the date and 4 is the author's name.
 	if ( $tag_list ) {
-		$utility_text = __( 'This entry was posted in %1$s and tagged %2$s on %3$s by %4$s.', 'twentytwelve' );
+		$utility_text = __( 'This entry was posted in %1$s and tagged %2$s on %3$s<span class="by-author"> by %4$s</span>.', 'twentytwelve' );
 	} elseif ( $categories_list ) {
-		$utility_text = __( 'This entry was posted in %1$s on %3$s by %4$s.', 'twentytwelve' );
+		$utility_text = __( 'This entry was posted in %1$s on %3$s<span class="by-author"> by %4$s</span>.', 'twentytwelve' );
 	} else {
-		$utility_text = __( 'This entry was posted on %3$s by %4$s.', 'twentytwelve' );
+		$utility_text = __( 'This entry was posted on %3$s<span class="by-author"> by %4$s</span>.', 'twentytwelve' );
 	}
 
 	printf(
@@ -375,6 +381,13 @@ function twentytwelve_body_class( $classes ) {
 		$classes[] = 'custom-background-empty';
 	elseif ( in_array( $background_color, array( 'fff', 'ffffff' ) ) )
 		$classes[] = 'custom-background-white';
+
+	// Enable custom font class only if the font CSS is queued to load.
+	if ( wp_style_is( 'twentytwelve-fonts', 'queue' ) )
+		$classes[] = 'custom-font-enabled';
+
+	if ( ! is_multi_author() )
+		$classes[] = 'single-author';
 
 	return $classes;
 }

@@ -1,6 +1,17 @@
 #wpbooster-cdn-client
 {
-    width: 900px;
+    margin-right: 2em;
+    overflow: auto;
+}
+
+#wpbooster-cdn-client h2
+{
+    width: 487px;
+    height: 94px;
+    background-image: url(img/logo.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    text-indent: -9999px;
 }
 
 #wpbooster-cdn-client .hndle
@@ -8,9 +19,14 @@
     cursor: default;
 }
 
+#wpbooster-cdn-client .postbox
+{
+    color: #555555 !important;
+}
+
 #wpbooster-cdn-client .postbox.half
 {
-    width: 440px;
+    width: 48%;
 }
 
 #wpbooster-cdn-client .postbox.align-left
@@ -23,14 +39,39 @@
     float: right;
 }
 
-.balance
+.api-key,
+.balance,
+.used
 {
-    line-height: 70px;
     text-align: right;
 }
 
 .balance .number
 {
     font-size: 70px;
+}
+
+.api-key
+{
+    margin-bottom: 2em;
+    line-height: 1.4em;
+}
+
+#wpbooster-cdn-client dd
+{
+    margin-bottom: 1em;
+    line-height: 1.4em;
+    margin-left: 1em;
+}
+
+.wpbooster-footer
+{
+    margin-top: 30px;
+    text-align: right;
+}
+
+.wpbooster-footer a
+{
+    margin: 5px;
 }
 

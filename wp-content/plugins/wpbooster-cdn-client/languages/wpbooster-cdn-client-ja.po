@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The WPBooster CDN Client 1.0.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wpbooster-cdn-client\n"
-"POT-Creation-Date: 2012-06-30 18:05:20+00:00\n"
+"POT-Creation-Date: 2012-09-13 04:35:36+00:00\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Takayuki Miyauchi <miyauchi@digitalcube.jp>\n"
 "Language-Team: ja_JP <LL@li.org>\n"
@@ -13,38 +13,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: wpbooster-cdn-client.php:152
+#: includes/admin.php:71
+msgid "WP Booster CDN Client"
+msgstr "WP Booster CDN Client"
+
+#: includes/admin.php:90
+msgid "History"
+msgstr "履歴"
+
+#: includes/admin.php:92
+msgid "Information"
+msgstr "お知らせ"
+
+#: includes/admin.php:93
+msgid "http://www.wpbooster.net/feed"
+msgstr "http://ja.wpbooster.net/feed"
+
+#: includes/admin.php:106
+msgid "Get The Point"
+msgstr "ポイントを購入"
+
+#: includes/admin.php:126
+msgid "http://en.digitalcube.jp/about/wordpress_consultant/"
+msgstr "http://www.digitalcube.jp/about/wordpress_consultant/"
+
+#: includes/admin.php:127
+msgid "http://www.wpbooster.net/"
+msgstr "http://ja.wpbooster.net/"
+
+#: includes/admin.php:128
+msgid "http://megumi-cloud.com/"
+msgstr "http://ja.megumi-cloud.com/"
+
+#: includes/admin.php:129
+msgid "http://wp.remotemanager.me/"
+msgstr "http://wp.remotemanager.me/ja/"
+
+#: includes/admin.php:159
+msgid ""
+"<a href=\"https://payment.digitalcube.jp/auth/login?language=en\" style="
+"\"font-size:30px;\">Get the point!</a>"
+msgstr ""
+"<a href=\"https://payment.digitalcube.jp/auth/login?language=ja\" style="
+"\"font-size:30px;\">ポイントを購入!</a>"
+
+#: wpbooster-cdn-client.php:164
 msgid "Please input WP Booster API Key: "
 msgstr "WP Booster の API キーを入力してください。: "
 
-#: wpbooster-cdn-client.php:153
+#: wpbooster-cdn-client.php:165
 msgid "<a href=\"http://wpbooster.net/cpanel\">Sign In</a>"
 msgstr "<a href=\"http://ja.wpbooster.net/cpanel\">サインイン</a>"
 
-#: wpbooster-cdn-client.php:163
+#: wpbooster-cdn-client.php:175
 msgid "The WP Booster CDN"
 msgstr "The WP Booster CDN"
 
-#: wpbooster-cdn-client.php:168
+#: wpbooster-cdn-client.php:180
 msgid "WP Booster CDN is running..."
 msgstr "WP Booster CDN は稼働中です。"
 
-#: wpbooster-cdn-client.php:170
+#: wpbooster-cdn-client.php:182
 msgid "WP Booster CDN is stopped."
 msgstr "WP Booster CDN は停止中です。"
 
-#: wpbooster-cdn-client.php:177
+#: wpbooster-cdn-client.php:189
 msgid "http://wpbooster.net/cpanel/"
 msgstr "http://ja.wpbooster.net/cpanel/"
 
 #. Plugin Name of the plugin/theme
 #, fuzzy
-msgid "The WPBooster CDN Client"
+msgid "The WP Booster CDN Client"
 msgstr "The WP Booster CDN Client"
 
 #. Description of the plugin/theme
 msgid "Deliver static files from WPBooster CDN."
-msgstr ""
+msgstr "静的ファイルを WP Booster の CDN から配信してサイトを高速化します。"
 
 #. Author of the plugin/theme
 msgid "Digitalcube Co,.Ltd (Takayuki Miyauchi)"
