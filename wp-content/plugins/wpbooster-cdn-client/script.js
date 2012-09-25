@@ -1,1 +1,55 @@
-(function(a){a.fn.equalHeights=function(){var b=0;a(this).each(function(){if(a(this).height()>b){b=a(this).height()}});a(this).height(b);return this};a(".half").equalHeights();chart=new Highcharts.Chart({chart:{renderTo:"booster-chart",zoomType:"xy"},title:{text:"WP Booster Statistical Information"},xAxis:[{categories:categories}],yAxis:[{allowDecimals:false,gridLineWidth:0,title:{text:"Used Points",style:{color:"#ffcc55"}},labels:{formatter:function(){return this.value+" points"},style:{color:"#ffcc55"}}},{labels:{formatter:function(){return this.value+" MB"},style:{color:"#89A54E"}},title:{text:"Transfer",style:{color:"#89A54E"}},opposite:true},{gridLineWidth:0,title:{text:"Requests",style:{color:"#4572A7"}},labels:{formatter:function(){return this.value+" req"},style:{color:"#4572A7"}},opposite:true}],tooltip:{formatter:function(){var b={Points:"point",Requests:"req",Transfer:"MB"}[this.series.name];return""+this.x+": "+this.y+" "+b}},legend:{layout:"vertical",align:"left",x:120,verticalAlign:"top",y:80,floating:true,backgroundColor:"#FFFFFF"},series:[{name:"Points",color:"#ffcc55",type:"column",data:used},{name:"Requests",color:"#4572A7",type:"spline",yAxis:2,data:requests},{name:"Transfer",color:"#89A54E",type:"spline",yAxis:1,data:transfers}]})})(jQuery);
+/*
+    javascript number_format();
+*/
+String.prototype.number_format = function(){
+    if( isNaN(this) ){
+        return NaN;
+    }
+    var num = this + "";
+    num = num.split(".",2);
+    var is_minus = 0;
+    if( parseInt( num[0] ) < 0 ){
+        num[0] = num[0].substring( 1, num[0].length );
+        is_minus = 1;
+    }
+    var len = num[0].length;
+    var place = new Array;
+    for( var i=3; i<=len+2; i+=3 ){
+        place[place.length] = num[0].substring( len-i, len-i+3 );
+    }
+    var value = "";
+    for( var i=place.length-1; i>=0; i--){
+        value += place[i]+",";
+    }
+    value = value.replace(/,$/,"");
+    if(num[1]){
+        value += "."+num[1];
+    }
+    if( is_minus ){
+        return '-' + value;
+    }else{
+        return value;
+    }
+}
+
+String.prototype.number_unformat = function(){
+    var place = (this+"").match(/[\d.]*/g);
+    var value   = "";
+    for(var i=0;i<place.length;i++){
+        value += place[i];
+    }
+    return value-0;
+}
+
+Number.prototype.number_format    = String.prototype.number_format;
+Number.prototype.number_unformat = String.prototype.number_unformat;
+
+(function($){
+for (var i=0; i<categories.length; i++) {
+    $('#cats').append('<th>'+categories[i]+'</th>');
+    $('#points').append('<td>'+used[i].number_format()+'</td>');
+    $('#req').append('<td>'+requests[i].number_format()+'</td>');
+    $('#tra').append('<td>'+transfers[i].number_format()+'</td>');
+}
+})(jQuery);
+

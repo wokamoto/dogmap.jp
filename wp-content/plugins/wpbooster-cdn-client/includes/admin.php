@@ -37,6 +37,7 @@ public function admin_menu()
 
 public function enqueue_script()
 {
+/*
     wp_enqueue_script(
         'highchart',
         WPBOOSTER_CDN_CLIENT_URL.'/Highcharts-2.3.2/js/highcharts.js',
@@ -44,10 +45,11 @@ public function enqueue_script()
         filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/Highcharts-2.3.2/js/highcharts.js'),
         true
     );
+*/
     wp_enqueue_script(
         'wpbooster-cdn-client',
         WPBOOSTER_CDN_CLIENT_URL.'/script.js',
-        array('highchart'),
+        array('jquery'),
         filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/script.js'),
         true
     );
@@ -81,26 +83,12 @@ public function admin_panel()
     echo ' points.';
     echo '</p>';
 
-/*
-    echo '<p class="used">';
-    echo "Used points in the last 30 days: ";
-    echo '</p>';
-*/
-
     $this->add_box(__('History', "wpbooster-cdn-client"), $this->get_history(), "");
     $this->add_box(
         __('Information', 'wpbooster-cdn-client'),
         $this->get_feed(__('http://www.wpbooster.net/feed', 'wpbooster-cdn-client')),
         "half align-left"
     );
-
-/*
-    $this->add_box(
-        'Support Forum',
-        $this->get_feed(__('http://wordpress.org/support/rss/plugin/wpbooster-cdn-client', 'wpbooster-cdn-client')),
-        "half align-right"
-    );
-*/
 
     $this->add_box(
         __('Get The Point', 'wpbooster-cdn-client'),
@@ -135,7 +123,8 @@ EOL;
     $transfers = array();
     $datas = array_reverse($data['data']);
     foreach ($datas as $stat) {
-        $date = preg_replace("/^[0-9]+\-[0-9]+\-/", '', $stat->date);
+        $date = preg_replace("/^[0-9]+\-/", '', $stat->date);
+        $date = preg_replace("/\-/", '/', $date);
         $categories[] = $date;
         $transfers[] = intval($stat->bytes/1024/1024);
         $requests[] = intval($stat->request);
@@ -153,9 +142,9 @@ private function get_point_box()
 {
     $html = '';
     $html .= '<p>';
-    $html .= 'Megumi payment” is a service to pay for WordPress-related services provided by <a href="http://www.digitalcube.jp/">DigitalCube Co. Ltd</a>.';
+    $html .= __('Megumi payment” is a service to pay for WordPress-related services provided by <a href="http://www.digitalcube.jp/">DigitalCube Co. Ltd</a>.', 'wpbooster-cdn-client');
     $html .= '</p>';
-    $html .= '<p>';
+    $html .= '<p style="margin: 50px 0 20px 0;">';
     $html .= __('<a href="https://payment.digitalcube.jp/auth/login?language=en" style="font-size:30px;">Get the point!</a>', 'wpbooster-cdn-client');
     $html .= '</p>';
 
@@ -185,8 +174,13 @@ private function get_feed($url)
 
 private function get_history()
 {
-    $html = '<div id="booster-chart">';
-    $html .= '</div>';
+    $html = '<div id="booster-chart"></div>';
+    $html .= '<table id="booster-table">';
+    $html .= '<tr id="cats"><th>'.__('Date', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '<tr id="points"><th>'.__('Used Points', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '<tr id="req"><th>'.__('Transfers (MB)', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '<tr id="tra"><th>'.__('Requests', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '</table>';
     return $html;
 }
 

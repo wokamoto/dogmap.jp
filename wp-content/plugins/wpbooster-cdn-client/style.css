@@ -75,3 +75,26 @@
     margin: 5px;
 }
 
+#booster-table
+{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #cccccc;
+}
+
+#booster-table th
+{
+    border: 1px solid #cccccc;
+    padding: 10px 3px;
+    background-color: rgb(228, 117, 26);
+    color: #ffffff;
+}
+
+#booster-table td
+{
+    text-align: right;
+    border: 1px solid #cccccc;
+    padding: 10px 3px;
+    background-color: #ffffff;
+}
+
