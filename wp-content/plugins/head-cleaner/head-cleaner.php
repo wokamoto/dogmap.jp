@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Head Cleaner
-Version: 1.4.2.11
+Version: 1.4.2.10
 Plugin URI: http://wppluginsj.sourceforge.jp/head-cleaner/
 Description: Cleaning tags from your WordPress header and footer.
 Author: wokamoto
@@ -160,7 +160,7 @@ class HeadCleaner extends wokController {
 	/**********************************************************
 	* Constructor
 	***********************************************************/
-	function __construct() {
+	function __construct($uninstall = false) {
 		$this->init(__FILE__);
 		$this->options = $this->_init_options($this->getOptions());
 		$this->filters = $this->options['filters'];
@@ -171,13 +171,17 @@ class HeadCleaner extends wokController {
 		$this->self_url = $this->wp_plugin_url( basename(dirname(__FILE__)) ) . basename(__FILE__);
 		$this->lang     = (defined('WPLANG') ? WPLANG : 'ja');
 		$this->charset  = get_option('blog_charset');
+
+		if ($uninstall)
+			return;
+
 		$this->last_modified["posts"] = 0;
 		$this->last_modified["theme"] = 0;
 		$this->_get_filters('wp_head');
 		$this->_get_filters('wp_footer');
 
 		// Create Directory for Cache
-		if ( $this->options['cache_enabled'] ) {
+		if ($this->options['cache_enabled']) {
 			$this->cache_path = $this->_create_cache_dir();
 			if ($this->cache_path !== false) {
 				$this->cache_url = str_replace(ABSPATH, $this->wp_url, $this->cache_path);
@@ -239,9 +243,6 @@ class HeadCleaner extends wokController {
 		}
 		if (function_exists('register_deactivation_hook')) {
 			register_deactivation_hook(__FILE__, array(&$this, 'deactivation'));
-		}
-		if ( function_exists('register_uninstall_hook') ) {
-			register_uninstall_hook(__FILE__, array(&$this, 'uninstall'));
 		}
 	}
 
@@ -2187,7 +2188,7 @@ class HeadCleaner extends wokController {
 		if (!file_exists($dir))
 			return false;
 
-		$rewrite_base = trailingslashit(str_replace(ABS_PATH, '/', $dir));
+		$rewrite_base = trailingslashit(str_replace(ABSPATH, '/', $dir));
 
 		$text   = '# BEGIN Head Cleaner' . "\n"
 			. '<IfModule mod_rewrite.c>' . "\n"
@@ -3494,4 +3495,7 @@ jQuery(function($){
 //**************************************************************************************
 global $head_cleaner;
 
-$head_cleaner = new HeadCleaner();
+if (!defined('WP_UNINSTALL_PLUGIN'))
+	$head_cleaner = new HeadCleaner(false);
+else
+	$head_cleaner = new HeadCleaner(true);

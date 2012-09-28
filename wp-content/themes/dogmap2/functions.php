@@ -1,6 +1,6 @@
 <?php
-remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
-add_action( 'wp_scheduled_delete', '__return_true' );
+//remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
+//add_action( 'wp_scheduled_delete', '__return_true' );
 
 //**********************************************************************************
 // 言語ファイルの読み込み
@@ -28,7 +28,10 @@ if ( !is_admin() ) {
         );
 }
 
-add_action('wp_enqueue_scripts', function(){wp_dequeue_style('twentytwelve-fonts');}, 11);
+//**********************************************************************************
+// Web フォント無効化
+//**********************************************************************************
+//add_action('wp_enqueue_scripts', function(){wp_dequeue_style('twentytwelve-fonts');}, 11);
 
 //**********************************************************************************
 // 制御用定数

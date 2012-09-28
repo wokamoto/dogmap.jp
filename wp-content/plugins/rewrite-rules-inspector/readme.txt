@@ -1,9 +1,9 @@
 === Rewrite Rules Inspector ===
 Contributors: danielbachhuber, automattic
 Tags: rewrite rules, tools
-Tested up to: 3.3.2
+Tested up to: 3.4.2
 Requires at least: 3.1
-Stable tag: 1.0
+Stable tag: 1.1
 
 Straightforward WordPress admin tool for inspecting your rewrite rules
 
@@ -19,6 +19,10 @@ Originally developed for [WordPress.com VIP](http://vip.wordpress.com/)-hosted c
 1. Error message appears if rewrite rules are missing in the database
 
 == Changelog == 
+
+= 1.1 (Sept. 25, 2012) =
+* Support for route matching when WordPress lives in a subdirectory. Props [dbernar1](https://github.com/dbernar1)
+* Display a success message after you've flushed your rewrite rules
 
 = 1.0 (May 9, 2012) =
 * Initial public release!

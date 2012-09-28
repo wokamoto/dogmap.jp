@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: Rewrite Rules Inspector
- * Plugin URI: http://automattic.com
+ * Plugin URI: http://wordpress.org/extend/plugins/rewrite-rules-inspector/
  * Description: Simple WordPress Admin view for inspecting your rewrite rules
  * Author: Daniel Bachhuber, Automattic
- * Version: 1.0
+ * Version: 1.1
  * Author URI: http://automattic.com/
  */
 
-define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.0' );
+define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.1' );
 define( 'REWRITE_RULES_INSPECTOR_ROOT', dirname( __FILE__ ) );
 define( 'REWRITE_RULES_INSPECTOR_FILE_PATH' , REWRITE_RULES_INSPECTOR_ROOT . '/' . basename( __FILE__ ) );
 
@@ -52,6 +52,8 @@ class Rewrite_Rules_Inspector
 			add_action( 'admin_init', array( $this, 'download_rules' ) );
 		elseif ( isset( $_GET['page'], $_GET['action'] ) && $_GET['page'] == $this->page_slug && $_GET['action'] == 'flush-rules' )
 			add_action( 'admin_init', array( $this, 'flush_rules' ) );
+		elseif ( isset( $_GET['page'], $_GET['message'] ) && $_GET['page'] == $this->page_slug && $_GET['message'] == 'flush-success' )
+			add_action( 'admin_notices', array( $this, 'action_admin_notices' ) );
 
 	}
 
@@ -62,6 +64,13 @@ class Rewrite_Rules_Inspector
 
 		add_submenu_page( $this->parent_slug, __( 'Rewrite Rules Inspector', 'rewrite-rules-inspector' ), __( 'Rewrite Rules', 'rewrite-rules-inspector' ), $this->view_cap, $this->page_slug, array( $this, 'view_rules' ) );
 
+	}
+
+	/**
+	 * Show a message when you've successfully flushed your rewrite rules
+	 */
+	function action_admin_notices() {
+		echo '<div class="message updated"><p>' . __( 'Rewrite rules flushed.', 'rewrite-rules-inspector' ) . '</p></div>';
 	}
 
 	/**
@@ -139,23 +148,25 @@ class Rewrite_Rules_Inspector
 		}
 		$this->sources = array_unique( $sources );
 
+		if ( ! empty( $_GET['s'] ) ) {
+			$match_path = parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
+			$wordpress_subdir_for_site = parse_url( home_url(), PHP_URL_PATH );
+			if ( ! empty( $wordpress_subdir_for_site ) ) {
+				$match_path = str_replace( $wordpress_subdir_for_site, '', $match_path );
+			}
+			$match_path = ltrim( $match_path, '/' );
+		}
+
+		$should_filter_by_source = ! empty( $_GET['source'] ) && 'all' !== $_GET[ 'source' ] && in_array( $_GET['source'], $this->sources );
+
 		// Filter based on match or source if necessary
 		foreach( $rewrite_rules_array as $rule => $data ) {
 			// If we're searching rules based on URL and there's no match, don't return it
-			if ( ! empty( $_GET['s'] ) ) {
-				$uri = parse_url( esc_url( $_GET['s'] ), PHP_URL_PATH );
-				$uri = ltrim( $uri, '/' );
-				if ( !preg_match( "!^$rule!", $uri ) )
-					unset( $rewrite_rules_array[$rule] );
-			}
-			// Filter by source if necessary
-			if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $this->sources ) )
-				$filter_source = sanitize_key( $_GET['source'] );
-			else
-				$filter_source = 'all';
-			if ( $filter_source != 'all' && $rewrite_rules_array[$rule]['source'] != $filter_source )
+			if ( ! empty( $match_path ) && ! preg_match( "!^$rule!", $match_path ) ) {
 				unset( $rewrite_rules_array[$rule] );
-			
+			} elseif ( $should_filter_by_source && $data['source'] != $_GET['source'] ) {
+				unset( $rewrite_rules_array[$rule] );
+			}
 		}
 
 		// Return our array of rewrite rules to be used
@@ -316,7 +327,7 @@ class Rewrite_Rules_Inspector_List_Table extends WP_List_Table {
 	 * What to print when no items were found
 	 */
 	function no_items() {
-		echo _e( 'No rewrite rules were found.', 'rewrite-rules-inspector' );
+		_e( 'No rewrite rules were found.', 'rewrite-rules-inspector' );
 	}
 
 	/**

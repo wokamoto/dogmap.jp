@@ -4,7 +4,7 @@ Theme URI: http://wordpress.org/extend/themes/twentytwelve
 Author: the WordPress team
 Author URI: http://wordpress.org/
 Description: The 2012 theme for WordPress is a fully responsive theme that looks great on any device. Features include a front page template with a its own widgets, an optional display font, styling for post formats on both index and single views, and an optional no-sidebar page template. Make it yours with a custom menu, header image, and background.
-Version: 0.9
+Version: 1.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, flexible-width, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -31,7 +31,7 @@ $line-height: 24;
 * Set a font-size and then set a line-height based on the font-size
 	font-size: 16px
 	font-size: 1.142857143rem; (16 / $rembase)
-	line-height: 1.846153846; ($line-height / 16)
+	line-height: 1.5; ($line-height / 16)
 
 ---------- Vertical spacing
 
@@ -571,6 +571,19 @@ section[role="banner"] {
 	font-size: 13px;
 	font-size: 0.928571429rem;
 	line-height: 1.846153846;
+}
+.widget-area .widget p {
+	margin-bottom: 24px;
+	margin-bottom: 1.714285714rem;
+}
+.widget-area .textwidget ul {
+	list-style: disc outside;
+	margin: 0 0 24px;
+	margin: 0 0 1.714285714rem;
+}
+.widget-area .textwidget li {
+	margin-left: 36px;
+	margin-left: 2.571428571rem;
 }
 .widget-area .widget a {
 	color: #777;
@@ -1433,8 +1446,8 @@ img#wpstats {
 		line-height: 2.181818182;
 		padding: 8px 10px;
 		padding: 0.571428571rem 0.714285714rem;
-		width: 120px;
-		width: 8.571428571rem;
+		width: 180px;
+		width: 12.85714286rem;
 	}
 	.main-navigation li ul li a:hover {
 		background: #e3e3e3;
@@ -1474,7 +1487,7 @@ img#wpstats {
 		width: 47.916666667%;
 	}
 	.template-front-page .widget-area .widget,
-	.template-front-page .widget-area.two .front-widgets {
+	.template-front-page.two-sidebars .widget-area .front-widgets {
 		float: left;
 		width: 51.875%;
 		margin-bottom: 24px;
@@ -1484,14 +1497,14 @@ img#wpstats {
 		clear: right;
 	}
 	.template-front-page .widget-area .widget:nth-child(even),
-	.template-front-page .widget-area.two .front-widgets + .front-widgets {
+	.template-front-page.two-sidebars .widget-area .front-widgets + .front-widgets {
 		float: right;
 		width: 39.0625%;
 		margin: 0 0 24px;
 		margin: 0 0 1.714285714rem;
 	}
-	.template-front-page .widget-area.two .widget,
-	.template-front-page .widget-area.two .widget:nth-child(even) {
+	.template-front-page.two-sidebars .widget,
+	.template-front-page.two-sidebars .widget:nth-child(even) {
 		float: none;
 		width: auto;
 	}

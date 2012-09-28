@@ -55,6 +55,13 @@ img.attachment-post-thumbnail {
     white-space: nowrap;
 }
 
+.widget-area .wp_ranking ol {
+    list-style: decimal outside none;
+}
+.widget-area .wp_ranking li {
+    margin-left: 0;
+}
+
 input#subscribe_comments,
 input#subscribe_blog {
   float: left;
@@ -200,4 +207,14 @@ ul#wpjrelated {
   position: relative;
   display: block;
   top: -3em;
+}
+
+.clipping-image,
+.clipped-image {
+  -webkit-border-radius: none !important;;
+  -moz-border-radius: none !important;;
+  border-radius: none !important;;
+  -webkit-box-shadow: none !important;;
+  -moz-box-shadow: none !important;;
+  box-shadow: none !important;;
 }

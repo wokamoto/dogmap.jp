@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: My Clipping
-Plugin URI: 
-Description: 
+Plugin Name: My Clippings
+Plugin URI: http://dogmap.jp/tag/my-clippings/
+Description: This plugin lets your site visitors create a list of their favorite posts. When they "clip" posts on your site, the post ID information is stored in their browser Cookie.
 Author: wokamoto
-Version: 0.1.0
+Version: 0.3.1
 Author URI: http://dogmap.jp/
 
 License:
@@ -27,41 +27,51 @@ License:
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-class MyClip {
-	const COOKIE_KEY = 'my_clip';
+class MyClippings {
+	const COOKIE_KEY = 'my_clippings';
 	const COOKIE_EXPIRES = 7;
 	private $clip_text = array();
 
 	function __construct() {
+		$this->set_clip_text(
+			'<img src="'.plugins_url('/images/clipping.png', __FILE__).'" alt="clip!" title="clip!" class="clipping-image" width="36" height="30" />',
+			'<img src="'.plugins_url('/images/clipped.png', __FILE__).'" alt="clipped" title="unclip" class="clipped-image" width="36" height="30" />'
+			);
+
+		// register widget
+		add_action('widgets_init', array(&$this, 'register_widget'));
+		
+		add_action('init', array(&$this, 'initialize'));
+	}
+
+	public function initialize() {
 		if ( !is_admin() ) {
 			add_filter('the_content', array(&$this, 'add_clip'));
 			add_action('wp_enqueue_scripts', array(&$this,'add_scripts'));
-			add_action('wp_footer', array(&$this,'footer_scripts'));
 		}
 
 		// register ajax
 		add_action('wp_ajax_clip_search', array(&$this, 'clip_search'));
 		add_action('wp_ajax_nopriv_clip_search', array(&$this, 'clip_search') );
-
-		// register widget
-		add_action('widgets_init', array(&$this, 'register_widget'));
-		
-		$this->set_clip_text('クリップする', 'クリップ済み');
 	}
 
 	public function add_scripts() {
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('jquery.cookie', plugins_url('/js/jquery.cookie.js', __FILE__), array('jquery'), '1.1', true);
+		wp_enqueue_script('jquery.cookie', plugins_url('/js/jquery.cookie.min.js', __FILE__), array('jquery'), '1.1', true);
 	}
 	
 	public function footer_scripts() {
 		$ajax_url = admin_url('admin-ajax.php') . '?action=clip_search';
 		$cookie_key = self::COOKIE_KEY;
 		$cookie_expire = self::COOKIE_EXPIRES;
-		$clip_text = $this->clip_text[0];
-		$clipped_text = $this->clip_text[1];
+		$clip_text = str_replace('"', '\"', $this->clip_text[0]);
+		$clipped_text = str_replace('"', '\"', $this->clip_text[1]);
 
         echo "<script>\n";
+        echo <<<EOT
+jQuery(function(a){function b(){a(".my-clip").each(function(){var b=a.cookie("$cookie_key");var c=a(this).attr("id").replace("clip-","");var d=new RegExp('"'+c+'"');if(!b||!b.match(d)){a(this).removeClass("clipped").html("$clip_text")}else{a(this).addClass("clipped").html("$clipped_text")}})}function c(b){var c=a.cookie("$cookie_key");var e=c;var f=b.attr("id").replace(/(clip|clipped)-/,"");if(e){if(!e.match(new RegExp('"'+f+'"'))){e='"'+f+'"'+(e?","+e:"")}else{e=e.replace('"'+f+'"',"").replace(",,",",").replace(/,$/,"").replace(/^,/,"")}}else{e='"'+f+'"'}if(e!==c){a.cookie("$cookie_key",e,{expires:$cookie_expire,path:"/"});a.ajax({type:"GET",url:"$ajax_url&posts="+e.replace(/"/g,""),dataType:"json",success:d})}}function d(d,e){a(".my-clip_wrap").each(function(){var b=a(this).attr("class").match(/limit-([0-9]+)/i);var e=0;var f=a("<ul></ul>");var g=false;var h=a(".more-clip",a(this)).css("display")!=="none"||a("li",a(this)).length<=b[1];a.each(d,function(){var c=a('<li id="my-clip-post-'+this.id+'"></li>');var d,i,j,k;d=a('<div class="thumbnail"></div>').append('<img src="'+this.thumbnail+'">');i="";a.each(this.categories,function(){i+=(i!==""?", ":"")+this});i=a('<div class="categories"></div>').append(i);j=a('<div class="content"></div>').append('<a href="'+this.permalink+'" class="clip-link">'+this.title+"</a><br>"+this.excerpt);k=a('<div class="del-link"></div>').append('<a href="#" class="my-clip-remove" id="clipped-'+this.id+'">x</a>');c.append(d).append(i).append(j).append(k);e++;if(e>b[1]&&h){c.hide();g=true}f.append(c)});if(a("ul",a(this)).length<=0){a(this).prepend("<ul></ul>")}a("ul",a(this)).replaceWith(f);if(g)a(".more-clip",a(this)).show();else a(".more-clip",a(this)).hide();if(a("li",a(this)).length<=b[1])a(".more-clip",a(this)).hide();a(".my-clip-remove").unbind("click").click(function(){c(a(this));return false})});b()}if(a.cookie("$cookie_key")){a.ajax({type:"GET",url:"$ajax_url&posts="+a.cookie("$cookie_key").replace(/"/g,""),dataType:"json",success:d})}b();a(".my-clip").unbind("click").click(function(){c(a(this));return false});a(".more-clip").unbind("click").click(function(){a(this).hide().parent().prev("ul").children("li").show();return false})});
+EOT;
+/*
         echo <<<EOT
 jQuery(function($){
   if ( $.cookie('$cookie_key') ) {
@@ -128,11 +138,20 @@ jQuery(function($){
       var hideclip = $('.more-clip', $(this)).css('display') !== 'none' || $('li', $(this)).length <= limit[1];
       $.each(data, function(){
         var li = $('<li id="my-clip-post-' + this.id + '"></li>');
-        var thumb = $('<div class="thumbnail"><img src="' + this.thumbnail + '"></div>');
-        var content = $('<div class="content"></div>')
+        var thumb, categories, content, remove;
+        thumb = $('<div class="thumbnail"></div>')
+          .append('<img src="' + this.thumbnail + '">');
+        categories = '';
+        $.each(this.categories, function(){
+          categories += (categories !== '' ? ', ' : '') + this;
+        });
+        categories = $('<div class="categories"></div>')
+          .append(categories);
+        content = $('<div class="content"></div>')
           .append('<a href="' + this.permalink + '" class="clip-link">' + this.title + '</a><br>' + this.excerpt);
-        var remove = $('<div class="del-link"><a href="#" class="my-clip-remove" id="clipped-' + this.id + '">x</a></div>');
-        li.append(thumb).append(content).append(remove);
+        remove = $('<div class="del-link"></div>')
+          .append('<a href="#" class="my-clip-remove" id="clipped-' + this.id + '">x</a>');
+        li.append(thumb).append(categories).append(content).append(remove);
         count++;
         if ( count > limit[1] && hideclip ) {
           li.hide();
@@ -156,6 +175,7 @@ jQuery(function($){
   }
 });
 EOT;
+*/
         echo "</script>\n";
 	}
 	
@@ -277,13 +297,14 @@ EOT;
 				$results[] = $result;
 			} else if ( $post = get_post($post_id) ) {
 				$result = array(
-					'id' => $post->ID,
-					'type' => $post->post_type,
-					'title' => $post->post_title,
-					'date' => $post->post_date,
+					'id'        => $post->ID,
+					'type'      => $post->post_type,
+					'title'     => $post->post_title,
+					'date'      => $post->post_date,
 					'permalink' => get_permalink($post->ID),
 					'thumbnail' => $this->get_the_thumbnail($post),
-					'excerpt' => $this->get_the_excerpt($post),
+					'excerpt'   => $this->get_the_excerpt($post),
+					'categories'=> explode(',', get_the_category_list(',', '', $post->ID)),
 					//'post' => $post,
 				);
 				set_transient($transient_key, $result, 5 * 60 );	// 5min * 60sec
@@ -301,26 +322,32 @@ EOT;
 
 	function register_widget() {
 		if ( class_exists('WP_Widget') )
-			register_widget('MyClipWidget');
+			register_widget('MyClippingsWidget');
 	}
 }
 
 /******************************************************************************
- * MyClipWidget Class ( for WP2.8+ )
+ * MyClippingsWidget Class ( for WP2.8+ )
  *****************************************************************************/
 if ( class_exists('WP_Widget') ) :
 
-class MyClipWidget extends WP_Widget {
+class MyClippingsWidget extends WP_Widget {
 	function __construct() {
 		$widget_ops = array(
-			'classname' => 'widget_my-clip' ,
-			'description' => 'My Clip',
+			'classname' => 'widget_my-clippings' ,
+			'description' => 'Lets your site visitors create a list of their favorite posts.',
 			);
-		$this->WP_Widget('my-clip', 'My Clip', $widget_ops);
+		$this->WP_Widget('my-clippings', 'My Clippings', $widget_ops);
 	}
 
 	public function widget( $args, $instance ) {
+		global $my_clippings;
+	
+		if (!isset($my_clippings))
+			$my_clippings = New MyClippings();
+
 		extract($args);
+		add_action('wp_footer', array(&$my_clippings, 'footer_scripts'));
 		$title = apply_filters('widget_title', 
 			isset($instance['title']) ? trim($instance['title']) : '' ,
 			$instance ,
@@ -331,7 +358,7 @@ class MyClipWidget extends WP_Widget {
 		printf(
 			'<div class="my-clip_wrap limit-%1$d"><ul></ul><p><a href="#" class="more-clip" style="display:none">%2$s</a></p></div>' . "\n",
 			intval($instance['limit']) ,
-			'すべて表示'
+			'Show all Clips'
 			);
 		echo $after_widget;
 	}
@@ -368,24 +395,24 @@ endif;
 /******************************************************************************
  * functions
  *****************************************************************************/
-function init_my_clip_text($clip_text, $clipped_text){
-	global $my_clip;
+function init_my_clippings($clip_text, $clipped_text){
+	global $my_clippings;
 	
-	if (!isset($my_clip))
-		$my_clip = New MyClip();
-	echo $my_clip->set_clip_text($clip_text, $clipped_text);
+	if (!isset($my_clippings))
+		$my_clippings = New MyClippings();
+	echo $my_clippings->set_clip_text($clip_text, $clipped_text);
 }
 
-function my_clip($post_id, $before = '', $after = ''){
-	global $my_clip;
+function my_clippings($post_id, $before = '', $after = ''){
+	global $my_clippings;
 	
-	if (!isset($my_clip))
-		$my_clip = New MyClip();
-	echo $my_clip->clip_icon($post_id, $before, $after);
+	if (!isset($my_clippings))
+		$my_clippings = New MyClippings();
+	echo $my_clippings->clip_icon($post_id, $before, $after);
 }
 
 /******************************************************************************
  * Go Go Go!
  *****************************************************************************/
-global $my_clip;
-$my_clip = New MyClip();
+global $my_clippings;
+$my_clippings = New MyClippings();
