@@ -162,7 +162,13 @@ function save_revision( $css, $is_preview = false ) {
 		$post['post_type'] = 'safecss';
 
 		// Set excerpt to current theme, for display in revisions list
-		$post['post_excerpt'] = get_current_theme();
+		if ( function_exists( 'wp_get_theme' ) ) {
+			$current_theme = wp_get_theme();
+			$post['post_excerpt'] = $current_theme->Name;
+		}
+		else {
+			$post['post_excerpt'] = get_current_theme();
+		}
 
 		// Insert the CSS into wp_posts
 		$post_id = wp_insert_post( $post );
@@ -173,7 +179,13 @@ function save_revision( $css, $is_preview = false ) {
 	$safecss_post['post_content'] = $css;
 
 	// Set excerpt to current theme, for display in revisions list
-	$safecss_post['post_excerpt'] = get_current_theme();
+	if ( function_exists( 'wp_get_theme' ) ) {
+		$current_theme = wp_get_theme();
+		$safecss_post['post_excerpt'] = $current_theme->Name;
+	}
+	else {
+		$safecss_post['post_excerpt'] = get_current_theme();
+	}
 
 	// Don't carry over last revision's timestamps, otherwise revisions all have matching timestamps
 	unset( $safecss_post['post_date'] );
@@ -296,7 +308,7 @@ function safecss_init() {
 
 		$css = $csstidy->print->plain();
 
-		if ( intval($_POST['custom_content_width']) > 0 )
+		if ( isset( $_POST['custom_content_width'] ) && intval($_POST['custom_content_width']) > 0 )
 			$custom_content_width = intval($_POST['custom_content_width']);
 		else
 			$custom_content_width = false;
@@ -390,12 +402,20 @@ function safecss() {
 	$css = str_replace( array( '\\\00BB \\\0020', '\0BB \020', '0BB 020' ), '\00BB \0020', $css );
 
 	if ( empty( $css ) ) {
-		$css = _e( apply_filters( 'safecss_default_css', '/* Welcome to Custom CSS!
-
-CSS (Cascading Style Sheets) is a kind of code that tells the browser how to render a web page. You may delete these comments and get started with your customizations.
-
-By default, your stylesheet will be loaded after the theme stylesheets, which means that your rules can take precedence and override the theme CSS rules. Just write here what you want to change, you don\'t need to copy all your theme\'s stylesheet content.
-*/' ), 'jetpack' );
+		$css = "/*\n"
+			. wordwrap(
+				apply_filters(
+					'safecss_default_css',
+					__(
+						"Welcome to Custom CSS!" .
+							"\n\nCSS (Cascading Style Sheets) is a kind of code that tells the browser how to render a web page. You may delete these comments and get started with your customizations." .
+							"\n\nBy default, your stylesheet will be loaded after the theme stylesheets, which means that your rules can take precedence and override the theme CSS rules. Just write here what you want to change, you don't need to copy all your theme's stylesheet content."
+						,
+						'jetpack'
+					)
+				)
+			)
+			. "\n*/";
 	}
 
 	$css = apply_filters( 'safecss_css', $css );
@@ -803,25 +823,28 @@ function safecss_admin() {
  * Render CSS Settings metabox
  * Called by `safecss_admin`
  *
- * @uses get_option, checked, __, get_current_theme, apply_filters, get_stylesheet_uri, _e, esc_attr
+ * @uses get_option, checked, __, get_current_theme, apply_filters, get_stylesheet_uri, _e, esc_attr, wp_get_theme
  * @return string
  */
 function custom_css_meta_box() {
-	$custom_content_width = intval( get_option( 'safecss_content_width' ) );
-	// If custom content width hasn't been overridden and the theme has a content_width value, use that as a default.
-	if ( $custom_content_width <= 0 && ! empty( $GLOBALS['content_width'] ) )
-		$custom_content_width = intval( $GLOBALS['content_width'] );
-?>
+	if ( function_exists( 'wp_get_theme' ) ) {
+		$current_theme = wp_get_theme();
+		$current_theme = $current_theme->Name;
+	}
+	else {
+		$current_theme = get_current_theme();
+	}
+
+	?>
 	<p class="css-settings">
-		<label><input type="radio" name="add_to_existing" value="true" <?php checked( get_option( 'safecss_add' ) != 'no' ); ?> /> <?php printf( __( 'Add my CSS to <strong>%s&apos;s</strong> CSS stylesheet.', 'jetpack' ), get_current_theme() ); ?></label><br />
-		<label><input type="radio" name="add_to_existing" value="false" <?php checked( get_option( 'safecss_add' ) == 'no' ); ?> /> <?php printf( __( 'Don&apos;t use <strong>%s&apos;s</strong> CSS, and replace everything with my own CSS.', 'jetpack' ), get_current_theme() ); ?></label>
+		<label><input type="radio" name="add_to_existing" value="true" <?php checked( get_option( 'safecss_add' ) != 'no' ); ?> /> <?php printf( __( 'Add my CSS to <strong>%s&apos;s</strong> CSS stylesheet.', 'jetpack' ), $current_theme ); ?></label><br />
+		<label><input type="radio" name="add_to_existing" value="false" <?php checked( get_option( 'safecss_add' ) == 'no' ); ?> /> <?php printf( __( 'Don&apos;t use <strong>%s&apos;s</strong> CSS, and replace everything with my own CSS.', 'jetpack' ), $current_theme ); ?></label>
 	</p>
-	<p><?php printf( __( '<a href="%s">View the original stylesheet</a> for the %s theme. Use this as a reference and do not copy and paste all of it into the CSS Editor.', 'jetpack' ), apply_filters( 'safecss_theme_stylesheet_url', get_stylesheet_uri() ), get_current_theme() ); ?></p>
-	<p class="custom_content_width" style="display: none;">
-		<label for="custom_content_width"><?php _e( 'Limit width to', 'jetpack' ); ?></label><input type="text" name="custom_content_width" id="custom_content_width" value="<?php echo esc_attr( $custom_content_width ); ?>" size=5 /> <?php printf( __( 'pixels for videos, full size images, and other shortcodes. (<a href="%s">More info</a>.)', 'jetpack' ), apply_filters( 'safecss_limit_width_link', 'http://jetpack.me/support/custom-css/#limited-width' ) ); ?>
-	<?php if ( !empty( $GLOBALS['content_width'] ) && $custom_content_width != $GLOBALS['content_width'] ) printf( __( 'The default content width for the %s theme is %d pixels.', 'jetpack' ), get_current_theme(), intval( $GLOBALS['content_width'] ) ); ?>
-	</p>
-<?php
+	<p><?php printf( __( '<a href="%s">View the original stylesheet</a> for the %s theme. Use this as a reference and do not copy and paste all of it into the CSS Editor.', 'jetpack' ), apply_filters( 'safecss_theme_stylesheet_url', get_stylesheet_uri() ), $current_theme ); ?></p>
+	<?php
+
+	do_action( 'custom_css_meta_fields' );
+
 }
 
 /**

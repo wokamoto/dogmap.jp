@@ -5,7 +5,7 @@
  * Plugin URI: http://wordpress.org/extend/plugins/jetpack/
  * Description: Bring the power of the WordPress.com cloud to your self-hosted WordPress. Jetpack enables you to connect your blog to a WordPress.com account to use the powerful features normally only available to WordPress.com users.
  * Author: Automattic
- * Version: 1.8
+ * Version: 1.8.1
  * Author URI: http://jetpack.me
  * License: GPL2+
  * Text Domain: jetpack
@@ -17,7 +17,7 @@ define( 'JETPACK__API_VERSION', 1 );
 define( 'JETPACK__MINIMUM_WP_VERSION', '3.2' );
 defined( 'JETPACK_CLIENT__AUTH_LOCATION' ) or define( 'JETPACK_CLIENT__AUTH_LOCATION', 'header' );
 defined( 'JETPACK_CLIENT__HTTPS' ) or define( 'JETPACK_CLIENT__HTTPS', 'AUTO' );
-define( 'JETPACK__VERSION', '1.8' );
+define( 'JETPACK__VERSION', '1.8.1' );
 define( 'JETPACK__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 defined( 'JETPACK__GLOTPRESS_LOCALES_PATH' ) or define( 'JETPACK__GLOTPRESS_LOCALES_PATH', JETPACK__PLUGIN_DIR . 'locales.php' );
 
@@ -161,8 +161,6 @@ class Jetpack {
 	 */
 	function Jetpack() {
 		$this->sync = new Jetpack_Sync;
-
-		require_once dirname( __FILE__ ) . '/class.jetpack-user-agent.php';
 
 		if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST && isset( $_GET['for'] ) && 'jetpack' == $_GET['for'] ) {
 			@ini_set( 'display_errors', false ); // Display errors can cause the XML to be not well formed.
@@ -2771,7 +2769,6 @@ class Jetpack_Client {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$args['user_id'] = (int) $args['user_id'];
 		$args['blog_id'] = (int) $args['blog_id'];
 
 		if ( 'header' != $args['auth_location'] ) {
@@ -2782,6 +2779,8 @@ class Jetpack_Client {
 		if ( !$token ) {
 			return new Jetpack_Error( 'missing_token' );
 		}
+
+		$args['user_id'] = (int) $args['user_id'];
 
 		$method = strtoupper( $args['method'] );
 
@@ -3452,6 +3451,9 @@ class Jetpack_Sync {
 		return $this->register( 'delete_comment', (int) $id, true );
 	}
 }
+
+require_once dirname( __FILE__ ) . '/class.jetpack-user-agent.php';
+require_once dirname( __FILE__ ) . '/class.jetpack-post-images.php';
 
 class Jetpack_Error extends WP_Error {}
 
