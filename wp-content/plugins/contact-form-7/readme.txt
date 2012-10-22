@@ -4,7 +4,7 @@ Donate link: http://contactform7.com/donate/
 Tags: contact, form, contact form, feedback, email, ajax, captcha, akismet, multilingual
 Requires at least: 3.3
 Tested up to: 3.4.2
-Stable tag: 3.3
+Stable tag: 3.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,7 +44,7 @@ It is hard to continue development and support for this plugin without contribut
 * Dutch (nl_NL) - [Chris Devriese](http://www.100it.be/), [Martin Hein](http://www.split-a-pixel.nl/), [Rene](http://wpwebshop.com/)
 * Esperanto (eo_EO) - Arkadiusz Zychewicz
 * Estonian (et) - [Peeter Rahuvarm](http://www.kraabus.ee), Egon Elbre
-* Finnish (fi) - [Miika Turunen](http://www.webwork.fi/), [Mediajalostamo](http://www.mediajalostamo.fi/)
+* Finnish (fi) - [Miika Turunen](http://www.webwork.fi/), [Mediajalostamo](http://www.mediajalostamo.fi/), [Jani Alha](http://www.wysiwyg.fi/)
 * French (fr_FR) - [Jillij](http://www.jillij.com/), [Oncle Tom](http://case.oncle-tom.net/), [Maître Mô](http://maitremo.fr/)
 * Galician (gl_ES) - [Arume Desenvolvementos Informáticos](http://www.arumeinformatica.es/)
 * Georgian (ka_GE) - [Nodar Rocko Davituri](http://davituri.com/)
@@ -112,6 +112,16 @@ Do you have questions or issues with Contact Form 7? Use these support channels 
 1. screenshot-1.png 
 
 == Changelog ==
+
+= 3.3.1 =
+
+* Fixed: Apply esc_html() to response outputs. In the case it is necessary to use HTML tags in the response messages, new wpcf7_form_response_output filter is available.
+* Fixed: Don't use $_POST for internal data passing. Use global $wpcf7 variable instead.
+* Fixed: Treat array value correctly in the Akismet module.
+* Fixed: Escape outputs of [_user_agent] spacial mail tags used in the HTML mode.
+* Fixed: Don't show the notice about conflicting with Jetpack to new users who rarely see such conflicts.
+* The jQuery Form Plugin (jquery.form.js) has been updated to 3.18.
+* Translations for Danish and Finnish have been updated.
 
 = 3.3 =
 

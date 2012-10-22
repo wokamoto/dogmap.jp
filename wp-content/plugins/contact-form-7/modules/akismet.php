@@ -67,7 +67,13 @@ function wpcf7_akismet_submitted_params() {
 		if ( ! isset( $fe['name'] ) || ! isset( $_POST[$fe['name']] ) )
 			continue;
 
-		$value = trim( $_POST[$fe['name']] );
+		$value = $_POST[$fe['name']];
+
+		if ( is_array( $value ) )
+			$value = implode( ', ', wpcf7_array_flatten( $value ) );
+
+		$value = trim( $value );
+
 		$options = (array) $fe['options'];
 
 		if ( preg_grep( '%^akismet:author$%', $options ) ) {
@@ -114,27 +120,6 @@ function wpcf7_akismet_comment_check( $comment ) {
 		$contact_form->akismet = array( 'comment' => $comment, 'spam' => $spam );
 
 	return apply_filters( 'wpcf7_akismet_comment_check', $spam, $comment );
-}
-
-
-/* Messages */
-
-add_filter( 'wpcf7_messages', 'wpcf7_akismet_messages' );
-
-function wpcf7_akismet_messages( $messages ) {
-	return array_merge( $messages, array( 'akismet_says_spam' => array(
-		'description' => __( "Akismet judged the sending activity as spamming", 'wpcf7' ),
-		'default' => __( 'Failed to send your message. Please try later or contact the administrator by another method.', 'wpcf7' )
-	) ) );
-}
-
-add_filter( 'wpcf7_display_message', 'wpcf7_akismet_display_message', 10, 2 );
-
-function wpcf7_akismet_display_message( $message, $status ) {
-	if ( 'spam' == $status && empty( $message ) )
-		$message = wpcf7_get_message( 'akismet_says_spam' );
-
-	return $message;
 }
 
 ?>

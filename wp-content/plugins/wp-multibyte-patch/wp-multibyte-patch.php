@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Multibyte Patch
 Description: Multibyte functionality enhancement for the WordPress Japanese package.
-Version: 1.6.2
+Version: 1.6.3
 Plugin URI: http://eastcoder.com/code/wp-multibyte-patch/
 Author: Seisuke Kuraishi
 Author URI: http://tinybit.co.jp/
@@ -15,7 +15,7 @@ Domain Path: /languages
  * Multibyte functionality enhancement for the WordPress Japanese package.
  *
  * @package WP_Multibyte_Patch
- * @version 1.6.2
+ * @version 1.6.3
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2012 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -45,6 +45,7 @@ class multibyte_patch {
 		'patch_wplink_js' => true,
 		'patch_word_count_js' => true,
 		'patch_force_character_count' => false,
+		'patch_force_twentytwelve_open_sans_off' => false,
 		'patch_sanitize_file_name' => true,
 		'patch_bp_create_excerpt' => false,
 		'bp_excerpt_mblength' => 110,
@@ -280,6 +281,10 @@ class multibyte_patch {
 		return $translations;
 	}
 
+	function force_twentytwelve_open_sans_off() {
+		wp_dequeue_style('twentytwelve-fonts');
+	}
+
 	function wp_dashboard_recent_drafts( $drafts = false ) {
 		if ( !$drafts ) {
 			$drafts_query = new WP_Query( array(
@@ -316,7 +321,7 @@ class multibyte_patch {
 	function dashboard_recent_drafts() {
 		global $wp_meta_boxes;
 		if(!empty($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']['callback']))
-			$wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']['callback'] = array(&$this, 'wp_dashboard_recent_drafts');
+			$wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']['callback'] = array($this, 'wp_dashboard_recent_drafts');
 	}
 
 	function query_based_settings() {
@@ -342,59 +347,62 @@ class multibyte_patch {
 	function filters_after_setup_theme() {
 		// add filter
 		if(false !== $this->conf['patch_force_character_count'] && 'characters' != _x('words', 'word count: words or characters?'))
-			add_filter('gettext_with_context', array(&$this, 'force_character_count'), 10, 3);
+			add_filter('gettext_with_context', array($this, 'force_character_count'), 10, 3);
 	}
 
 	function filters() {
 		// add filter
-		add_filter('preprocess_comment', array(&$this, 'preprocess_comment'), 99);
+		add_filter('preprocess_comment', array($this, 'preprocess_comment'), 99);
 
 		if(false !== $this->conf['patch_incoming_pingback'])
-			add_filter('pre_remote_source', array(&$this, 'pre_remote_source'), 10, 2);
+			add_filter('pre_remote_source', array($this, 'pre_remote_source'), 10, 2);
 
 		if(false !== $this->conf['patch_wp_trim_excerpt']) {
-			add_filter('excerpt_length', array(&$this, 'excerpt_mblength'), 99);
-			add_filter('excerpt_more', array(&$this, 'excerpt_more'), 9);
+			add_filter('excerpt_length', array($this, 'excerpt_mblength'), 99);
+			add_filter('excerpt_more', array($this, 'excerpt_more'), 9);
 		}
 
 		if(false !== $this->conf['patch_get_comment_excerpt'])
-			add_filter('get_comment_excerpt', array(&$this, 'get_comment_excerpt'));
+			add_filter('get_comment_excerpt', array($this, 'get_comment_excerpt'));
 
 		if(false !== $this->conf['patch_sanitize_file_name'])
-			add_filter('sanitize_file_name', array(&$this, 'sanitize_file_name'));
+			add_filter('sanitize_file_name', array($this, 'sanitize_file_name'));
 
 		if(false !== $this->conf['patch_bp_create_excerpt']) {
-			add_filter('bp_create_excerpt', array(&$this, 'bp_create_excerpt'), 99);
-			add_filter('bp_get_activity_content_body', array(&$this, 'bp_get_activity_content_body'), 99);
+			add_filter('bp_create_excerpt', array($this, 'bp_create_excerpt'), 99);
+			add_filter('bp_get_activity_content_body', array($this, 'bp_get_activity_content_body'), 99);
 		}
 
 		if(method_exists($this, 'wp_trim_words') && false !== $this->conf['patch_wp_trim_words'])
-			add_filter('wp_trim_words', array(&$this, 'wp_trim_words'), 99, 4);
+			add_filter('wp_trim_words', array($this, 'wp_trim_words'), 99, 4);
 
 		// add action
-		add_action('wp', array(&$this, 'query_based_settings'));
+		add_action('wp', array($this, 'query_based_settings'));
 
 		if(method_exists($this, 'process_search_terms') && false !== $this->conf['patch_process_search_terms'])
-			add_action('sanitize_comment_cookies', array(&$this, 'process_search_terms'));
+			add_action('sanitize_comment_cookies', array($this, 'process_search_terms'));
 
 		if(method_exists($this, 'wp_mail') && false !== $this->conf['patch_wp_mail'])
-			add_action('phpmailer_init', array(&$this, 'wp_mail'));
+			add_action('phpmailer_init', array($this, 'wp_mail'));
 
 		if(method_exists($this, 'admin_custom_css') && false !== $this->conf['patch_admin_custom_css']) {
-			add_action('admin_enqueue_scripts', array(&$this, 'admin_custom_css'), 99);
-			add_action('customize_controls_enqueue_scripts', array(&$this, 'admin_custom_css'), 99);
+			add_action('admin_enqueue_scripts', array($this, 'admin_custom_css'), 99);
+			add_action('customize_controls_enqueue_scripts', array($this, 'admin_custom_css'), 99);
 		}
 
 		if(false !== $this->conf['patch_wplink_js'])
-			add_action('wp_default_scripts', array(&$this, 'wplink_js'), 9);
+			add_action('wp_default_scripts', array($this, 'wplink_js'), 9);
 
 		if(false !== $this->conf['patch_word_count_js'])
-			add_action('wp_default_scripts', array(&$this, 'word_count_js'), 9);
+			add_action('wp_default_scripts', array($this, 'word_count_js'), 9);
 
 		if(false !== $this->conf['patch_dashboard_recent_drafts'])
-			add_action('wp_dashboard_setup', array(&$this, 'dashboard_recent_drafts'));
+			add_action('wp_dashboard_setup', array($this, 'dashboard_recent_drafts'));
 
-		add_action('after_setup_theme', array(&$this, 'filters_after_setup_theme'));
+		if(false !== $this->conf['patch_force_twentytwelve_open_sans_off'] && 'twentytwelve' == get_template())
+			add_action('wp_enqueue_scripts', array($this, 'force_twentytwelve_open_sans_off'), 99);
+
+		add_action('after_setup_theme', array($this, 'filters_after_setup_theme'), 99);
 	}
 
 	function mbfunctions_exist() {
@@ -449,7 +457,7 @@ class multibyte_patch {
 		$this->debug_suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.dev' : '';
 
 		load_textdomain($this->textdomain, plugin_dir_path(__FILE__) . $this->lang_dir . '/' . $this->textdomain . '-' . get_locale() . '.mo');
-		register_activation_hook(__FILE__, array(&$this, 'activation_check'));
+		register_activation_hook(__FILE__, array($this, 'activation_check'));
 		$this->filters();
 	}
 }

@@ -58,6 +58,15 @@ $wpmp_conf['dashboard_recent_drafts_mblength'] = 40;
 $wpmp_conf['mail_mode'] = 'JIS';
 
 /**
+ * 管理パネルカスタム CSS の URL
+ *
+ * 管理パネルで読み込まれる CSS の URL を任意で指定することができます。
+ * 未指定の場合は、デフォルトの CSS が読み込まれます。
+ * この設定は $wpmp_conf['patch_admin_custom_css'] が false の場合は無効となります。
+ */
+$wpmp_conf['admin_custom_css_url'] = '';
+
+/**
  * BuddyPress bp_create_excerpt() 抜粋の最大文字数
  *
  * この設定は BuddyPress の bp_create_excerpt() (アクティビティストリームの抜粋で利用) に適用されます。
@@ -87,6 +96,7 @@ $wpmp_conf['patch_admin_custom_css'] = true;
 $wpmp_conf['patch_wplink_js'] = true;
 $wpmp_conf['patch_word_count_js'] = true;
 $wpmp_conf['patch_force_character_count'] = true;
+$wpmp_conf['patch_force_twentytwelve_open_sans_off'] = true;
 $wpmp_conf['patch_sanitize_file_name'] = true;
 $wpmp_conf['patch_bp_create_excerpt'] = false;
 

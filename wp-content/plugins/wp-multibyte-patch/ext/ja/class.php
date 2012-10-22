@@ -3,7 +3,7 @@
  * WP Multibyte Patch Japanese Locale Extension
  *
  * @package WP_Multibyte_Patch
- * @version 1.6.2
+ * @version 1.6.3
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2012 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -142,7 +142,12 @@ class multibyte_patch_ext extends multibyte_patch {
 	}
 
 	function admin_custom_css() {
-		wp_register_style('wpmp-admin-custom', plugin_dir_url(__FILE__) . 'admin.css', array(), false);
+		if(empty($this->conf['admin_custom_css_url']))
+			$url = plugin_dir_url(__FILE__) . 'admin.css';
+		else
+			$url = $this->conf['admin_custom_css_url'];
+
+		wp_register_style('wpmp-admin-custom', $url, array(), false);
 		wp_enqueue_style('wpmp-admin-custom');
 	}
 
@@ -170,9 +175,11 @@ class multibyte_patch_ext extends multibyte_patch {
 		$this->conf['patch_process_search_terms'] = true;
 		$this->conf['patch_admin_custom_css'] = true;
 		$this->conf['patch_force_character_count'] = true;
+		$this->conf['patch_force_twentytwelve_open_sans_off'] = true;
 		$this->conf['patch_wp_trim_words'] = true;
 		// auto, JIS, UTF-8
 		$this->conf['mail_mode'] = 'JIS';
+		$this->conf['admin_custom_css_url'] = '';
 
 		parent::__construct();
 	}

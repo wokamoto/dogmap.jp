@@ -2,5 +2,5 @@
 
 body *:not(textarea) {
 	font-style: normal !important;
-	font-family: "Helvetica Neue", Helvetica, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", Arial, Verdana, sans-serif !important;
+	font-family: sans-serif !important;
 }
