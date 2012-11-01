@@ -3,7 +3,7 @@
 Plugin Name: The WP Booster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
-Version: 2.2.3
+Version: 2.3.0
 Author URI: http://wpbooster.net/
 Domain Path: /languages
 Text Domain: wpbooster-cdn-client
@@ -174,27 +174,32 @@ public function admin_notice()
 
 public function admin_bar_menu($bar)
 {
+    if (get_transient($this->is_active)) {
+        $message1 = __("WP Booster CDN is running...", "wpbooster-cdn-client");
+        //$message2 = __("Stop WP Booster CDN service temporarily.", "wpbooster-cdn-client");
+    } else {
+        $message1 = __("WP Booster CDN is stopped.", "wpbooster-cdn-client");
+        //$message2 = __("Start WP Booster CDN Service.", "wpbooster-cdn-client");
+    }
+
     $bar->add_menu( array(
         'id'    => 'wp-booster-logo',
-        'title' => '<span class="ab-icon"></span>',
+        'title' => '<span class="ab-icon" style="margin-right:10px;"></span>'.$message1,
         'meta'  => array(
             'title' => __('The WP Booster CDN', 'wpbooster-cdn-client'),
         ),
+        'href'  => admin_url('admin.php?page=wpbooster-cdn-client'),
     ) );
 
-    if (get_transient($this->is_active)) {
-        $message = __("WP Booster CDN is running...", "wpbooster-cdn-client");
-    } else {
-        $message = __("WP Booster CDN is stopped.", "wpbooster-cdn-client");
-    }
-
+/*
     $bar->add_menu(array(
         "parent" => "wp-booster-logo",
-        "id"    => "wp-booster-cdn-running",
-        "title" => $message,
-        'href'  => __('http://wpbooster.net/cpanel/', 'wpbooster-cdn-client'),
+        "id"    => "wp-booster-stop",
+        "title" => $message2,
+        'href'  => admin_url('admin.php?page=wpbooster-cdn-client&action=stop&nonce='.wp_create_nonce('stop-wpbooster')),
         "meta"  => false,
     ));
+*/
 }
 
 } // MegumiCDN

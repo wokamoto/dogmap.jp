@@ -45,11 +45,17 @@ Number.prototype.number_format    = String.prototype.number_format;
 Number.prototype.number_unformat = String.prototype.number_unformat;
 
 (function($){
-for (var i=0; i<categories.length; i++) {
-    $('#cats').append('<th>'+categories[i]+'</th>');
-    $('#points').append('<td>'+used[i].number_format()+'</td>');
-    $('#req').append('<td>'+requests[i].number_format()+'</td>');
-    $('#tra').append('<td>'+transfers[i].number_format()+'</td>');
+if (categories.length) {
+    for (var i=0; i<categories.length; i++) {
+        $('#cats').append('<th>'+categories[i]+'</th>');
+        $('#points').append('<td>'+used[i].number_format()+'</td>');
+        $('#req').append('<td>'+requests[i].number_format()+'</td>');
+        $('#tra').append('<td>'+transfers[i].number_format()+'</td>');
+    }
+} else {
+    $('#booster-table').hide();
+    $('.balance').hide();
+    $('<p style="font-size:300%;">No Data. Please wait...</p>').insertBefore('#booster-table');
 }
 })(jQuery);
 

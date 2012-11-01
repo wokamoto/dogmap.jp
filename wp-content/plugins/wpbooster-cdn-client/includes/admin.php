@@ -7,6 +7,7 @@ class WPBooster_Admin {
 private $key = null;
 private $get_point_by_api = 'http://api.wpbooster.net/get_point_by_api/%s';
 private $get_requests_by_api = 'http://api.wpbooster.net/get_requests_by_api/%s';
+private $stop_wpbooster_api = 'http://api.wpbooster.net/stop/%s';
 private $transient_expire = 3600;
 private $transient_key = 'wpbooster-site-data';
 private $is_active = 'wpbooster-is-active';
@@ -37,20 +38,18 @@ public function admin_menu()
 
 public function enqueue_script()
 {
-/*
     wp_enqueue_script(
-        'highchart',
-        WPBOOSTER_CDN_CLIENT_URL.'/Highcharts-2.3.2/js/highcharts.js',
+        'enhance',
+        WPBOOSTER_CDN_CLIENT_URL.'/js/enhance.min.js',
         array('jquery'),
-        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/Highcharts-2.3.2/js/highcharts.js'),
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/js/enhance.min.js'),
         true
     );
-*/
     wp_enqueue_script(
         'wpbooster-cdn-client',
-        WPBOOSTER_CDN_CLIENT_URL.'/script.js',
+        WPBOOSTER_CDN_CLIENT_URL.'/js/script.js',
         array('jquery'),
-        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/script.js'),
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/js/script.js'),
         true
     );
 }
@@ -58,15 +57,26 @@ public function enqueue_script()
 public function enqueue_style()
 {
     wp_enqueue_style(
-        'wpbooster-cdn-client',
-        WPBOOSTER_CDN_CLIENT_URL.'/style.css',
+        'jquery-visalize-basic',
+        WPBOOSTER_CDN_CLIENT_URL.'/css/basic.css',
         array(),
-        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/style.css')
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/css/basic.css')
+    );
+    wp_enqueue_style(
+        'wpbooster-cdn-client',
+        WPBOOSTER_CDN_CLIENT_URL.'/css/style.css',
+        array(),
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/css/style.css')
     );
 }
 
 public function admin_panel()
 {
+    if (isset($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'stop-wpbooster')
+            && isset($_GET['action']) && $_GET['action'] == 'stop') {
+        $this->stop_wpbooster();
+    }
+
     $data = $this->get_data();
 
     echo '<div class="wrap" id="wpbooster-cdn-client">';
@@ -100,11 +110,21 @@ public function admin_panel()
 
     $footer =<<<EOL
         <div class="wpbooster-footer">
+            <div class="cell">
             <a href="%3\$s" target="_blank"><img src="%1\$s/img/wp_booster.gif" width="200" height="84" alt="WP Booster" title="WP Booster"/></a>
+            </div>
+            <div class="cell">
             <a href="%4\$s" target="_blank"><img src="%1\$s/img/megumicloud_amimoto.gif" width="200" height="84" alt="megumi cloud" title="megumi cloud"/></a>
+            </div>
+            <div class="cell">
             <a href="%5\$s" target="_blank"><img src="%1\$s/img/wp_remote_manager.gif" width="200" height="84" alt="WP remote" title="WP remote"/></a>
+            </div>
+            <div class="cell">
             <a href="%2\$s" target="_blank"><img src="%1\$s/img/wordpress_consultant_1.gif" width="200" height="84" alt="WordPress CONSULTANT" title="WordPress CONSULTANT"/></a>
+            </div>
+            <div class="cell">
             <a href="https://aws.amazon.com/solution-providers/si/digitalcube-co-ltd" target="_blank"><img src="%1\$s/img/aws.png" width="193" height="84" alt="WP remote" title="WP remote"/></a>
+            </div>
         </div>
 EOL;
 
@@ -137,15 +157,14 @@ EOL;
     echo '</script>';
 }
 
-
 private function get_point_box()
 {
     $html = '';
     $html .= '<p>';
     $html .= __('Megumi payment” is a service to pay for WordPress-related services provided by <a href="http://www.digitalcube.jp/">DigitalCube Co. Ltd</a>.', 'wpbooster-cdn-client');
     $html .= '</p>';
-    $html .= '<p style="margin: 50px 0 20px 0;">';
-    $html .= __('<a href="https://payment.digitalcube.jp/auth/login?language=en" style="font-size:30px;">Get the point!</a>', 'wpbooster-cdn-client');
+    $html .= '<p style="margin: 20px 0 20px 0;">';
+    $html .= __('<a class="btn red" href="https://payment.digitalcube.jp/auth/login?language=en">Get the point!</a>', 'wpbooster-cdn-client');
     $html .= '</p>';
 
     return $html;
@@ -192,6 +211,11 @@ private function add_box($title, $content, $style = null)
     echo $content;
     echo '</div><!-- end .inside -->';
     echo '</div><!-- end .postbox -->';
+}
+
+private function stop_wpbooster()
+{
+    $api = sprintf($this->stop_wpbooster_api, $this->key);
 }
 
 private function get_data()

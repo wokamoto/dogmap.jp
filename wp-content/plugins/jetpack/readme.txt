@@ -1,9 +1,9 @@
 === Jetpack by WordPress.com ===
-Contributors: automattic, apeatling, beaulebens, hugobaeta, joen, mdawaffe, andy, designsimply, hew, westi, eoigal, tmoorewp, matt, pento, cfinke, daniloercoli, chellycat
-Tags: WordPress.com, statistics, stats, views, tweets, twitter, widget, gravatar, hovercards, profile, equations, latex, math, maths, youtube, shortcode, archives, audio, blip, bliptv, dailymotion, digg, flickr, googlevideo, google, googlemaps, kyte, kytetv, livevideo, redlasso, rockyou, rss, scribd, slide, slideshare, soundcloud, vimeo, shortlinks, wp.me, subscriptions
+Contributors: automattic, apeatling, beaulebens, hugobaeta, Joen, mdawaffe, andy, designsimply, hew, westi, eoigal, tmoorewp, matt, pento, cfinke, daniloercoli, chellycat, gibrown, jblz, jshreve, barry, alternatekev, azaozz, ethitter, johnjamesjacoby, lancewillett, martinremy, nickmomrik, stephdau, yoavf
+Tags: WordPress.com, statistics, stats, views, tweets, twitter, widget, gravatar, hovercards, profile, equations, latex, math, maths, youtube, shortcode, archives, audio, blip, bliptv, dailymotion, digg, flickr, googlevideo, google, googlemaps, kyte, kytetv, livevideo, redlasso, rockyou, rss, scribd, slide, slideshare, soundcloud, vimeo, shortlinks, wp.me, subscriptions, notifications, notes, json, api, rest
 Requires at least: 3.2
 Tested up to: 3.4.2
-Stable tag: 1.8.2
+Stable tag: 1.9.1
 
 Supercharge your WordPress site with powerful features previously only available to WordPress.com users.
 
@@ -18,6 +18,7 @@ Features include:
 * Simple, concise stats with no additional load on your server.  Previously provided by [WordPress.com Stats](http://wordpress.org/extend/plugins/stats/).
 * Email subscriptions for your blog's posts and your post's comments.
 * Social networking enabled comment system.
+* Monitor and manage your site's activity with Notifications in your Toolbar and on WordPress.com.
 * Simple, Akismet-backed contact forms.
 * The [WP.me URL shortener](http://wp.me/sf2B5-shorten).
 * Hovercard popups for your commenters via [Gravatar](http://gravatar.com/).
@@ -29,7 +30,8 @@ Features include:
 * With Carousel active, any standard WordPress galleries you have embedded in posts or pages will launch a gorgeous full-screen photo browsing experience with comments and EXIF metadata.
 * A CSS editor that lets you customize your site design without modifying your theme.
 * A mobile theme that automatically streamlines your site for visitors on mobile devices.
-* Mobile push notifications for new comments via WordPress mobile apps. 
+* Mobile push notifications for new comments via WordPress mobile apps.
+* The ability to allow applications to securely authenticate and access your site with your permission. 
 * and *many* more to come!
 
 Note: The stats portion of Jetpack uses Quantcast to enhance its data.
@@ -84,6 +86,38 @@ Use [shortcodes](http://support.wordpress.com/shortcodes/) to embed your media. 
 8. Mobile Theme
 
 == Changelog ==
+
+= 1.9.1 =
+* Enhancement: Notifications feature is enabled for logged-out users when the module is active & the toolbar is shown by another plugin.
+* Bug Fix: Use proper CDN addresses to avoid SSL cert issues.
+* Bug Fix: Prioritize syncing comments over deleting comments on WordPress.com. Fixes comment notifications marked as spam appearing to be trashed.
+
+= 1.9 =
+* Enhancement: Notifications: Display Notifications in the toolbar and support reply/moderation of comment notifications.
+* Enhancement: Mobile Push Notifications: Added support for mobile push notifications of new comments for users that linked their accounts to WordPress.com accounts.
+* Enhancement: JSON API: Allows applications to send API requests via WordPress.com (see [the docs](http://developer.wordpress.com/docs/api/) )
+* Enhancement: Sync: Modules (that require the data) sync full Post/Comment to ensure consistent data on WP.com (eg Stats)
+* Enhancement: Sync: Improve syncing of site options to WP.com
+* Enhancement: Sync: Sync attachment parents to WP.com
+* Enhancement: Sync: Add signing of WP.com user ids for Jetpack Comments
+* Enhancement: Sync: Mark and obfuscate private posts.
+* Enhancement: Privacy: Default disable enhanced-distribution and json-api modules if site appears to be private.
+* Enhancement: Custom CSS: allow applying Custom CSS to mobile theme.
+* Enhancement: Sharing: On HTTPS pageloads, load as much of the sharing embeds as possible from HTTPS URLs.
+* Enhancement: Contact Form: Overhaul of the contact form code to fix incompatibilites with other plugins.
+* Bug Fix: Only allow users with manage_options permission to enable/disable modules
+* Bug Fix: Custom CSS: allow '/' in media query units; e.g. (-o-min-device-pixel-ratio: 3/2)
+* Bug Fix: Custom CSS: leave comments alone in CSS when editing but minify on the frontend
+* Bug Fix: Sharing: Keep "more" pane open so Google+ Button isn't obscured
+* Bug Fix: Carousel: Make sure the original size is used, even when it is exceedingly large.
+* Bug Fix: Exclude iPad from Twitter on iPhone mobile browsing
+* Bug Fix: Sync: On .org user role changes synchronize the change to .com
+* Bug Fix: Contact Form: Fix a bug where some web hosts would reject mail from the contact form due to email address spoofing.
+
+= 1.8.3 =
+* Bug Fix: Subscriptions: Fix a bug where subscriptions were not being sent from the blog.
+* Bug Fix: Twitter: Fix a bug where the Twitter username was being saved as blank.
+* Bug Fix: Fix a bug where Contact Form notification emails were not being sent.
 
 = 1.8.2 =
 * Bug Fix: Subscriptions: Fix a bug where subscriptions were not sent for posts and comments written by some authors.
