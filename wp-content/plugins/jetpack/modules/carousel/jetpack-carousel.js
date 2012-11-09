@@ -393,6 +393,13 @@ jQuery(document).ready(function($) {
 	};
 
 	var methods = {
+		testForData: function(gallery) {
+			gallery = $( gallery ); // make sure we have it as a jQuery object.
+			if ( ! gallery.length || undefined == gallery.data( 'carousel-extra' ) )
+				return false;
+			return true;
+		},
+
 		open: function(options) {
 			var settings = {
 				'items_selector' : ".gallery-item [data-attachment-id], .tiled-gallery-item [data-attachment-id]",
@@ -854,7 +861,7 @@ jQuery(document).ready(function($) {
 
 		shutterSpeed: function(d) {
 			if (d >= 1)
-				Math.round(d) + 's';
+				return Math.round(d) + 's';
 			var df = 1, top = 1, bot = 1;
 			var limit = 1e5; //Increase for greater precision.
 			while (df != d && limit-- > 0) {
@@ -1153,6 +1160,8 @@ jQuery(document).ready(function($) {
 
 	// register the event listener for staring the gallery
 	$( document.body ).on( 'click', 'div.gallery,div.tiled-gallery', function(e) {
+		if ( ! $(this).jp_carousel( 'testForData', e.currentTarget ) )
+			return;
 		if ( $(e.target).parent().hasClass('gallery-caption') )
 			return;
 		e.preventDefault();
@@ -1163,6 +1172,9 @@ jQuery(document).ready(function($) {
 	if ( document.location.hash && document.location.hash.match(/jp-carousel-(\d+)/) ) {
 		$(document).ready(function(){
 			var gallery = $('div.gallery, div.tiled-gallery'), index = -1, n = document.location.hash.match(/jp-carousel-(\d+)/);
+			
+			if ( ! $(this).jp_carousel( 'testForData', gallery ) )
+				return;
 
 			n = parseInt(n[1], 10);
 

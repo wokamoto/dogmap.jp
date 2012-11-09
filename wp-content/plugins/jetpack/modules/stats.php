@@ -15,6 +15,20 @@ defined( 'STATS_DASHBOARD_SERVER' ) or define( 'STATS_DASHBOARD_SERVER', 'dashbo
 
 add_action( 'jetpack_modules_loaded', 'stats_load' );
 
+// Tell HQ about changed settings
+Jetpack_Sync::sync_options( __FILE__,
+	'home',
+	'siteurl',
+	'blogname',
+	'blogdescription',
+	'gmt_offset',
+	'timezone_string',
+	'page_on_front',
+	'permalink_structure',
+	'category_base',
+	'tag_base'
+);
+
 function stats_load() {
 	global $wp_roles;
 
@@ -22,20 +36,6 @@ function stats_load() {
 	Jetpack::module_configuration_load( __FILE__, 'stats_configuration_load' );
 	Jetpack::module_configuration_head( __FILE__, 'stats_configuration_head' );
 	Jetpack::module_configuration_screen( __FILE__, 'stats_configuration_screen' );
-
-	// Tell HQ about changed settings
-	Jetpack_Sync::sync_options( __FILE__,
-		'home',
-		'siteurl',
-		'blogname',
-		'blogdescription',
-		'gmt_offset',
-		'timezone_string',
-		'page_on_front',
-		'permalink_structure',
-		'category_base',
-		'tag_base'
-	);
 
 	// Tell HQ about changed posts
 	$post_stati = get_post_stati( array( 'public' => true ) ); // All public post stati
@@ -411,14 +411,8 @@ function stats_reports_page() {
 
 	$get = Jetpack_Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );
-	$get_code_type = intval( $get_code / 100 );
-	if ( is_wp_error( $get ) || ( 2 != $get_code_type && 304 != $get_code ) ) {
-		// @todo nicer looking error
-		if ( 3 == $get_code_type ) {
-			echo '<p>' . __( 'We were unable to get your stats just now (too many redirects). Please try again.', 'jetpack' ) . '</p>';
-		} else {
-			echo '<p>' . __( 'We were unable to get your stats just now. Please try again.', 'jetpack' ) . '</p>';
-		}
+	if ( is_wp_error( $get ) || ( 2 != intval( $get_code / 100 ) && 304 != $get_code ) || empty( $get['body'] ) ) {
+		stats_print_wp_remote_error( $get, $url );
 	} else {
 		if ( !empty( $get['headers']['content-type'] ) ) {
 			$type = $get['headers']['content-type'];
@@ -713,7 +707,7 @@ function stats_dashboard_widget_control() {
 	</p>
 
 	<p>
-	<label for="top"><?php _e( 'Show top posts over', 'jetpack'); ?></label>
+	<label for="top"><?php _e( 'Show top posts over', 'jetpack' ); ?></label>
 	<select id="top" name="top">
 	<?php
 	foreach ( $intervals as $val => $label ) {
@@ -726,7 +720,7 @@ function stats_dashboard_widget_control() {
 	</p>
 
 	<p>
-	<label for="search"><?php _e( 'Show top search terms over', 'jetpack'); ?></label>
+	<label for="search"><?php _e( 'Show top search terms over', 'jetpack' ); ?></label>
 	<select id="search" name="search">
 	<?php
 	foreach ( $intervals as $val => $label ) {
@@ -872,14 +866,8 @@ function stats_dashboard_widget_content() {
 
 	$get = Jetpack_Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );
-	$get_code_type = intval( $get_code / 100 );
-	if ( is_wp_error( $get ) || ( 2 != $get_code_type && 304 != $get_code ) || empty( $get['body'] ) ) {
-		// @todo
-		if ( 3 == $get_code_type ) {
-			echo '<p>' . __( 'We were unable to get your stats just now (too many redirects). Please try again.', 'jetpack' ) . '</p>';
-		} else {
-			echo '<p>' . __( 'We were unable to get your stats just now. Please try again.', 'jetpack' ) . '</p>';
-		}
+	if ( is_wp_error( $get ) || ( 2 != intval( $get_code / 100 ) && 304 != $get_code ) || empty( $get['body'] ) ) {
+		stats_print_wp_remote_error( $get, $url );
 	} else {
 		$body = stats_convert_post_titles($get['body']);
 		$body = stats_convert_chart_urls($body);
@@ -950,6 +938,38 @@ function stats_dashboard_widget_content() {
 <div class="clear"></div>
 <?php
 	exit;
+}
+
+function stats_print_wp_remote_error( $get, $url ) {
+?>
+	<div class="wrap">
+	<p><?php printf( __( 'We were unable to get your stats just now. Please reload this page to try again. If this error persists, please <a href="%1$s">contact support</a>. In your report please include the information below.', 'jetpack' ), 'http://support.wordpress.com/contact/?jetpack=needs-service' ); ?></p>
+	<pre>
+	User Agent: "<?php print htmlspecialchars( $_SERVER['HTTP_USER_AGENT'] ); ?>"
+	Page URL: "http<?php print (is_ssl()?'s':'') . '://' . htmlspecialchars( $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>"
+	API URL: "<?php print clean_url( $url ); ?>"
+<?php
+	if ( is_wp_error( $get ) ) {
+		foreach ( $get->get_error_codes() as $code ) {
+			foreach ( $get->get_error_messages($code) as $message ) {
+				?>
+	<?php print $code . ': "' . $message . '"' ?>
+
+<?php
+			}
+		}
+	} else {
+		$get_code = wp_remote_retrieve_response_code( $get );
+		$content_length = strlen( wp_remote_retrieve_body( $get ) );
+		?>
+	Response code: "<?php print $get_code ?>"
+	Content length: "<?php print $content_length ?>"
+
+<?php
+	}
+	?></pre>
+	</div>
+	<?php
 }
 
 function stats_get_csv( $table, $args = null ) {

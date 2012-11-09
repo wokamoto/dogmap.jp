@@ -164,7 +164,7 @@ abstract class Sharing_Source {
 		?>
 		<script type="text/javascript" charset="utf-8">
 		jQuery(document).ready(function(){
-			jQuery( '.share-<?php echo $name; ?>' ).click(function(){
+			jQuery( 'a.share-<?php echo $name; ?>' ).click(function(){
 				window.open( jQuery(this).attr( 'href' ), 'wpcom<?php echo $name; ?>', '<?php echo $opts; ?>' );
 				return false;
 			});
@@ -830,19 +830,21 @@ class Share_GooglePlus1 extends Sharing_Source {
 	public function get_name() {
 		return __( 'Google +1', 'jetpack' );
 	}
+	
+	public function has_custom_button_style() {
+		return $this->smart;
+	}
 
 	public function get_display( $post ) {
-		// Smart or not, return the G+ button
-		return '<div class="googleplus1_button"><div class="g-plusone" data-size="medium" data-callback="sharing_plusone" data-href="' . esc_url( $this->get_share_url( $post->ID ) ) . '"></div></div>';
-	}
-	
-	public function display_preview() {
-		?>
-		<div class="option option-smart-on">
-		<a href="javascript:void(0);return false;" class="share-<?php echo $this->shortname; ?>">
-			<span></span>
-		</a>
-		</div><?php
+		$share_url = $this->get_share_url( $post->ID );
+
+		if ( $this->smart ) {
+			return '<div class="googleplus1_button"><div class="g-plusone" data-size="medium" data-callback="sharing_plusone" data-href="' . esc_url( $share_url ) . '"></div></div>';
+		} else {
+			//if ( 'icon-text' == $this->button_style || 'text' == $this->button_style )
+				//sharing_register_post_for_share_counts( $post->ID );
+			return $this->get_link( get_permalink( $post->ID ), _x( 'Google +1', 'share to', 'jetpack' ), __( 'Click to share on Google+', 'jetpack' ), 'share=google-plus-1', 'sharing-google-' . $post->ID );
+		}
 	}
 	
 	public function get_state() {
@@ -856,23 +858,30 @@ class Share_GooglePlus1 extends Sharing_Source {
 		}
 		// Record stats
 		parent::process_request( $post, $post_data );
+		
+		// Redirect to Google +'s sharing endpoint
+		$url = 'https://plus.google.com/share?url=' . rawurlencode( $this->get_share_url( $post->ID ) );
+		wp_redirect( $url );
 		die();
 	}
 	
 	public function display_footer() {
 		global $post;
-?>
-	<script type="text/javascript" charset="utf-8">
-	function sharing_plusone( obj ) { 
-		jQuery.ajax( {
-			url: '<?php echo get_permalink( $post->ID ) . '?share=google-plus-1'; ?>',
-			type: 'POST',
-			data: obj
-		} );
-	}
-	</script>
-	<script type="text/javascript" src="<?php echo $this->http(); ?>://apis.google.com/js/plusone.js"></script>
-<?php
+		
+		if ( $this->smart ) { ?>
+			<script type="text/javascript" charset="utf-8">
+				function sharing_plusone( obj ) { 
+					jQuery.ajax( {
+						url: '<?php echo get_permalink( $post->ID ) . '?share=google-plus-1'; ?>',
+						type: 'POST',
+						data: obj
+					} );
+				}
+			</script>
+			<script type="text/javascript" src="<?php echo $this->http(); ?>://apis.google.com/js/plusone.js"></script> <?php
+		} else {
+			$this->js_dialog( 'google-plus-1', array( 'width' => 600, 'height' => 600 ) );
+		}
 	}	
 
 	public function get_total( $post = false ) {
@@ -924,7 +933,7 @@ class Share_Custom extends Sharing_Advanced_Source {
 	
 	public function get_display( $post ) {
 		$str = $this->get_link( get_permalink( $post->ID ), esc_html( $this->name ), __( 'Click to share', 'jetpack' ), 'share='.$this->id );
-		return str_replace( '<span>', '<span style="background-image:url(' . esc_url( $this->icon ) . ');">', $str );
+		return str_replace( '<span>', '<span style="' . esc_attr( 'background-image:url("' . addcslashes( esc_url_raw( $this->icon ), '"' ) . '");' ) . '">', $str );
 	}
 
 	public function process_request( $post, array $post_data ) {
@@ -1074,10 +1083,15 @@ class Share_Tumblr extends Sharing_Source {
 	}
 
 	public function get_display( $post ) {
-		if ( $this->smart )
-			return '<a href="http://www.tumblr.com/share/link/?url=' . rawurlencode( $this->get_share_url( $post->ID ) ) . '&name=' . rawurlencode( $post->post_title ) . '" title="Share on Tumblr" style="display:inline-block; text-indent:-9999px; overflow:hidden; width:62px; height:20px; background:url(\'http://platform.tumblr.com/v1/share_2.png\') top left no-repeat transparent;">Share on Tumblr</a>';
-		else
+		if ( $this->smart ) {
+			$target = '';
+			if ( 'new' == $this->open_links )
+				$target = '_blank';
+
+			return '<a target="' . $target . '" href="http://www.tumblr.com/share/link/?url=' . rawurlencode( $this->get_share_url( $post->ID ) ) . '&name=' . rawurlencode( $post->post_title ) . '" title="Share on Tumblr" style="display:inline-block; text-indent:-9999px; overflow:hidden; width:62px; height:20px; background:url(\'http://platform.tumblr.com/v1/share_2.png\') top left no-repeat transparent;">Share on Tumblr</a>';
+		 } else {
 			return $this->get_link( get_permalink( $post->ID ), _x( 'Tumblr', 'share to', 'jetpack' ), __( 'Click to share on Tumblr', 'jetpack' ), 'share=tumblr' );
+		}
 	}
 	
 	public function process_request( $post, array $post_data ) {

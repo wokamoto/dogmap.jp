@@ -1,9 +1,9 @@
 === Jetpack by WordPress.com ===
-Contributors: automattic, apeatling, beaulebens, hugobaeta, Joen, mdawaffe, andy, designsimply, hew, westi, eoigal, tmoorewp, matt, pento, cfinke, daniloercoli, chellycat, gibrown, jblz, jshreve, barry, alternatekev, azaozz, ethitter, johnjamesjacoby, lancewillett, martinremy, nickmomrik, stephdau, yoavf
+Contributors: automattic, apeatling, beaulebens, hugobaeta, Joen, mdawaffe, andy, designsimply, hew, westi, eoigal, tmoorewp, matt, pento, cfinke, daniloercoli, chellycat, gibrown, jblz, jshreve, barry, alternatekev, azaozz, ethitter, johnjamesjacoby, lancewillett, martinremy, nickmomrik, stephdau, yoavf, matveb
 Tags: WordPress.com, statistics, stats, views, tweets, twitter, widget, gravatar, hovercards, profile, equations, latex, math, maths, youtube, shortcode, archives, audio, blip, bliptv, dailymotion, digg, flickr, googlevideo, google, googlemaps, kyte, kytetv, livevideo, redlasso, rockyou, rss, scribd, slide, slideshare, soundcloud, vimeo, shortlinks, wp.me, subscriptions, notifications, notes, json, api, rest
 Requires at least: 3.2
 Tested up to: 3.4.2
-Stable tag: 1.9.1
+Stable tag: 2.0
 
 Supercharge your WordPress site with powerful features previously only available to WordPress.com users.
 
@@ -23,6 +23,8 @@ Features include:
 * The [WP.me URL shortener](http://wp.me/sf2B5-shorten).
 * Hovercard popups for your commenters via [Gravatar](http://gravatar.com/).
 * Easily embedded media from popular sites like YouTube, Digg, and Vimeo.
+* The ability to post to your blog from any email client.
+* Integration with and automatic posting to your favorite social networks including Twitter, Facebook, Tumblr, and LinkedIn.
 * For the Math geeks, a simple way to include beautiful mathematical expressions on your site.
 * A widget for displaying recent tweets.  Previously provided by [Wickett Twitter Widget](http://wordpress.org/extend/plugins/wickett-twitter-widget/)
 * Your readers can easily share your posts via email or their favorite social networks.  Previously provided by the [Sharedaddy](http://wordpress.org/extend/plugins/sharedaddy/) WordPress plugin.
@@ -86,6 +88,23 @@ Use [shortcodes](http://support.wordpress.com/shortcodes/) to embed your media. 
 8. Mobile Theme
 
 == Changelog ==
+
+= 2.0 =
+* Enhancement: Publicize: Connect your site to popular social networks and automatically share new posts with your friends.
+* Enhancement: Post By Email: Publish posts to your blog directly from your personal email account.
+* Enhancement: Photon: Images served through the global WordPress.com cloud.
+* Enhancement: Infinite Scroll: Better/faster browsing by pulling the next set of posts into view automatically when the reader approaches the bottom of the page.
+* Enhancement: Open Graph: Provides more detailed information about your posts to social networks.
+* Enhancement: JSON API: New parameters for creating and viewing posts.
+* Enhancement: Improved compatibility for the upcoming WordPress 3.5.
+* Bug Fix: Sharing: When you set your sharing buttons to use icon, text, or icon + text mode, the Google+ button will display accordingly. 
+* Bug Fix: Gravatar Profile Widget: Allow basic HTML to be displayed.
+* Bug Fix: Twitter Widget: Error handling fixes.
+* Bug Fix: Sharing: Improved theme compatibility
+* Bug Fix: JSON API: Fixed error when creating some posts in some versions of PHP.
+
+= 1.9.2 =
+* Bug Fix: Only sync options on upgrade once.
 
 = 1.9.1 =
 * Enhancement: Notifications feature is enabled for logged-out users when the module is active & the toolbar is shown by another plugin.

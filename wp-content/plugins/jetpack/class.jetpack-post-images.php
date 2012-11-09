@@ -156,7 +156,7 @@ class Jetpack_PostImages {
 		if ( !$post_images )
 			return false;
 
-		$permalink = get_permalink( $post->ID );
+		$permalink = get_permalink( $post_id );
 
 		$images = array();
 
@@ -179,6 +179,25 @@ class Jetpack_PostImages {
 				'href'       => $permalink,
 			);
 		}
+		
+		/*
+		* We only want to pass back attached images that were actually inserted.
+		* We can load up all the images found in the HTML source and then
+		* compare URLs to see if an image is attached AND inserted.
+		*/
+		$html_images = array();
+		$html_images = self::from_html( get_post( $post_id ) );
+
+		$inserted_images = array();
+		
+		foreach( $html_images as $html_image ) {
+			$src = parse_url( $html_image['src'] );
+			$inserted_images[] = $src['scheme'] . '://' . $src['host'] . $src['path']; // strip off any query strings 
+		}
+		foreach( $images as $i => $image ) {
+			if ( !in_array( $image['src'], $inserted_images ) )
+				unset( $images[$i] );
+		}
 
 		return $images;
 	}
@@ -191,6 +210,11 @@ class Jetpack_PostImages {
 	 */
 	static function from_thumbnail( $post_id, $width = 200, $height = 200 ) {
 		$images = array();
+
+		if ( !function_exists( 'get_post_thumbnail_id' ) ) {
+			return $images;
+		}
+
 		$thumb = get_post_thumbnail_id( $post_id );
 
 		if ( $thumb ) {
@@ -360,6 +384,10 @@ class Jetpack_PostImages {
 		// Figure out which image to attach to this post.
 		$media = false;
 
+		$media = apply_filters( 'jetpack_images_pre_get_images', $media, $post_id, $args );
+		if ( $media )
+			return $media; 
+
 		$defaults = array(
 			'width' => 200,  // Required minimum width (if possible to determine)
 			'height' => 200, // Required minimum height (if possible to determine)
@@ -385,6 +413,6 @@ class Jetpack_PostImages {
 				$media = self::from_gravatar( $post_id, $args['avatar_size'], $args['gravatar_default'] );
 		}
 
-		return $media;
+		return apply_filters( 'jetpack_images_get_images', $media, $post_id, $args );
 	}
 }
