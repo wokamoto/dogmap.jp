@@ -42,6 +42,8 @@ class Jetpack_Infinite_Scroll_Extras {
 
 		add_action( 'admin_init', array( $this, 'action_admin_init' ), 11 );
 
+		add_action( 'after_setup_theme', array( $this, 'action_after_setup_theme' ), 5 );
+
 		add_filter( 'infinite_scroll_js_settings', array( $this, 'filter_infinite_scroll_js_settings' ) );
 	}
 
@@ -101,6 +103,35 @@ class Jetpack_Infinite_Scroll_Extras {
 	}
 
 	/**
+	 * Load theme's infinite scroll annotation file, if present in the IS plugin.
+	 * The `setup_theme` action is used because the annotation files should be using `after_setup_theme` to register support for IS.
+	 *
+	 * As released in Jetpack 2.0, a child theme's parent wasn't checked for in the plugin's bundled support, hence the convoluted way the parent is checked for now.
+	 *
+	 * @uses is_admin, wp_get_theme, get_theme, get_current_theme, apply_filters
+	 * @action setup_theme
+	 * @return null
+	 */
+	function action_after_setup_theme() {
+		$theme = function_exists( 'wp_get_theme' ) ? wp_get_theme() : get_theme( get_current_theme() );
+
+		if ( ! is_a( $theme, 'WP_Theme' ) && ! is_array( $theme ) )
+			return;
+
+		$customization_file = apply_filters( 'infinite_scroll_customization_file', dirname( __FILE__ ) . "/infinite-scroll/themes/{$theme['Stylesheet']}.php", $theme['Stylesheet'] );
+
+		if ( is_readable( $customization_file ) ) {
+			require_once( $customization_file );
+		}
+		elseif ( ! empty( $theme['Template'] ) ) {
+			$customization_file = dirname( __FILE__ ) . "/infinite-scroll/themes/{$theme['Template']}.php";
+
+			if ( is_readable( $customization_file ) )
+				require_once( $customization_file );
+		}
+	}
+
+	/**
 	 * Modify Infinite Scroll configuration information
 	 *
 	 * @uses Jetpack::get_active_modules, is_user_logged_in, stats_get_options, Jetpack::get_option, get_option, JETPACK__API_VERSION, JETPACK__VERSION
@@ -122,6 +153,13 @@ class Jetpack_Infinite_Scroll_Extras {
 
 			// We made it this far, so gather the data needed to track IS views
 			$settings['stats'] = 'blog=' . Jetpack::get_option( 'id' ) . '&host=' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '&v=ext&j=' . JETPACK__API_VERSION . ':' . JETPACK__VERSION;
+
+			// Pagetype parameter
+			$settings['stats'] .= '&x_pagetype=infinite';
+			if ( 'click' == $settings['type'] )
+				$settings['stats'] .= '-click';
+
+			$settings['stats'] .= '-jetpack';
 		}
 
 		// Check if Google Analytics tracking is requested
@@ -136,3 +174,8 @@ Jetpack_Infinite_Scroll_Extras::instance();
  * Load main IS file
  */
 require_once( dirname( __FILE__ ) . "/infinite-scroll/infinity.php" );
+
+/**
+ * Remove the IS annotation loading function bundled with the IS plugin in favor of the Jetpack-specific version in Jetpack_Infinite_Scroll_Extras::action_after_setup_theme();
+ */
+remove_action( 'after_setup_theme', 'the_neverending_home_page_theme_support', 5 );

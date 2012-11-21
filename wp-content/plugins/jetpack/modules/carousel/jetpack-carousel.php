@@ -298,7 +298,7 @@ class Jetpack_Carousel {
 
 		// Used in context like NewDash
 		$switched = false;
-		if ( $_blog_id != get_current_blog_id() ) {
+		if ( is_multisite() && $_blog_id != get_current_blog_id() ) {
 			switch_to_blog( $_blog_id );
 			$switched = true;
 		}

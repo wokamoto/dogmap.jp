@@ -141,7 +141,7 @@ class Publicize_UI {
 										<li>
 											<?php
 											if ( !empty( $profile_link ) ) : ?>
-												<a class="publicize-profile-link" href="<?php echo esc_attr( $profile_link ); ?>">
+												<a class="publicize-profile-link" href="<?php echo esc_url( $profile_link ); ?>">
 													<?php echo esc_html( $connection_display ); ?>
 												</a><?php
 											else :
@@ -390,6 +390,14 @@ jQuery( function($) {
 					<ul>
 
 					<?php
+					// We can set an _all flag to indicate that this post is completely done as
+					// far as Publicize is concerned. Jetpack uses this approach. All published posts in Jetpack
+					// have Publicize disabled.
+					$all_done = get_post_meta( $post->ID, $this->publicize->POST_DONE . 'all', true ) || ( $this->in_jetpack && 'publish' == $post->post_status );
+
+					// We don't allow Publicizing to the same external id twice, to prevent spam
+					$service_id_done = (array) get_post_meta( $post_id, $this->publicize->POST_SERVICE_DONE, true );
+
 					foreach ( $services as $name => $connections ) {
 						foreach ( $connections as $connection ) {
 							if ( !$continue = apply_filters( 'wpas_submit_post?', true, $post->ID, $name ) )
@@ -401,7 +409,11 @@ jQuery( function($) {
 								$unique_id = $connection['connection_data']['token_id'];
 
 							// Should we be skipping this one?
-							$skip = get_post_meta( $post->ID, $this->publicize->POST_SKIP . $unique_id, true );
+							$skip = (
+								get_post_meta( $post->ID, $this->publicize->POST_SKIP . $unique_id, true )
+							||
+								( is_array( $connection ) && !empty( $service_id_done[ $name ][ $connection['connection_data']['external_id'] ] ) )
+							);
 
 							// Was this connections (OR, old-format service) already Publicized to?
 							$done = ( 1 == get_post_meta( $post->ID, $this->publicize->POST_DONE . $unique_id, true ) ||  1 == get_post_meta( $post->ID, $this->publicize->POST_DONE . $name, true ) ); // New and old style flags
@@ -414,16 +426,19 @@ jQuery( function($) {
 							// If this is a global connection and this user doesn't have enough permissions to modify
 							// those connections, don't let them change it
 							$cmeta = $this->publicize->get_connection_meta( $connection );
-
 							$hidden_checkbox = false;
 							if ( !$done && ( 0 == $cmeta['user_id'] && !current_user_can( Publicize::GLOBAL_CAP ) ) ) {
 								$disabled = ' disabled="disabled"';
 								$hidden_checkbox = true;
 							}
 
-							// Post was published prior to plugin activation
-							if ( $skip && 'publish' == $post->post_status && !$done )
-								$checked = false;
+							// Determine the state of the checkbox (on/off) and allow filtering
+							$checked = $skip != 1 || $done;
+							$checked = apply_filters( 'publicize_checkbox_default', $checked, $post->ID, $name, $connection );
+
+							// This post has been handled, so disable everything
+							if ( $all_done )
+								$disabled = ' disabled="disabled"';
 
 							$label = sprintf(
 								_x( '%1$s: %2$s', 'Service: Account connected as', 'jetpack' ),
@@ -437,7 +452,7 @@ jQuery( function($) {
 							<li>
 								<label for="wpas-submit-<?php echo esc_attr( $unique_id ); ?>">
 									<input type="checkbox" name="wpas[submit][<?php echo $unique_id; ?>]" id="wpas-submit-<?php echo $unique_id; ?>" value="1" <?php
-										checked( true, $skip != 1 || $done );
+										checked( true, $checked );
 										echo $disabled;
 									?> />
 									<?php
@@ -464,7 +479,7 @@ jQuery( function($) {
 					<label for="wpas-title"><?php _e( 'Custom Message:', 'jetpack' ); ?></label>
 					<span id="wpas-title-counter" class="alignright hide-if-no-js">0</span>
 
-					<textarea name="wpas_title" id="wpas-title"><?php echo $title; ?></textarea>
+					<textarea name="wpas_title" id="wpas-title"<?php disabled( $all_done ); ?>><?php echo $title; ?></textarea>
 
 					<a href="#" class="hide-if-no-js" id="publicize-form-hide"><?php _e( 'Hide', 'jetpack' ); ?></a>
 					<input type="hidden" name="wpas[0]" value="1" />

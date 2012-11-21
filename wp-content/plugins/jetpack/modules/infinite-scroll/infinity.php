@@ -280,7 +280,7 @@ class The_Neverending_Home_Page {
 		add_filter( 'body_class', array( $this, 'body_class' ) );
 
 		// Add our scripts.
-		wp_enqueue_script( 'the-neverending-homepage', plugins_url( 'infinity.js', __FILE__ ), array( 'jquery' ), '20121105' );
+		wp_enqueue_script( 'the-neverending-homepage', plugins_url( 'infinity.js', __FILE__ ), array( 'jquery' ), '20121119' );
 
 		// Add our default styles.
 		wp_enqueue_style( 'the-neverending-homepage', plugins_url( 'infinity.css', __FILE__ ), array(), '20120612' );
@@ -579,6 +579,10 @@ class The_Neverending_Home_Page {
 					// Base source
 					$src = $wp_scripts->registered[ $handle ]->src;
 
+					// Take base_url into account
+					if ( strpos( $src, 'http' ) !== 0 )
+						$src = $wp_scripts->base_url . $src;
+
 					// Version and additional arguments
 					if ( null === $wp_scripts->registered[ $handle ]->ver )
 						$ver = '';
@@ -623,6 +627,10 @@ class The_Neverending_Home_Page {
 
 					// Base source
 					$src = $wp_styles->registered[ $handle ]->src;
+
+					// Take base_url into account
+					if ( strpos( $src, 'http' ) !== 0 )
+						$src = $wp_styles->base_url . $src;
 
 					// Version and additional arguments
 					if ( null === $wp_styles->registered[ $handle ]->ver )
@@ -677,11 +685,12 @@ class The_Neverending_Home_Page {
 	 * Triggered by an AJAX request.
 	 *
 	 * @global $wp_query
+	 * @global $wp_the_query
 	 * @uses current_user_can, get_option, self::set_last_post_time, current_user_can, apply_filters, self::get_settings, add_filter, WP_Query, remove_filter, have_posts, wp_head, do_action, add_action, this::render, this::has_wrapper, esc_attr, wp_footer
 	 * @return string or null
 	 */
 	function query() {
-		global $wp_query;
+		global $wp_query, $wp_the_query;
 
 		if ( ! isset( $_GET['page'] ) || ! current_theme_supports( 'infinite-scroll' ) )
 			die;
@@ -698,13 +707,15 @@ class The_Neverending_Home_Page {
 
 		$order = in_array( $_GET['order'], array( 'ASC', 'DESC' ) ) ? $_GET['order'] : 'DESC';
 
-		$query_args = apply_filters( 'infinite_scroll_query_args', array(
+		$query_args = array_merge( $wp_the_query->query_vars, array(
 			'paged'          => $page,
 			'post_status'    => $post_status,
 			'posts_per_page' => self::get_settings()->posts_per_page,
 			'post__not_in'   => ( array ) $sticky,
 			'order'          => $order
 		) );
+
+		$query_args = apply_filters( 'infinite_scroll_query_args', $query_args );
 
 		// Add query filter that checks for posts below the date
 		add_filter( 'posts_where', array( $this, 'query_time_filter' ), 10, 2 );

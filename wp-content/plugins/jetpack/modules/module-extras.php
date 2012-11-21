@@ -12,18 +12,30 @@
  * Load theme's infinite scroll annotation file, if present in the IS plugin.
  * The `setup_theme` action is used because the annotation files should be using `after_setup_theme` to register support for IS.
  *
- * @uses is_admin, get_stylesheet, apply_filters
+ * As released in Jetpack 2.0, a child theme's parent wasn't checked for in the plugin's bundled support, hence the convoluted way the parent is checked for now.
+ *
+ * @uses is_admin, wp_get_theme, get_theme, get_current_theme, apply_filters
  * @action setup_theme
  * @return null
  */
 function jetpack_load_infinite_scroll_annotation() {
 	if ( is_admin() && isset( $_GET['page'] ) && 'jetpack' == $_GET['page'] ) {
-		$theme_name = get_stylesheet();
+		$theme = function_exists( 'wp_get_theme' ) ? wp_get_theme() : get_theme( get_current_theme() );
 
-		$customization_file = apply_filters( 'infinite_scroll_customization_file', dirname( __FILE__ ) . "/infinite-scroll/themes/{$theme_name}.php", $theme_name );
+		if ( ! is_a( $theme, 'WP_Theme' ) && ! is_array( $theme ) )
+			return;
 
-		if ( is_readable( $customization_file ) )
+		$customization_file = apply_filters( 'infinite_scroll_customization_file', dirname( __FILE__ ) . "/infinite-scroll/themes/{$theme['Stylesheet']}.php", $theme['Stylesheet'] );
+
+		if ( is_readable( $customization_file ) ) {
 			require_once( $customization_file );
+		}
+		elseif ( ! empty( $theme['Template'] ) ) {
+			$customization_file = dirname( __FILE__ ) . "/infinite-scroll/themes/{$theme['Template']}.php";
+
+			if ( is_readable( $customization_file ) )
+				require_once( $customization_file );
+		}
 	}
 }
 add_action( 'setup_theme', 'jetpack_load_infinite_scroll_annotation' );
