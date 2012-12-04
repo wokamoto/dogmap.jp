@@ -12,6 +12,7 @@ private $transient_expire = 3600;
 private $transient_key = 'wpbooster-site-data';
 private $is_active = 'wpbooster-is-active';
 private $feed_items = 5;
+private $nonce = 'wpbooster-suspend-nonce';
 
 function __construct()
 {
@@ -34,6 +35,10 @@ public function admin_menu()
     );
     add_action('admin_print_styles-'.$hook, array(&$this, 'enqueue_style'));
     add_action('admin_print_scripts-'.$hook, array(&$this, 'enqueue_script'));
+
+    if (isset($_POST['suspend-wpbooster']) && wp_verify_nonce($_POST['suspend-wpbooster'], $this->nonce)) {
+        $this->suspend_wpbooster();
+    }
 }
 
 public function enqueue_script()
@@ -72,11 +77,6 @@ public function enqueue_style()
 
 public function admin_panel()
 {
-    if (isset($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'stop-wpbooster')
-            && isset($_GET['action']) && $_GET['action'] == 'stop') {
-        $this->stop_wpbooster();
-    }
-
     $data = $this->get_data();
 
     echo '<div class="wrap" id="wpbooster-cdn-client">';
@@ -101,7 +101,7 @@ public function admin_panel()
     );
 
     $this->add_box(
-        __('Get The Point', 'wpbooster-cdn-client'),
+        '',
         $this->get_point_box(),
         "half align-right"
     );
@@ -125,7 +125,20 @@ public function admin_panel()
             <div class="cell">
             <a href="https://aws.amazon.com/solution-providers/si/digitalcube-co-ltd" target="_blank"><img src="%1\$s/img/aws.png" width="193" height="84" alt="WP remote" title="WP remote"/></a>
             </div>
+
+<div class="widget-container">
+<div class="fb-like-box" data-href="http://www.facebook.com/WPBooster" data-width="1000" data-show-faces="true" data-stream="true" data-header="true"></div>
+</div>
         </div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 EOL;
 
     printf(
@@ -164,8 +177,43 @@ private function get_point_box()
     $html .= __('Megumi payment” is a service to pay for WordPress-related services provided by <a href="http://www.digitalcube.jp/">DigitalCube Co. Ltd</a>.', 'wpbooster-cdn-client');
     $html .= '</p>';
     $html .= '<p style="margin: 20px 0 20px 0;">';
-    $html .= __('<a class="btn red" href="https://payment.digitalcube.jp/auth/login?language=en">Get the point!</a>', 'wpbooster-cdn-client');
+    $html .= __('<a class="btn blue" href="https://payment.digitalcube.jp/auth/login?language=en">Get the point!</a>', 'wpbooster-cdn-client');
     $html .= '</p>';
+
+    if (get_transient($this->is_active)) {
+        $html .= '<hr />';
+
+        $html .= __(
+            "WP Booster is running...<br />",
+            'wpbooster-cdn-client'
+        );
+        $html .= __(
+            "If you want to stop WP Booster temporarily, please click.",
+            'wpbooster-cdn-client'
+        );
+        $html .= '<p style="margin: 20px 0 20px 0;">';
+        $html .= sprintf(
+            '<form action="%s" method="post">',
+            $_SERVER['REQUEST_URI']
+        );
+        $html .= sprintf(
+            '<input type="hidden" name="suspend-wpbooster" value="%s" />',
+            wp_create_nonce($this->nonce)
+        );
+        if (get_option('wpbooster-suspended', 0)) {
+            $html .= __(
+                '<button class="btn green">Restart WP Booster !</button>',
+                'wpbooster-cdn-client'
+            );
+        } else {
+            $html .= __(
+                '<button class="btn red">Suspend WP Booster !</button>',
+                'wpbooster-cdn-client'
+            );
+        }
+        $html .= "</form>";
+        $html .= '</p>';
+    }
 
     return $html;
 }
@@ -206,16 +254,23 @@ private function get_history()
 private function add_box($title, $content, $style = null)
 {
     echo sprintf('<div class="postbox %s">', $style);
-    echo '<h3 class="hndle" style="padding:10px;"><span>'.esc_html($title).'</span></h3>';
+    if ($title) {
+        echo '<h3 class="hndle" style="padding:10px;"><span>'.esc_html($title).'</span></h3>';
+    }
     echo '<div class="inside">';
     echo $content;
     echo '</div><!-- end .inside -->';
     echo '</div><!-- end .postbox -->';
 }
 
-private function stop_wpbooster()
+private function suspend_wpbooster()
 {
-    $api = sprintf($this->stop_wpbooster_api, $this->key);
+    if (get_option('wpbooster-suspended', 0)) {
+        delete_option('wpbooster-suspended'); // activate
+    } else {
+        update_option('wpbooster-suspended', 1); // deactivate
+    }
+    wp_redirect(admin_url('admin.php?page=wpbooster-cdn-client'));
 }
 
 private function get_data()

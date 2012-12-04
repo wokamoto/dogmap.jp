@@ -4,7 +4,7 @@ Plugin Name: Nginx Cache Controller
 Author: Ninjax Team (Takayuki Miyauchi)
 Plugin URI: http://ninjax.cc/
 Description: Plugin for Nginx Reverse Proxy
-Version: 1.1.5
+Version: 1.2.2
 Author URI: http://ninjax.cc/
 Domain Path: /languages
 Text Domain: nginxchampuru
@@ -37,6 +37,9 @@ private $transient_timeout = 60;
 
 private $flush_urls = array();
 
+const OPTION_NAME_DB_VERSION = 'nginxchampuru-db_version';
+const OPTION_NAME_CACHE_EXPIRES = 'nginxchampuru-cache_expires';
+
 // hook and flush mode
 private $method =array(
     'publish' => 'almost',
@@ -54,7 +57,7 @@ function __construct()
 
     $data = get_file_data( __FILE__, array( 'version' => 'Version' ) );
     $this->version = $data['version'];
-    $this->db_version = get_option('nginxchampuru-db_version', 0);
+    $this->db_version = get_option(self::OPTION_NAME_DB_VERSION, 0);
 }
 
 public function is_enable_flush()
@@ -114,7 +117,7 @@ public function add()
     }
     global $wpdb;
     $sql = $wpdb->prepare(
-        "replace into `{$this->table}` values(%s, %d, %s, %s)",
+        "replace into `{$this->table}` values(%s, %d, %s, %s, null)",
         $this->get_cache_key(),
         $this->get_postid(),
         $this->get_post_type(),
@@ -159,7 +162,6 @@ private function flush_this()
             unlink($cache);
         }
     }
-    unset($caches);
 
     global $wpdb;
     $sql = $wpdb->prepare("delete from `$this->table` where cache_key=%s", $key);
@@ -172,19 +174,25 @@ private function flush_cache()
     $mode   = $params[0][0];
     $id     = $params[0][1];
 
+    $expire_limit = date('Y-m-d H:i:s', time() - $this->get_max_expire());
+
     global $wpdb;
     if ($mode === "all") {
-        $sql = "select distinct `cache_key`, `cache_id`, `cache_type`, ifnull(`cache_url`,\"\") as `cache_url` from `$this->table`";
+        $sql = $wpdb->prepare("select distinct `cache_key`, `cache_id`, `cache_type`, ifnull(`cache_url`,\"\") as `cache_url` from `$this->table` where `cache_saved` > %s",
+            $expire_limit
+        );
     } elseif ($mode === "single" && intval($id)) {
         $sql = $wpdb->prepare(
-            "select distinct `cache_key`, `cache_id`, `cache_type`, ifnull(`cache_url`,\"\") as `cache_url` from `$this->table` where cache_id=%d",
-            intval($id)
+            "select distinct `cache_key`, `cache_id`, `cache_type`, ifnull(`cache_url`,\"\") as `cache_url` from `$this->table` where `cache_id`=%d and cache_saved > %s",
+            intval($id),
+            $expire_limit
         );
     } elseif ($mode === 'almost' && intval($id)) {
         $sql = $wpdb->prepare(
             "select distinct `cache_key`, `cache_id`, `cache_type`, ifnull(`cache_url`,\"\") as `cache_url` from `$this->table`
-                where cache_id=%d or
-                cache_type in ('is_home', 'is_archive', 'other')",
+                where `cache_saved`> %s and (cache_id=%d or
+                cache_type in ('is_home', 'is_archive', 'other'))",
+            $expire_limit,
             intval($id)
         );
     } else {
@@ -199,7 +207,7 @@ private function flush_cache()
         if ( empty($url) && $key->cache_type === 'is_singular' ) {
             $url = get_permalink($key->cache_id);
             $sql = $wpdb->prepare(
-                "replace into `{$this->table}` values(%s, %d, %s, %s)",
+                "replace into `{$this->table}` values(%s, %d, %s, %s, current_timestamp)",
                 $key->cache_key,
                 $key->cache_id,
                 $key->cache_type,
@@ -217,10 +225,8 @@ private function flush_cache()
                 unlink($cache);
             }
         }
-        unset($caches);
         $purge_keys[] = $key->cache_key;
     }
-    unset($keys);
 
     $sql = "delete from `$this->table` where cache_key in ('".join("','", $purge_keys)."')";
     $wpdb->query($sql);
@@ -235,13 +241,16 @@ public function activation()
             `cache_id` bigint(20) unsigned default 0 not null,
             `cache_type` varchar(11) not null,
             `cache_url` varchar(256),
+            `cache_saved` timestamp default current_timestamp not null,
             primary key (`cache_key`),
             key `cache_id` (`cache_id`),
+            key `cache_saved`(`cache_saved`),
+            key `cache_url`(`cache_url`),
             key `cache_type`(`cache_type`)
             );";
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
-	    update_option('nginxchampuru-db_version', $this->version);
+	    update_option(self::OPTION_NAME_DB_VERSION, $this->version);
     }
 }
 
@@ -250,23 +259,42 @@ private function alter_table($version, $db_version)
     global $wpdb;
     if ($wpdb->get_var("show tables like '$this->table'") != $this->table) {
     	$this->activation();
-    	return $version;
+    	return get_option(self::OPTION_NAME_DB_VERSION, $version);
     }
 
-    switch ($db_version) {
-        default:
+    switch (true) {
+        case (version_compare('1.1.5', $db_version) > 0):
             $sql = "ALTER TABLE `{$this->table}` ADD COLUMN `cache_url` varchar(256);";
             $wpdb->query($sql);
+        case (version_compare('1.2.1', $db_version) > 0):
+            $sql = "ALTER TABLE `{$this->table}` ADD COLUMN `cache_saved` timestamp default current_timestamp not null;";
+            $wpdb->query($sql);
+            $sql = "ALTER TABLE `{$this->table}` ADD INDEX `cache_saved`(`cache_saved`);";
+            $wpdb->query($sql);
+            $sql = "ALTER TABLE `{$this->table}` ADD INDEX `cache_url`(`cache_url`);";
+            $wpdb->query($sql);
+            $sql = "update `{$this->table}` set `cache_saved` = current_timestamp";
+            $wpdb->query($sql);
+        default:
+            update_option(self::OPTION_NAME_DB_VERSION, $version);
             break;
     }
-    update_option('nginxchampuru-db_version', $version);
     return $version;
 }
 
+private function get_max_expire()
+{
+    $expires = get_option(self::OPTION_NAME_CACHE_EXPIRES);
+    $max = max(array_values($expires));
+    if (!$max) {
+        $max = $this->get_default_expire();
+    }
+    return $max;
+}
 
 public function get_expire()
 {
-    $expires = get_option("nginxchampuru-cache_expires");
+    $expires = get_option(self::OPTION_NAME_CACHE_EXPIRES);
     $par = $this->get_post_type();
     if (isset($expires[$par]) && strlen($expires[$par])) {
         return $expires[$par];

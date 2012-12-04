@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the The WP Booster CDN Client package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The WP Booster CDN Client 2.2.0\n"
+"Project-Id-Version: The WP Booster CDN Client 2.4.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wpbooster-cdn-client\n"
-"POT-Creation-Date: 2012-09-24 04:03:47+00:00\n"
+"POT-Creation-Date: 2012-11-29 07:32:21+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,92 +12,100 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: includes/admin.php:73
+#: includes/admin.php:83
 msgid "WP Booster CDN Client"
 msgstr ""
 
-#: includes/admin.php:86
+#: includes/admin.php:96
 msgid "History"
 msgstr ""
 
-#: includes/admin.php:88
+#: includes/admin.php:98
 msgid "Information"
 msgstr ""
 
-#: includes/admin.php:89
+#: includes/admin.php:99
 msgid "http://www.wpbooster.net/feed"
 msgstr ""
 
-#: includes/admin.php:94
-msgid "Get The Point"
-msgstr ""
-
-#: includes/admin.php:114
+#: includes/admin.php:147
 msgid "http://en.digitalcube.jp/about/wordpress_consultant/"
 msgstr ""
 
-#: includes/admin.php:115
+#: includes/admin.php:148
 msgid "http://www.wpbooster.net/"
 msgstr ""
 
-#: includes/admin.php:116
+#: includes/admin.php:149
 msgid "http://megumi-cloud.com/"
 msgstr ""
 
-#: includes/admin.php:117
+#: includes/admin.php:150
 msgid "http://wp.remotemanager.me/"
 msgstr ""
 
-#: includes/admin.php:145
+#: includes/admin.php:177
 msgid ""
 "Megumi payment” is a service to pay for WordPress-related services provided "
 "by <a href=\"http://www.digitalcube.jp/\">DigitalCube Co. Ltd</a>."
 msgstr ""
 
-#: includes/admin.php:148
+#: includes/admin.php:180
 msgid ""
-"<a href=\"https://payment.digitalcube.jp/auth/login?language=en\" style="
-"\"font-size:30px;\">Get the point!</a>"
+"<a class=\"btn blue\" href=\"https://payment.digitalcube.jp/auth/login?"
+"language=en\">Get the point!</a>"
 msgstr ""
 
-#: includes/admin.php:179
+#: includes/admin.php:186
+msgid "WP Booster is running...<br />"
+msgstr ""
+
+#: includes/admin.php:190
+msgid "If you want to stop WP Booster temporarily, please click."
+msgstr ""
+
+#: includes/admin.php:204
+msgid "<button class=\"btn red\">Suspend WP Booster !</button>"
+msgstr ""
+
+#: includes/admin.php:209
+msgid "<button class=\"btn green\">Restart WP Booster !</button>"
+msgstr ""
+
+#: includes/admin.php:246
 msgid "Date"
 msgstr ""
 
-#: includes/admin.php:180
+#: includes/admin.php:247
 msgid "Used Points"
 msgstr ""
 
-#: includes/admin.php:181
-msgid "Requests (MB)"
+#: includes/admin.php:248
+msgid "Transfers (MB)"
 msgstr ""
 
-#: includes/admin.php:182
-msgid "Transfers"
-msgstr ""
-
-#: wpbooster-cdn-client.php:170
-msgid "Please input WP Booster API Key: "
+#: includes/admin.php:249
+msgid "Requests"
 msgstr ""
 
 #: wpbooster-cdn-client.php:171
+msgid "Please input WP Booster API Key: "
+msgstr ""
+
+#: wpbooster-cdn-client.php:172
 msgid "<a href=\"http://wpbooster.net/cpanel\">Sign In</a>"
 msgstr ""
 
-#: wpbooster-cdn-client.php:181
-msgid "The WP Booster CDN"
-msgstr ""
-
-#: wpbooster-cdn-client.php:186
+#: wpbooster-cdn-client.php:183
 msgid "WP Booster CDN is running..."
 msgstr ""
 
-#: wpbooster-cdn-client.php:188
+#: wpbooster-cdn-client.php:185
 msgid "WP Booster CDN is stopped."
 msgstr ""
 
-#: wpbooster-cdn-client.php:195
-msgid "http://wpbooster.net/cpanel/"
+#: wpbooster-cdn-client.php:192
+msgid "The WP Booster CDN"
 msgstr ""
 
 #. Plugin Name of the plugin/theme

@@ -9,8 +9,9 @@
 <div id="message" class="updated"><p><?php _e("Saved.", "nginxchampuru"); ?></p></div>
 <?php endif; ?>
 
-
+<?php if(!is_plugin_active('wpbooster-cdn-client/wpbooster-cdn-client.php')): ?>
 <p style="margin:2em 0;"><a href="<?php _e('http://wpbooster.net/', 'nginxchampuru'); ?>"><img src="<?php echo NGINX_CACHE_CONTROLER_URL; ?>/img/booster.jpg" width="728" height="90" /></a></p>
+<?php endif; ?>
 
 <h3><?php _e("Cache Expire", "nginxchampuru"); ?></h3>
 
@@ -106,6 +107,10 @@ if (!is_array($expires)) {
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e("Save", "nginxchampuru"); ?>"  /></p>
 </form>
 
+<div class="widget-container">
+<div class="fb-like-box" data-href="http://www.facebook.com/Ninjax.cc" data-width="1280" data-show-faces="true" data-stream="false" data-header="true"></div>
+</div>
+
 <div style="text-align:right;"><a href="http://ninjax.cc/"><img src="<?php echo $nginxchampuru->get_plugin_url(); ?>/img/ninjax.png"></a></div>
 
 </div><!-- #ninjax-expirescontrol -->
@@ -124,3 +129,11 @@ if (!is_array($expires)) {
 })(jQuery);
 </script>
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

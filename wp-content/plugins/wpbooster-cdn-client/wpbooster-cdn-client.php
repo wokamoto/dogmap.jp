@@ -3,7 +3,7 @@
 Plugin Name: The WP Booster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
-Version: 2.3.0
+Version: 2.4.0
 Author URI: http://wpbooster.net/
 Domain Path: /languages
 Text Domain: wpbooster-cdn-client
@@ -36,6 +36,7 @@ define("WPBOOSTER_CDN_CLIENT_URL", plugins_url("", __FILE__));
 define("WPBOOSTER_CDN_CLIENT_DIR", dirname(__FILE__));
 
 register_deactivation_hook(__FILE__, 'wp_booster_cdn_deactive');
+
 function wp_booster_cdn_deactive(){
     delete_option("wpboosterapikey");
     delete_transient("wpbooster-is-active");
@@ -102,7 +103,7 @@ public function plugins_loaded()
     );
 
     if ($this->is_active_host()) {
-        if (!is_user_logged_in()) {
+        if (!is_user_logged_in() && !get_option('wpbooster-suspended', 0)) {
             $hooks = array(
                 "stylesheet_directory_uri",
                 "template_directory_uri",
@@ -151,7 +152,7 @@ public function is_active_host()
     if (get_transient($this->is_active)) {
         return true;
     } else {
-        $res = wp_remote_get(sprintf($this->api, $api));
+        $res = wp_remote_get(sprintf($this->get_api(), $api));
         if (!is_wp_error($res) && $res['response']['code'] === 200) {
             set_transient($this->is_active, json_decode($res['body']), $this->exp);
             return true;
@@ -174,12 +175,14 @@ public function admin_notice()
 
 public function admin_bar_menu($bar)
 {
+    if (!current_user_can('update_core')) {
+        return false;
+    }
+
     if (get_transient($this->is_active)) {
         $message1 = __("WP Booster CDN is running...", "wpbooster-cdn-client");
-        //$message2 = __("Stop WP Booster CDN service temporarily.", "wpbooster-cdn-client");
     } else {
         $message1 = __("WP Booster CDN is stopped.", "wpbooster-cdn-client");
-        //$message2 = __("Start WP Booster CDN Service.", "wpbooster-cdn-client");
     }
 
     $bar->add_menu( array(
@@ -190,16 +193,11 @@ public function admin_bar_menu($bar)
         ),
         'href'  => admin_url('admin.php?page=wpbooster-cdn-client'),
     ) );
+}
 
-/*
-    $bar->add_menu(array(
-        "parent" => "wp-booster-logo",
-        "id"    => "wp-booster-stop",
-        "title" => $message2,
-        'href'  => admin_url('admin.php?page=wpbooster-cdn-client&action=stop&nonce='.wp_create_nonce('stop-wpbooster')),
-        "meta"  => false,
-    ));
-*/
+private function get_api()
+{
+    return apply_filters('wpbooster_api_url', $this->api);
 }
 
 } // MegumiCDN
