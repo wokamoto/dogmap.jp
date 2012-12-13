@@ -1,1 +1,48 @@
-(function(a,b){wpWordCount={settings:{strip:/<[a-zA-Z\/][^<>]*>/g,clean:/[0-9.(),;:!?%#$¿'"_+=\\/-]+/g,count:/\S\s+/g,},block:0,wc:function(e,g){var f=this,d=a(".word-count"),c=0;if(g===b){g=wordCountL10n.type}if(g!=="w"&&g!=="c"){g="w"}if(f.block){return}f.block=1;setTimeout(function(){if(e){if(g=="w"){e=e.replace(f.settings.strip," ").replace(/&nbsp;|&#160;/gi," ");e=e.replace(f.settings.clean,"");e.replace(f.settings.count,function(){c++})}else{if(g=="c"){e=e.replace(f.settings.strip,"").replace(/^ +| +$/gm,"");e=e.replace(/ +|&nbsp;|&#160;/gi," ");e.replace(/[\S \u00A0\u3000]/g,function(){c++})}}}d.html(c.toString());setTimeout(function(){f.block=0},2000)},1)}};a(document).bind("wpcountwords",function(d,c){wpWordCount.wc(c)})}(jQuery));
+(function($,undefined) {
+	wpWordCount = {
+
+		settings : {
+			strip : /<[a-zA-Z\/][^<>]*>/g, // strip HTML tags
+			clean : /[0-9.(),;:!?%#$¿'"_+=\\/-]+/g, // regexp to remove punctuation, etc.
+			count : /\S\s+/g, // word-counting regexp
+		},
+
+		block : 0,
+
+		wc : function(tx, type) {
+			var t = this, w = $('.word-count'), tc = 0;
+
+			if ( type === undefined )
+				type = wordCountL10n.type;
+			if ( type !== 'w' && type !== 'c' )
+				type = 'w';
+
+			if ( t.block )
+				return;
+
+			t.block = 1;
+
+			setTimeout( function() {
+				if ( tx ) {
+					if ( type == 'w' ) { // word-counting
+						tx = tx.replace( t.settings.strip, ' ' ).replace( /&nbsp;|&#160;/gi, ' ' );
+						tx = tx.replace( t.settings.clean, '' );
+						tx.replace( t.settings.count, function(){tc++;} );
+					}
+					else if ( type == 'c' ) { // char-counting for asian languages
+						tx = tx.replace( t.settings.strip, '' ).replace( /^ +| +$/gm, '' );
+						tx = tx.replace( / +|&nbsp;|&#160;/gi, ' ' );
+						tx.replace( /[\S \u00A0\u3000]/g, function(){tc++;} );
+					}
+				}
+				w.html(tc.toString());
+
+				setTimeout( function() { t.block = 0; }, 2000 );
+			}, 1 );
+		}
+	}
+
+	$(document).bind( 'wpcountwords', function(e, txt) {
+		wpWordCount.wc(txt);
+	});
+}(jQuery));

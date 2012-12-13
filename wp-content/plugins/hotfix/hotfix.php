@@ -2,7 +2,7 @@
 /*
 Plugin Name: Hotfix
 Description: Provides "hotfixes" for selected WordPress bugs, so you don't have to wait for the next WordPress core release. Keep the plugin updated!
-Version: 0.9
+Version: 1.0
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
 */
@@ -34,6 +34,9 @@ function wp_hotfix_init() {
 	$hotfixes = array();
 
 	switch ( $wp_version ) {
+		case '3.5' :
+			$hotfixes = array( '350_twentytwelve' );
+			break;
 		case '3.4.2' :
 			$hotfixes = array( '342_custom_fields' );
 			break;
@@ -151,3 +154,66 @@ function wp_hotfix_342_custom_fields_action() {
 	</script>
 	<?php
 }
+
+function wp_hotfix_350_twentytwelve() {
+	add_action( 'pre_http_request', 'wp_hotfix_350_twentytwelve_pre_http_request', 10, 3 );
+	add_action( 'load-themes.php', 'wp_hotfix_350_twentytwelve_themes_php' );
+	add_action( 'load-update-core.php', 'wp_hotfix_350_twentytwelve_update_core_php', 9 );
+}
+
+function wp_hotfix_350_twentytwelve_update_core_php() {
+	if ( ! empty( $_GET['action'] ) )
+		return;
+
+	$theme = wp_get_theme('twentytwelve');
+	if ( ! $theme->exists() || ! $theme->errors() )
+		return;
+
+	delete_site_transient( 'update_themes' );
+}
+
+function wp_hotfix_350_twentytwelve_themes_php() {
+	$theme = wp_get_theme('twentytwelve');
+	if ( ! $theme->exists() || ! $theme->errors() )
+		return;
+
+	// Non-English installs weren't affected. Saves us the need to translate!
+	if ( 'en_US' != get_locale() )
+		return;
+
+	if ( current_user_can( 'update_themes' ) )
+		add_action( 'admin_notices', 'wp_hotfix_350_twentytwelve_notice' );
+}
+
+function wp_hotfix_350_twentytwelve_notice() {
+	printf( '<div class="error"><p><strong>Looking for Twenty Twelve?</strong> You will need to first update it at <a href="%s">Dashboard &rarr; Updates</a>.</p></div>',
+		self_admin_url( 'update-core.php' ) );
+}
+
+function wp_hotfix_350_twentytwelve_pre_http_request( $return, $args, $url ) {
+	if ( $url != 'http://api.wordpress.org/themes/update-check/1.0/' )
+		return $return;
+
+	if ( ! empty( $args['_twentytwelve_hijack'] ) )
+		return $return;
+
+	$theme = wp_get_theme('twentytwelve');
+	if ( ! $theme->exists() || ! $theme->errors() )
+		return $return;
+
+	$args['_twentytwelve_hijack'] = true;
+
+	$themes = unserialize( $args['body']['themes'] );
+	$themes['twentytwelve'] = array(
+		'Name'       => 'Twenty Twelve',
+		'Title'      => 'Twenty Twelve',
+		'Version'    => '1.0',
+		'Author'     => 'the WordPress team',
+		'Author URI' => 'http://wordpress.org/',
+		'Template'   => 'twentytwelve',
+		'Stylesheet' => 'twentytwelve',
+	);
+	$args['body']['themes'] = serialize( $themes );
+	return wp_remote_post( $url, $args );
+}
+

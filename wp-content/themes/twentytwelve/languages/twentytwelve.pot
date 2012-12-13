@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Twenty Twelve 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2012-09-27 17:51:13+00:00\n"
+"POT-Creation-Date: 2012-12-03 21:18:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Newer Comments &rarr;"
 msgstr ""
 
-#: comments.php:51
+#: comments.php:53
 msgid "Comments are closed."
 msgstr ""
 
@@ -93,9 +93,24 @@ msgstr ""
 msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: content-aside.php:21 content-image.php:20 content-link.php:19
-#: content-page.php:21 content-quote.php:18 content-status.php:25
-#: content.php:46 functions.php:298 image.php:37
+#: content-aside.php:23 content-image.php:23 content-link.php:21
+#: content-quote.php:20 content-status.php:27 content.php:28
+msgid "Leave a reply"
+msgstr ""
+
+#: content-aside.php:23 content-image.php:23 content-link.php:21
+#: content-quote.php:20 content-status.php:27 content.php:28
+msgid "1 Reply"
+msgstr ""
+
+#: content-aside.php:23 content-image.php:23 content-link.php:21
+#: content-quote.php:20 content-status.php:27 content.php:28
+msgid "% Replies"
+msgstr ""
+
+#: content-aside.php:26 content-image.php:26 content-link.php:24
+#: content-page.php:21 content-quote.php:23 content-status.php:30
+#: content.php:46 functions.php:309 image.php:37
 msgid "Edit"
 msgstr ""
 
@@ -119,18 +134,6 @@ msgstr ""
 
 #: content.php:14
 msgid "Featured post"
-msgstr ""
-
-#: content.php:28
-msgid "Leave a reply"
-msgstr ""
-
-#: content.php:28
-msgid "1 Reply"
-msgstr ""
-
-#: content.php:28
-msgid "% Replies"
 msgstr ""
 
 #: content.php:57
@@ -158,7 +161,7 @@ msgstr ""
 #. translators: If there are characters in your language that are not supported
 #. 	   by Open Sans, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:118
+#: functions.php:120
 msgctxt "Open Sans font: on or off"
 msgid "on"
 msgstr ""
@@ -167,115 +170,114 @@ msgstr ""
 #. your language, translate
 #. 		   this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your
 #. own language.
-#: functions.php:123
+#: functions.php:125
 msgctxt "Open Sans font: add new subset (greek, cyrillic, vietnamese)"
 msgid "no-subset"
 msgstr ""
 
-#: functions.php:173
+#: functions.php:181
 msgid "Page %s"
 msgstr ""
 
-#: functions.php:197
+#: functions.php:206
 msgid "Main Sidebar"
 msgstr ""
 
-#: functions.php:199
+#: functions.php:208
 msgid ""
 "Appears on posts and pages except the optional Front Page template, which "
 "has its own widgets"
 msgstr ""
 
-#: functions.php:207
+#: functions.php:216
 msgid "First Front Page Widget Area"
 msgstr ""
 
-#: functions.php:209 functions.php:219
+#: functions.php:218 functions.php:228
 msgid ""
 "Appears when using the optional Front Page template with a page set as "
 "Static Front Page"
 msgstr ""
 
-#: functions.php:217
+#: functions.php:226
 msgid "Second Front Page Widget Area"
 msgstr ""
 
-#: functions.php:239 single.php:20
+#: functions.php:250 single.php:20
 msgid "Post navigation"
 msgstr ""
 
-#: functions.php:240
+#: functions.php:251
 msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
 msgstr ""
 
-#: functions.php:241
+#: functions.php:252
 msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: functions.php:266
+#: functions.php:277
 msgid "Pingback:"
 msgstr ""
 
-#: functions.php:266
+#: functions.php:277
 msgid "(Edit)"
 msgstr ""
 
-#: functions.php:281
+#: functions.php:292
 msgid "Post author"
 msgstr ""
 
 #. translators: 1: date, 2: time
-#: functions.php:287
+#: functions.php:298
 msgid "%1$s at %2$s"
 msgstr ""
 
-#: functions.php:293
+#: functions.php:304
 msgid "Your comment is awaiting moderation."
 msgstr ""
 
-#: functions.php:302
-msgid "Reply <span>&darr;</span>"
+#: functions.php:313
+msgid "Reply"
 msgstr ""
 
-#: functions.php:321 functions.php:324
+#: functions.php:332 functions.php:335
 msgid ", "
 msgstr ""
 
-#: functions.php:335
+#: functions.php:346
 msgid "View all posts by %s"
 msgstr ""
 
-#: functions.php:341
+#: functions.php:352
 msgid ""
 "This entry was posted in %1$s and tagged %2$s on %3$s<span class=\"by-author"
 "\"> by %4$s</span>."
 msgstr ""
 
-#: functions.php:343
+#: functions.php:354
 msgid ""
 "This entry was posted in %1$s on %3$s<span class=\"by-author\"> by %4$s</"
 "span>."
 msgstr ""
 
-#: functions.php:345
+#: functions.php:356
 msgid "This entry was posted on %3$s<span class=\"by-author\"> by %4$s</span>."
 msgstr ""
 
-#: header.php:40
+#: header.php:43
 msgid "Menu"
 msgstr ""
 
-#: header.php:41
+#: header.php:44
 msgid "Skip to content"
 msgstr ""
 
 #: image.php:26
 msgid ""
 "<span class=\"meta-prep meta-prep-entry-date\">Published </span> <span class="
-"\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\" pubdate>%2$s</"
-"time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s "
-"&times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery"
-"\">%8$s</a>."
+"\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></"
+"span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5"
+"$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a>."
 msgstr ""
 
 #: image.php:41
@@ -329,8 +331,8 @@ msgstr ""
 #. Description of the plugin/theme
 msgid ""
 "The 2012 theme for WordPress is a fully responsive theme that looks great on "
-"any device. Features include a front page template with a its own widgets, "
-"an optional display font, styling for post formats on both index and single "
+"any device. Features include a front page template with its own widgets, an "
+"optional display font, styling for post formats on both index and single "
 "views, and an optional no-sidebar page template. Make it yours with a custom "
 "menu, header image, and background."
 msgstr ""

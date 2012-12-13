@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Multibyte Patch
 Description: Multibyte functionality enhancement for the WordPress Japanese package.
-Version: 1.6.3
+Version: 1.6.4
 Plugin URI: http://eastcoder.com/code/wp-multibyte-patch/
 Author: Seisuke Kuraishi
 Author URI: http://tinybit.co.jp/
@@ -15,7 +15,7 @@ Domain Path: /languages
  * Multibyte functionality enhancement for the WordPress Japanese package.
  *
  * @package WP_Multibyte_Patch
- * @version 1.6.3
+ * @version 1.6.4
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2012 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -59,7 +59,7 @@ class multibyte_patch {
 	var $debug_suffix = '';
 	var $textdomain = 'wp-multibyte-patch';
 	var $lang_dir = 'languages';
-	var $required_version = '3.4-RC2';
+	var $required_version = '3.5';
 	var $query_based_vars = array();
 
 	// For fallback purpose only. (1.6)
@@ -132,6 +132,8 @@ class multibyte_patch {
 	}
 
 	function incoming_pingback($commentdata) {
+		global $wpdb;
+
 		if('pingback' != $commentdata['comment_type'])
 			return $commentdata;
 
@@ -143,7 +145,10 @@ class multibyte_patch {
 
 		$linea = preg_replace("/" . preg_quote('<!DOC', '/') . "/i", '<DOC', $linea);
 		$linea = preg_replace("/[\r\n\t ]+/", ' ', $linea);
-		$linea = preg_replace("/ <(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/i", "\n\n", $linea);
+		$linea = preg_replace("/<\/*(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/i", "\n\n", $linea);
+
+		preg_match('|<title>([^<]*?)</title>|is', $linea, $matchtitle);
+		$title = $matchtitle[1];
 
 		preg_match("/<meta[^<>]+charset=\"*([a-zA-Z0-9\-_]+)\"*[^<>]*>/i", $linea, $matches);
 		$charset = isset($matches[1]) ? $matches[1] : '';
@@ -194,10 +199,9 @@ class multibyte_patch {
 		}
 
 		$commentdata['comment_content'] = '[...] ' . esc_html($excerpt) . ' [...]';
-		$commentdata['comment_content'] = addslashes($commentdata['comment_content']);
-		$commentdata['comment_author'] = stripslashes($commentdata['comment_author']);
-		$commentdata['comment_author'] = $this->convenc($commentdata['comment_author'], $blog_encoding, $from_encoding);
-		$commentdata['comment_author'] = addslashes($commentdata['comment_author']);
+		$commentdata['comment_content'] = $wpdb->escape($commentdata['comment_content']);
+		$commentdata['comment_author'] = $this->convenc($title, $blog_encoding, $from_encoding);
+		$commentdata['comment_author'] = $wpdb->escape($commentdata['comment_author']);
 
 		return $commentdata;
 	}
@@ -454,7 +458,7 @@ class multibyte_patch {
 
 		$this->has_mbfunctions = $this->mbfunctions_exist();
 		$this->has_mb_strlen = function_exists('mb_strlen');
-		$this->debug_suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.dev' : '';
+		$this->debug_suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
 		load_textdomain($this->textdomain, plugin_dir_path(__FILE__) . $this->lang_dir . '/' . $this->textdomain . '-' . get_locale() . '.mo');
 		register_activation_hook(__FILE__, array($this, 'activation_check'));
