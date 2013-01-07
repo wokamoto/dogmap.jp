@@ -16,28 +16,51 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 /**
  * default option
  */
 function wp_social_bookmarking_light_default_options()
 {
-    return array( "services" => "hatena, hatena_users, facebook, google_buzz, yahoo, livedoor, friendfeed, tweetmeme, grow",
+    $styles = <<<EOT
+.wp_social_bookmarking_light{
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.wp_social_bookmarking_light div{
+    float: left !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 5px 0px 0 !important;
+    height: 23px !important;
+    text-indent: 0 !important;
+}
+.wp_social_bookmarking_light img{
+    border: 0 !important;
+    padding: 0;
+    margin: 0;
+    vertical-align: top !important;
+}
+.wp_social_bookmarking_light_clear{
+    clear: both !important;
+}
+.wsbl_twitter{
+    width: 100px;
+}
+EOT;
+    
+    return array( "services" => "hatena_button, facebook_like, twitter",
+                  "styles" => $styles,
                   "position" => "top",
                   "single_page" => true,
                   "is_page" => true,
-                  'style' => array('padding_top' => '0',
-                                    'padding_bottom' => '0',
-                                    'float' => 'left'),
                   "mixi" => array('check_key' => '',
                                    'check_robots' => 'noimage',
                                    'button' => 'button-3'),
                   'mixi_like' => array('width' => '65'),
                   "twitter" => array('via' => "",
                                       'lang' => "en",
-                                      'count' => 'horizontal',
-                                      'width' => '130',
-                                      'height' => '20'),
+                                      'count' => 'horizontal'),
                   "hatena_button" => array('layout' => 'standard'),
                   'facebook' => array('locale' => 'en_US'),
                   'facebook_like' => array('version' => 'xfbml',
@@ -58,8 +81,7 @@ function wp_social_bookmarking_light_default_options()
                   'google_plus_one' => array('button_size' => 'medium',
                                                 'lang' => 'en-US',
                                                 'count' => true),
-                  'grow' => array('button_type' => 'square' ,
-				  					  'apikey' => ''),
+                  'line' => array('button_type' => 'line88x20'),
     );
 }
 
@@ -91,21 +113,17 @@ function wp_social_bookmarking_light_options()
 function wp_social_bookmarking_light_save_options($data)
 {
     $options = array("services" => $data["services"],
+                      "styles" => $data["styles"],
                       "position" => $data["position"],
                       "single_page" => $data["single_page"] == 'true',
                       "is_page" => $data["is_page"] == 'true',
-                      'style' => array('padding_top' => $data["style_padding_top"],
-                                        'padding_bottom' => $data["style_padding_bottom"],
-                                        'float' => $data["style_float"]),
                       "mixi" => array('check_key' => $data["mixi_check_key"],
                                        'check_robots' => $data["mixi_check_robots"],
                                        'button' => $data['mixi_button']),
                       'mixi_like' => array('width' => $data["mixi_like_width"],),
                       "twitter" => array('via' => $data['twitter_via'],
                                           'lang' => $data['twitter_lang'],
-                                          'count' => $data['twitter_count'],
-                                          'width' => $data['twitter_width'],
-                                          'height' => $data['twitter_height']),
+                                          'count' => $data['twitter_count']),
                       'hatena_button' => array('layout' => $data['hatena_button_layout']),
                       'facebook' => array('locale' => trim($data['facebook_locale'])),
                       'facebook_like' => array('version' => $data['facebook_like_version'],
@@ -124,8 +142,7 @@ function wp_social_bookmarking_light_save_options($data)
                       'google_plus_one' => array('button_size' => $data['google_plus_one_button_size'],
                                                     'lang' => $data['google_plus_one_lang'],
                                                     'count' => $data['google_plus_one_count'] == 'true'),
-                      'grow' => array('button_type' => $data['grow_button_type'] ,
-				  					  'apikey' => $data['grow_apikey']),
+                      'line' => array('button_type' => $data['line_button_type']),
     );
     update_option( 'wp_social_bookmarking_light_options', $options );
     return $options;

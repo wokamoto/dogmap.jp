@@ -181,7 +181,7 @@ function wsbl_update_services(is_simply)
     jQuery("#services_id").val(vals);
     
     is_simply = is_simply || false;
-    var services = ['mixi', 'twitter', 'hatena_button', 'facebook', 'gree', 'evernote', 'tumblr', 'atode', 'google_plus_one', 'grow'];
+    var services = ['mixi', 'twitter', 'hatena_button', 'facebook', 'gree', 'evernote', 'tumblr', 'atode', 'google_plus_one', 'line'];
     for(var i in services){
         wsbl_tab_toggle(services[i], is_simply);
     }
@@ -270,6 +270,7 @@ function wp_social_bookmarking_light_options_page()
     <div id="tabs">
         <ul>
             <li><a href="#tabs-1"><span><?php _e("General Settings") ?></span></a></li>
+            <li><a href="#tabs-1_2"><span><?php _e("Styles") ?></span></a></li>
             <li id='mixi_settings'><a href="#tabs-2"><span><?php _el("mixi") ?></span></a></li>
             <li id='twitter_settings'><a href="#tabs-3"><span><?php _el("twitter") ?></span></a></li>
             <li id='hatena_button_settings'><a href="#tabs-4"><span><?php _el("hatena_button") ?></span></a></li>
@@ -279,8 +280,8 @@ function wp_social_bookmarking_light_options_page()
             <li id='tumblr_settings'><a href="#tabs-9"><span><?php _el("tumblr") ?></span></a></li>
             <li id='atode_settings'><a href="#tabs-10"><span><?php _el("atode") ?></span></a></li>
             <li id='google_plus_one_settings'><a href="#tabs-11"><span><?php _el("google_plus_one") ?></span></a></li>
-            <li id='grow_settings'><a href="#tabs-12"><span><?php _el("grow") ?></span></a></li>
-        </ul>
+            <li id='line_settings'><a href="#tabs-12"><span><?php _el("line") ?></span></a></li>
+            </ul>
 
         <!-- General -->
         <div id="tabs-1">
@@ -310,36 +311,6 @@ function wp_social_bookmarking_light_options_page()
                 <select name='is_page'>
                 <option value='true' <?php if( $options['is_page'] == true ) echo 'selected'; ?>>Yes</option>
                 <option value='false' <?php if( $options['is_page'] == false ) echo 'selected'; ?>>No</option>
-                </select>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row"><?php _el('Padding') ?>:</th>
-                <td>
-                Top:
-                <select name='style_padding_top'>
-                <?php 
-                for($i = 0; $i < 50; $i++){
-                    ?><option value='<?php echo $i ?>' <?php if( $options['style']['padding_top'] == $i ) echo 'selected'; ?>><?php echo $i?>px</option><?php
-                }
-                ?>
-                </select>
-                Bottom:
-                <select name='style_padding_bottom'>
-                <?php 
-                for($i = 0; $i < 50; $i++){
-                    ?><option value='<?php echo $i ?>' <?php if( $options['style']['padding_bottom'] == $i ) echo 'selected'; ?>><?php echo $i?>px</option><?php
-                }
-                ?>
-                </select>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row"><?php _el('Float') ?>:</th>
-                <td>
-                <select name='style_float'>
-                <option value='left' <?php if( $options['style']['float'] == 'left' ) echo 'selected'; ?>><?php _el('float_left') ?></option>
-                <option value='right' <?php if( $options['style']['float'] == 'right' ) echo 'selected'; ?>><?php _el('float_right') ?></option>
                 </select>
                 </td>
             </tr>
@@ -379,6 +350,18 @@ function wp_social_bookmarking_light_options_page()
                     </ul>
                     <br clear="both"/>
                 </td>
+            </tr>
+            </table>
+        </div>
+        
+        <!-- Styles -->
+        <div id="tabs-1_2">
+            <table class='form-table'>
+            <tr>
+	            <th scope="row">Custom CSS:</th>
+            	<td>
+            		<textarea name="styles" rows="20" cols="80"><?php echo $options['styles'] ?></textarea>
+            	</td>
             </tr>
             </table>
         </div>
@@ -423,10 +406,12 @@ function wp_social_bookmarking_light_options_page()
 			<!-- mixi Like -->
             <strong>mixi Like</strong>
             <table class='form-table'>
+            <tr>
                 <th scope="row">Width:</th>
                 <td>
                 <input type="text" name='mixi_like_width' value="<?php echo $options['mixi_like']["width"] ?>"/>
                 </td>
+            </tr>
             </table>
         </div>
 
@@ -458,18 +443,6 @@ function wp_social_bookmarking_light_options_page()
                 <option value='none' <?php if( $options['twitter']['count'] == 'none' ) echo 'selected'; ?>>none</option>
                 <option value='horizontal' <?php if( $options['twitter']['count'] == 'horizontal' ) echo 'selected'; ?>>horizontal</option>
                 </select>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Width:</th>
-                <td>
-                <input type="text" name='twitter_width' value="<?php echo $options['twitter']['width'] ?>" size=20 />
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Height:</th>
-                <td>
-                <input type="text" name='twitter_height' value="<?php echo $options['twitter']['height'] ?>" size=20 />
                 </td>
             </tr>
             </table>
@@ -764,24 +737,26 @@ function wp_social_bookmarking_light_options_page()
             </tr>
             </table>
         </div>
-        
-		<!-- grow! button  -->
-		<div id="tabs-12">
+
+        <!-- line -->
+        <div id="tabs-12">
             <table class='form-table'>
-	            <tr>
-	            	<th scope="row">apikey</th>
-	            	<td> <input type="text" name='grow_apikey' value="<?php echo $options['grow']["apikey"] ?>" size=50 /></td>
-	            </tr>
-	            <tr>
-	            	<th scope="row">Button type</th>
-	            	<td>
-						<input id="square" type="radio" name="grow_button_type" value="square" <?php if('square' == $options['grow']["button_type"]):?> checked="checked" <?php endif; ?>><label for="square">Square</label>
-						<br/>
-						<input id="rectangle" type="radio" name="grow_button_type" value="rectangle" <?php if('rectangle' == $options['grow']["button_type"]):?> checked="checked" <?php endif; ?>><label for="rectangle">Rectangle</label>
-					</td>
-	            </tr>
+            <tr>
+                <th scope="row">Button type:</th>
+                <td>
+                <select name='line_button_type' onchange='jQuery("#line_img").attr("src", "<?php echo WP_SOCIAL_BOOKMARKING_LIGHT_IMAGES_URL ?>/"+this.form.line_button_type.value+".png")'>
+                <?php
+                $button_types = array('line20x20', 'line88x20');
+                foreach($button_types as $button_type){
+                    ?><option value='<?php echo $button_type ?>' <?php if( $options['line']['button_type'] == $button_type ) echo 'selected'; ?>><?php echo $button_type?></option><?php
+                }
+                ?>
+                </select>
+                <img id='line_img' style="vertical-align:middle" src='<?php echo WP_SOCIAL_BOOKMARKING_LIGHT_IMAGES_URL."/".$options['line']['button_type'] ?>.png'>
+                </td>
+            </tr>
             </table>
-		</div>
+        </div>
         
     </div>
     <p class="submit">
@@ -831,7 +806,7 @@ function wp_social_bookmarking_light_options_page()
     <tr><td>mixi_like</td><td>mixi Like (require <a href="http://developer.mixi.co.jp/connect/mixi_plugin/mixi_check/mixicheck" onclick="window.open('http://developer.mixi.co.jp/connect/mixi_plugin/mixi_check/mixicheck'); return false;" >mixi check key</a>)</td></tr>
     <tr><td>gree</td><td>GREE Social Feedback</td></tr>
     <tr><td>atode</td><td>atode (toread)</td></tr>
-    <tr><td>grow!</td><td>grow! button (require <a href="http://growbutton.com/setting#!get_button"  onclick="window.open('http://growbutton.com/setting#!get_button'); return false;" >apikey</a>)</td></tr>
+    <tr><td>line</td><td>LINE Button</td></tr>
     </table>
 </div>
 

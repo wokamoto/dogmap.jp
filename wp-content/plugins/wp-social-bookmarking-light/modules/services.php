@@ -129,8 +129,6 @@ class WpSocialBookmarkingLight
     {
         $options = wp_social_bookmarking_light_options();
         $twitter = $options['twitter'];
-        $width = $twitter['width'] != '' ? $twitter['width'] : '120';
-        $height = $twitter['height'] != '' ? $twitter['height'] : '20';
         return $this->link_raw('<iframe allowtransparency="true" frameborder="0" scrolling="no"'
                                 .' src="http://platform.twitter.com/widgets/tweet_button.html'
                                 .'?url='.$this->encode_url
@@ -138,8 +136,7 @@ class WpSocialBookmarkingLight
                                 .($twitter['via'] != '' ? '&amp;via='.$twitter['via'] : '')
                                 .'&amp;lang='.$twitter['lang']
                                 .'&amp;count='.$twitter['count']
-                                .'"'
-                                .' style="width:'.$width.'px; height:'.$twitter['height'].'px;">'
+                                .'" style="width:130px; height:20px;">'
                                 .'</iframe>');
     }
 
@@ -387,7 +384,7 @@ class WpSocialBookmarkingLight
                                     .'&amp;action='.$action
                                     .'&amp;colorscheme='.$colorscheme
                                     .($font == '' ? '' : '&amp;font='.$font)
-                                    .($locale == '' ? '' : '$amp;locale='.$locale)
+                                    .($locale == '' ? '' : '&amp;locale='.$locale)
                                     .'&amp;height=21"'
                                     .' scrolling="no" frameborder="0"'
                                     .' style="border:none; overflow:hidden; width:'.$width.'px; height:21px;"'
@@ -552,24 +549,26 @@ class WpSocialBookmarkingLight
         }
         return '';
     }
-
-	/**
-	 * @brief grow!
-	 */
-	function grow()
-	{
-		$site_name = $this->blogname;
-		$link = $this->url;
-		$title = $this->title;
-		$button_type = $options['grow']['button_type'];
-		
-		return '<span class="growbutton">' . 
-		   '<span style="display: none;" itemscope itemref="' . $button_type . '" itemtype="http://growbutton.com/ns#button">'.
-		   '<span itemprop="url">' . $link . '</span>'.
-		   '<span itemprop="title">' . $title . '</span>'.
-		   '<span itemprop="site_name">'. $site_name . '</span>'.
-		   '</span>';
-	}
+    
+    /**
+     * @brief LINE
+     */
+    function line()
+    {
+    	$options = wp_social_bookmarking_light_options();
+    	if($options['line']['button_type'] == "line88x20"){
+    	    $icon = WP_SOCIAL_BOOKMARKING_LIGHT_IMAGES_URL."/line88x20.png";
+    	    $width = 88;
+    	    $height = 20;
+    	}
+    	else{
+    	    $icon = WP_SOCIAL_BOOKMARKING_LIGHT_IMAGES_URL."/line20x20.png";
+    	    $width = 20;
+    	    $height = 20;
+    	}
+    	return $this->link("http://line.naver.jp/R/msg/text/?{$this->title}%0D%0A{$this->url}", "LINEで送る", $icon, $width, $height);
+    }
+    
 }
 
 /**
