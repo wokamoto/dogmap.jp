@@ -4,11 +4,11 @@
  * Plugin URI: http://wordpress.org/extend/plugins/rewrite-rules-inspector/
  * Description: Simple WordPress Admin view for inspecting your rewrite rules
  * Author: Daniel Bachhuber, Automattic
- * Version: 1.1
+ * Version: 1.2
  * Author URI: http://automattic.com/
  */
 
-define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.1' );
+define( 'REWRITE_RULES_INSPECTOR_VERSION', '1.2' );
 define( 'REWRITE_RULES_INSPECTOR_ROOT', dirname( __FILE__ ) );
 define( 'REWRITE_RULES_INSPECTOR_FILE_PATH' , REWRITE_RULES_INSPECTOR_ROOT . '/' . basename( __FILE__ ) );
 
@@ -121,7 +121,7 @@ class Rewrite_Rules_Inspector
 				}
 			}
 			if ( !isset( $rewrite_rules_array[$rule]['source'] ) )
-				$rewrite_rules_array[$rule]['source'] = 'other';
+				$rewrite_rules_array[$rule]['source'] = apply_filters( 'rewrite_rules_inspector_source', 'other', $rule, $rewrite );
 		}
 
 		// Find any rewrite rules that should've been generated but weren't
