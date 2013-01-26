@@ -29,7 +29,7 @@ if (!defined('AJAX_LIBS_GOOGLE'))
 if (!defined('AJAX_LIBS_YUI'))
 	define('AJAX_LIBS_YUI', true);
 
-$jquery_ver = '1.7.2';
+$jquery_ver = '1.8.3';
 if (version_compare($wp_version, "3.4.1", ">="))
 	$jquery_ver = '1.7.2';
 elseif (version_compare($wp_version, "3.3", ">="))
@@ -165,7 +165,7 @@ endif;
 //**************************************************************************************
 function script_src_cleanup($src) {
 	if (strstr($src, GOOGLE_JS_API_URL) != false || strstr($src, AJAX_LIBS_GOOGLE_URL) != false || strstr($src, AJAX_LIBS_YUI_URL) != false)
-		$src = preg_replace("/(\?|\&|\&(amp|#038);)ver=.*$/i", "", $src);
+		$src = preg_replace("/(¥?|¥&|¥&(amp|#038);)ver=.*$/i", "", $src);
 	return $src;
 }
 add_filter('script_loader_src', 'script_src_cleanup');

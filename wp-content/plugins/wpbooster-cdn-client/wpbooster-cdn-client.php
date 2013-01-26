@@ -60,7 +60,8 @@ function __construct()
     }
 
     register_activation_hook(__FILE__, array(&$this, "is_active_host"));
-    add_action("plugins_loaded", array(&$this, "plugins_loaded"));
+    if ( !is_ssl() )
+        add_action("plugins_loaded", array(&$this, "plugins_loaded"));
     add_action('admin_init', array(&$this, 'admin_init'));
     add_action("admin_bar_menu", array(&$this, "admin_bar_menu"), 9999);
     add_action("admin_head", array(&$this, "admin_head"));
