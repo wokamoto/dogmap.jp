@@ -3,7 +3,7 @@
 Plugin Name: The WP Booster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
-Version: 2.4.1
+Version: 2.5.0
 Author URI: http://wpbooster.net/
 Domain Path: /languages
 Text Domain: wpbooster-cdn-client
@@ -60,10 +60,9 @@ function __construct()
     }
 
     register_activation_hook(__FILE__, array(&$this, "is_active_host"));
-    if ( !is_ssl() )
-        add_action("plugins_loaded", array(&$this, "plugins_loaded"));
+    add_action("plugins_loaded", array(&$this, "plugins_loaded"));
     add_action('admin_init', array(&$this, 'admin_init'));
-    add_action("admin_bar_menu", array(&$this, "admin_bar_menu"), 9999);
+    //add_action("admin_bar_menu", array(&$this, "admin_bar_menu"), 9999);
     add_action("admin_head", array(&$this, "admin_head"));
     add_action("wp_head", array(&$this, "admin_head"));
 }
@@ -104,7 +103,7 @@ public function plugins_loaded()
     );
 
     if ($this->is_active_host()) {
-        if (!is_user_logged_in() && !get_option('wpbooster-suspended', 0)) {
+        if (!is_user_logged_in() && !get_option('wpbooster-suspended', 0) && !is_ssl()) {
             $hooks = array(
                 "stylesheet_directory_uri",
                 "template_directory_uri",
@@ -135,11 +134,26 @@ public function the_content($html)
 public function filter($uri)
 {
     $cdn = get_transient($this->is_active);
+    if ($this->is_reserved()) {
+        $cdn_url = 'http://'.$cdn->id.'.wpbooster.net/';
+    } else {
+        $cdn_url = 'http://'.$this->cdn.'/'.$cdn->id.'/';
+    }
     return str_replace(
         $cdn->base_url,
-        'http://'.$this->cdn.'/'.$cdn->id.'/',
+        $cdn_url,
         $uri
     );
+}
+
+public function is_reserved()
+{
+    $cdn = get_transient($this->is_active);
+    if (intval($cdn->reserved) === 1) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 public function is_active_host()
@@ -174,6 +188,7 @@ public function admin_notice()
     );
 }
 
+/*
 public function admin_bar_menu($bar)
 {
     if (!current_user_can('update_core')) {
@@ -195,6 +210,7 @@ public function admin_bar_menu($bar)
         'href'  => admin_url('admin.php?page=wpbooster-cdn-client'),
     ) );
 }
+*/
 
 private function get_api()
 {

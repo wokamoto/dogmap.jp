@@ -2,8 +2,8 @@
 Contributors: codestyling
 Tags: wordpress, php, memory, system, information, tool, dashboard, monitoring, health, quota, 
 Requires at least: 2.7
-Tested up to: 3.1.3
-Stable tag: 1.3.3
+Tested up to: 3.5.1
+Stable tag: 1.4.0
 
 Comprehensive Overview for your WordPress Parameter and Server Performance.
 
@@ -21,6 +21,11 @@ Furthermore the Plugin also introduces a new Dashboard Sub Page, Memory Usage in
 Additional you can switch on the performance values HTML comment output at your visitors pages to measure your system.
 The new Dashboard Administration Submenu entry allows deactivation of several features if not necessary.
 
+All WordPress related constants can be inspected. The amount ahs been adapted to WordPress 3.5.1 now.
+
+Newly introduced you will find a CPU Usage History chart at your Dashboard. It will show the approx. last 2 minutes of server load.
+This will be extended and fully configurable with next upcomming versions. If you don't get any values shown, your provider may have disabled any type of performance functions.
+
 The plugin is now fully translatable and gots as first shot a german translation (approx. 40% translated). Feel free to contribute your translations.
 
 With all the provided information it's easy to detect configuration issues, memory race problems and also to help somebody by just request some values.
@@ -28,9 +33,10 @@ I use this plugin normally as a "service desk" info point at my friends if somet
 
 Remark: The current version provides database analysis at full spectrum only for normal WordPress installations. Multi Site installation analysis will follow with the next update.
 
-= Next Steps = 
+= Attention = 
 
-The analysis of WordPress Multi Site Database have to be implemented.
+This plugins will be restructed now and will require WordPress min version 3.5 with next upcomming updates.
+Please be prepared to have a suitable WordPress version running to continue using this plugins.
 
 = Requirements =
 
@@ -47,6 +53,19 @@ Please visit [the official website](http://www.code-styling.de/english/developme
 1. Navigate to your Dashboard and enjoy status informations
 
 == Changelog ==
+
+= Attention = 
+Version(s) 1.4.x will be the last version(s) with compatibility support down to WordPress 2.7!
+Upcomming higher versions will required WordPress 3.5 as minimum version.
+
+= Version 1.4.0 =
+* Bugfix: compatibility with WP 3.5
+* Bugfix: progress bar styles adjusted
+* Bugfix: repaired broken dashboard drag/drop and click handler within widget
+* Feature: extended list of WordPress constants
+* Feature: smaller plugin code because of extraction overview to external file loaded on demand only
+* Feature: PHP section now list the full information php_info() would show
+* Feature: CPU usage chart at Dashboard with live data of last 2 min.
 
 = Version 1.3.3 =
 * Feature: first part of test suite: memory limit tester
@@ -117,6 +136,7 @@ Please visit [the official website](http://www.code-styling.de/english/developme
 
 
 == Screenshots ==
+1. the Dashboard Widget with live performance monitoring for last approx. 2 minutes.
 1. the System Tab (with one expanded detail section)
 1. the System Tab (if your provider has massive security restrictions)
 1. the PHP Tab (all details collapsed)

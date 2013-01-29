@@ -8,12 +8,14 @@ class wpsh_boot_loader {
 	
 	function __construct() {
 		$this->pure_init = !function_exists('add_action');
-		$this->memory_limit = (int) $this->convert_ini_bytes(ini_get('memory_limit'));
-		//if no limit is available set it to 1GB to be sure are divisions ;-)
+		$this->memory_limit = (int) $this->convert_ini_bytes(@ini_get('memory_limit'));
+		//if no limit is available set it to 1GB to be sure at divisions ;-)
 		if($this->memory_limit == 0) $this->memory_limit = 1024*1024*1024; 
 		$this->mem_usage_possible = function_exists('memory_get_usage');
-		$this->mem_usage_denied	= preg_match('/memory_get_usage/', ini_get('disable_functions'));
-		$this->exec_denied = preg_match('/exec/', ini_get('disable_functions'));
+		$this->mem_usage_denied	= preg_match('/memory_get_usage/', @ini_get('disable_functions'));
+		$this->exec_denied = preg_match('/exec/', @ini_get('disable_functions'));
+		if (!$this->exec_denied) // Suhosin likes to throw a warning if exec is disabled then die - weird
+			$this->exec_denied = preg_match('/exec/',  @ini_get('suhosin.executor.func.blacklist'));
 		$this->is_windows = ( substr(PHP_OS,0,3) == 'WIN');
 		$this->check_points = array();
 		if ($this->pure_init) {
@@ -103,8 +105,8 @@ class wpsh_boot_loader {
 		}
 	}
 	
-	function get_loadavg() {
-		$result = array(__('-n.a.-', 'wp-system-health'),__('-n.a.-', 'wp-system-health'),__('-n.a.-', 'wp-system-health'));
+	function get_loadavg($defaults) {
+		$result = $defaults;
 		if (function_exists('sys_getloadavg')) {
 			$load = @sys_getloadavg();
 			if (is_array($load)) {

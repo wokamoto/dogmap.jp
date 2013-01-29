@@ -106,8 +106,9 @@
 .ui-tabs-nav li.ui-tabs-selected {
 	border-bottom-color: #ffffff;
 }
-.ui-tabs-nav li.ui-tabs-selected a, .ui-tabs-nav li.ui-tabs-selected a:hover {
-	background: #ffffff url(images/ffffff_40x100_textures_02_glass_65.png) 0 50% repeat-x;
+.ui-tabs-nav li.ui-tabs-selected a, .ui-tabs-nav li.ui-tabs-selected a:hover,
+.ui-tabs-nav li.ui-tabs-active a, .ui-tabs-nav li.ui-tabs-active a:hover{
+	background: #fad42e url(images/fad42e_40x100_textures_02_glass_65.png) 0 50% repeat-x;
 	color: #212121;
 }
 .ui-tabs-panel {
@@ -612,6 +613,7 @@ Generic ThemeRoller Classes
 .ui-widget-shadow { margin: -4px/*{offsetTopShadow}*/ 0 0 -4px/*{offsetLeftShadow}*/; padding: 4px/*{thicknessShadow}*/; background: #aaaaaa/*{bgColorShadow}*/ none/*{bgImgUrlShadow}*/ 0/*{bgShadowXPos}*/ 0/*{bgShadowYPos}*/ repeat-x/*{bgShadowRepeat}*/; opacity: .35;filter:Alpha(Opacity=35)/*{opacityShadow}*/; -moz-border-radius: 4px/*{cornerRadiusShadow}*/; -webkit-border-radius: 4px/*{cornerRadiusShadow}*/; }
 
 #icon-wp-system-health { background:transparent url(images/health.gif) no-repeat scroll left top; }
+#wpsh-tabs table.widefat { background-color: #fff; }
 #wsph-check-memory-limit-results { padding: 10px; height:300px; overflow:auto;border:dotted 1px gray; }
 .mem-test-success { padding-left: 20px; background:transparent url(images/ok.png) no-repeat scroll left top; }
 .mem-test-failed { padding-left: 20px; background:transparent url(images/no.png) no-repeat scroll left top; }

@@ -25,6 +25,10 @@ class relative_URI {
                 str_replace( 'https://', 'http://', $home_url),
                 str_replace( 'http://', 'https://', $home_url),
                 $content);
+            $content = str_replace(
+                array('http://connect.facebook.net/', 'http://apis.google.com/', 'http://platform.twitter.com/', 'http://wokamoto.files.wordpress.com'),
+                array('https://connect.facebook.net/', 'https://apis.google.com/', 'https://platform.twitter.com/', 'https://wokamoto.files.wordpress.com'),
+                $content);
         }
 
         return $content;

@@ -22,6 +22,16 @@ function __construct()
     }
 }
 
+public function is_reserved()
+{
+    $cdn = get_transient($this->is_active);
+    if (intval($cdn->reserved) === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 public function admin_menu()
 {
     $hook = add_menu_page(
@@ -86,14 +96,19 @@ public function admin_panel()
     echo "API KEY: ".$this->key;
     echo '</p>';
 
-    echo '<p class="balance">';
-    echo '<span class="number">';
-    echo number_format($data['point']);
-    echo '</span>';
-    echo ' points.';
-    echo '</p>';
+    if (!$this->is_reserved()) {
+        echo '<p class="balance">';
+        echo '<span class="number">';
+        echo number_format($data['point']);
+        echo '</span>';
+        echo ' points.';
+        echo '</p>';
+    }
 
-    $this->add_box(__('History', "wpbooster-cdn-client"), $this->get_history(), "");
+    if (!$this->is_reserved()) {
+        $this->add_box(__('History', "wpbooster-cdn-client"), $this->get_history(), "");
+    }
+
     $this->add_box(
         __('Information', 'wpbooster-cdn-client'),
         $this->get_feed(__('http://www.wpbooster.net/feed', 'wpbooster-cdn-client')),
@@ -245,8 +260,8 @@ private function get_history()
     $html .= '<table id="booster-table">';
     $html .= '<tr id="cats"><th>'.__('Date', 'wpbooster-cdn-client').'</th></tr>';
     $html .= '<tr id="points"><th>'.__('Used Points', 'wpbooster-cdn-client').'</th></tr>';
-    $html .= '<tr id="req"><th>'.__('Transfers (MB)', 'wpbooster-cdn-client').'</th></tr>';
-    $html .= '<tr id="tra"><th>'.__('Requests', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '<tr id="tra"><th>'.__('Transfers (MB)', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '<tr id="req"><th>'.__('Requests', 'wpbooster-cdn-client').'</th></tr>';
     $html .= '</table>';
     return $html;
 }

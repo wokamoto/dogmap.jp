@@ -4,7 +4,7 @@ Donate link: http://wpist.me/
 Tags: head, post, page, functions.php, admin, logo, auto save, revision, meta box, dashboard
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 
 WP Total Hacks can customize more than 20 settings on your WordPress Site.
 PHP5 is required!
@@ -54,7 +54,7 @@ PHP5 is required!
 * Belarusian(be_BY) - [Alexander Ovsov](http://webhostinggeeks.com/science/)
 * Malay(ms_MY) - [Zairul Azmil](http://flavors.me/zairul#2fa/wordpress)
 * Brazilian Portuguese(pt_BR) - [Rafael Funchal](http://www.rafaelfunchal.com.br/)
-* French(fr_FR) - [Guillaume VASLIN](http://www.chaptalstreetquartetfamily.fr/csqf00/)
+* French(fr_FR) - [Guillaume VASLIN](http://www.chaptalstreetquartetfamily.fr/)
 
 You can send your own language pack to me.
 
