@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Feedback Champuru
-Version: 0.5.3
+Version: 0.5.4
 Plugin URI: http://wppluginsj.sourceforge.jp/feedback-champru/
 Description: This plugin makes WordPress Comment boisterous adding feedbacks of Twitter, Social Bookmarks and so on.
 Author: wokamoto
@@ -98,11 +98,12 @@ function feedback_type($commenttxt = false, $trackbacktxt = false, $pingbacktxt 
 //**********************************************************************************
 class FeedbackChampuru {
 	var $plugin_name   = 'feedback-champuru';
-	var $plugin_ver    = '0.5.3';
+	var $plugin_ver    = '0.5.4';
 
 	const SCHEDULE_HANDLER = 'get-feedback-champuru';
 	const META_KEY_PRE  = '_feedback_';
 
+	const TWITTER_API   = 'http://search.twitter.com/search.json?q=%s&rpp=100';
 	const TOPSY_API     = 'http://otter.topsy.com/trackbacks.json?url=%s&tracktype=tweet&perpage=50';
 	const HATENA_API    = 'http://b.hatena.ne.jp/entry/jsonlite/?url=%s';
 	const DELICIOUS_API = 'http://feeds.delicious.com/v2/json/url/%s';
@@ -135,6 +136,9 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Constructor
 	***********************************************************/
+	function FeedbackChampuru(){
+		$this->__construct();
+	}
 	function __construct() {
 		$this->_set_plugin_dir(__FILE__);
 		$this->_load_textdomain();
@@ -338,10 +342,6 @@ class FeedbackChampuru {
 
 	// remote_get
 	function remote_get( $url, $args = array() ){
-//		$url = $this->safe_url( $url );
-//		if ( empty($url) )
-//			return false;
-
 		$ret = wp_remote_get( $url, $args );
 		if ( is_array($ret) && isset($ret["body"]) && !empty($ret["body"]) )
 			return $ret["body"];
@@ -451,7 +451,7 @@ class FeedbackChampuru {
 		if (false !== ($value = get_transient($transient))) {
 			foreach ((array)$value as $post_id => $permalink) {
 				foreach ($this->feedbacks as $type) {
-					$this->_get_feedback($type, $post_id, $permalink, true);
+					$this->_get_feedback($type, $post_id, $permalink);
 				}
 			}
 			delete_transient($transient);
@@ -465,10 +465,10 @@ class FeedbackChampuru {
 			return ( strtotime($a->comment_date) < strtotime($b->comment_date) ? -1 : 1);
 	}
 
-	function comment_build($type, $post_id, $author = '', $author_url = '', $datetime = 0, $content = '', $photo_url = ''){
+	function comment_build($type, $post_id, $author = '', $author_url = '', $datetime = 0, $content = '', $photo_url = '', $comment_id = null){
 		$gmt_offset = 3600 * get_option('gmt_offset');
 		$comment = (object) array(
-			"comment_ID"           => $type . '-' . $this->comment_id++ ,
+			"comment_ID"           => $type . '-' . ($comment_id ? $comment_id : $this->comment_id++) ,
 			"comment_post_ID"      => (string) $post_id ,
 			"comment_author"       => $author ,
 			"comment_author_email" => $photo_url ,
@@ -504,15 +504,19 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get Feedbacks
 	***********************************************************/
-	function _get_feedback($type, $post_id, $permalink, $get_new = false){
+	function _get_feedback($type, $post_id, $permalink){
 		$permalink = $this->percent_encode_capital_letter($permalink);
 		if ( !preg_match( '/^https?:\/\//i', $permalink) )
 			return array();
 
 		$comments_array = array();
+
+		$cache = $this->_get_cache($type, $post_id);
+		$get_new  = (intval($cache["expired"]) < time());
+
 		switch ($type){
 		case 'tweet':
-			$comments_array = $this->_get_topsy($type, $post_id, $permalink, $get_new);
+			$comments_array = $this->_get_twitter($type, $post_id, $permalink, $get_new);
 			break;
 		case 'hatena':
 			$comments_array = $this->_get_hatena($type, $post_id, $permalink, $get_new);
@@ -550,21 +554,64 @@ class FeedbackChampuru {
 		return $comments;
 	}
 
+	function _get_cache($type, $post_id) {
+		$meta_key = self::META_KEY_PRE . $type;
+		$cache = $this->_get_post_meta($post_id, $meta_key);
+		if ( isset($cache["expired"]) && isset($cache["comments"]) ) {
+			return array('comments' => $cache["comments"], 'expired' => $cache["expired"]);
+		} else {
+			return array('comments' => array(), 'expired' => 0);
+		}
+	}
+
+	/**********************************************************
+	* Get Twitter Feedbacks (Twitter Search API)
+	***********************************************************/
+	function _get_twitter($type, $post_id, $permalink, $get_new = false){
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
+
+		$comments = $cache["comments"];
+		$response = $this->remote_get(sprintf(self::TWITTER_API, urlencode($permalink)));
+		if ($response !== false){
+			$json = $this->json_decode($response);
+			$list = (isset($json->results) ? $json->results : array());
+			foreach ((array) $list as $item){
+				$author     = esc_attr($item->from_user_name);
+				$author_url = esc_attr(sprintf('https://twitter.com/%s/status/%s', $item->from_user, $item->id_str));
+				$datetime   = (int) strtotime($item->created_at);
+				$content    = $item->text;
+				$photo_url  = esc_attr($item->profile_image_url);
+
+				$content    = apply_filters($this->plugin_name.'/content', $content, $type, $author, $author_url, $datetime, $photo_url, $item);
+
+				if ( $content )
+					$comments[$item->id_str] = $this->comment_build($type, $post_id, $author, $author_url, $datetime, $content, $photo_url, $item->id_str);
+			}
+		}
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
+
+		$cache = array(
+			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
+			"comments" => $comments ,
+			);
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
+
+		$results = array();
+		foreach ($comments as $comment) {
+			$results[] = $comment;
+		}
+		return $results;
+	}
+
 	/**********************************************************
 	* Get Twitter Feedbacks (Topsy)
 	***********************************************************/
 	function _get_topsy($type, $post_id, $permalink, $get_new = false){
-		$meta_key = self::META_KEY_PRE . $type;
-		$cache = $this->_get_post_meta($post_id, $meta_key);
-		if (isset($cache["expired"]) && isset($cache["comments"])) {
-			$expired  = (int)$cache["expired"];
-			$comments = $cache["comments"];
-		} else {
-			$expired  = 0;
-			$comments = array();
-		}
-		if ( $expired > time() || !$get_new )
-			return $comments;
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
 
 		$comments = array();
 		$response = $this->remote_get(sprintf(self::TOPSY_API, urlencode($permalink)));
@@ -572,21 +619,11 @@ class FeedbackChampuru {
 			$json = $this->json_decode($response);
 			$list = (isset($json->response) ? $json->response->list : array());
 			foreach ((array) $list as $item){
-//				$author     = esc_attr($item->author->name);
 				$author     = preg_replace('/^http:\/\/topsy\.com\/twitter\/([^\?]*)\?.*$/i', '$1', esc_attr($item->author->topsy_author_url));
-//				$author_url = esc_attr((isset($item->author->url) && !empty($item->author->url)) ? $item->author->url : 'http://twitter.com/' . $author);
-//				$author_url = esc_attr('http://topsy.com/' . str_replace('http://', '', $permalink));
 				$author_url = esc_attr($item->permalink_url);
 				$datetime   = (int) $item->date;
 				$content    = esc_attr($item->content);
 				$photo_url  = esc_attr($item->author->photo_url);
-
-//				if ( !empty($content) )
-//					$content .= "\n\n<i>" .
-//						sprintf(
-//							__('This comment was originally posted on %s.', $this->textdomain_name ) ,
-//							'<a href="' . esc_attr($item->permalink_url) . '">Twitter</a>'
-//							) . '</i>';
 
 				$content    = apply_filters($this->plugin_name.'/content', $content, $type, $author, $author_url, $datetime, $photo_url, $item);
 
@@ -594,13 +631,13 @@ class FeedbackChampuru {
 					$comments[] = $this->comment_build($type, $post_id, $author, $author_url, $datetime, $content, $photo_url);
 			}
 		}
-		$comments = (count($comments) > 0 ? $comments : (isset($cache["comments"]) ? $cache["comments"] : $comments));
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
 
 		$cache = array(
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -609,17 +646,9 @@ class FeedbackChampuru {
 	* Get Hatena Bookmark Feedbacks
 	***********************************************************/
 	function _get_hatena($type, $post_id, $permalink, $get_new = false){
-		$meta_key = self::META_KEY_PRE . $type;
-		$cache = $this->_get_post_meta($post_id, $meta_key);
-		if (isset($cache["expired"]) && isset($cache["comments"])) {
-			$expired  = (int)$cache["expired"];
-			$comments = $cache["comments"];
-		} else {
-			$expired  = 0;
-			$comments = array();
-		}
-		if ( $expired > time() || !$get_new )
-			return $comments;
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
 
 		$comments = array();
 		$response = $this->remote_get(sprintf(self::HATENA_API, urlencode($permalink)));
@@ -628,7 +657,6 @@ class FeedbackChampuru {
 			$list = (isset($json->bookmarks) ? $json->bookmarks : array());
 			foreach ((array) $list as $item){
 				$author     = esc_attr($item->user);
-//				$author_url = 'http://b.hatena.ne.jp/' . $author;
 				$author_url = esc_attr('http://b.hatena.ne.jp/entry/' . str_replace('http://', '', $permalink));
 				$datetime   = strtotime(str_replace('/', '-', $item->timestamp));
 				$content    = esc_attr($item->comment);
@@ -640,13 +668,13 @@ class FeedbackChampuru {
 					$comments[] = $this->comment_build($type, $post_id, $author, $author_url, $datetime, $content, $photo_url);
 			}
 		}
-		$comments = (count($comments) > 0 ? $comments : (isset($cache["comments"]) ? $cache["comments"] : $comments));
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
 
 		$cache = array(
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -655,17 +683,9 @@ class FeedbackChampuru {
 	* Get Delicious Feedbacks
 	***********************************************************/
 	function _get_delicious($type, $post_id, $permalink, $get_new = false){
-		$meta_key = self::META_KEY_PRE . $type;
-		$cache = $this->_get_post_meta($post_id, $meta_key);
-		if (isset($cache["expired"]) && isset($cache["comments"])) {
-			$expired  = (int)$cache["expired"];
-			$comments = $cache["comments"];
-		} else {
-			$expired  = 0;
-			$comments = array();
-		}
-		if ( $expired > time() || !$get_new )
-			return $comments;
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
 
 		$comments = array();
 		$response = $this->remote_get(sprintf(self::DELICIOUS_API, md5($permalink)));
@@ -673,7 +693,6 @@ class FeedbackChampuru {
 			$json = $this->json_decode($response);
 			foreach ((array) $json as $item){
 				$author     = esc_attr($item->a);
-//				$author_url = 'http://delicious.com/'.$author;
 				$author_url = esc_attr('http://delicious.com/url/' . md5($permalink));
 				$datetime   = strtotime($item->dt);
 				$content    = esc_attr($item->n);
@@ -685,13 +704,13 @@ class FeedbackChampuru {
 					$comments[] = $this->comment_build($type, $post_id, $author, $author_url, $datetime, $content, $photo_url);
 			}
 		}
-		$comments = (count($comments) > 0 ? $comments : (isset($cache["comments"]) ? $cache["comments"] : $comments));
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
 
 		$cache = array(
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -700,17 +719,9 @@ class FeedbackChampuru {
 	* Get FriendFeed Feedbacks
 	***********************************************************/
 	function _get_friendfeed($type, $post_id, $permalink, $get_new = false){
-		$meta_key = self::META_KEY_PRE . $type;
-		$cache = $this->_get_post_meta($post_id, $meta_key);
-		if (isset($cache["expired"]) && isset($cache["comments"])) {
-			$expired  = (int)$cache["expired"];
-			$comments = $cache["comments"];
-		} else {
-			$expired  = 0;
-			$comments = array();
-		}
-		if ( $expired > time() || !$get_new )
-			return $comments;
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
 
 		$comments = array();
 		$response = $this->remote_get(sprintf(self::FRIENDFEED_API, urlencode($permalink)));
@@ -720,11 +731,9 @@ class FeedbackChampuru {
 				$list = $json;
 				foreach ((array) $list as $item){
 					$author     = esc_attr($item->from->name);
-//					$author_url = 'http://friendfeed.com/' . esc_attr($item->from->id);
 					$author_url = esc_attr($item->url);
 					$datetime   = strtotime($item->date);
 					$content    = $item->body;
-//					$content    = esc_attr(strip_tags($item->body));
 					$photo_url  = 'http://friendfeed-api.com/v2/picture/' . esc_attr($item->from->id) . '?size=large';;
 
 					$content    = apply_filters($this->plugin_name.'/content', $content, $type, $author, $author_url, $datetime, $photo_url, $item);
@@ -734,13 +743,13 @@ class FeedbackChampuru {
 				}
 			}
 		}
-		$comments = (count($comments) > 0 ? $comments : (isset($cache["comments"]) ? $cache["comments"] : $comments));
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
 
 		$cache = array(
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -749,17 +758,9 @@ class FeedbackChampuru {
 	* Get livedoor clip Feedbacks
 	***********************************************************/
 	function _get_livedoor($type, $post_id, $permalink, $get_new = false){
-		$meta_key = self::META_KEY_PRE . $type;
-		$cache = $this->_get_post_meta($post_id, $meta_key);
-		if (isset($cache["expired"]) && isset($cache["comments"])) {
-			$expired  = (int)$cache["expired"];
-			$comments = $cache["comments"];
-		} else {
-			$expired  = 0;
-			$comments = array();
-		}
-		if ( $expired > time() || !$get_new )
-			return $comments;
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
 
 		$comments = array();
 		$response = $this->remote_get(sprintf(self::LIVEDOOR_API, urlencode($permalink)));
@@ -768,7 +769,6 @@ class FeedbackChampuru {
 			$list = (isset($json->Comments) ? $json->Comments : array());
 			foreach ((array) $list as $item){
 				$author     = esc_attr($item->livedoor_id);
-//				$author_url = 'http://clip.livedoor.com/clips/' . $author;
 				$author_url = esc_attr('http://clip.livedoor.com/page/' . $permalink);
 				$datetime   = $item->created_on;
 				$content    = esc_attr($item->notes);
@@ -780,13 +780,13 @@ class FeedbackChampuru {
 					$comments[] = $this->comment_build($type, $post_id, $author, $author_url, $datetime, $content, $photo_url);
 			}
 		}
-		$comments = (count($comments) > 0 ? $comments : (isset($cache["comments"]) ? $cache["comments"] : $comments));
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
 
 		$cache = array(
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -795,17 +795,9 @@ class FeedbackChampuru {
 	* Get buzzurl Feedbacks
 	***********************************************************/
 	function _get_buzzurl($type, $post_id, $permalink, $get_new = false){
-		$meta_key = self::META_KEY_PRE . $type;
-		$cache = $this->_get_post_meta($post_id, $meta_key);
-		if (isset($cache["expired"]) && isset($cache["comments"])) {
-			$expired  = (int)$cache["expired"];
-			$comments = $cache["comments"];
-		} else {
-			$expired  = 0;
-			$comments = array();
-		}
-		if ( $expired > time() || !$get_new )
-			return $comments;
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
 
 		$comments = array();
 		$response = $this->remote_get(sprintf(self::BUZZURL_API, urlencode($permalink)));
@@ -815,7 +807,6 @@ class FeedbackChampuru {
 				$list = (isset($json->posts) ? $json->posts : array());
 				foreach ((array) $list as $item){
 					$author     = esc_attr($item->user_name);
-//					$author_url = 'http://buzzurl.jp/user/' . $author;
 					$author_url = esc_attr('http://buzzurl.jp/entry/' . $permalink);
 					$datetime   = strtotime($item->date);
 					$content    = esc_attr($item->comment);
@@ -828,13 +819,13 @@ class FeedbackChampuru {
 				}
 			}
 		}
-		$comments = (count($comments) > 0 ? $comments : (isset($cache["comments"]) ? $cache["comments"] : $comments));
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
 
 		$cache = array(
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -843,17 +834,9 @@ class FeedbackChampuru {
 	* Get Google Feedbacks
 	***********************************************************/
 	function _get_googleurl($type, $post_id, $permalink, $get_new = false){
-		$meta_key = self::META_KEY_PRE . $type;
-		$cache = $this->_get_post_meta($post_id, $meta_key);
-		if (isset($cache["expired"]) && isset($cache["comments"])) {
-			$expired  = (int)$cache["expired"];
-			$comments = $cache["comments"];
-		} else {
-			$expired  = 0;
-			$comments = array();
-		}
-		if ( $expired > time() || !$get_new )
-			return $comments;
+		$cache = $this->_get_cache($type, $post_id);
+		if ( !$get_new )
+			return $cache["comments"];
 
 		$comments = array();
 		$response = $this->remote_get(sprintf(self::GOOGLE_API, urlencode($permalink)));
@@ -876,13 +859,13 @@ class FeedbackChampuru {
 				}
 			}
 		}
-		$comments = (count($comments) > 0 ? $comments : (isset($cache["comments"]) ? $cache["comments"] : $comments));
+		$comments = (count($comments) > 0 ? $comments : $cache["comments"]);
 
 		$cache = array(
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -909,21 +892,11 @@ class FeedbackChampuru {
 			$json = $this->json_decode($response);
 			$list = (isset($json->response) ? $json->response->list : array());
 			foreach ((array) $list as $item){
-//				$author     = esc_attr($item->author->name);
 				$author     = esc_attr($item->author->display_name);
-//				$author_url = esc_attr((isset($item->author->url) && !empty($item->author->url)) ? $item->author->url : 'http://twitter.com/' . $author);
-//				$author_url = esc_attr('http://topsy.com/' . str_replace('http://', '', $permalink));
 				$author_url = esc_attr($item->permalink_url);
 				$datetime   = (int) $item->date;
 				$content    = esc_attr($item->content);
 				$photo_url  = esc_attr($item->author->photo_url);
-
-//				if ( !empty($content) )
-//					$content .= "\n\n<i>" .
-//						sprintf(
-//							__('This comment was originally posted on %s.', $this->textdomain_name ) ,
-//							'<a href="' . esc_attr($item->permalink_url) . '">Twitter</a>'
-//							) . '</i>';
 
 				$content    = apply_filters($this->plugin_name.'/content', $content, $type, $author, $author_url, $datetime, $photo_url, $item);
 
@@ -937,7 +910,7 @@ class FeedbackChampuru {
 			"expired" => time() + apply_filters($this->plugin_name.'/cache_expired', $this->cache_expired * 60, $post_id) ,
 			"comments" => $comments ,
 			);
-		$this->_update_post_meta($post_id, $meta_key, $cache );
+		$this->_update_post_meta($post_id, self::META_KEY_PRE . $type, $cache);
 
 		return $comments;
 	}
@@ -983,7 +956,7 @@ class FeedbackChampuru {
 			return $avatar;
 
 		$type_pattern = '/^('.implode('|',$this->feedbacks).')\-/i';
-		if (preg_match('/^http:\/\//i', $comment->comment_author_email)) {
+		if (preg_match('/^https?:\/\//i', $comment->comment_author_email)) {
 			$img_url = $comment->comment_author_email;
 		} elseif (preg_match($type_pattern, $comment->comment_ID, $matches)) {
 			$img_url = site_url(str_replace(ABSPATH, '', dirname(__FILE__))) . '/images/';
@@ -1035,8 +1008,6 @@ class FeedbackChampuru {
 		$image = false;
 		if( !file_exists($cache_file) )
 			$image = $this->_get_resize_image($img_url, $img_size, $cache_file);
-//		elseif ( time() >= (filemtime($cache_file) + $cache_expired) )
-//			$image = $this->_get_resize_image($img_url, $img_size, $cache_file);
 
 		if ($image === false && file_exists($cache_file))
 			$image = imagecreatefrompng($cache_file);
@@ -1089,13 +1060,6 @@ class FeedbackChampuru {
 	function comment_reply_link($link, $args = '', $comment = '', $post = ''){
 		switch ($this->_get_type_from_ID(isset($comment->comment_ID) ? $comment->comment_ID : get_comment_ID())) {
 		case 'tweet' :
-//			if (isset($comment->comment_author_url) && preg_match('/^http:\/\/twitter\.com\/([^\/]+)\/status\/([\d]+)$/i', $comment->comment_author_url, $matches) ) {
-//				$href = "http://twitter.com/?status=%40{$matches[1]}+&amp;in_reply_to_status_id={$matches[2]}";
-//				$link = preg_replace('/^(.* href=[\'"])[^\'"]*([\'"].*)$/i', '$1'.$href.'$2', $link);
-//			} else {
-//				$link = '';
-//			}
-//			break;
 		case 'hatena' :
 		case 'delicious' :
 		case 'friendfeed' :
@@ -1348,7 +1312,7 @@ class FeedbackChampuru {
 		$out .= '</label>';
 		$out .= '</td>';
 		$out .= '</tr>'."\n";
-
+/*
 		$out .= '<tr>'."\n";
 		$out .= '<td>';
 		$out .= '<input type="checkbox" name="googleplus" id="googleplus" value="on" style="margin-right:0.5em;"'.(in_array('googleplus',$this->feedbacks) ? ' checked="true"' : '').' />';
@@ -1361,7 +1325,7 @@ class FeedbackChampuru {
 		$out .= '<td>';
 		$out .= '</td>';
 		$out .= '</tr>'."\n";
-
+*/
 		$out .= '</tbody></table>'."\n";
 
 		$out .= '<h3>' . __('Basic Settings', $this->textdomain_name) . '</h3>'."\n";
