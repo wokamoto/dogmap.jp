@@ -1,10 +1,10 @@
 === Feedback Champuru ===
-Contributors: wokamoto
+Contributors: wokamoto, megumithemes, Webnist, tai
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJCY7XB8F4&lc=JP&item_name=WordPress%20Plugins&item_number=wp%2dplugins&currency_code=JPY&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
-Tags: social bookmarks, twitter, hatena bookmark, delicious, friendFeed, livedoor clip, buzzurl, comments
+Tags: social bookmarks, twitter, hatena bookmark, delicious, friendFeed, livedoor clip, buzzurl, googleplus, comments
 Requires at least: 2.7
-Tested up to: 3.2.1
-Stable tag: 0.5.2.6
+Tested up to: 3.5.1
+Stable tag: 0.5.5
 
 This plugin enhances the WordPress comments by incorporating Twitter and Social Bookmarking systems(Hatena, Delicious, FriendFeed, livedoor clip, Buzzurl).
 
@@ -26,6 +26,16 @@ If you have translated into your language, please let me know.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Changelog == 
+
+**0.5.5 - February 1, 2013**  
+minor bug fix.
+
+**0.5.4 - February 1, 2013**  
+UnSupport Google+.
+Fix Twitter Search API.
+
+**0.5.3 - October 12, 2011**  
+Support Google+.
 
 **0.5.2.5 - April 20, 2011**  
 minor bug fix.

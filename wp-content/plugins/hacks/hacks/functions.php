@@ -22,7 +22,7 @@ function champru_comments($comments_array, $type){
 			case 'tweet':
 			case 'hatena':
 			case 'delicious':
-				if ($comment->comment_author != 'wokamoto' && $comment->comment_author != 'dogmap_jp' && $comment->comment_author != 'roland_808' && $comment->comment_author != 'jkuns_cafe'  && $comment->comment_author != 'jkunrss')
+				if ($comment->comment_author != 'wokamoto' && $comment->comment_author != 'dogmap_jp')
 					$comments[] = $comment;
 				break;
 			default:

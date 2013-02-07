@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Feedback Champuru
-Version: 0.5.4
+Version: 0.5.6
 Plugin URI: http://wppluginsj.sourceforge.jp/feedback-champru/
 Description: This plugin makes WordPress Comment boisterous adding feedbacks of Twitter, Social Bookmarks and so on.
 Author: wokamoto
@@ -98,7 +98,7 @@ function feedback_type($commenttxt = false, $trackbacktxt = false, $pingbacktxt 
 //**********************************************************************************
 class FeedbackChampuru {
 	var $plugin_name   = 'feedback-champuru';
-	var $plugin_ver    = '0.5.4';
+	var $plugin_ver    = '0.5.5';
 
 	const SCHEDULE_HANDLER = 'get-feedback-champuru';
 	const META_KEY_PRE  = '_feedback_';
@@ -136,9 +136,6 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Constructor
 	***********************************************************/
-	function FeedbackChampuru(){
-		$this->__construct();
-	}
 	function __construct() {
 		$this->_set_plugin_dir(__FILE__);
 		$this->_load_textdomain();
@@ -185,7 +182,7 @@ class FeedbackChampuru {
 	}
 
 	// set plugin dir
-	function _set_plugin_dir( $file = '' ) {
+	private function _set_plugin_dir( $file = '' ) {
 		$file_path = ( !empty($file) ? $file : __FILE__);
 		$filename = explode("/", $file_path);
 		if(count($filename) <= 1) $filename = explode("\\", $file_path);
@@ -203,7 +200,7 @@ class FeedbackChampuru {
 	}
 
 	// load textdomain
-	function _load_textdomain( $sub_dir = 'languages', $textdomain_name = '' ) {
+	private function _load_textdomain( $sub_dir = 'languages', $textdomain_name = '' ) {
 		$this->textdomain_name = (empty($textdomain_name) ? $this->plugin_dir : $textdomain_name);
 		$plugins_dir = trailingslashit(defined('PLUGINDIR') ? PLUGINDIR : 'wp-content/plugins');
 		$abs_plugin_dir = $this->_wp_plugin_dir($this->plugin_dir);
@@ -221,7 +218,7 @@ class FeedbackChampuru {
 	}
 
 	// init options
-	function _init_options(){
+	private function _init_options(){
 		$this->option_name = $this->plugin_name.' Options';
 		$options = (array) get_option($this->option_name);
 
@@ -243,7 +240,7 @@ class FeedbackChampuru {
 	}
 
 	// Update Options
-	function _update_options( $options = array() ) {
+	private function _update_options( $options = array() ) {
 		$options = array(
 			'feedbacks'  => isset($options['feedbacks'])  ? $options['feedbacks']  : $this->feedbacks  ,
 			'icon_cache' => isset($options['icon_cache']) ? $options['icon_cache'] : $this->icon_cache ,
@@ -253,7 +250,7 @@ class FeedbackChampuru {
 	}
 
 	// check icon cache directory
-	function _check_icon_cache_dir( $cache_path = '') {
+	private function _check_icon_cache_dir( $cache_path = '') {
 		if ( function_exists('imagepng') ) {
 			if( !file_exists( dirname($cache_path) ) )
 				@mkdir( dirname($cache_path), 0777 );
@@ -267,13 +264,13 @@ class FeedbackChampuru {
 	}
 
 	// check wp version
-	function _check_wp_version($version, $operator = ">=") {
+	private function _check_wp_version($version, $operator = ">=") {
 		global $wp_version;
 		return version_compare($wp_version, $version, $operator);
 	}
 
 	// WP_CONTENT_DIR
-	function _wp_content_dir($path = '') {
+	private function _wp_content_dir($path = '') {
 		return trailingslashit( trailingslashit( defined('WP_CONTENT_DIR')
 			? WP_CONTENT_DIR
 			: trailingslashit(ABSPATH) . 'wp-content'
@@ -281,7 +278,7 @@ class FeedbackChampuru {
 	}
 
 	// WP_CONTENT_URL
-	function _wp_content_url($path = '') {
+	private function _wp_content_url($path = '') {
 		return trailingslashit( trailingslashit( defined('WP_CONTENT_URL')
 			? WP_CONTENT_URL
 			: trailingslashit(get_option('siteurl')) . 'wp-content'
@@ -289,17 +286,17 @@ class FeedbackChampuru {
 	}
 
 	// WP_PLUGIN_DIR
-	function _wp_plugin_dir($path = '') {
+	private function _wp_plugin_dir($path = '') {
 		return trailingslashit($this->_wp_content_dir( 'plugins/' . preg_replace('/^\//', '', $path) ));
 	}
 
 	// WP_PLUGIN_URL
-	function _wp_plugin_url($path = '') {
+	private function _wp_plugin_url($path = '') {
 		return trailingslashit($this->_wp_content_url( 'plugins/' . preg_replace('/^\//', '', $path) ));
 	}
 
 	// Get post_meta
-	function _get_post_meta($post_id, $key) {
+	private function _get_post_meta($post_id, $key) {
 		$val = get_post_meta($post_id, $key, true);
 		$val = maybe_unserialize($val);
 		if (!is_serialized($val) && !is_array($val) && ($_val = base64_decode($val)) !== FALSE) {
@@ -309,7 +306,7 @@ class FeedbackChampuru {
 	}
 
 	// Add or Update post_meta
-	function _update_post_meta($post_id, $key, $val) {
+	private function _update_post_meta($post_id, $key, $val) {
 		$val = maybe_serialize($val);
 		$val = base64_encode($val);
 		return (
@@ -319,7 +316,7 @@ class FeedbackChampuru {
 	}
 
 	// Make Nonce field
-	function _make_nonce_field($action = -1, $name = "_wpnonce", $referer = true , $echo = true ) {
+	private function _make_nonce_field($action = -1, $name = "_wpnonce", $referer = true , $echo = true ) {
 		if ( !function_exists('wp_nonce_field') )
 			return;
 		else
@@ -327,7 +324,7 @@ class FeedbackChampuru {
 	}
 
 	// json decode
-	function json_decode( $string ) {
+	private function json_decode( $string ) {
 		if ( function_exists('json_decode') ) {
 			return json_decode( $string );
 		} else {
@@ -341,7 +338,7 @@ class FeedbackChampuru {
 	}
 
 	// remote_get
-	function remote_get( $url, $args = array() ){
+	private function remote_get( $url, $args = array() ){
 		$ret = wp_remote_get( $url, $args );
 		if ( is_array($ret) && isset($ret["body"]) && !empty($ret["body"]) )
 			return $ret["body"];
@@ -350,7 +347,7 @@ class FeedbackChampuru {
 	}
 
 	// Get safe url
-	function safe_url( $url ){
+	public function safe_url( $url ){
 		$params = preg_split( '/[\?\&]/', $url );
 		$url = array_shift($params);
 		$query = '';
@@ -375,21 +372,21 @@ class FeedbackChampuru {
 	/**********************************************************
 	* plugin activation
 	***********************************************************/
-	function activation(){
+	public function activation(){
 		$this->_update_options();
 	}
 
 	/**********************************************************
 	* plugin deactivation
 	***********************************************************/
-	function deactivation(){
+	public function deactivation(){
 		wp_clear_scheduled_hook(self::SCHEDULE_HANDLER);
 	}
 
 	/**********************************************************
 	* Add Admin Menu
 	***********************************************************/
-	function admin_menu() {
+	public function admin_menu() {
 		$this->admin_hook['option'] = add_options_page(
 			__('Feedback Champuru', $this->textdomain_name) ,
 			__('Feedback Champuru', $this->textdomain_name) ,
@@ -399,7 +396,7 @@ class FeedbackChampuru {
 			);
 	}
 
-	function plugin_setting_links($links, $file) {
+	public function plugin_setting_links($links, $file) {
 		$this_plugin = plugin_basename(__FILE__);
 		if ($file == $this_plugin) {
 			$settings_link = '<a href="' . $this->admin_action . '">' . __('Settings') . '</a>';
@@ -412,12 +409,12 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Champuru!
 	***********************************************************/
-	function comments_champuru($comments, $post_id){
+	public function comments_champuru($comments, $post_id){
 		$permalink = get_permalink($post_id);
 		foreach ($this->feedbacks as $type) {
 			$comments = array_merge($comments ,	$this->_get_feedback($type, $post_id, $permalink, false));
 		}
-		usort($comments, array($this, '_comments_cmp'));
+		usort($comments, array($this, 'comments_cmp'));
 
 		// set wp-cron schedule
 		if ( is_singular() ) {
@@ -446,7 +443,7 @@ class FeedbackChampuru {
 		return $comments;
 	}
 
-	function get_champuru() {
+	public function get_champuru() {
 		$transient = $this->plugin_name;
 		if (false !== ($value = get_transient($transient))) {
 			foreach ((array)$value as $post_id => $permalink) {
@@ -458,14 +455,14 @@ class FeedbackChampuru {
 		}
 	}
 
-	function _comments_cmp($a, $b){
+	public function comments_cmp($a, $b){
 	    if ($a->comment_date == $b->comment_date)
 	        return 0;
 		else
 			return ( strtotime($a->comment_date) < strtotime($b->comment_date) ? -1 : 1);
 	}
 
-	function comment_build($type, $post_id, $author = '', $author_url = '', $datetime = 0, $content = '', $photo_url = '', $comment_id = null){
+	public function comment_build($type, $post_id, $author = '', $author_url = '', $datetime = 0, $content = '', $photo_url = '', $comment_id = null){
 		$gmt_offset = 3600 * get_option('gmt_offset');
 		$comment = (object) array(
 			"comment_ID"           => $type . '-' . ($comment_id ? $comment_id : $this->comment_id++) ,
@@ -490,7 +487,7 @@ class FeedbackChampuru {
 		return $comment;
 	}
 
-	function _get_type_from_ID($comment_id = ''){
+	private function _get_type_from_ID($comment_id = ''){
 		$comment_id = (empty($comment_id)) || is_null($comment_id)
 			? get_comment_ID()
 			: (!is_null($comment_id) ? $comment_id : '');
@@ -504,15 +501,17 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get Feedbacks
 	***********************************************************/
-	function _get_feedback($type, $post_id, $permalink){
+	private function _get_feedback($type, $post_id, $permalink, $get_new = true){
 		$permalink = $this->percent_encode_capital_letter($permalink);
 		if ( !preg_match( '/^https?:\/\//i', $permalink) )
 			return array();
 
 		$comments_array = array();
 
-		$cache = $this->_get_cache($type, $post_id);
-		$get_new  = (intval($cache["expired"]) < time());
+		if ( $get_new ) {
+			$cache = $this->_get_cache($type, $post_id);
+			$get_new  = (intval($cache["expired"]) < time());
+		}
 
 		switch ($type){
 		case 'tweet':
@@ -554,7 +553,7 @@ class FeedbackChampuru {
 		return $comments;
 	}
 
-	function _get_cache($type, $post_id) {
+	private function _get_cache($type, $post_id) {
 		$meta_key = self::META_KEY_PRE . $type;
 		$cache = $this->_get_post_meta($post_id, $meta_key);
 		if ( isset($cache["expired"]) && isset($cache["comments"]) ) {
@@ -567,12 +566,21 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get Twitter Feedbacks (Twitter Search API)
 	***********************************************************/
-	function _get_twitter($type, $post_id, $permalink, $get_new = false){
+        public function get_twitter($type, $post_id, $permalink, $get_new = false){
+		return $this->_get_twitter($type, $post_id, $permalink, $get_new);
+        }
+	private function _get_twitter($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
 
-		$comments = $cache["comments"];
+		$comments = array();
+		foreach ( $cache["comments"] as $cache_comment  ) {
+			$id = preg_replace('#https?://twitter.com/[^/]+/status/#i', '', $cache_comment->comment_author_url);
+			$cache_comment->comment_ID = $type . '-' . $id;
+			$comments[$id] = $cache_comment;
+		}
+
 		$response = $this->remote_get(sprintf(self::TWITTER_API, urlencode($permalink)));
 		if ($response !== false){
 			$json = $this->json_decode($response);
@@ -602,13 +610,13 @@ class FeedbackChampuru {
 		foreach ($comments as $comment) {
 			$results[] = $comment;
 		}
-		return $results;
+		return $comments;
 	}
 
 	/**********************************************************
 	* Get Twitter Feedbacks (Topsy)
 	***********************************************************/
-	function _get_topsy($type, $post_id, $permalink, $get_new = false){
+	private function _get_topsy($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
@@ -645,7 +653,10 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get Hatena Bookmark Feedbacks
 	***********************************************************/
-	function _get_hatena($type, $post_id, $permalink, $get_new = false){
+        public function get_hatena($type, $post_id, $permalink, $get_new = false){
+		return $this->_get_hatena($type, $post_id, $permalink, $get_new);
+	}
+	private function _get_hatena($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
@@ -682,7 +693,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get Delicious Feedbacks
 	***********************************************************/
-	function _get_delicious($type, $post_id, $permalink, $get_new = false){
+	private function _get_delicious($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
@@ -718,7 +729,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get FriendFeed Feedbacks
 	***********************************************************/
-	function _get_friendfeed($type, $post_id, $permalink, $get_new = false){
+	private function _get_friendfeed($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
@@ -757,7 +768,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get livedoor clip Feedbacks
 	***********************************************************/
-	function _get_livedoor($type, $post_id, $permalink, $get_new = false){
+	private function _get_livedoor($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
@@ -794,7 +805,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get buzzurl Feedbacks
 	***********************************************************/
-	function _get_buzzurl($type, $post_id, $permalink, $get_new = false){
+	private function _get_buzzurl($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
@@ -833,7 +844,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get Google Feedbacks
 	***********************************************************/
-	function _get_googleurl($type, $post_id, $permalink, $get_new = false){
+	private function _get_googleurl($type, $post_id, $permalink, $get_new = false){
 		$cache = $this->_get_cache($type, $post_id);
 		if ( !$get_new )
 			return $cache["comments"];
@@ -873,7 +884,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Get Google+ Feedbacks
 	***********************************************************/
-	function _get_googleplus($type, $post_id, $permalink, $get_new = false){
+	private function _get_googleplus($type, $post_id, $permalink, $get_new = false){
 		$meta_key = self::META_KEY_PRE . $type;
 		$cache = $this->_get_post_meta($post_id, $meta_key);
 		if (isset($cache["expired"]) && isset($cache["comments"])) {
@@ -918,7 +929,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* get comments number
 	***********************************************************/
-	function get_comments_number($count, $post_id = ''){
+	public function get_comments_number($count, $post_id = ''){
 		$comments = $this->comments_champuru(array(), $post_id);
 		return $count + count($comments);
 	}
@@ -926,7 +937,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* comment class
 	***********************************************************/
-	function comment_class($classes, $class = '', $comment_id = '', $post_id = ''){
+	public function comment_class($classes, $class = '', $comment_id = '', $post_id = ''){
 		$comment_type = $this->_get_type_from_ID($comment_id);
 		if (!empty($comment_type))
 			$classes[] = esc_attr($comment_type);
@@ -936,7 +947,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* comment type
 	***********************************************************/
-	function get_comment_type($comment_type){
+	public function get_comment_type($comment_type){
 		global $comment;
 		$comment_type = $this->_get_type_from_ID(isset($comment) ? $comment->comment_ID : '');
 		if (!empty($comment_type))
@@ -947,7 +958,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* get avatar
 	***********************************************************/
-	function get_avatar($avatar, $id_or_email = '', $size = '96', $default = '', $alt = false){
+	public function get_avatar($avatar, $id_or_email = '', $size = '96', $default = '', $alt = false){
 		global $pagenow, $comment;
 
 		if($pagenow == 'options-discussion.php')
@@ -987,12 +998,12 @@ class FeedbackChampuru {
 	}
 
 	// _cache_file_name
-	function _cache_file_name($img_url, $img_size) {
+	private function _cache_file_name($img_url, $img_size) {
 		return md5($img_url . $img_size) . '.png';
 	}
 
 	// Function getImage
-	function get_image($img_url, $img_size){
+	public function get_image($img_url, $img_size){
 		if(empty($img_url) || parse_url($img_url) === false) {
 			header("HTTP/1.0 404 Not Found");
 			die();
@@ -1023,7 +1034,7 @@ class FeedbackChampuru {
 	}
 
 	// Function _get_resize_image
-	function _get_resize_image($img_url, $img_size = 96, $cache_file = '') {
+	private function _get_resize_image($img_url, $img_size = 96, $cache_file = '') {
 		$imgbin = $this->remote_get($img_url);
 		if ($imgbin === false)
 			return false;
@@ -1050,14 +1061,14 @@ class FeedbackChampuru {
 		return $img_resized;
 	}
 
-	function wp_footer(){
+	public function wp_footer(){
 		remove_filter('get_avatar', array(&$this, 'get_avatar'), 10, 5);
 	}
 
 	/**********************************************************
 	* comment reply link
 	***********************************************************/
-	function comment_reply_link($link, $args = '', $comment = '', $post = ''){
+	public function comment_reply_link($link, $args = '', $comment = '', $post = ''){
 		switch ($this->_get_type_from_ID(isset($comment->comment_ID) ? $comment->comment_ID : get_comment_ID())) {
 		case 'tweet' :
 		case 'hatena' :
@@ -1078,24 +1089,24 @@ class FeedbackChampuru {
 	/**********************************************************
 	* edit comment link
 	***********************************************************/
-	function edit_comment_link($link, $comment_id = ''){
+	public function edit_comment_link($link, $comment_id = ''){
 		return (preg_match('/^[\d]+$/', !empty($comment_id) ? $comment_id : get_comment_ID()) ? $link : '');
 	}
 
 	/**********************************************************
 	* percent encode capital letter
 	***********************************************************/
-	function to_upper($m) {
+	public function to_upper($m) {
 		return strtoupper($m[0]);
 	}
-	function percent_encode_capital_letter($uri) {
+	public function percent_encode_capital_letter($uri) {
 		return preg_replace_callback('/(%[0-9a-f]{2}?)+/', array(&$this, 'to_upper'), $uri);
 	}
 
 	/**********************************************************
 	* Get cache expired
 	***********************************************************/
-	function get_cache_expired($expired, $id = 0){
+	public function get_cache_expired($expired, $id = 0){
 		$post = &get_post($id);
 		$post_date_diff = (time() - strtotime($post->post_date_gmt . ' GMT')) / 60;
 		return (int) (
@@ -1108,7 +1119,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* SPAM check
 	***********************************************************/
-	function spam_check_array( $comments_array, $type = '' ){
+	private function spam_check_array( $comments_array, $type = '' ){
 		foreach ( (array)$comments_array as $key => $comment ) {
 			if ( $comment->comment_approved !== 'spam' && $this->spam_check($comment) ) {
 				$comments_array[$key]->comment_approved = 'spam';
@@ -1118,7 +1129,7 @@ class FeedbackChampuru {
 	}
 
 	// SPAM check
-	function spam_check( $comment ){
+	private function spam_check( $comment ){
 		if ( !$this->spam_check ) {
 			return false;
 		} else {
@@ -1127,12 +1138,12 @@ class FeedbackChampuru {
 	}
 
 	// blacklist check
-	function blacklist_check($comment){
+	private function blacklist_check($comment){
 		return wp_blacklist_check($comment->author, '', $comment->comment_author_url, $comment->comment_content, '', '');
 	}
 
 	// Akismet
-	function akismet($comment) {
+	private function akismet($comment) {
 		global $akismet_api_host, $akismet_api_port;
 
 		if ( !function_exists('akismet_http_post') || !(get_option('wordpress_api_key') || $wpcom_api_key) )
@@ -1175,7 +1186,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* Set gmt offset
 	***********************************************************/
-	function set_gmt_offset( $comments_array, $type = '' ){
+	public function set_gmt_offset( $comments_array, $type = '' ){
 		$gmt_offset = 3600 * get_option('gmt_offset');
 		foreach ((array)$comments_array as $key => $comment) {
 			if (method_exists($comment, 'comment_date_gmt') && method_exists($comments_array[$key], 'comment_date')) {
@@ -1205,7 +1216,7 @@ class FeedbackChampuru {
 	/**********************************************************
 	* option page
 	***********************************************************/
-	function option_page() {
+	public function option_page() {
 		if (isset($_POST['options_update'])) {
 			if ($this->_check_wp_version("2.5"))
 				check_admin_referer("update_options", "_wpnonce_update_options");
@@ -1387,7 +1398,7 @@ class FeedbackChampuru {
 	}
 
 	// Delete all option
-	function _delete_settings(){
+	private function _delete_settings(){
 		global $wpdb;
 
 		$wpdb->query($wpdb->prepare(

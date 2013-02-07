@@ -67,6 +67,10 @@ input#subscribe_blog {
   float: left;
 }
 
+.comments-area li.bypostauthor cite span {
+  position: relative;
+}
+
 cite.fn span.commenters-info {
   display: block;
   float: right;
