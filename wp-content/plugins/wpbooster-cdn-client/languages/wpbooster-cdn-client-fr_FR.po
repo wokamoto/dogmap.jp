@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: The WPBooster CDN Client 1.0.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wpbooster-cdn-client\n"
 "POT-Creation-Date: 2013-02-19 12:28:13+00:00\n"
-"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Takayuki Miyauchi <miyauchi@digitalcube.jp>\n"
+"PO-Revision-Date: 2013-02-04 14:01+0100\n"
+"Last-Translator: \n"
 "Language-Team: ja_JP <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,39 +19,40 @@ msgstr "WP Booster CDN Client"
 
 #: includes/admin.php:109
 msgid "History"
-msgstr "履歴"
+msgstr "Historique"
 
 #: includes/admin.php:113
 msgid "Information"
-msgstr "お知らせ"
+msgstr "Information"
 
 #: includes/admin.php:114
 msgid "http://www.wpbooster.net/feed"
-msgstr "http://ja.wpbooster.net/feed"
+msgstr "http://www.wpbooster.net/feed"
 
 #: includes/admin.php:162
 msgid "http://en.digitalcube.jp/about/wordpress_consultant/"
-msgstr "http://www.digitalcube.jp/about/wordpress_consultant/"
+msgstr "http://en.digitalcube.jp/about/wordpress_consultant/"
 
 #: includes/admin.php:163
 msgid "http://www.wpbooster.net/"
-msgstr "http://ja.wpbooster.net/"
+msgstr "http://www.wpbooster.net/"
 
 #: includes/admin.php:164
 msgid "http://megumi-cloud.com/"
-msgstr "http://ja.megumi-cloud.com/"
+msgstr "http://megumi-cloud.com/"
 
 #: includes/admin.php:165
 msgid "http://wp.remotemanager.me/"
-msgstr "http://wp.remotemanager.me/ja/"
+msgstr "http://wp.remotemanager.me/"
 
 #: includes/admin.php:192
 msgid ""
 "Megumi payment” is a service to pay for WordPress-related services provided "
 "by <a href=\"http://www.digitalcube.jp/\">DigitalCube Co. Ltd</a>."
 msgstr ""
-"め組ペイメントは、<a href=\"http://www.digitalcube.jp/\">DigitalCube Co. "
-"Ltd</a> による決済サービスです。"
+"Megumi est un service de paiement pour utiliser des fonctions avancées de "
+"WordPress et des services spécifiques mis en place par <a href=\"http://www."
+"digitalcube.jp/\">DigitalCube Co. Ltd</a>."
 
 #: includes/admin.php:195
 msgid ""
@@ -59,55 +60,55 @@ msgid ""
 "language=en\">Get the point!</a>"
 msgstr ""
 "<a class=\"btn blue\" href=\"https://payment.digitalcube.jp/auth/login?"
-"language=en\">ポイントを購入！</a>"
+"language=en\">Connexion！</a>"
 
 #: includes/admin.php:201
 msgid "WP Booster is running...<br />"
-msgstr "WP Booster CDN は稼働中です。<br />"
+msgstr "WP Booster CDN fonctionne...<br />"
 
 #: includes/admin.php:205
 msgid "If you want to stop WP Booster temporarily, please click."
-msgstr "WP Boosterを一時停止することができます。"
+msgstr "pour arrêter WP Booster temporairement, veuillez cliquer."
 
 #: includes/admin.php:219
 msgid "<button class=\"btn green\">Restart WP Booster !</button>"
-msgstr "<button class=\"btn green\">WP Boosterを再起動</button>"
+msgstr "<button class=\"btn green\">WP Boosteren MARCHE !</button>"
 
 #: includes/admin.php:224
 msgid "<button class=\"btn red\">Suspend WP Booster !</button>"
-msgstr "<button class=\"btn red\">WP Boosterを一時停止</button>"
+msgstr "<button class=\"btn red\">WP Booster en PAUSE</button>"
 
 #: includes/admin.php:261
 msgid "Date"
-msgstr "日付"
+msgstr "Date"
 
 #: includes/admin.php:262
 msgid "Used Points"
-msgstr "消費ポイント"
+msgstr "Points utilisés"
 
 #: includes/admin.php:263
 msgid "Transfers (MB)"
-msgstr "転送量 (MB)"
+msgstr "Transferts (MB)"
 
 #: includes/admin.php:264
 msgid "Requests"
-msgstr "リクエスト"
+msgstr "Requêtes "
 
 #: wpbooster-cdn-client.php:186
 msgid "Please input WP Booster API Key: "
-msgstr "WP Booster の API キーを入力してください。: "
+msgstr "Veuillez insérer la clé (API) WP Booster :  "
 
 #: wpbooster-cdn-client.php:187
 msgid "<a href=\"http://wpbooster.net/cpanel\">Sign In</a>"
-msgstr "<a href=\"http://ja.wpbooster.net/cpanel\">サインイン</a>"
+msgstr "<a href=\"http://wpbooster.net/cpanel\">Connexion</a>"
 
 #. Plugin Name of the plugin/theme
 msgid "The WP Booster CDN Client"
-msgstr "The WP Booster CDN Client"
+msgstr "Le client WP Booster CDN "
 
 #. Description of the plugin/theme
 msgid "Deliver static files from WPBooster CDN."
-msgstr "静的ファイルを WP Booster の CDN から配信してサイトを高速化します。"
+msgstr "Charger des ficheirs statiques depuis WPBooster CDN."
 
 #. Author of the plugin/theme
 msgid "Digitalcube Co,.Ltd (Takayuki Miyauchi)"
@@ -115,16 +116,16 @@ msgstr "Digitalcube Co,.Ltd (Takayuki Miyauchi)"
 
 #. Author URI of the plugin/theme
 msgid "http://wpbooster.net/"
-msgstr "http://ja.wpbooster.net/"
+msgstr "http://wpbooster.net/"
 
 #~ msgid "WP Booster CDN is running..."
-#~ msgstr "WP Booster CDN は稼働中です。"
+#~ msgstr "WP Booster CDN est actif..."
 
 #~ msgid "WP Booster CDN is stopped."
-#~ msgstr "WP Booster CDN は停止中です。"
+#~ msgstr "WP Booster CDN est arrêté. "
 
 #~ msgid "The WP Booster CDN"
-#~ msgstr "The WP Booster CDN"
+#~ msgstr "WP Booster CDN"
 
 #~ msgid "Get The Point"
 #~ msgstr "ポイントを購入"
