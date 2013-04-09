@@ -3,7 +3,7 @@ Contributors: automattic, alternatekev, andy, apeatling, azaozz, barry, beaulebe
 Tags: WordPress.com, statistics, stats, views, tweets, twitter, widget, gravatar, hovercards, profile, equations, latex, math, maths, youtube, shortcode, archives, audio, blip, bliptv, dailymotion, digg, flickr, googlevideo, google, googlemaps, kyte, kytetv, livevideo, redlasso, rockyou, rss, scribd, slide, slideshare, soundcloud, vimeo, shortlinks, wp.me, subscriptions, notifications, notes, json, api, rest, mosaic, gallery, slideshow
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 
 Supercharge your WordPress site with powerful features previously only available to WordPress.com users.
 
@@ -90,6 +90,18 @@ Use [shortcodes](http://support.wordpress.com/shortcodes/) to embed your media. 
 8. Mobile Theme
 
 == Changelog ==
+
+= 2.2.2 =
+* Enhancement: Mobile Theme: Add controls for custom CSS.
+* Enhancement: Sharing: Add Pocket to the available services.
+* Bug Fix: Custom CSS: Update the method for generating content width setting.
+* Bug Fix: JSON API: Security updates.
+* Bug Fix: Likes: Add settings for email notifications and misc style updates.
+* Bug Fix: Notifications: Add the post types to sync after init.
+* Bug Fix: Publicize: RTL styling.
+* Bug Fix: Shortcodes: security fixes and function prefixing.
+* Bug Fix: Widgets: Update wording on the Top Posts widget for clarity.
+* Bug Fix: Jetpack Post Images security fixes.
 
 = 2.2.1 =
 * Enhancement: Development Mode: Define the `JETPACK_DEV_DEBUG` constant to `true` to enable an offline mode for localhost development. Only modules that don't require a WordPress.com connection can be enabled in this mode.

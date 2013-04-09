@@ -1,0 +1,98 @@
+/*  Copyright (C) 2013 Amazon.com, Inc. or its affiliates. All rights reserved.
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License, version 2, as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with this program; if not, write to the Free Software Foundation, Inc.,
+	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
+.kindleWidget {
+	white-space: nowrap;
+	cursor: pointer;
+	display: inline-block;
+	padding: 3px;
+	line-height: 1em;
+	font-size: 11px;
+	font-family: sans-serif;
+	border-radius: 3px;
+}
+
+.kindleWidget > img {
+	box-shadow: none;
+	vertical-align: middle;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.kindleWidget > span {
+	margin-left: 3px;
+	vertical-align: middle;
+	color: black;
+}
+
+/* Light-colored theme. */
+
+.kindleLight {
+	border: #ccc solid thin;
+
+	background: #e6e6e6;
+	background: -webkit-linear-gradient(white, #e6e6e6);
+	background: -moz-linear-gradient(white, #e6e6e6);
+	background: -ms-linear-gradient(white, #e6e6e6);
+	background: linear-gradient(white, #e6e6e6);
+}
+
+.kindleLight:hover {
+	background: #e6e6e6;
+}
+
+.kindleLight:active {
+	background: #ccc;
+}
+
+/* Dark-colored theme. */
+
+.kindleDarkText > span {
+	color: #e9e9e9;
+}
+
+.kindleDark {
+	border: #555 solid thin;
+
+	background: #6e6e6e;
+	background: -webkit-linear-gradient(#888, #575757);
+	background: -moz-linear-gradient(#888, #575757);
+	background: linear-gradient(#888, #575757);
+}
+
+.kindleDark:hover {
+	background: #575757;
+}
+
+.kindleDark:active {
+	background: #555;
+}
+
+/* Assists with Jetpack integration. */
+
+.services ul li#kindle, #available-services .preview-kindle {
+	background: url('white-15.png') 4px 5px no-repeat white;
+}
+
+li.share-kindle a.sd-button > span {
+	background-image: url('white-15.png');
+}
+
+.kindleWidget.option {
+	padding: 0 !important;
+}
