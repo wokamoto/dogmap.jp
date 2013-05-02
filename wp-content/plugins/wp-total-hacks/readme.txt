@@ -1,10 +1,10 @@
 === WP Total Hacks ===
 Contributors: miyauchi
-Donate link: http://wpist.me/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FR7RD5SGEU69Y
 Tags: head, post, page, functions.php, admin, logo, auto save, revision, meta box, dashboard
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 
 WP Total Hacks can customize more than 20 settings on your WordPress Site.
 PHP5 is required!
