@@ -1,0 +1,147 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: commenters-info\n"
+"POT-Creation-Date: 2009-04-10 17:17+0900\n"
+"PO-Revision-Date: \n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: Romania\n"
+"Language-Team: Web Geeks\n"
+"Last-Translator: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#description
+msgid "The aggregate information and list the commenter."
+msgstr "Informaţii globale şi de lista de comentator."
+
+#: ../commenters-info.php:156
+#: ../commenters-info.php:921
+#: ../commenters-info.php:1091
+#: ../commenters-info.php:1201
+#: ../commenters-info.php:1311
+#: ../commenters-info.php:1429
+#: ../commenters-info.php:1519
+msgid "Commenters information"
+msgstr "comentatori de informaţii"
+
+#: ../commenters-info.php:214
+#: ../commenters-info.php:263
+msgid "Commenters Ranking"
+msgstr "Commenters Ranking"
+
+#: ../commenters-info.php:247
+msgid "Max Comemnters"
+msgstr "Max Comemnters"
+
+#: ../commenters-info.php:251
+msgid "Gravatar size (px)"
+msgstr "Gravatar dimensiunea (px)"
+
+#: ../commenters-info.php:856
+msgid "Commenters list"
+msgstr "Commenters lista"
+
+#: ../commenters-info.php:857
+msgid "Browsers summary"
+msgstr "Browsere rezumat"
+
+#: ../commenters-info.php:858
+msgid "Plathome summary"
+msgstr "Plathome rezumat"
+
+#: ../commenters-info.php:859
+msgid "Browsers + Plathome summary"
+msgstr "Browsere + Plathome rezumat"
+
+#: ../commenters-info.php:860
+msgid "Trackbacks summary"
+msgstr "Urmăritori rezumat"
+
+#: ../commenters-info.php:861
+msgid "Location summary"
+msgstr "Amplasare rezumat"
+
+#: ../commenters-info.php:935
+#: ../commenters-info.php:960
+#: ../commenters-info.php:974
+msgid "Twitter ID"
+msgstr "Twitter ID-ul"
+
+#: ../commenters-info.php:937
+#: ../commenters-info.php:962
+#: ../commenters-info.php:976
+#: ../commenters-info.php:1117
+#: ../commenters-info.php:1124
+#: ../commenters-info.php:1227
+#: ../commenters-info.php:1234
+#: ../commenters-info.php:1337
+#: ../commenters-info.php:1344
+#: ../commenters-info.php:1451
+#: ../commenters-info.php:1458
+#: ../commenters-info.php:1545
+#: ../commenters-info.php:1552
+msgid "Count"
+msgstr "Count"
+
+#: ../commenters-info.php:938
+#: ../commenters-info.php:963
+#: ../commenters-info.php:977
+msgid "Last Comment"
+msgstr "Ultimele Comentariu"
+
+#: ../commenters-info.php:941
+msgid "Ascending order"
+msgstr "ordine crescătoare"
+
+#: ../commenters-info.php:942
+msgid "Descending order"
+msgstr "ordinea descrescătoare a"
+
+#: ../commenters-info.php:962
+#: ../commenters-info.php:976
+msgid "(comments / pingbacks)"
+msgstr "(Comentarii / pingbacks)"
+
+#: ../commenters-info.php:1101
+#: ../commenters-info.php:1211
+#: ../commenters-info.php:1321
+#: ../commenters-info.php:1529
+msgid "with blog owner"
+msgstr "cu proprietarul blog-ul"
+
+#: ../commenters-info.php:1102
+#: ../commenters-info.php:1212
+#: ../commenters-info.php:1322
+#: ../commenters-info.php:1530
+msgid "without blog owner"
+msgstr "fără proprietar Blog"
+
+#: ../commenters-info.php:1116
+#: ../commenters-info.php:1123
+msgid "Browser"
+msgstr "Browser-ul"
+
+#: ../commenters-info.php:1226
+#: ../commenters-info.php:1233
+msgid "Plathome"
+msgstr "Plathome"
+
+#: ../commenters-info.php:1336
+#: ../commenters-info.php:1343
+msgid "Browser + Plathome"
+msgstr "Browser-ul + Plathome"
+
+#: ../commenters-info.php:1450
+#: ../commenters-info.php:1457
+msgid "Blog Tool"
+msgstr "Instrument de blog"
+
+#: ../commenters-info.php:1544
+#: ../commenters-info.php:1551
+msgid "Country"
+msgstr "ţară"
+
+msgid "other"
+msgstr "alte"
+

@@ -4,7 +4,7 @@ Plugin Name: Commenters Info
 Plugin URI: http://wppluginsj.sourceforge.jp/commenters-info/
 Description: The aggregate information and list the commenter.
 Author: wokamoto
-Version: 0.6.7
+Version: 0.6.7.1
 Author URI: http://dogmap.jp/
 Text Domain: commenters-info
 Domain Path: /languages/
@@ -74,7 +74,7 @@ function commenters_info($comment_or_ID = '', $before = '', $after = '', $show_c
 	global $commenters_info;
 
 	if (!isset($commenters_info))
-		$commenters_info = new CommentersController();
+		$commenters_info = new CommentersInfo();
 	echo $commenters_info->get_commenters_info($comment_or_ID, $before, $after, $show_country, $show_browser, $show_ver, $separator);
 }
 
@@ -87,7 +87,7 @@ function commenters_ranking($limit = 5, $show_admin = false, $avatar_size = 16, 
 	global $commenters_info;
 
 	if ( !isset($commenters_info) )
-		$commenters_info = new CommentersController();
+		$commenters_info = new CommentersInfo();
 	echo $commenters_info->get_ranking($limit, $show_admin, $avatar_size, $before, $after, $show_country, $show_browser, $show_ver, $separator);
 }
 
@@ -103,12 +103,12 @@ if (!class_exists('wokController') || !class_exists('wokScriptManager'))
  *****************************************************************************/
 class CommentersInfo extends wokController {
 	public $plugin_name = 'commenters-info';
-	public $plugin_ver  = '0.6.5';
+	public $plugin_ver  = '0.6.7';
 
 	const LIST_PER_PAGE = 30;			// Commenters Info List / Page
 	const SCHEDULE_HUNDLER = 'commenters_info_get_commenter_list';
-	const IP2CDB_CHK_INTERVAL = 604800;	// 60 * 60 * 24 * 7
-	const IP2CDB_CHK_HUNDLER = 'commenters_info_ip2c_db_check';
+//	const IP2CDB_CHK_INTERVAL = 604800;	// 60 * 60 * 24 * 7
+//	const IP2CDB_CHK_HUNDLER = 'commenters_info_ip2c_db_check';
 	const GRAPH_WIDTH = 600;
 	const GRAPH_HEIGHT = 300;
 
@@ -713,20 +713,20 @@ img.commentersinfo {float:none;margin-right:0;margin-top:0;}
 		return $commenter_list;
 	}
 
-	// get wp-cron schedule
-	private function schedule_enabled($schedule_procname = self::IP2CDB_CHK_HUNDLER) {
-		$schedule = $this->_get_schedule($schedule_procname);
-		return ($schedule['enabled']);
-	}
+//	// get wp-cron schedule
+//	private function schedule_enabled($schedule_procname = self::IP2CDB_CHK_HUNDLER) {
+//		$schedule = $this->_get_schedule($schedule_procname);
+//		return ($schedule['enabled']);
+//	}
 
-	// IP to Country DB Check & Update
-	public function ip2c_db_check($ver_check = true) {
-		$time_interval = (int) self::IP2CDB_CHK_INTERVAL;
-		$this->_detect_countries->ip2c_db_ver_check($ver_check);
-		if ($time_interval > 0) {
-			wp_schedule_single_event(time() + $time_interval, self::IP2CDB_CHK_HUNDLER);
-		}
-	}
+//	// IP to Country DB Check & Update
+//	public function ip2c_db_check($ver_check = true) {
+//		$time_interval = (int) self::IP2CDB_CHK_INTERVAL;
+//		$this->_detect_countries->ip2c_db_ver_check($ver_check);
+//		if ($time_interval > 0) {
+//			wp_schedule_single_event(time() + $time_interval, self::IP2CDB_CHK_HUNDLER);
+//		}
+//	}
 
 
 	//**************************************************************************************
@@ -766,6 +766,7 @@ img.commentersinfo {float:none;margin-right:0;margin-top:0;}
 
 		return array($key, $user_id, $author, $email, $url, $comment_count, $trackback_count, $count, $post_id,$comment_id, $comment_date, $last_comment);
 	}
+
 	private function _set_comment_row_data($key, $row_data, $commenters) {
 		list($user_id, $author, $email, $url, $count, $comment_count, $trackback_count, $last_comment, $comment_id, $comment_date) = $row_data;
 
@@ -790,24 +791,26 @@ img.commentersinfo {float:none;margin-right:0;margin-top:0;}
 				$comment_id   = ( isset($commenters[$key]['comment_id'])   ? $commenters[$key]['comment_id']   : $comment_id   );
 				$comment_date = ( isset($commenters[$key]['comment_date']) ? $commenters[$key]['comment_date'] : $comment_date );
 			}
-
-			if ( !is_array($commenters[$key]) )
-				$commenters[$key] = array();
-
-			$commenters[$key]['user_id']      = $user_id;
-			$commenters[$key]['author']       = $author;
-			$commenters[$key]['email']        = $email;
-			$commenters[$key]['url']          = $url;
-			$commenters[$key]['count']        = $count;
-			$commenters[$key]['comments']     = $comment_count;
-			$commenters[$key]['trackbacks']   = $trackback_count;
-			$commenters[$key]['last_comment'] = $last_comment;
-			$commenters[$key]['comment_id']   = $comment_id;
-			$commenters[$key]['comment_date'] = $comment_date;
+		} else if ( !is_array($commenters) ) {
+			$commenters = array( $key => array() );
+		} else {
+			$commenters[$key] = array();
 		}
+
+		$commenters[$key]['user_id']      = $user_id;
+		$commenters[$key]['author']       = $author;
+		$commenters[$key]['email']        = $email;
+		$commenters[$key]['url']          = $url;
+		$commenters[$key]['count']        = $count;
+		$commenters[$key]['comments']     = $comment_count;
+		$commenters[$key]['trackbacks']   = $trackback_count;
+		$commenters[$key]['last_comment'] = $last_comment;
+		$commenters[$key]['comment_id']   = $comment_id;
+		$commenters[$key]['comment_date'] = $comment_date;
 
 		return $commenters;
 	}
+
 	private function _get_comment_authors($commenters) {
 		global $wpdb;
 
@@ -2040,7 +2043,7 @@ class CommentersWidgetController extends WP_Widget {
 	function __construct() {
 		global $commenters_info;
 		if ( !isset($commenters_info) ) {
-			$commenters_info = new CommentersController();
+			$commenters_info = new CommentersInfo();
 		}
 		$this->plugin_name = $commenters_info->plugin_name;
 		$this->textdomain_name = $commenters_info->textdomain_name;

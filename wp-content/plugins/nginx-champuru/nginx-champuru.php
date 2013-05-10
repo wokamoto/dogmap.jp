@@ -4,7 +4,7 @@ Plugin Name: Nginx Cache Controller
 Author: Ninjax Team (Takayuki Miyauchi)
 Plugin URI: http://ninjax.cc/
 Description: Plugin for Nginx Reverse Proxy
-Version: 1.4.2
+Version: 1.5.0
 Author URI: http://ninjax.cc/
 Domain Path: /languages
 Text Domain: nginxchampuru
@@ -254,14 +254,25 @@ public function activation()
 
 private function add_caps()
 {
+    if (!function_exists('get_role'))
+        return;
+
     $role = get_role('administrator');
-    $role->add_cap('flush_cache_single');
-    $role->add_cap('flush_cache_all');
+    if ($role && !is_wp_error($role)) {
+        $role->add_cap('flush_cache_single');
+        $role->add_cap('flush_cache_all');
+    }
+
     $role = get_role('editor');
-    $role->add_cap('flush_cache_single');
-    $role->add_cap('flush_cache_all');
+    if ($role && !is_wp_error($role)) {
+        $role->add_cap('flush_cache_single');
+        $role->add_cap('flush_cache_all');
+    }
+
     $role = get_role('author');
-    $role->add_cap('flush_cache_single');
+    if ($role && !is_wp_error($role)) {
+        $role->add_cap('flush_cache_single');
+    }
 }
 
 private function alter_table($version, $db_version)

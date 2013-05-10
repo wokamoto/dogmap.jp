@@ -3,8 +3,8 @@ Contributors: wokamoto
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJCY7XB8F4&lc=JP&item_name=WordPress%20Plugins&item_number=wp%2dplugins&currency_code=JPY&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: comment, information
 Requires at least: 2.5
-Tested up to: 3.3.1
-Stable tag: 0.6.6.2
+Tested up to: 3.5.1
+Stable tag: 0.6.7.1
 
 The aggregate information and list the commenter.
 
@@ -20,6 +20,7 @@ The aggregate information and list the commenter.
 * German (de_DE) - [Rian Klijn](http://www.creditriskmanager.com/ "Credit Risk Manager")
 * Turkish (tr_TR) - [Hakan Demiray](http://www.dmry.net/ "Günlük Haftalık Aylık")
 * Russian (ru_RU) - Max Lozovsky
+* Romanian (ro_RO) - [Web Geek Sciense](http://webhostinggeeks.com/ "Web Hosting Geeks")
 
 If you have translated into your language, please let me know.
 
