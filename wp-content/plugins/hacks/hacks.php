@@ -20,6 +20,11 @@ add_filter('pre_option_link_manager_enabled', '__return_true');
 
 // remove jetpack open graph tags
 add_filter( 'jetpack_enable_open_graph', '__return_false' );
+add_action('plugins_loaded', function(){
+	if ( function_exists('jetpack_og_tags') ) {
+		remove_action('wp_head','jetpack_og_tags');
+	}
+});
 
 //**********************************************************************************
 // Nginx Cache Controller で消す URL キーを追加

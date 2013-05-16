@@ -25,7 +25,7 @@ License:
 */
 
 if ( !class_exists('ip2country') )
-	require_once( dirname( __FILE__ ) . '/ip2c/ip2c.php' );
+	require_once( dirname(__FILE__) . '/ip2c/ip2c.php' );
 
 class DetectCountriesController {
 	private $ip2c;

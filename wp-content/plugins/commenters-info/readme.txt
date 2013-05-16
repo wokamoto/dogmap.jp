@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJ
 Tags: comment, information
 Requires at least: 2.5
 Tested up to: 3.5.1
-Stable tag: 0.6.7.1
+Stable tag: 0.6.7.2
 
 The aggregate information and list the commenter.
 

@@ -4,7 +4,7 @@ Plugin Name: Commenters Info
 Plugin URI: http://wppluginsj.sourceforge.jp/commenters-info/
 Description: The aggregate information and list the commenter.
 Author: wokamoto
-Version: 0.6.7.1
+Version: 0.6.7.2
 Author URI: http://dogmap.jp/
 Text Domain: commenters-info
 Domain Path: /languages/
