@@ -1,0 +1,15 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: feed-template-customize\n"
+"POT-Creation-Date: 2011-06-28 14:30+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# description
+msgid "This plugin modifies RSS feeds and ATOM feeds as you want."
+msgstr ""
+
