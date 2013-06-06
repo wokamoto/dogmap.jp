@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJ
 Tags: head optimization, javascript, css, optimization, minified, performance
 Requires at least: 2.5
 Tested up to: 3.3.1
-Stable tag: 1.4.2.9
+Stable tag: 1.4.2.10
 
 Head と footer をお掃除します。
 

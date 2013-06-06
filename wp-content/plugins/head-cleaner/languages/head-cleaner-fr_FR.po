@@ -1,0 +1,209 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Head Cleaner - 1.4.2.8 (French)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-20 08:30+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: studio RVOLA <hello@rvola.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2;plural=n>2\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+
+#: head-cleaner.php:2208
+msgid "Head Cleaner"
+msgstr "Head Cleaner"
+
+#: head-cleaner.php:2219
+#: includes/common-controller.php:195
+msgid "Settings"
+msgstr "Réglages"
+
+#: head-cleaner.php:2309
+#: head-cleaner.php:2317
+#: head-cleaner.php:2325
+msgid "Done!"
+msgstr "Terminé !"
+
+#: head-cleaner.php:2339
+msgid "Head Cleaner Options"
+msgstr "Head Cleaner Options"
+
+#: head-cleaner.php:2348
+msgid "CSS and JavaScript are cached on the server."
+msgstr "CSS et JavaScript sont mis en cache sur le serveur."
+
+#: head-cleaner.php:2352
+msgid "CSS and JS are dynamically generated."
+msgstr "CSS et JS sont générées dynamiquement."
+
+#: head-cleaner.php:2355
+msgid "Default media attribute applied to CSS."
+msgstr "Les attributs media par défaut appliqué au CSS."
+
+#: head-cleaner.php:2363
+msgid "Two or more CSS is combined."
+msgstr "Deux ou plus fichiers CSS sont combinés."
+
+#: head-cleaner.php:2367
+msgid "CSS is optimized."
+msgstr "CSS est optimisé."
+
+#: head-cleaner.php:2371
+msgid "URLs of images in CSS will be converted into the data scheme URIs."
+msgstr "URL des images en CSS seront convertis en data scheme URIs."
+
+#: head-cleaner.php:2378
+msgid "Two or more JavaScript is combined."
+msgstr "Deux ou plusieurs fichiers JavaScript sont combinés."
+
+#: head-cleaner.php:2382
+msgid "JavaScript is minified."
+msgstr "JavaScript est minifiés."
+
+#: head-cleaner.php:2386
+msgid "Bottom JavaScript is combined, too."
+msgstr "Les fichiers JavaScript du footer sont combinés, aussi."
+
+#: head-cleaner.php:2393
+msgid "Put JavaScripts at the Bottom."
+msgstr "Déplacer les JavaScripts dans le footer."
+
+#: head-cleaner.php:2397
+msgid "Use Google Ajax Libraries."
+msgstr "Utilisez bibliothèques Google Ajax."
+
+#: head-cleaner.php:2406
+msgid "Add XML Declaration."
+msgstr "Ajouter déclaration XML."
+
+#: head-cleaner.php:2410
+msgid "Add canonical tag."
+msgstr "Ajouter un tag canonique."
+
+#: head-cleaner.php:2419
+msgid "Add OGP(Open Graph Protocol) tags."
+msgstr "Ajouter tags OGP (Open Graph Protocole)."
+
+#: head-cleaner.php:2422
+msgid "OGP default image URL."
+msgstr "OGP URL de l'image par défaut."
+
+#: head-cleaner.php:2429
+msgid "og:locale"
+msgstr ""
+
+#: head-cleaner.php:2433
+msgid "fb:admins"
+msgstr "fb:admins"
+
+#: head-cleaner.php:2437
+msgid "fb:app_id"
+msgstr "fb:app_id"
+
+#: head-cleaner.php:2445
+msgid "Remove generator tag."
+msgstr "Retirer tag générateur."
+
+#: head-cleaner.php:2449
+msgid "Remove RSD link tag."
+msgstr "Retirer balise RSD."
+
+#: head-cleaner.php:2453
+msgid "Remove wlwmanifest link tag."
+msgstr "Retirer balise wlwmanifest."
+
+#: head-cleaner.php:2460
+msgid "Remove IE Conditional Tag."
+msgstr "Retirer Tag conditionnel pour IE."
+
+#: head-cleaner.php:2473
+msgid "Add Last modified."
+msgstr "Ajouter Dernière mise à jour."
+
+#: head-cleaner.php:2477
+msgid "Enabling \"<strong>paranoia mode</strong>\". Cut waste from the HTML and tries to minimize it."
+msgstr "Activation \"<strong>mode paranoïa</strong>\". Mets bout à bout tous les entêtes HTML et tente de le minimiser."
+
+#: head-cleaner.php:2488
+msgid "Debug mode"
+msgstr "Mode debug"
+
+#: head-cleaner.php:2496
+msgid "Active Filters"
+msgstr "Filtres actifs."
+
+#: head-cleaner.php:2499
+#: head-cleaner.php:2537
+msgid "Don't process!"
+msgstr "Ne pas traiter !"
+
+#: head-cleaner.php:2500
+#: head-cleaner.php:2538
+#: head-cleaner.php:2581
+msgid "Remove"
+msgstr "Supprimer"
+
+#: head-cleaner.php:2501
+msgid "Head filters"
+msgstr "Filtres du header"
+
+#: head-cleaner.php:2503
+#: head-cleaner.php:2541
+msgid "Priority"
+msgstr "Priorité"
+
+#: head-cleaner.php:2539
+msgid "Bottom filters"
+msgstr "Filtres du footer"
+
+#: head-cleaner.php:2577
+msgid "Active JavaScripts"
+msgstr "JavaScripts Actif"
+
+#: head-cleaner.php:2580
+msgid "Move to footer"
+msgstr "Déplacer dans le footer"
+
+#: head-cleaner.php:2582
+msgid "JavaScripts"
+msgstr "JavaScripts"
+
+#: head-cleaner.php:2596
+msgid "Update Options"
+msgstr "Mettre à jour les options"
+
+#: head-cleaner.php:2602
+msgid "Remove all cache files"
+msgstr "Supprimez tous les fichiers de cache"
+
+#: head-cleaner.php:2606
+msgid "All cache files are removed."
+msgstr "Tous les fichiers de cache seront supprimés."
+
+#: head-cleaner.php:2607
+msgid "Remove All Cache Files"
+msgstr "Supprimez tous les fichiers du cache"
+
+#: head-cleaner.php:2612
+msgid "Uninstall"
+msgstr "Désinstaller"
+
+#: head-cleaner.php:2616
+msgid "All the settings of &quot;Head Cleaner&quot; are deleted."
+msgstr "Tous les paramètres de &quot;Head Cleaner&quot; seront supprimés."
+
+#: head-cleaner.php:2617
+msgid "Delete Options"
+msgstr "Supprimer Options"
+
+#: head-cleaner.php:3198
+msgid "There is no excerpt because this is a protected post."
+msgstr "Il n'y a pas extrait, car il s'agit d'un poste protégé."
+

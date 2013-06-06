@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Head Cleaner
-Version: 1.4.2.10
+Version: 1.4.2.11
 Plugin URI: http://wppluginsj.sourceforge.jp/head-cleaner/
 Description: Cleaning tags from your WordPress header and footer.
 Author: wokamoto
@@ -12,7 +12,7 @@ Domain Path: /languages/
 License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
-  Copyright 2009 - 2012 wokamoto (email : wokamoto1973@gmail.com)
+  Copyright 2009 - 2013 wokamoto (email : wokamoto1973@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -3196,12 +3196,12 @@ jQuery(function($){
 	private function _get_ogp_tags() {
 		$site_name = get_bloginfo('name');
 		$url = $this->_get_permalink();
-		$title = trim(wp_title('|', false, 'right'));
+		$title = $title = trim(wp_title('', false));
 		$thumb = '';
 		$excerpt = '';
-		$type = '';
+		$type = $this->options['og_type_top'];
 
-		if ( is_home() ) {
+		if ( is_home() || is_front_page() ) {
 			$excerpt = get_bloginfo('description');
 			$title = $site_name;
 			$type = $this->options['og_type_top'];

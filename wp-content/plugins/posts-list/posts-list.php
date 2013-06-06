@@ -3,7 +3,7 @@
 Plugin Name: Posts List
 Plugin URI: http://wppluginsj.sourceforge.jp/posts-list/
 Description: Adds a posts (or pages) list of your blog pages (not posts) by entering the shortcode [posts-list].
-Version: 0.4.1
+Version: 0.4.2
 Author: wokamoto
 Author URI: http://dogmap.jp/
 Text Domain: 
@@ -13,7 +13,7 @@ License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
 
-  Copyright 2011 (email : wokamoto1973@gmail.com)
+  Copyright 2011 - 2013 (email : wokamoto1973@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -79,7 +79,10 @@ class posts_list {
 		case 'attachment':
 			break;
 		default:
-			$type = 'post';
+			$post_types = get_post_types(array('public' => true));
+			if ( !in_array($type, $post_types) ) {
+				$type = 'post';
+			}
 		}
 
 		$sort = trim(strtolower($sort));
@@ -355,4 +358,3 @@ class posts_list {
 }
 
 new posts_list();
-?>

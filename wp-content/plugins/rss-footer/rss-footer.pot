@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Joost de Valk
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/rss-footer\n"
+"POT-Creation-Date: 2009-07-26 16:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: rss-footer.php:25
+msgid "You cannot edit the RSS Footer options."
+msgstr ""
+
+#: rss-footer.php:43
+msgid "RSS Footer options"
+msgstr ""
+
+#: rss-footer.php:55
+msgid "Content to put in the footer"
+msgstr ""
+
+#: rss-footer.php:56
+msgid "(HTML allowed)"
+msgstr ""
+
+#: rss-footer.php:60 rss-footer.php:92
+msgid "Explanation"
+msgstr ""
+
+#: rss-footer.php:61
+msgid ""
+"You can use the following variables within the content, they will be "
+"replaced by the value on the right."
+msgstr ""
+
+#: rss-footer.php:63
+msgid "A link to the post, with the title as anchor text."
+msgstr ""
+
+#: rss-footer.php:64
+msgid "A link to your site, with your site's name as anchor text."
+msgstr ""
+
+#: rss-footer.php:65
+msgid ""
+"A link to your site, with your site's name and description as anchor text."
+msgstr ""
+
+#: rss-footer.php:67
+msgid "If you update the text above, check the preview below:"
+msgstr ""
+
+#: rss-footer.php:69
+msgid "Content of your RSS Footer"
+msgstr ""
+
+#: rss-footer.php:70
+msgid "Preview of your RSS Footer"
+msgstr ""
+
+#: rss-footer.php:70
+msgid "You need JavaScript enabled for the preview to work."
+msgstr ""
+
+#: rss-footer.php:85
+msgid "Content position"
+msgstr ""
+
+#: rss-footer.php:87
+msgid "after"
+msgstr ""
+
+#: rss-footer.php:88
+msgid "before"
+msgstr ""
+
+#: rss-footer.php:93
+msgid ""
+"The position determines whether the content you've entered above will appear "
+"below or above the post."
+msgstr ""
+
+#: rss-footer.php:98
+msgid "Update RSS Footer Settings"
+msgstr ""
+
+#: rss-footer.php:125
+msgid "is a post from"
+msgstr ""
+
+#: yst_plugin_tools.php:60
+msgid "Settings"
+msgstr ""
+
+#: yst_plugin_tools.php:120
+msgid "Why not do any or all of the following:"
+msgstr ""
+
+#: yst_plugin_tools.php:122
+msgid "Link to it so other folks can find out about it."
+msgstr ""
+
+#: yst_plugin_tools.php:123
+msgid "Give it a good rating on WordPress.org."
+msgstr ""
+
+#: yst_plugin_tools.php:124
+msgid "Donate a token of your appreciation."
+msgstr ""
+
+#: yst_plugin_tools.php:126
+msgid "Like this plugin?"
+msgstr ""
+
+#: yst_plugin_tools.php:133
+msgid ""
+"If you have any problems with this plugin or good ideas for improvements or "
+"new features, please talk about them in the"
+msgstr ""
+
+#: yst_plugin_tools.php:133
+msgid "Support forums"
+msgstr ""
+
+#: yst_plugin_tools.php:134
+msgid "Need support?"
+msgstr ""
+
+#: yst_plugin_tools.php:150 yst_plugin_tools.php:183
+msgid "Subscribe with RSS"
+msgstr ""
+
+#: yst_plugin_tools.php:151 yst_plugin_tools.php:185
+msgid "Subscribe by email"
+msgstr ""
+
+#: yst_plugin_tools.php:152 yst_plugin_tools.php:154
+msgid "Latest news from Yoast"
+msgstr ""
+
+#: yst_plugin_tools.php:154
+msgid "Nothing to say..."
+msgstr ""
+
+#: yst_plugin_tools.php:171
+msgid "Go to Yoast.com"
+msgstr ""
+
+#: yst_plugin_tools.php:192
+msgid "The Latest news from Yoast"
+msgstr ""
+
+#. Plugin Name of an extension
+msgid "RSS Footer"
+msgstr ""
+
+#. Plugin URI of an extension
+msgid "http://yoast.com/wordpress/rss-footer/"
+msgstr ""
+
+#. Description of an extension
+msgid ""
+"Allows you to add a line of content to the end of your RSS feed articles."
+msgstr ""
+
+#. Author of an extension
+msgid "Joost de Valk"
+msgstr ""
+
+#. Author URI of an extension
+msgid "http://yoast.com/"
+msgstr ""

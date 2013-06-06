@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJ
 Tags: head, header, footer, javascript, css, optimization, minified, performance, facebook, OGP
 Requires at least: 2.5
 Tested up to: 3.3.1
-Stable tag: 1.4.2.9
+Stable tag: 1.4.2.11
 
 Cleaning tags from your WordPress header and footer.
 
@@ -43,6 +43,7 @@ To speed up the loading of JavaScript and CSS.
 * Belorussian (by) - [Marcis Gasuns](http://www.comfi.com/ "Marcis Gasuns")
 * Bulgarian (bg_BG) - [Web Geek](http://webhostinggeeks.com/ "Web Geek")
 * Dutch (nl_NL) - [Rene](http://wpwebshop.com/blog "WPWebshop Blog")
+* French (fr_FR) - [NicoR](http://wordpress.org/support/profile/nicor-1 "NicoR")
 * German (de) - Carsten
 * Japanese (ja) - [OKAMOTO Wataru](http://dogmap.jp/ "dogmap.jp") (plugin author)
 * Spanish (es) - [Franz Hartmann](http://tolingo.com/ "tolingo.com - Franz Hartmann")
