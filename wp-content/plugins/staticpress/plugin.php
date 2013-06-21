@@ -4,7 +4,7 @@ Plugin Name: StaticPress
 Author: wokamoto 
 Plugin URI: https://github.com/megumiteam/staticpress
 Description: Transform your WordPress into static websites and blogs.
-Version: 0.4.0
+Version: 0.4.3.2
 Author URI: http://www.digitalcube.jp/
 Text Domain: static-press
 Domain Path: /languages
@@ -30,18 +30,28 @@ License:
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if (!class_exists('static_press_admin'))
-	require_once(dirname(__FILE__).'/includes/class-admin-menu.php');
+	require(dirname(__FILE__).'/includes/class-static_press_admin.php');
 if (!class_exists('static_press'))
-	require_once(dirname(__FILE__).'/includes/class-static_press.php');
+	require(dirname(__FILE__).'/includes/class-static_press.php');
 
 load_plugin_textdomain(static_press_admin::TEXT_DOMAIN, false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
-$static_admin = new static_press_admin(plugin_basename(__FILE__));
-$static = new static_press(
+$staticpress = new static_press(
 	plugin_basename(__FILE__),
-	$static_admin->static_url(),
-	$static_admin->static_dir(),
-	$static_admin->remote_get_option()
+	static_press_admin::static_url(),
+	static_press_admin::static_dir(),
+	static_press_admin::remote_get_option()
 	);
-register_activation_hook(__FILE__, array($static, 'activate'));
-register_deactivation_hook(__FILE__, array($static, 'deactivate'));
+
+add_filter('StaticPress::get_url', array($staticpress, 'replace_url'));
+add_filter('StaticPress::static_url', array($staticpress, 'static_url'));
+add_filter('StaticPress::put_content', array($staticpress, 'rewrite_generator_tag'), 10, 2);
+add_filter('StaticPress::put_content', array($staticpress, 'add_last_modified'), 10, 2);
+add_filter('StaticPress::put_content', array($staticpress, 'remove_link_tag'), 10, 2);
+add_filter('StaticPress::put_content', array($staticpress, 'replace_relative_URI'), 10, 2);
+
+register_activation_hook(__FILE__, array($staticpress, 'activate'));
+register_deactivation_hook(__FILE__, array($staticpress, 'deactivate'));
+
+if (is_admin())
+	new static_press_admin(plugin_basename(__FILE__));

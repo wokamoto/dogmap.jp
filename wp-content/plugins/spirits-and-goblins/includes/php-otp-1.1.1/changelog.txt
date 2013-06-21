@@ -1,0 +1,44 @@
+2009-08-06
+* additional check in the method initializeOtp() - $sequenceCount cannot be 0
+* changes in the readme.txt
+* version 1.1.1
+
+2009-08-04
+* changes in the readme.txt
+
+2009-08-03
+* version 1.1.0
+
+2009-07-31
+* bugfix in setAlternativeDictionary() - a valid dictionary could not be set
+* new method isAvailableAlgorithm()
+* small tweak of the isWordsOtp() method
+* small tweak of the isBitOtp() method
+* small tweak of the isDecOtp() method
+* small tweak of the isValidChallenge() method
+* small tweak of the isValidSeed() method
+* small tweak of the isValidSequence() method
+* changes in the readme.txt
+
+2009-07-30
+* version 1.0.3
+
+2009-07-29
+* if current sequence is 0, then the 'next_sequence' returned by the method
+	authAgainstHexOtp() is set to FALSE as there is no further authentication
+	possible without reinitialization
+* method reinitializeOtp() now expects an array of previously used seeds that
+  cannot be used anymore
+* small corrections in the comments and in the readme.txt
+
+2009-05-21
+* dropped 'previous_hex_otp' from the output of the generateOtpList() method
+* version 1.0.2
+
+2009-05-20
+* modification of the generateOtp() method and generateOtpList() method so that
+	their usage makes more sense for an OTP generator
+* version 1.0.1
+
+2009-05-18
+* first release - version 1.0.0

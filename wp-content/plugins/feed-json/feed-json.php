@@ -4,7 +4,7 @@ Plugin Name: Feed JSON
 Plugin URI: http://wordpress.org/extend/plugins/feed-json/
 Description: Adds a new type of feed you can subscribe to. http://example.com/feed/json or http://example.com/?feed=json to anywhere you get a JSON form.
 Author: wokamoto
-Version: 1.0.2
+Version: 1.0.3
 Author URI: http://dogmap.jp/
 
 License:
@@ -27,8 +27,9 @@ License:
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 class feed_json {
-	function feed_json() {
+	public function __construct() {
 		global $wp_rewrite;
 
 		add_action('init', array(&$this, 'add_feed_json'));
@@ -41,13 +42,13 @@ class feed_json {
 		add_action('deactivate_' . $plugin_basename, array(&$this, 'remove_feed_json'));
 	}
 
-	function add_feed_json_once() {
+	public function add_feed_json_once() {
 		global $wp_rewrite;
 		$this->add_feed_json();
 		$wp_rewrite->flush_rules();
 	}
 
-	function remove_feed_json() {
+	public function remove_feed_json() {
 		global $wp_rewrite;
 		$feeds = array();
 		foreach ( $wp_rewrite->feeds as $feed ) {
@@ -59,21 +60,21 @@ class feed_json {
 		$wp_rewrite->flush_rules();
 	}
 
-	function add_query_vars($qvars) {
+	public function add_query_vars($qvars) {
 	  $qvars[] = 'callback';
 	  $qvars[] = 'limit';
 	  return $qvars;
 	}
 
-	function add_feed_json() {
+	public function add_feed_json() {
 		add_feed('json', array(&$this, 'do_feed_json'));
 	}
 
-	function do_feed_json() {
+	public function do_feed_json() {
 		load_template($this->template_json(dirname(__FILE__) . '/feed-json-template.php'));
 	}
 
-	function template_json( $template ) {
+	public function template_json( $template ) {
 		$template_file = false;
 		if (get_query_var('feed') === 'json') {
 			$template_file = '/feed-json.php';
@@ -96,4 +97,3 @@ class feed_json {
 	}
 }
 new feed_json();
-?>

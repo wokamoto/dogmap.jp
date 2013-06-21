@@ -90,7 +90,7 @@ function wp_social_bookmarking_light_wp_head()
     if(in_array('facebook_like', $services) || in_array('facebook_send', $services)){
         $locale = $options['facebook']['locale'];
         $locale = ($locale == '' ? 'en_US' : $locale);
-        echo '<script type="text/javascript" src="https://connect.facebook.net/'.$locale.'/all.js#xfbml=1"></script>'."\n";
+        echo '<script type="text/javascript" src="http://connect.facebook.net/'.$locale.'/all.js#xfbml=1"></script>'."\n";
     }
 
     // css

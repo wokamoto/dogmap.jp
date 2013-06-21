@@ -3196,7 +3196,7 @@ jQuery(function($){
 	private function _get_ogp_tags() {
 		$site_name = get_bloginfo('name');
 		$url = $this->_get_permalink();
-		$title = $title = trim(wp_title('', false));
+		$title = trim(wp_title( '|', false, 'right' ));
 		$thumb = '';
 		$excerpt = '';
 		$type = $this->options['og_type_top'];

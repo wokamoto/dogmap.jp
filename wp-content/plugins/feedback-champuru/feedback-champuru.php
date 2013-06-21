@@ -103,7 +103,8 @@ class FeedbackChampuru {
 	const SCHEDULE_HANDLER = 'get-feedback-champuru';
 	const META_KEY_PRE  = '_feedback_';
 
-	const TWITTER_API   = 'http://search.twitter.com/search.json?q=%s&rpp=100';
+//	const TWITTER_API   = 'http://search.twitter.com/search.json?q=%s&rpp=100';
+	const TWITTER_API   = 'https://api.twitter.com/1.1/search/tweets.json?q=%s&rpp=50&include_entities=true&result_type=mixed';
 	const TOPSY_API     = 'http://otter.topsy.com/trackbacks.json?url=%s&tracktype=tweet&perpage=50';
 	const HATENA_API    = 'http://b.hatena.ne.jp/entry/jsonlite/?url=%s';
 	const DELICIOUS_API = 'http://feeds.delicious.com/v2/json/url/%s';
