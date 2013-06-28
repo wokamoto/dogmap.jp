@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Spirits and Goblins
-Version: 0.1.0
+Version: 0.3.0
 Plugin URI: https://github.com/wokamoto/spirits-and-goblins
-Description:  
+Description: This plugin enables 2-step verification using one-time password when you log in your WordPress.
 Author: wokamoto
 Author URI: http://dogmap.jp/
 Text Domain: spirits-and-goblins
@@ -28,10 +28,18 @@ License:
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+if ( !class_exists('SpiritsAndGoblins_Admin') )
+	require(dirname(__FILE__).'/includes/class-SpiritsAndGoblins_Admin.php');
 if ( !class_exists('SpiritsAndGoblins') )
-	require dirname(__FILE__).'/includes/class-SpiritsAndGoblins.php';
+	require(dirname(__FILE__).'/includes/class-SpiritsAndGoblins.php');
 
 load_plugin_textdomain(SpiritsAndGoblins::TEXT_DOMAIN, false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
 // Go Go Go!
-$spirits_and_goblins = new SpiritsAndGoblins();
+$spirits_and_goblins = new SpiritsAndGoblins(SpiritsAndGoblins_Admin::get_option());
+
+register_activation_hook(__FILE__, array($spirits_and_goblins, 'activate'));
+register_deactivation_hook(__FILE__, array($spirits_and_goblins, 'deactivate'));
+
+if (is_admin())
+	new SpiritsAndGoblins_Admin();

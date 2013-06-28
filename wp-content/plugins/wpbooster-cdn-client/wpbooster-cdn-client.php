@@ -3,7 +3,7 @@
 Plugin Name: The WP Booster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
-Version: 2.5.1
+Version: 2.6.0
 Author URI: http://wpbooster.net/
 Domain Path: /languages
 Text Domain: wpbooster-cdn-client
@@ -103,7 +103,7 @@ public function plugins_loaded()
     );
 
     if ($this->is_active_host()) {
-        if (!is_user_logged_in() && !get_option('wpbooster-suspended', 0) && !is_ssl()) {
+        if (!is_user_logged_in() && !get_option('wpbooster-suspended', 0)) {
             $hooks = array(
                 "stylesheet_directory_uri",
                 "template_directory_uri",
@@ -134,13 +134,26 @@ public function the_content($html)
 public function filter($uri)
 {
     $cdn = get_transient($this->is_active);
-    if ($this->is_reserved()) {
-        $cdn_url = 'http://'.$cdn->id.'.wpbooster.net/';
+    if (is_ssl()) {
+        $scheme = 'https://';
     } else {
-        $cdn_url = 'http://'.$this->cdn.'/'.$cdn->id.'/';
+        $scheme = 'http://';
+    }
+
+    $base_url = $cdn->base_url;
+    if (preg_match('#^http://#i', $base_url)) {
+       $base_url = array($base_url, str_replace('http://', 'https://', $base_url));
+    } else if (preg_match('#^https://#i', $base_url)) {
+       $base_url = array($base_url, str_replace('https://', 'http://', $base_url));
+    }
+
+    if ($this->is_reserved()) {
+        $cdn_url = $scheme.$cdn->id.'.wpbooster.net/';
+    } else {
+        $cdn_url = $scheme.$this->cdn.'/'.$cdn->id.'/';
     }
     return str_replace(
-        $cdn->base_url,
+        $base_url,
         $cdn_url,
         $uri
     );

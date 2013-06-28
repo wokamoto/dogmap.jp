@@ -1,0 +1,101 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Spirits and Goblins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-20 13:08+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin Name
+msgid "Spirits and Goblins"
+msgstr ""
+
+# description
+msgid "This plugin enables 2-step verification using one-time password when you log in your WordPress."
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins.php:58
+msgid "Unknown error!"
+msgstr ""
+
+# default country (ex. US, JP, FR...)
+msgid "default country"
+msgstr "US"
+
+msgid "Country"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins.php:82
+#: ../includes/class-SpiritsAndGoblins_Admin.php:188
+msgid "Phone number"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins.php:178
+msgid "One-Time Password"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins.php:209
+msgid "not logged in"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins.php:234
+#, php-format
+msgid "One-Time Password incorrect for %s"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins.php:283
+#, php-format
+msgid "[%s] Your One-Time Password"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:31
+msgid "One-Time Password length"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:32
+msgid "One-Time Password expires (sec)"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:33
+msgid "Send option"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:34
+msgid "Twilio sid"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:35
+msgid "Twilio token"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:36
+msgid "Twilio phone number"
+msgstr ""
+
+# Error message
+#: ../includes/class-SpiritsAndGoblins_Admin.php:110
+msgid "Error! : "
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:131
+msgid "Done!"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:163
+msgid "EMail"
+msgstr ""
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:164
+msgid "Short Message"
+msgstr ""
+
+msgid "When you use Short Message of Send option, you have to sign up <a href=\"http://www.twilio.com/\" title=\"Twilio\">Twilio</a> and get Twilio sid, Twilio token, and Twilio phone number."
+msgstr ""
+
+msgid "Also you need to put in your country and your cell phone number at the <a href=\"%s\">user profile</a>."
+msgstr ""
+

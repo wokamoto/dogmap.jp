@@ -1,0 +1,120 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Spirits and Goblins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-20 13:08+0900\n"
+"PO-Revision-Date: 2013-06-24 10:08+0900\n"
+"Last-Translator: wokamoto <wokamoto1973@gmail.com>\n"
+"Language-Team: JAPANESE <http://wppluginsj.sourceforge.jp/>\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Plugin Name
+msgid "Spirits and Goblins"
+msgstr "Spirits and Goblins (魍魎)"
+
+# description
+msgid ""
+"This plugin enables 2-step verification using one-time password when you log "
+"in your WordPress."
+msgstr ""
+"このプラグインを有効にすることで、WordPress ログイン時にワンタイムパスワード"
+"による二段階認証を導入することができます。"
+
+# default country (ex. US, JP, FR...)
+msgid "default country"
+msgstr "JP"
+
+#: ../includes/class-SpiritsAndGoblins.php:58
+msgid "Unknown error!"
+msgstr "不明なエラー"
+
+msgid "Country"
+msgstr "国"
+
+#: ../includes/class-SpiritsAndGoblins.php:82
+#: ../includes/class-SpiritsAndGoblins_Admin.php:188
+msgid "Phone number"
+msgstr "携帯電話番号"
+
+#: ../includes/class-SpiritsAndGoblins.php:178
+msgid "One-Time Password"
+msgstr "ワンタイムパスワード"
+
+#: ../includes/class-SpiritsAndGoblins.php:209
+msgid "not logged in"
+msgstr "ログインしていません"
+
+#: ../includes/class-SpiritsAndGoblins.php:234
+#, php-format
+msgid "One-Time Password incorrect for %s"
+msgstr "%s のワンタイムパスワードが違います"
+
+#: ../includes/class-SpiritsAndGoblins.php:283
+#, php-format
+msgid "[%s] Your One-Time Password"
+msgstr "[%s] あなたのワンタイムパスワード"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:31
+msgid "One-Time Password length"
+msgstr "ワンタイムパスワードの長さ"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:32
+msgid "One-Time Password expires (sec)"
+msgstr "ワンタイムパスワードの有効期間 (秒)"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:33
+msgid "Send option"
+msgstr "送信オプション"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:34
+msgid "Twilio sid"
+msgstr "Twilio sid"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:35
+msgid "Twilio token"
+msgstr "Twilio token"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:36
+msgid "Twilio phone number"
+msgstr "Twilio 電話番号"
+
+# Error message
+#: ../includes/class-SpiritsAndGoblins_Admin.php:110
+msgid "Error! : "
+msgstr "Error! : "
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:131
+msgid "Done!"
+msgstr "完了"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:163
+msgid "EMail"
+msgstr "メール"
+
+#: ../includes/class-SpiritsAndGoblins_Admin.php:164
+msgid "Short Message"
+msgstr "ショートメッセージ"
+
+msgid ""
+"When you use Short Message of Send option, you have to sign up <a href="
+"\"http://www.twilio.com/\" title=\"Twilio\">Twilio</a> and get Twilio sid, "
+"Twilio token, and Twilio phone number."
+msgstr ""
+"送信オプションで「ショートメッセージ」を使用するには <a href=\"http://www."
+"twilio.com/\" title=\"Twilio\">Twilio</a> への登録を行い「Twilio sid」"
+"「Twilio token」「Twilio phone number」を取得する必要があります。"
+
+msgid ""
+"Also you need to put in your country and your cell phone number at the <a "
+"href=\"%s\">user profile</a>."
+msgstr ""
+"また、<a href=\"%s\">ユーザープロフィール</a>で「国」と「携帯電話番号」も登録"
+"してください。"
