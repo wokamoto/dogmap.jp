@@ -4,7 +4,7 @@
  *
  */
 $callback = trim(esc_html(get_query_var('callback')));
-$charset = get_bloginfo('charset');
+$charset  = get_bloginfo('charset');
 
 if (!function_exists('json_encode')) {
 	// For PHP < 5.2.0
@@ -58,11 +58,11 @@ if ( have_posts() ) {
 
 	nocache_headers();
 	if (!empty($callback)) {
-		header("Content-Type: application/x-javascript; charset=$charset");
-		echo "$callback($json);";
+		header("Content-Type: application/x-javascript; charset={$charset}");
+		echo "{$callback}({$json});";
 	} else {
-		header("Content-Type: application/json; charset=$charset");
-		echo "$json";
+		header("Content-Type: application/json; charset={$charset}");
+		echo $json;
 	}
 
 } else {

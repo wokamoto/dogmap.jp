@@ -4,14 +4,14 @@ Plugin Name: Feed JSON
 Plugin URI: http://wordpress.org/extend/plugins/feed-json/
 Description: Adds a new type of feed you can subscribe to. http://example.com/feed/json or http://example.com/?feed=json to anywhere you get a JSON form.
 Author: wokamoto
-Version: 1.0.3
+Version: 1.0.4
 Author URI: http://dogmap.jp/
 
 License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
 
-  Copyright 2011-2012 (email : wokamoto1973@gmail.com)
+  Copyright 2011-2013 (email : wokamoto1973@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,17 +29,25 @@ License:
 */
 
 class feed_json {
+	static $instance;
+	const  JSON_TEMPLATE = 'feed-json.php';
+
 	public function __construct() {
-		global $wp_rewrite;
+		self::$instance = $this;
 
-		add_action('init', array(&$this, 'add_feed_json'));
-		add_action('do_feed_json', array(&$this, 'do_feed_json'), 10, 1);
-		add_filter('template_include', array(&$this, 'template_json'));
-		add_filter('query_vars', array(&$this, 'add_query_vars'));
+		add_action('init', array($this, 'add_feed_json'));
+		add_action('do_feed_json', array($this, 'do_feed_json'), 10, 1);
+		add_filter('template_include', array($this, 'template_json'));
+		add_filter('query_vars', array($this, 'add_query_vars'));
 
-		$plugin_basename = plugin_basename(__FILE__);
-		add_action('activate_' . $plugin_basename, array(&$this, 'add_feed_json_once'));
-		add_action('deactivate_' . $plugin_basename, array(&$this, 'remove_feed_json'));
+		if (function_exists('register_activation_hook')) {
+			register_activation_hook(__FILE__, array($this, 'add_feed_json_once'));
+			register_deactivation_hook(__FILE__, array($this, 'remove_feed_json'));
+		} else {
+			$plugin_basename = plugin_basename(__FILE__);
+			add_action('activate_' . $plugin_basename, array($this, 'add_feed_json_once'));
+			add_action('deactivate_' . $plugin_basename, array($this, 'remove_feed_json'));
+		}
 	}
 
 	public function add_feed_json_once() {
@@ -67,25 +75,22 @@ class feed_json {
 	}
 
 	public function add_feed_json() {
-		add_feed('json', array(&$this, 'do_feed_json'));
+		add_feed('json', array($this, 'do_feed_json'));
 	}
 
 	public function do_feed_json() {
-		load_template($this->template_json(dirname(__FILE__) . '/feed-json-template.php'));
+		load_template($this->template_json(dirname(__FILE__) . '/template/' . self::JSON_TEMPLATE));
 	}
 
 	public function template_json( $template ) {
 		$template_file = false;
 		if (get_query_var('feed') === 'json') {
-			$template_file = '/feed-json.php';
-			if (function_exists('get_stylesheet_directory') && file_exists(get_stylesheet_directory() . $template_file)) {
-				$template_file = get_stylesheet_directory() . $template_file;
-			} elseif (function_exists('get_template_directory') && file_exists(get_template_directory() . $template_file)) {
-				$template_file = get_template_directory() . $template_file;
-			} elseif (file_exists(dirname(__FILE__) . '/feed-json-template.php')) {
-				$template_file = dirname(__FILE__) . '/feed-json-template.php';
-			} else {
-				$template_file = false;
+			if (function_exists('get_stylesheet_directory') && file_exists(get_stylesheet_directory() . '/' . self::JSON_TEMPLATE)) {
+				$template_file = get_stylesheet_directory() . self::JSON_TEMPLATE;
+			} elseif (function_exists('get_template_directory') && file_exists(get_template_directory() . '/' . self::JSON_TEMPLATE)) {
+				$template_file = get_template_directory() . self::JSON_TEMPLATE;
+			} elseif (file_exists(dirname(__FILE__) . '/template/' . self::JSON_TEMPLATE)) {
+				$template_file = dirname(__FILE__) . '/template/' . self::JSON_TEMPLATE;
 			}
 		}
 

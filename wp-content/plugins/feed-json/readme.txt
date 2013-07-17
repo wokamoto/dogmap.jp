@@ -21,11 +21,18 @@ Adds a new type of feed you can subscribe to.
 
 == Changelog == 
 
+**1.0.3 June 10, 2013**  
+
+source code refactoring
+
 **1.0.2 February 17, 2012**  
+
 Bug fix.
 
 **1.0.1 July 28, 2011**  
+
 Bug fix.
 
 **1.0.0 February 15, 2011**  
+
 Initial release.
