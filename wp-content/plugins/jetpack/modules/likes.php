@@ -4,6 +4,8 @@
  * Module Description: Likes are a way for people to show their appreciation for content you have written. It’s also a way for you to show the world how popular your content has become.
  * First Introduced: 2.2
  * Sort Order: 4
+ * Requires Connection: Yes
+ * Auto Activate: No
  */
 class Jetpack_Likes {
 	var $version = '20130620a';
@@ -519,11 +521,11 @@ class Jetpack_Likes {
 			.fixed .column-likes .post-com-count { background-image: none; }
 			.fixed .column-likes .comment-count { background-color: #888; }
 			.fixed .column-likes .comment-count:hover { background-color: #D54E21; }
-			.admin-color-mp6 .fixed .column-likes .post-com-count::after { border: none !important; }
-			.admin-color-mp6 .fixed .column-likes .comment-count { background-color: #bbb; }
-			.admin-color-mp6 .fixed .column-likes .comment-count:hover { background-color: #2ea2cc; }
-			.admin-color-mp6 .fixed .column-likes .vers img { display: none; }
-			.admin-color-mp6 .fixed .column-likes .vers:before {font:20px/1 dashicons;content: '\f155';-webkit-font-smoothing:antialiased;}
+			.mp6 .fixed .column-likes .post-com-count::after { border: none !important; }
+			.mp6 .fixed .column-likes .comment-count { background-color: #bbb; }
+			.mp6 .fixed .column-likes .comment-count:hover { background-color: #2ea2cc; }
+			.mp6 .fixed .column-likes .vers img { display: none; }
+			.mp6 .fixed .column-likes .vers:before {font:20px/1 dashicons;content: '\f155';-webkit-font-smoothing:antialiased;}
 		</style> <?php
 	}
 
@@ -532,10 +534,14 @@ class Jetpack_Likes {
 	*/
 	function enqueue_admin_scripts() {
 		if ( empty( $_GET['post_type'] ) || 'post' == $_GET['post_type'] || 'page' == $_GET['post_type'] ) {
-			if ( $this->in_jetpack )
+			if ( $this->in_jetpack ) {
 				wp_enqueue_script( 'likes-post-count', plugins_url( 'modules/likes/post-count.js', dirname( __FILE__ ) ), array( 'jquery' ), JETPACK__VERSION );
-			else
+				wp_enqueue_script( 'likes-post-count-jetpack', plugins_url( 'modules/likes/post-count-jetpack.js', dirname( __FILE__ ) ), array( 'likes-post-count' ), JETPACK__VERSION );
+			} else {
+				wp_enqueue_script( 'jquery.wpcom-proxy-request', "/wp-content/js/jquery/jquery.wpcom-proxy-request.js", array('jquery'), NULL, true );
 				wp_enqueue_script( 'likes-post-count', plugins_url( 'likes/post-count.js', dirname( __FILE__ ) ), array( 'jquery' ), JETPACK__VERSION );
+				wp_enqueue_script( 'likes-post-count-wpcom', plugins_url( 'likes/post-count-wpcom.js', dirname( __FILE__ ) ), array( 'likes-post-count', 'jquery.wpcom-proxy-request' ), JETPACK__VERSION );
+			}
 		}
 	}
 
@@ -585,10 +591,6 @@ class Jetpack_Likes {
 		if ( ! $this->is_likes_visible() )
 			return $content;
 
-		$protocol = 'http';
-		if ( is_ssl() )
-			$protocol = 'https';
-
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			$blog_id = get_current_blog_id();
 			$bloginfo = get_blog_details( (int) $blog_id );
@@ -609,7 +611,7 @@ class Jetpack_Likes {
 		*/
 		$uniqid = uniqid();
 
-		$src = sprintf( '%1$s://widgets.wp.com/likes/#blog_id=%2$d&amp;post_id=%3$d&amp;origin=%1$s://%4$s&amp;obj_id=%2$d-%3$d-%5$s', $protocol, $blog_id, $post->ID, $domain, $uniqid );
+		$src = sprintf( '//widgets.wp.com/likes/#blog_id=%1$d&amp;post_id=%2$d&amp;origin=%3$s&amp;obj_id=%1$d-%2$d-%4$s', $blog_id, $post->ID, $domain, $uniqid );
 		$name = sprintf( 'like-post-frame-%1$d-%2$d-%3$s', $blog_id, $post->ID, $uniqid );
 		$wrapper = sprintf( 'like-post-wrapper-%1$d-%2$d-%3$s', $blog_id, $post->ID, $uniqid );
 

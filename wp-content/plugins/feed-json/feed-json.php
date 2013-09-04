@@ -4,7 +4,7 @@ Plugin Name: Feed JSON
 Plugin URI: http://wordpress.org/extend/plugins/feed-json/
 Description: Adds a new type of feed you can subscribe to. http://example.com/feed/json or http://example.com/?feed=json to anywhere you get a JSON form.
 Author: wokamoto
-Version: 1.0.4
+Version: 1.0.6
 Author URI: http://dogmap.jp/
 
 License:
@@ -86,19 +86,16 @@ class feed_json {
 		$template_file = false;
 		if (get_query_var('feed') === 'json') {
 			if (function_exists('get_stylesheet_directory') && file_exists(get_stylesheet_directory() . '/' . self::JSON_TEMPLATE)) {
-				$template_file = get_stylesheet_directory() . self::JSON_TEMPLATE;
+				$template_file = get_stylesheet_directory() . '/'. self::JSON_TEMPLATE;
 			} elseif (function_exists('get_template_directory') && file_exists(get_template_directory() . '/' . self::JSON_TEMPLATE)) {
-				$template_file = get_template_directory() . self::JSON_TEMPLATE;
+				$template_file = get_template_directory() . '/' . self::JSON_TEMPLATE;
 			} elseif (file_exists(dirname(__FILE__) . '/template/' . self::JSON_TEMPLATE)) {
 				$template_file = dirname(__FILE__) . '/template/' . self::JSON_TEMPLATE;
 			}
 		}
 
-		return (
-			$template_file !== false
-			? $template_file
-			: $template
-			);
+		$template_file = ($template_file !== false ? $template_file : $template);
+		return apply_filters( 'feed-json-template-file', $template_file );
 	}
 }
 new feed_json();

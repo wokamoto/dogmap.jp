@@ -2,9 +2,7 @@
 /**
  * The template for displaying Comments.
  *
- * The area of the page that contains both current comments and the comment
- * form. The actual display of comments is handled by a callback to
- * twentythirteen_comment() which is located in the functions.php file.
+ * The area of the page that contains comments and the comment form.
  *
  * @package WordPress
  * @subpackage Twenty_Thirteen
@@ -30,7 +28,13 @@ if ( post_password_required() )
 		</h2>
 
 		<ol class="comment-list">
-			<?php wp_list_comments( array( 'callback' => 'twentythirteen_comment', 'style' => 'ol' ) ); ?>
+			<?php
+				wp_list_comments( array(
+					'style'       => 'ol',
+					'short_ping'  => true,
+					'avatar_size' => 74,
+				) );
+			?>
 		</ol><!-- .comment-list -->
 
 		<?php
@@ -38,10 +42,10 @@ if ( post_password_required() )
 			if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
 		?>
 		<nav class="navigation comment-navigation" role="navigation">
-			<h1 class="assistive-text section-heading"><?php _e( 'Comment navigation', 'twentythirteen' ); ?></h1>
+			<h1 class="screen-reader-text section-heading"><?php _e( 'Comment navigation', 'twentythirteen' ); ?></h1>
 			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'twentythirteen' ) ); ?></div>
 			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'twentythirteen' ) ); ?></div>
-		</nav>
+		</nav><!-- .comment-navigation -->
 		<?php endif; // Check for comment navigation ?>
 
 		<?php if ( ! comments_open() && get_comments_number() ) : ?>

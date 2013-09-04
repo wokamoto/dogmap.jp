@@ -10,7 +10,7 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
-		<?php if ( has_post_thumbnail() && ! is_single() && ! post_password_required() ) : ?>
+		<?php if ( has_post_thumbnail() && ! post_password_required() ) : ?>
 		<div class="entry-thumbnail">
 			<?php the_post_thumbnail(); ?>
 		</div>
@@ -20,7 +20,7 @@
 		<h1 class="entry-title"><?php the_title(); ?></h1>
 		<?php else : ?>
 		<h1 class="entry-title">
-			<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'twentythirteen' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
+			<a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
 		</h1>
 		<?php endif; // is_single() ?>
 
@@ -42,7 +42,7 @@
 	<?php endif; ?>
 
 	<footer class="entry-meta">
-		<?php if ( comments_open() ) : ?>
+		<?php if ( comments_open() && ! is_single() ) : ?>
 			<div class="comments-link">
 				<?php comments_popup_link( '<span class="leave-reply">' . __( 'Leave a comment', 'twentythirteen' ) . '</span>', __( 'One comment so far', 'twentythirteen' ), __( 'View all % comments', 'twentythirteen' ) ); ?>
 			</div><!-- .comments-link -->

@@ -30,7 +30,7 @@ $wpmp_conf['excerpt_mblength'] = 110;
  * この設定は the_excerpt() とその関連の抜粋系関数に適用されます。
  * この設定は $wpmp_conf['patch_wp_trim_excerpt'] が false の場合は無効となります。
  */
-$wpmp_conf['excerpt_more'] = ' [...]';
+$wpmp_conf['excerpt_more'] = ' [&hellip;]';
 
 /**
  * get_comment_excerpt() 抜粋の最大文字数
@@ -80,7 +80,7 @@ $wpmp_conf['bp_excerpt_mblength'] = 110;
  * この設定は BuddyPress の bp_create_excerpt() (アクティビティストリームの抜粋で利用) に適用されます。
  * この設定は $wpmp_conf['patch_bp_create_excerpt'] が false の場合は無効となります。
  */
-$wpmp_conf['bp_excerpt_more'] = ' [...]';
+$wpmp_conf['bp_excerpt_more'] = ' [&hellip;]';
 
 
 /* 機能を個別に有効化、無効化できます。有効化するには true を、無効化するには false を指定してください。 */
@@ -97,6 +97,6 @@ $wpmp_conf['patch_wplink_js'] = true;
 $wpmp_conf['patch_word_count_js'] = true;
 $wpmp_conf['patch_force_character_count'] = true;
 $wpmp_conf['patch_force_twentytwelve_open_sans_off'] = true;
+$wpmp_conf['patch_force_twentythirteen_google_fonts_off'] = false;
 $wpmp_conf['patch_sanitize_file_name'] = true;
 $wpmp_conf['patch_bp_create_excerpt'] = false;
-

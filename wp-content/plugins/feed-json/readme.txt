@@ -3,8 +3,8 @@ Contributors: wokamoto
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJCY7XB8F4&lc=JP&item_name=WordPress%20Plugins&item_number=wp%2dplugins&currency_code=JPY&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: feed, feeds, json, jsonp
 Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 1.0.2
+Tested up to: 3.6
+Stable tag: 1.0.6
 
 Adds a new type of feed you can subscribe to. http://example.com/feed/json or http://example.com/?feed=json to anywhere you get a JSON form.
 
@@ -20,6 +20,18 @@ Adds a new type of feed you can subscribe to.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Changelog == 
+
+**1.0.6 August 9, 2013**
+
+add template filter hook
+
+**1.0.5 August 9, 2013**
+
+Bug fix.
+
+**1.0.4 July 11, 2013**
+
+source code refactoring
 
 **1.0.3 June 10, 2013**  
 

@@ -5,43 +5,23 @@
  */
 
 ( function( $ ) {
-	/**
-	 * Repositions the window on jump-to-anchor to account for
-	 * navbar height.
-	 */
-	var twentyThirteenAdjustAnchor = function() {
-		if ( window.location.hash )
-			window.scrollBy( 0, -49 );
-	};
-
-	$( document ).on( 'ready',    twentyThirteenAdjustAnchor );
-	$( window ).on( 'hashchange', twentyThirteenAdjustAnchor );
+	var body    = $( 'body' ),
+	    _window = $( window );
 
 	/**
-	 * Displays the fixed navbar based on screen position.
+	 * Adds a top margin to the footer if the sidebar widget area is higher
+	 * than the rest of the page, to help the footer always visually clear
+	 * the sidebar.
 	 */
-	var html          = $( 'html' ),
-		navbar        = $( '#navbar' ),
-		navbarOffset  = -1,
-		toolbarOffset = $( 'body' ).is( '.admin-bar' ) ? 28 : 0;
+	$( function() {
+		if ( body.is( '.sidebar' ) ) {
+			var sidebar   = $( '#secondary .widget-area' ),
+			    secondary = ( 0 == sidebar.length ) ? -40 : sidebar.height(),
+			    margin    = $( '#tertiary .widget-area' ).height() - $( '#content' ).height() - secondary;
 
-	$( window ).scroll( function() {
-		if ( navbarOffset < 0 )
-			navbarOffset = navbar.offset().top - toolbarOffset;
-
-		if ( window.scrollY >= navbarOffset )
-			html.addClass( 'navbar-fixed' );
-		else
-			html.removeClass( 'navbar-fixed' );
-	} );
-
-	/**
-	 * Allows clicking the navbar to scroll to top.
-	 */
-	navbar.on( 'click', function( event ) {
-		// Ensure that the navbar element was the target of the click.
-		if ( 'navbar' == event.target.id  || 'site-navigation' == event.target.id )
-			$( 'html, body' ).animate( { scrollTop: 0 }, 'fast' );
+			if ( margin > 0 && _window.innerWidth() > 999 )
+				$( '#colophon' ).css( 'margin-top', margin + 'px' );
+		}
 	} );
 
 	/**
@@ -53,21 +33,20 @@
 			return;
 
 		button = nav.find( '.menu-toggle' );
-		menu   = nav.find( '.nav-menu' );
 		if ( ! button )
 			return;
 
 		// Hide button if menu is missing or empty.
+		menu = nav.find( '.nav-menu' );
 		if ( ! menu || ! menu.children().length ) {
 			button.hide();
 			return;
 		}
 
-		$( '.menu-toggle' ).on( 'click', function() {
+		$( '.menu-toggle' ).on( 'click.twentythirteen', function() {
 			nav.toggleClass( 'toggled-on' );
 		} );
 	} )();
-
 
 	/**
 	 * Makes "skip to content" link work correctly in IE9 and Chrome for better
@@ -75,12 +54,12 @@
 	 *
 	 * @link http://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
 	 */
-	$( window ).on( 'hashchange', function() {
-		var element = $( location.hash );
+	_window.on( 'hashchange.twentythirteen', function() {
+		var element = document.getElementById( location.hash.substring( 1 ) );
 
 		if ( element ) {
-			if ( ! /^(?:a|select|input|button)$/i.test( element.tagName ) )
-				element.attr( 'tabindex', -1 );
+			if ( ! /^(?:a|select|input|button|textarea)$/i.test( element.tagName ) )
+				element.tabIndex = -1;
 
 			element.focus();
 		}
@@ -90,12 +69,13 @@
 	 * Arranges footer widgets vertically.
 	 */
 	if ( $.isFunction( $.fn.masonry ) ) {
-		var columnWidth = $( 'body' ).is( '.sidebar' ) ? 228 : 245;
+		var columnWidth = body.is( '.sidebar' ) ? 228 : 245;
 
-		$( '#tertiary .widget-area' ).masonry( {
+		$( '#secondary .widget-area' ).masonry( {
 			itemSelector: '.widget',
-			columnWidth:  columnWidth,
-			gutterWidth:  20
+			columnWidth: columnWidth,
+			gutterWidth: 20,
+			isRTL: body.is( '.rtl' )
 		} );
 	}
 } )( jQuery );

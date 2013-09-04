@@ -13,8 +13,8 @@ get_header(); ?>
 		<div id="content" class="site-content" role="main">
 
 			<header class="page-header">
-				<h1 class="page-title"><?php _e( 'Not found', 'twentythirteen' ); ?></h1>
-			</header><!-- .page-header -->
+				<h1 class="page-title"><?php _e( 'Nothing Found', 'twentythirteen' ); ?></h1>
+			</header>
 
 			<div class="page-wrapper">
 				<div class="page-content">

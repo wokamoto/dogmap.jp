@@ -11,7 +11,7 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<h1 class="entry-title">
-			<a href="<?php echo esc_url( twentythirteen_get_first_url() ); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+			<a href="<?php echo esc_url( twentythirteen_get_link_url() ); ?>"><?php the_title(); ?></a>
 		</h1>
 
 		<div class="entry-meta">
@@ -31,6 +31,6 @@
 		<?php if ( get_the_author_meta( 'description' ) && is_multi_author() ) : ?>
 			<?php get_template_part( 'author-bio' ); ?>
 		<?php endif; ?>
-	</footer>
+	</footer><!-- .entry-meta -->
 	<?php endif; // is_single() ?>
 </article><!-- #post -->
