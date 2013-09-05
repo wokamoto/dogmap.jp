@@ -3,8 +3,8 @@ Contributors: wokamoto, megumithemes
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJCY7XB8F4&lc=JP&item_name=WordPress%20Plugins&item_number=wp%2dplugins&currency_code=JPY&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: security, login, one time password, twilio, 2-step verification
 Requires at least: 3.5
-Tested up to: 3.5.2
-Stable tag: 0.3.0
+Tested up to: 3.6
+Stable tag: 0.3.1
 
 This plugin enables 2-step verification using one-time password when you log in your WordPress.
 
@@ -42,6 +42,6 @@ none
 
 == Changelog == 
 
-**0.3.0 - June 20, 2013**
+**0.3.0 - June 24, 2013**
 
 Initial release.

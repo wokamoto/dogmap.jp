@@ -299,7 +299,10 @@ if(typeof wpOnload=='function')wpOnload();
 	}
 
 	private function pass_phrase() {
-		return defined('AUTH_SALT') ? AUTH_SALT : (defined('COOKIEHASH') ? COOKIEHASH : md5(get_site_option('siteurl')));
+		return
+			( defined('AUTH_SALT')  && AUTH_SALT !== 'put your unique phrase here' )
+			? AUTH_SALT
+			: ( defined('COOKIEHASH') ? COOKIEHASH : md5(get_site_option('siteurl')) );
 	}
 
 	private function verify_user($user){
