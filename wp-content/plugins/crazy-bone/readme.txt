@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJ
 Tags: log, login, users
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 
 Tracks user name, time of login, IP address and browser user agent.
 
@@ -33,6 +33,10 @@ none
 1. The admin page
 
 == Changelog == 
+
+**0.5.1 - Sep. 9, 2013**
+
+Multisite support.
 
 **0.5.0 - Aug. 14, 2013**
 
