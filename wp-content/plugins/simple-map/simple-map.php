@@ -4,7 +4,7 @@ Plugin Name: Simple Map
 Author: Takayuki Miyauchi
 Plugin URI: http://wpist.me/
 Description: Insert google map convert from address.
-Version: 0.8.0
+Version: 0.9.0
 Author URI: http://wpist.me/
 Domain Path: /languages
 Text Domain: simplemap
@@ -14,6 +14,7 @@ new SimpleMap();
 
 class SimpleMap{
 
+private $shortcode_tag = 'map';
 private $class_name = 'simplemap';
 private $width      = '100%';
 private $height     = '200px';
@@ -23,13 +24,13 @@ private $max_breakpoint = 640;
 
 function __construct()
 {
-    add_action('plugins_loaded', array($this, 'plugins_loaded'));
+    add_action('init', array($this, 'init'));
 }
 
-public function plugins_loaded()
+public function init()
 {
     add_action('wp_head', array($this, 'wp_head'));
-    add_shortcode('map', array($this, 'shortcode'));
+    add_shortcode($this->get_shortcode_tag(), array($this, 'shortcode'));
 
     wp_embed_register_handler(
         'google-map',
@@ -40,7 +41,11 @@ public function plugins_loaded()
 
 public function oembed_handler($match)
 {
-    return sprintf('[map url="%s"]', esc_url($match[0]));
+    return sprintf(
+        '[%s url="%s"]',
+        $this->get_shortcode_tag(),
+        esc_url($match[0])
+    );
 }
 
 public function wp_head()
@@ -70,10 +75,10 @@ public function wp_enqueue_scripts()
         'simplemap',
         apply_filters(
             "simplemap_script",
-            plugins_url('js/simplemap.js' , __FILE__)
+            plugins_url('js/simplemap.min.js' , __FILE__)
         ),
         array('gmaps.js'),
-        filemtime(dirname(__FILE__).'/js/simplemap.js'),
+        filemtime(dirname(__FILE__).'/js/simplemap.min.js'),
         true
     );
     wp_enqueue_script('simplemap');
@@ -147,7 +152,12 @@ public function shortcode($p, $content = null)
     );
 }
 
+private function get_shortcode_tag()
+{
+    return apply_filters('simplemap_shortcode_tag', $this->shortcode_tag);
 }
+
+} // end class
 
 
 // EOF

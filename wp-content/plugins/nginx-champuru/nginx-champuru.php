@@ -4,11 +4,15 @@ Plugin Name: Nginx Cache Controller
 Author: Ninjax Team (Takayuki Miyauchi)
 Plugin URI: http://ninjax.cc/
 Description: Plugin for Nginx Reverse Proxy
-Version: 1.6.1
+Version: 1.8.0
 Author URI: http://ninjax.cc/
 Domain Path: /languages
 Text Domain: nginxchampuru
 */
+
+if ( defined('WP_CLI') && WP_CLI ) {
+	require_once(dirname(__FILE__)."/includes/wp-cli.php");
+}
 
 $nginxchampuru = new NginxChampuru();
 register_activation_hook (__FILE__, array($nginxchampuru, 'activation'));
@@ -60,6 +64,10 @@ function __construct()
 
 public function is_enable_flush()
 {
+	if ( defined('WP_CLI') && WP_CLI ) {
+		return true;
+	}
+
     return get_option("nginxchampuru-enable_flush", 0);
 }
 
@@ -144,6 +152,19 @@ public function transientExec($callback)
     call_user_func(array(&$this, $callback), $params);
 
     delete_transient("nginxchampuru_flush");
+}
+
+public function get_cached_objects()
+{
+    global $wpdb;
+
+    $expire_limit = date('Y-m-d H:i:s', time() - $this->get_max_expire());
+
+    $sql = $wpdb->prepare("select distinct `cache_id`, ifnull(`cache_url`,\"\") as `cache_url`, `cache_saved` from `$this->table` where `cache_saved` > %s",
+        $expire_limit
+    );
+
+    return $wpdb->get_results($sql);
 }
 
 private function flush_this()

@@ -4,7 +4,7 @@ Plugin Name: Crazy Bone
 Plugin URI: https://github.com/wokamoto/crazy-bone
 Description: Tracks user name, time of login, IP address and browser user agent.
 Author: wokamoto
-Version: 0.5.1
+Version: 0.5.2
 Author URI: http://dogmap.jp/
 Text Domain: user-login-log
 Domain Path: /languages/
@@ -78,6 +78,8 @@ class crazy_bone {
 		add_action('wp_login', array($this, 'user_login_log'), 10, 2);
 		add_action('wp_authenticate', array($this, 'wp_authenticate_log'), 10, 2);
 		add_action('login_form_logout', array($this, 'user_logout_log'));
+		add_action('auth_cookie_expired', array($this, 'cookie_expired_log'), 10, 2);
+		add_action('auth_cookie_bad_hash', array($this, 'cookie_bad_hash_log'), 10, 2);
 
 		add_action('admin_enqueue_scripts', array($this,'enqueue_scripts'));
 		add_action('wp_enqueue_scripts', array($this,'enqueue_scripts'));
@@ -214,6 +216,16 @@ CREATE TABLE `{$this->ull_table}` (
 
 	public function user_login_log($user_login, $user) {
 		$this->logging($user->ID, 'login');
+	}
+
+	public function cookie_expired_log($cookie_elements) {
+		$user = get_userdatabylogin($cookie_elements['username']);
+		$this->logging($user->ID, 'cookie_expired');
+	}
+
+	public function cookie_bad_hash_log($cookie_elements) {
+		$user = get_userdatabylogin($cookie_elements['username']);
+		$this->logging($user->ID, 'cookie_bad_hash');
 	}
 
 	function wp_authenticate_log($user_login, $user_password) {
@@ -857,7 +869,7 @@ if ($errors != 'invalid_username')
 		if (!empty($status))
 			$sql .= $wpdb->prepare(" AND `activity_status` = %s", $status);
 		$sql .= " GROUP BY `user_id`, `user_login`, `activity_status`, `activity_errors`";
-		$sql .= " ORDER BY `user_login`, `user_id`";
+		$sql .= " ORDER BY `count` DESC, `user_login`, `user_id`";
 		$total = intval($wpdb->get_var("SELECT count(*) from ({$sql}) as log"));
 
 		// Pagination
@@ -866,7 +878,7 @@ if ($errors != 'invalid_username')
 		$page_links_text = $this->get_pagenation($total, self::LIST_PER_PAGE, $page, $start);
 
 		// get login log summary
-		$ull_summary = $wpdb->get_results($wpdb->prepare("{$sql} ORDER BY `count` DESC LIMIT %d,%d", $start, self::LIST_PER_PAGE));
+		$ull_summary = $wpdb->get_results($wpdb->prepare("{$sql} LIMIT %d,%d", $start, self::LIST_PER_PAGE));
 
 		$row_num = 0;
 ?>
