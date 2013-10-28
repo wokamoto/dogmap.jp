@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Multibyte Patch
 Description: Multibyte functionality enhancement for the WordPress Japanese package.
-Version: 1.7
+Version: 1.8
 Plugin URI: http://eastcoder.com/code/wp-multibyte-patch/
 Author: Seisuke Kuraishi
 Author URI: http://tinybit.co.jp/
@@ -15,7 +15,7 @@ Domain Path: /languages
  * Multibyte functionality enhancement for the WordPress Japanese package.
  *
  * @package WP_Multibyte_Patch
- * @version 1.7
+ * @version 1.8
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2013 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -60,7 +60,7 @@ class multibyte_patch {
 	var $debug_suffix = '';
 	var $textdomain = 'wp-multibyte-patch';
 	var $lang_dir = 'languages';
-	var $required_version = '3.6';
+	var $required_version = '3.7-RC1';
 	var $query_based_vars = array();
 
 	// For fallback purpose only. (1.6)
@@ -354,8 +354,10 @@ class multibyte_patch {
 		if ( false !== $this->conf['patch_force_character_count'] && 'characters' != _x( 'words', 'word count: words or characters?' ) )
 			add_filter( 'gettext_with_context', array( $this, 'force_character_count' ), 10, 3 );
 
-		if ( false !== $this->conf['patch_force_twentytwelve_open_sans_off'] && 'twentytwelve' == get_template() )
+		if ( false !== $this->conf['patch_force_twentytwelve_open_sans_off'] && 'twentytwelve' == get_template() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'force_twentytwelve_open_sans_off' ), 99 );
+			add_action( 'admin_print_styles-appearance_page_custom-header', array( $this, 'force_twentytwelve_open_sans_off' ), 99 );
+		}
 
 		if ( false !== $this->conf['patch_force_twentythirteen_google_fonts_off'] && 'twentythirteen' == get_template() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'force_twentythirteen_google_fonts_off' ), 99 );
@@ -466,7 +468,7 @@ class multibyte_patch {
 		$this->has_mb_strlen = function_exists( 'mb_strlen' );
 		$this->debug_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		load_textdomain( $this->textdomain, plugin_dir_path( __FILE__ ) . $this->lang_dir . '/' . $this->textdomain . '-' . get_locale() . '.mo' );
+		load_plugin_textdomain( $this->textdomain, false, dirname( plugin_basename( __FILE__ ) ) . '/' . $this->lang_dir );
 		register_activation_hook( __FILE__, array( $this, 'activation_check' ) );
 		$this->filters();
 	}

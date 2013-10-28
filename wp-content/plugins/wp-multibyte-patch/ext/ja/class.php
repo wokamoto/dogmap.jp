@@ -3,7 +3,7 @@
  * WP Multibyte Patch Japanese Locale Extension
  *
  * @package WP_Multibyte_Patch
- * @version 1.7
+ * @version 1.8
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2013 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -118,7 +118,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		$blog_encoding = $this->blog_encoding;
 
 		if ( isset( $_GET['s'] ) ) {
-			$_GET['s'] = stripslashes( $_GET['s'] );
+			$_GET['s'] = wp_unslash( $_GET['s'] );
 			$_GET['s'] = mb_convert_kana( $_GET['s'], 's', $blog_encoding );
 			$_GET['s'] = preg_replace( "/ +/", " ", $_GET['s'] );
 			$_GET['s'] = wp_slash( $_GET['s'] );

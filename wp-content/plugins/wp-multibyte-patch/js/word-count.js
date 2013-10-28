@@ -4,7 +4,7 @@
 		settings : {
 			strip : /<[a-zA-Z\/][^<>]*>/g, // strip HTML tags
 			clean : /[0-9.(),;:!?%#$¿'"_+=\\/-]+/g, // regexp to remove punctuation, etc.
-			count : /\S\s+/g, // word-counting regexp
+			count : /\S\s+/g // word-counting regexp
 		},
 
 		block : 0,
