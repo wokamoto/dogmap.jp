@@ -4,7 +4,7 @@ Plugin Name: Nginx Cache Controller
 Author: Ninjax Team (Takayuki Miyauchi)
 Plugin URI: http://ninjax.cc/
 Description: Plugin for Nginx Reverse Proxy
-Version: 1.8.0
+Version: 2.0.0
 Author URI: http://ninjax.cc/
 Domain Path: /languages
 Text Domain: nginxchampuru
@@ -425,7 +425,7 @@ public function get_cache_key($url = null)
 
 private function get_postid()
 {
-    $id = url_to_postid($this->get_the_url());
+    $id = get_the_ID();
     if (is_singular() && intval($id)) {
         return $id;
     } else {
