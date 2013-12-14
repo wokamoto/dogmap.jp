@@ -28,15 +28,21 @@ class Jetpack {
 	var $HTTP_RAW_POST_DATA = null; // copy of $GLOBALS['HTTP_RAW_POST_DATA']
 
 	var $plugins_to_deactivate = array(
-		'stats'              => array( 'stats/stats.php', 'WordPress.com Stats' ),
-		'shortlinks'         => array( 'stats/stats.php', 'WordPress.com Stats' ),
-		'sharedaddy'         => array( 'sharedaddy/sharedaddy.php', 'Sharedaddy' ),
-		'twitter-widget'     => array( 'wickett-twitter-widget/wickett-twitter-widget.php', 'Wickett Twitter Widget' ),
-		'after-the-deadline' => array( 'after-the-deadline/after-the-deadline.php', 'After The Deadline' ),
-		'contact-form'       => array( 'grunion-contact-form/grunion-contact-form.php', 'Grunion Contact Form' ),
-		'custom-css'         => array( 'safecss/safecss.php', 'WordPress.com Custom CSS' ),
-		'random-redirect'    => array( 'random-redirect/random-redirect.php', 'Random Redirect' ),
-		'videopress'         => array( 'video/video.php', 'VideoPress' ),
+		'stats'              	 => array( 'stats/stats.php', 'WordPress.com Stats' ),
+		'shortlinks'         	 => array( 'stats/stats.php', 'WordPress.com Stats' ),
+		'sharedaddy'         	 => array( 'sharedaddy/sharedaddy.php', 'Sharedaddy' ),
+		'twitter-widget'     	 => array( 'wickett-twitter-widget/wickett-twitter-widget.php', 'Wickett Twitter Widget' ),
+		'after-the-deadline'	 => array( 'after-the-deadline/after-the-deadline.php', 'After The Deadline' ),
+		'contact-form'		 => array( 'grunion-contact-form/grunion-contact-form.php', 'Grunion Contact Form' ),
+		'custom-css'		 => array( 'safecss/safecss.php', 'WordPress.com Custom CSS' ),
+		'random-redirect'	 => array( 'random-redirect/random-redirect.php', 'Random Redirect' ),
+		'videopress'		 => array( 'video/video.php', 'VideoPress' ),
+		'widget-visibility'	 => array( 'jetpack-widget-visibility/widget-visibility.php', 'Jetpack Widget Visibility' ),
+		'widget-visibility'	 => array( 'widget-visibility-without-jetpack/widget-visibility-without-jetpack.php', 'Widget Visibility Without Jetpack' ),
+		'sharedaddy'		 => array( 'jetpack-sharing/sharedaddy.php', 'Jetpack Sharing' ),
+		'omnisearch'		 => array( 'jetpack-omnisearch/omnisearch.php', 'Jetpack Omnisearch' ),
+		'gravatar-hovercards'	 => array( 'jetpack-gravatar-hovercards/gravatar-hovercards.php', 'Jetpack Gravatar Hovercards' ),
+		'latex'			 => array( 'wp-latex/wp-latex.php', 'WP LaTeX' ),
 	);
 
 	var $capability_translations = array(
@@ -45,6 +51,60 @@ class Jetpack {
 		'author'        => 'publish_posts',
 		'contributor'   => 'edit_posts',
 		'subscriber'    => 'read',
+	);
+
+	/**
+	 * Map of modules that have conflicts with plugins and should not be auto-activated
+	 * if the plugins are active.  Used by filter_default_modules
+	 *
+	 * Plugin Authors: If you'd like to prevent a single module from auto-activating,
+	 * change `module-slug` and add this to your plugin:
+	 *
+	 * add_filter( 'jetpack_get_default_modules', 'my_jetpack_get_default_modules' );
+	 * function my_jetpack_get_default_modules( $modules ) {
+	 *     return array_diff( $modules, array( 'module-slug' ) );
+	 * }
+	 *
+	 * @var array
+	 */
+	private $conflicting_plugins = array(
+		'comments'          => array(
+			'Intense Debate'	  => 'intensedebate/intensedebate.php',
+			'Disqus'		  => 'disqus-comment-system/disqus.php',
+		),
+		'contact-form'      => array(
+			'Contact Form 7'	  => 'contact-form-7/wp-contact-form-7.php',
+			'Gravity Forms'		  => 'gravityforms/gravityforms.php',
+			'Contact Form Plugin'	  => 'contact-form-plugin/contact_form.php',
+			'Easy Contact Forms'	  => 'easy-contact-forms/easy-contact-forms.php',
+		),
+		'gplus-authorship'  => array(
+			'WP SEO by Yoast'	  => 'wordpress-seo/wp-seo.php',
+		),
+		'minileven'         => array(
+			'WPtouch'		  => 'wptouch/wptouch.php',
+		),
+		'latex'		    => array(
+			'LaTeX for WordPress'	  => 'latex/latex.php',
+			'Youngwhans Simple Latex' => 'youngwhans-simple-latex/yw-latex.php',
+			'Easy WP LaTeX'		  => 'easy-wp-latex-lite/easy-wp-latex-lite.php',
+			'MathJax-LaTeX'		  => 'mathjax-latex/mathjax-latex.php',
+			'Enable Latex'		  => 'enable-latex/enable-latex.php',
+			'WP QuickLaTeX'		  => 'wp-quicklatex/wp-quicklatex.php',
+		),
+		'sharedaddy'        => array(
+			'AddThis'		  => 'addthis/addthis_social_widget.php',
+			'Add To Any'		  => 'add-to-any/add-to-any.php',
+			'ShareThis'		  => 'share-this/sharethis.php',
+			'Shareaholic'		  => 'shareaholic/shareaholic.php',
+		),
+		'widget-visibility' => array(
+			'Widget Logic'		  => 'widget-logic/widget_logic.php',
+			'Dynamic Widgets'	  => 'dynamic-widgets/dynamic-widgets.php',
+		),
+		'random-redirect' => array(
+			'Random Redirect 2'	  => 'random-redirect-2/random-redirect.php',
+		),
 	);
 
 	/**
@@ -232,14 +292,20 @@ class Jetpack {
 
 		add_action( 'jetpack_activate_module', array( $this, 'activate_module_actions' ) );
 
+		add_action( 'plugins_loaded', array( $this, 'extra_oembed_providers' ) );
+
 		/**
 		 * These actions run checks to load additional files.
 		 * They check for external files or plugins, so they need to run as late as possible.
 		 */
 		add_action( 'plugins_loaded', array( $this, 'check_open_graph' ),       999 );
+		add_action( 'plugins_loaded', array( $this, 'check_twitter_tags' ),     999 );
 		add_action( 'plugins_loaded', array( $this, 'check_rest_api_compat' ), 1000 );
 
 		add_filter( 'map_meta_cap', array( $this, 'jetpack_custom_caps' ), 1, 4 );
+
+		add_filter( 'jetpack_get_default_modules', array( $this, 'filter_default_modules' ) );
+		add_filter( 'jetpack_get_default_modules', array( $this, 'handle_deprecated_modules' ), 99 );
 	}
 
 	/**
@@ -303,6 +369,9 @@ class Jetpack {
 		 */
 		require_once( JETPACK__PLUGIN_DIR . '_inc/genericons.php' );
 		jetpack_register_genericons();
+
+		if ( ! wp_style_is( 'jetpack-icons', 'registered' ) )
+			wp_register_style( 'jetpack-icons', plugins_url( '_inc/jetpack-icons/jetpack-icons.css', __FILE__ ), false, JETPACK__VERSION );
 	}
 
 	/**
@@ -314,14 +383,14 @@ class Jetpack {
 	}
 
 	/*
-	 * Returns the location of Jetpack's lib directory. This filter is applied  
-	 * in require_lib(). 
-	 * 
-	 * @filter require_lib_dir  
-	 */ 
-	function require_lib_dir( $lib_dir ) { 
-		return JETPACK__PLUGIN_DIR . 'lib'; 
-	} 
+	 * Returns the location of Jetpack's lib directory. This filter is applied
+	 * in require_lib().
+	 *
+	 * @filter require_lib_dir
+	 */
+	function require_lib_dir( $lib_dir ) {
+		return JETPACK__PLUGIN_DIR . 'lib';
+	}
 
 	/**
 	 * Is Jetpack active?
@@ -364,8 +433,16 @@ class Jetpack {
 	}
 
 	/**
-	* Synchronize connected user role changes
-	*/
+	 * Add any extra oEmbed providers that we know about and use on wpcom for feature parity.
+	 */
+	function extra_oembed_providers() {
+		// Cloudup: https://dev.cloudup.com/#oembed
+		wp_oembed_add_provider( 'https://cloudup.com/*' , 'https://cloudup.com/oembed' );
+	}
+
+	/**
+	 * Synchronize connected user role changes
+	 */
 	function user_role_change( $user_id ) {
 		if ( Jetpack::is_active() && Jetpack::is_user_connected( $user_id ) ) {
 			$current_user_id = get_current_user_id();
@@ -515,35 +592,31 @@ class Jetpack {
 		}
 
 		$conflicting_plugins = array(
-			'facebook/facebook.php',                                                								// Official Facebook plugin
-			'wordpress-seo/wp-seo.php',                                             								// WordPress SEO by Yoast
-			'add-link-to-facebook/add-link-to-facebook.php',                        								// Add Link to Facebook
-			'facebook-awd/AWD_facebook.php',                                        								// Facebook AWD All in one
-			'header-footer/plugin.php',                                             								// Header and Footer
-			'nextgen-facebook/nextgen-facebook.php',                                								// NextGEN Facebook OG
-			'seo-facebook-comments/seofacebook.php',                                								// SEO Facebook Comments
-			'seo-ultimate/seo-ultimate.php',                                        								// SEO Ultimate
-			'sexybookmarks/sexy-bookmarks.php',                                     								// Shareaholic
-			'shareaholic/sexy-bookmarks.php',                                       								// Shareaholic
-			'social-discussions/social-discussions.php',                            								// Social Discussions
-			'social-networks-auto-poster-facebook-twitter-g/NextScripts_SNAP.php',									// NextScripts SNAP
-			'wordbooker/wordbooker.php',                                            								// Wordbooker
-			'socialize/socialize.php',                                              								// Socialize
-			'simple-facebook-connect/sfc.php',                                      								// Simple Facebook Connect
-			'social-sharing-toolkit/social_sharing_toolkit.php',                    								// Social Sharing Toolkit
-			'wp-facebook-open-graph-protocol/wp-facebook-ogp.php',                  								// WP Facebook Open Graph protocol
-			'opengraph/opengraph.php',                                              								// Open Graph
-			'sharepress/sharepress.php',                                            								// SharePress
-			'wp-facebook-like-send-open-graph-meta/wp-facebook-like-send-open-graph-meta.php',							// WP Facebook Like Send & Open Graph Meta
-			'network-publisher/networkpub.php',													// Network Publisher
-			'wp-ogp/wp-ogp.php',															// WP-OGP
-			'twitter-cards/twitter-cards.php',													// Twitter Cards
-			'twitter-cards-meta/twitter-cards-meta.php',												// Twitter Cards Meta
-			'ig-twitter-cards/ig-twitter-cards.php',												// IG:Twitter Cards
-			'kevinjohn-gallagher-pure-web-brilliants-social-graph-twitter-cards-extention/kevinjohn_gallagher___social_graph_twitter_output.php',	// Pure Web Brilliant's Social Graph Twitter Cards Extention
-			'jm-twitter-cards/jm-twitter-cards.php',												// JM Twitter Cards
-			'wp-twitter-cards/twitter_cards.php',													// WP Twitter Cards
-			'eewee-twitter-card/index.php',														// eewee twitter card
+			'facebook/facebook.php',                                                		// Official Facebook plugin
+			'wordpress-seo/wp-seo.php',                                             		// WordPress SEO by Yoast
+			'add-link-to-facebook/add-link-to-facebook.php',                        		// Add Link to Facebook
+			'facebook-awd/AWD_facebook.php',                                        		// Facebook AWD All in one
+			'header-footer/plugin.php',                                             		// Header and Footer
+			'nextgen-facebook/nextgen-facebook.php',                                		// NextGEN Facebook OG
+			'seo-facebook-comments/seofacebook.php',                                		// SEO Facebook Comments
+			'seo-ultimate/seo-ultimate.php',                                        		// SEO Ultimate
+			'sexybookmarks/sexy-bookmarks.php',                                     		// Shareaholic
+			'shareaholic/sexy-bookmarks.php',                                       		// Shareaholic
+			'social-discussions/social-discussions.php',                            		// Social Discussions
+			'social-networks-auto-poster-facebook-twitter-g/NextScripts_SNAP.php',			// NextScripts SNAP
+			'wordbooker/wordbooker.php',                                            		// Wordbooker
+			'socialize/socialize.php',                                              		// Socialize
+			'simple-facebook-connect/sfc.php',                                      		// Simple Facebook Connect
+			'social-sharing-toolkit/social_sharing_toolkit.php',                    		// Social Sharing Toolkit
+			'wp-facebook-open-graph-protocol/wp-facebook-ogp.php',                  		// WP Facebook Open Graph protocol
+			'opengraph/opengraph.php',                                              		// Open Graph
+			'sharepress/sharepress.php',                                            		// SharePress
+			'wp-facebook-like-send-open-graph-meta/wp-facebook-like-send-open-graph-meta.php',	// WP Facebook Like Send & Open Graph Meta
+			'network-publisher/networkpub.php',							// Network Publisher
+			'wp-ogp/wp-ogp.php',									// WP-OGP
+			'open-graph-protocol-framework/open-graph-protocol-framework.php',			// Open Graph Protocol Framework
+			'all-in-one-seo-pack/all_in_one_seo_pack.php',						// All in One SEO Pack
+			'facebook-featured-image-and-open-graph-meta-tags/fb-featured-image.php',		// Facebook Featured Image & OG Meta Tags
 		);
 
 		foreach ( $conflicting_plugins as $plugin ) {
@@ -555,6 +628,48 @@ class Jetpack {
 
 		if ( apply_filters( 'jetpack_enable_open_graph', false ) )
 			require_once JETPACK__PLUGIN_DIR . 'functions.opengraph.php';
+	}
+
+	/**
+	 * Check if Jetpack's Twitter tags should be used.
+	 * If certain plugins are active, Jetpack's twitter tags are suppressed.
+	 *
+	 * @uses Jetpack::get_active_modules, add_filter, get_option, apply_filters
+	 * @action plugins_loaded
+	 * @return null
+	 */
+	public function check_twitter_tags() {
+
+		$active_plugins = get_option( 'active_plugins', array() );
+
+		if ( is_multisite() ) {
+			// Due to legacy code, active_sitewide_plugins stores them in the keys,
+			// whereas active_plugins stores them in the values.
+			$network_plugins = array_keys( get_site_option( 'active_sitewide_plugins', array() ) );
+			if ( $network_plugins ) {
+				$active_plugins = array_merge( $active_plugins, $network_plugins );
+			}
+		}
+
+		$conflicting_plugins = array(
+			'twitter-cards/twitter-cards.php',		// Twitter Cards
+			'twitter-cards-meta/twitter-cards-meta.php',	// Twitter Cards Meta
+			'ig-twitter-cards/ig-twitter-cards.php',	// IG:Twitter Cards
+			'jm-twitter-cards/jm-twitter-cards.php',	// JM Twitter Cards
+			'wp-twitter-cards/twitter_cards.php',		// WP Twitter Cards
+			'eewee-twitter-card/index.php',			// Eewee Twitter Card
+			'kevinjohn-gallagher-pure-web-brilliants-social-graph-twitter-cards-extention/kevinjohn_gallagher___social_graph_twitter_output.php',	// Pure Web Brilliant's Social Graph Twitter Cards Extention
+		);
+
+		foreach ( $conflicting_plugins as $plugin ) {
+			if ( in_array( $plugin, $active_plugins ) ) {
+				add_filter( 'jetpack_disable_twitter_cards', '__return_true', 99 );
+				break;
+			}
+		}
+
+		if ( apply_filters( 'jetpack_disable_twitter_cards', true ) )
+			require_once JETPACK__PLUGIN_DIR . 'functions.twitter-cards.php';
 	}
 
 /* Jetpack Options API */
@@ -797,6 +912,90 @@ class Jetpack {
 	}
 
 	/**
+	 * Checks activated modules during auto-activation to determine
+	 * if any of those modules are being deprecated.  If so, close
+	 * them out, and add any replacement modules.
+	 *
+	 * Runs at priority 99 by default.
+	 *
+	 * This is run late, so that it can still activate a module if
+	 * the new module is a replacement for another that the user
+	 * currently has active, even if something at the normal priority
+	 * would kibosh everything.
+	 *
+	 * @since 2.6
+	 * @uses jetpack_get_default_modules filter
+	 * @param array $modules
+	 * @return array
+	 */
+	function handle_deprecated_modules( $modules ) {
+		$deprecated_modules = array(
+			'debug' => null,  // Closed out and moved to ./class.jetpack-debugger.php
+			'wpcc'  => 'sso', // Closed out in 2.6 -- SSO provides the same functionality.
+		);
+
+		// Don't activate SSO if they never completed activating WPCC.
+		if ( Jetpack::is_module_active( 'wpcc' ) ) {
+			$wpcc_options = Jetpack_Options::get_option( 'wpcc_options' );
+			if ( empty( $wpcc_options ) || empty( $wpcc_options['client_id'] ) || empty( $wpcc_options['client_id'] ) ) {
+				$deprecated_modules['wpcc'] = null;
+			}
+		}
+
+		foreach ( $deprecated_modules as $module => $replacement ) {
+			if ( Jetpack::is_module_active( $module ) ) {
+				self::deactivate_module( $module );
+				if ( $replacement ) {
+					$modules[] = $replacement;
+				}
+			}
+		}
+
+		return array_unique( $modules );
+	}
+
+	/**
+	 * Checks activated plugins during auto-activation to determine
+	 * if any of those plugins are in the list with a corresponding module
+	 * that is not compatible with the plugin. The module will not be allowed
+	 * to auto-activate.
+	 *
+	 * @since 2.6
+	 * @uses jetpack_get_default_modules filter
+	 * @param array $modules
+	 * @return array
+	 */
+	function filter_default_modules( $modules ) {
+		$active_plugins = get_option( 'active_plugins', array() );
+		if ( is_multisite() ) {
+			// Due to legacy code, active_sitewide_plugins stores them in the keys,
+			// whereas active_plugins stores them in the values.
+			$network_plugins = array_keys( get_site_option( 'active_sitewide_plugins', array() ) );
+			if ( $network_plugins ) {
+				$active_plugins = array_merge( $active_plugins, $network_plugins );
+			}
+		}
+		sort( $active_plugins );
+
+		// For each module we'd like to auto-activate...
+		foreach ( $modules as $key => $module ) {
+			// If there are potential conflicts for it...
+			if ( ! empty( $this->conflicting_plugins[ $module ] ) ) {
+				// For each potential conflict...
+				foreach ( $this->conflicting_plugins[ $module ] as $title => $plugin ) {
+					// If that conflicting plugin is active...
+					if ( in_array( $plugin, $active_plugins ) ) {
+						// Remove that item from being auto-activated.
+						unset( $modules[ $key ] );
+					}
+				}
+			}
+		}
+
+		return $modules;
+	}
+
+	/**
 	 * Extract a module's slug from its full path.
 	 */
 	public static function get_module_slug( $file ) {
@@ -826,6 +1025,7 @@ class Jetpack {
 			'free'                => 'Free',
 			'requires_connection' => 'Requires Connection',
 			'auto_activate'       => 'Auto Activate',
+			'module_tags'         => 'Module Tags',
 		);
 
 		$file = Jetpack::get_module_path( Jetpack::get_module_slug( $module ) );
@@ -836,12 +1036,11 @@ class Jetpack {
 		if ( empty( $mod['name'] ) )
 			return false;
 
-		$mod['name'] = translate( $mod['name'], 'jetpack' );
-		$mod['description'] = translate( $mod['description'], 'jetpack' );
-		if ( empty( $mod['sort'] ) )
-			$mod['sort'] = 10;
-		$mod['deactivate'] = empty( $mod['deactivate'] );
-		$mod['free'] = empty( $mod['free'] );
+		$mod['name']                = translate( $mod['name'], 'jetpack' );
+		$mod['description']         = translate( $mod['description'], 'jetpack' );
+		$mod['sort']                = empty( $mod['sort'] ) ? 10 : (int) $mod['sort'];
+		$mod['deactivate']          = empty( $mod['deactivate'] );
+		$mod['free']                = empty( $mod['free'] );
 		$mod['requires_connection'] = ( ! empty( $mod['requires_connection'] ) && 'No' == $mod['requires_connection'] ) ? false : true;
 
 		if ( empty( $mod['auto_activate'] ) || ! in_array( strtolower( $mod['auto_activate'] ), array( 'yes', 'no', 'public' ) ) ) {
@@ -850,7 +1049,29 @@ class Jetpack {
 			$mod['auto_activate'] = (string) $mod['auto_activate'];
 		}
 
+		if ( $mod['module_tags'] ) {
+			$mod['module_tags'] = explode( ',', $mod['module_tags'] );
+			$mod['module_tags'] = array_map( 'trim', $mod['module_tags'] );
+			$mod['module_tags'] = array_map( array( __CLASS__, 'translate_module_tag' ), $mod['module_tags'] );
+		} else {
+			$mod['module_tags'] = array( self::translate_module_tag( 'Other' ) );
+		}
+
 		return $mod;
+	}
+
+	public static function translate_module_tag( $untranslated_tag ) {
+		return _x( $untranslated_tag, 'Module Tag', 'jetpack' );
+
+		// Calls here are to populate translation files.
+		_x( 'Photos and Videos',   'Module Tag', 'jetpack' );
+		_x( 'Social',              'Module Tag', 'jetpack' );
+		_x( 'WordPress.com Stats', 'Module Tag', 'jetpack' );
+		_x( 'Writing',             'Module Tag', 'jetpack' );
+		_x( 'Appearance',          'Module Tag', 'jetpack' );
+		_x( 'Developers',          'Module Tag', 'jetpack' );
+		_x( 'Mobile',              'Module Tag', 'jetpack' );
+		_x( 'Other',               'Module Tag', 'jetpack' );
 	}
 
 	/**
@@ -1007,6 +1228,8 @@ class Jetpack {
 	}
 
 	public static function activate_module( $module, $exit = true ) {
+		do_action( 'jetpack_pre_activate_module', $module, $exit );
+
 		$jetpack = Jetpack::init();
 
 		if ( ! strlen( $module ) )
@@ -1074,12 +1297,10 @@ class Jetpack {
 	}
 
 	public static function deactivate_module( $module ) {
+		do_action( 'jetpack_pre_deactivate_module', $module );
+
 		$active = Jetpack::get_active_modules();
-		$new    = array();
-		foreach ( $active as $check ) {
-			if ( ! empty( $check ) && $module != $check )
-				$new[] = $check;
-		}
+		$new    = array_filter( array_diff( $active, (array) $module ) );
 
 		do_action( "jetpack_deactivate_module_$module" );
 		return Jetpack_Options::update_option( 'active_modules', array_unique( $new ) );
@@ -1232,23 +1453,23 @@ p {
 	/**
 	 * Unlinks the current user from the linked WordPress.com user
 	 */
-	function unlink_user() {
+	public static function unlink_user( $user_id = null ) {
 		if ( ! $tokens = Jetpack_Options::get_option( 'user_tokens' ) )
 			return false;
 
-		$user_id = get_current_user_id();
+		$user_id = empty( $user_id ) ? get_current_user_id() : intval( $user_id );
 
 		if ( Jetpack_Options::get_option( 'master_user' ) == $user_id )
 			return false;
 
-		if ( ! isset( $tokens[$user_id] ) )
+		if ( ! isset( $tokens[ $user_id ] ) )
 			return false;
 
 		Jetpack::load_xml_rpc_client();
 		$xml = new Jetpack_IXR_Client( compact( 'user_id' ) );
 		$xml->query( 'jetpack.unlink_user', $user_id );
 
-		unset( $tokens[$user_id] );
+		unset( $tokens[ $user_id ] );
 
 		Jetpack_Options::update_option( 'user_tokens', $tokens );
 
@@ -1345,7 +1566,7 @@ p {
 		}
 
 		add_action( 'load-plugins.php', array( $this, 'intercept_plugin_error_scrape_init' ) );
-		add_action( 'admin_head', array( $this, 'admin_menu_css' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_menu_css' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( JETPACK__PLUGIN_DIR . 'jetpack.php' ), array( $this, 'plugin_action_links' ) );
 
 		if ( Jetpack::is_active() || Jetpack::is_development_mode() ) {
@@ -1358,12 +1579,21 @@ p {
 	}
 
 	function admin_body_class( $admin_body_class = '' ) {
-		if ( self::is_active() ) {
-			$admin_body_class .= ' jetpack-connected';
-		} else {
-			$admin_body_class .= ' jetpack-disconnected';
+		$classes = explode( ' ', trim( $admin_body_class ) );
+
+		$classes[] = self::is_active() ? 'jetpack-connected' : 'jetpack-disconnected';
+
+		// Handle pre-mp6 styling by adding a 'pre-mp6' body class.
+		include( ABSPATH . WPINC . '/version.php' );
+		if ( version_compare( $wp_version, '3.8-alpha', '<' ) ) {
+			$classes[] = 'pre-mp6';
 		}
-		return $admin_body_class;
+
+		return implode( ' ', array_unique( $classes ) );
+	}
+
+	static function add_jetpack_pagestyles( $admin_body_class = '' ) {
+		return $admin_body_class . ' jetpack-pagestyles';
 	}
 
 	function prepare_connect_notice() {
@@ -1466,7 +1696,7 @@ p {
 
 		add_action( "admin_print_scripts-$hook", array( $this, 'admin_scripts' ) );
 
-		do_action( 'jetpack_admin_menu' );
+		do_action( 'jetpack_admin_menu', $hook );
 	}
 /*
 	function admin_menu_modules() {
@@ -1670,24 +1900,49 @@ p {
 		);
 	}
 
-	function admin_menu_css() { ?>
-		<style type="text/css" id="jetpack-menu-css">
-			#toplevel_page_jetpack .wp-menu-image {
-				background: url( <?php echo plugins_url( '_inc/images/menuicon-sprite.png', __FILE__ ) ?> ) 0 90% no-repeat;
-			}
-			/* Retina Jetpack Menu Icon */
-			@media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-				#toplevel_page_jetpack .wp-menu-image {
-					background: url( <?php echo plugins_url( '_inc/images/menuicon-sprite-2x.png', __FILE__ ) ?> ) 0 90% no-repeat;
-					background-size:30px 64px;
+	function admin_menu_css() {
+		// Make sure we're working off a clean version.
+		include( ABSPATH . WPINC . '/version.php' );
+		if ( version_compare( $wp_version, '3.8-alpha', '>=' ) ) {
+			wp_enqueue_style( 'jetpack-icons' );
+			$css = "
+				#toplevel_page_jetpack .wp-menu-image:before {
+					font-family: 'Jetpack' !important;
+					content: '\\e600';
 				}
-			}
-			#toplevel_page_jetpack.current .wp-menu-image,
-			#toplevel_page_jetpack.wp-has-current-submenu .wp-menu-image,
-			#toplevel_page_jetpack:hover .wp-menu-image {
-				background-position: top left;
-			}
-		</style><?php
+				#toplevel_page_jetpack .wp-menu-image {
+					background-repeat: no-repeat;
+				}
+				#menu-posts-feedback .wp-menu-image:before {
+					font-family: dashicons !important;
+					content: '\\f175';
+				}
+				#adminmenu #menu-posts-feedback div.wp-menu-image {
+					background: none !important;
+					background-repeat: no-repeat;
+				}";
+		} else {
+			$css = "
+				#toplevel_page_jetpack .wp-menu-image {
+					background: url( " . plugins_url( '_inc/images/menuicon-sprite.png', __FILE__ ) . " ) 0 90% no-repeat;
+				}
+				/* Retina Jetpack Menu Icon */
+				@media  only screen and (-moz-min-device-pixel-ratio: 1.5),
+						only screen and (-o-min-device-pixel-ratio: 3/2),
+						only screen and (-webkit-min-device-pixel-ratio: 1.5),
+						only screen and (min-device-pixel-ratio: 1.5) {
+					#toplevel_page_jetpack .wp-menu-image {
+						background: url( " . plugins_url( '_inc/images/menuicon-sprite-2x.png', __FILE__ ) . " ) 0 90% no-repeat;
+						background-size:30px 64px;
+					}
+				}
+				#toplevel_page_jetpack.current .wp-menu-image,
+				#toplevel_page_jetpack.wp-has-current-submenu .wp-menu-image,
+				#toplevel_page_jetpack:hover .wp-menu-image {
+					background-position: top left;
+				}";
+		}
+		wp_add_inline_style( 'wp-admin', $css );
 	}
 
 	function admin_menu_order() {
@@ -1863,6 +2118,9 @@ p {
 	function admin_page_load() {
 		$error = false;
 
+		// Make sure we have the right body class to hook stylings for subpages off of.
+		add_filter( 'admin_body_class', array( __CLASS__, 'add_jetpack_pagestyles' ) );
+
 		if ( ! empty( $_GET['jetpack_restate'] ) ) {
 			// Should only be used in intermediate redirects to preserve state across redirects
 			Jetpack::restate();
@@ -1915,7 +2173,7 @@ p {
 
 				$module = stripslashes( $_GET['module'] );
 				check_admin_referer( "jetpack_activate-$module" );
-				Jetpack::log( 'activate' );
+				Jetpack::log( 'activate', $module );
 				Jetpack::activate_module( $module );
 				// The following two lines will rarely happen, as Jetpack::activate_module normally exits at the end.
 				wp_safe_redirect( Jetpack::admin_url( 'page=jetpack' ) );
@@ -1960,8 +2218,8 @@ p {
 
 				$modules = stripslashes( $_GET['module'] );
 				check_admin_referer( "jetpack_deactivate-$modules" );
-				Jetpack::log( 'deactivate' );
 				foreach ( explode( ',', $modules ) as $module ) {
+					Jetpack::log( 'deactivate', $module );
 					Jetpack::deactivate_module( $module );
 					Jetpack::state( 'message', 'module_deactivated' );
 				}
@@ -1975,6 +2233,8 @@ p {
 				Jetpack::state( 'message', 'unlinked' );
 				wp_safe_redirect( Jetpack::admin_url() );
 				exit;
+			default:
+				do_action( 'jetpack_unrecognized_action', sanitize_key( $_GET['action'] ) );
 			}
 		}
 
@@ -2016,6 +2276,27 @@ p {
 			if ( $php_errors = Jetpack::state( 'php_errors' ) ) {
 				$this->error .= "<br />\n";
 				$this->error .= $php_errors;
+			}
+			break;
+		case 'master_user_required' :
+			$module = Jetpack::state( 'module' );
+			$module_name = '';
+			if ( ! empty( $module ) && $mod = Jetpack::get_module( $module ) ) {
+				$module_name = $mod['name'];
+			}
+
+			$master_user = Jetpack_Options::get_option( 'master_user' );
+			$master_userdata = get_userdata( $master_user ) ;
+			if ( $master_userdata ) {
+				if ( ! in_array( $module, Jetpack::get_active_modules() ) ) {
+					$this->error = sprintf( __( '%s was not activated.' , 'jetpack' ), $module_name );
+				} else {
+					$this->error = sprintf( __( '%s was not deactivated.' , 'jetpack' ), $module_name );
+				}
+				$this->error .= '  ' . sprintf( __( 'This module can only be altered by %s, the user who initiated the Jetpack connection on this site.' , 'jetpack' ), esc_html( $master_userdata->display_name ) );
+
+			} else {
+				$this->error = sprintf( __( 'Only the user who initiated the Jetpack connection on this site can toggle %s, but that user no longer exists. This should not happen.', 'jetpack' ), $module_name );
 			}
 			break;
 		case 'not_public' :
@@ -3724,7 +4005,7 @@ p {
 		$option_names = array_filter( (array) $option_names, 'is_string' );
 
 		Jetpack::load_xml_rpc_client();
-		$xml = new Jetpack_IXR_Client( array( 'user_id' => get_current_user_id(), ) );
+		$xml = new Jetpack_IXR_Client( array( 'user_id' => JETPACK_MASTER_USER, ) );
 		$xml->query( 'jetpack.fetchSiteOptions', $option_names );
 		if ( $xml->isError() ) {
 			return array_flip( $option_names );
@@ -3755,9 +4036,6 @@ p {
 	 * @return array An array of options that do not match.  If everything is good, it will evaluate to false.
 	 */
 	public static function check_identity_crisis( $force_recheck = false ) {
-		if ( ! current_user_can( 'manage_options' ) )
-			return false;
-
 		if ( ! Jetpack::is_active() || Jetpack::is_development_mode() )
 			return false;
 

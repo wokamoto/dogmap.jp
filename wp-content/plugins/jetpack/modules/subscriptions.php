@@ -6,6 +6,7 @@
  * First Introduced: 1.2
  * Requires Connection: Yes
  * Auto Activate: Yes
+ * Module Tags: Social
  */
 
 add_action( 'jetpack_modules_loaded', 'jetpack_subscriptions_load' );
@@ -557,10 +558,21 @@ class Jetpack_Subscriptions_Widget extends WP_Widget {
 		$control_ops = array( 'width' => 300 );
 
 		$this->WP_Widget( 'blog_subscription', __( 'Blog Subscriptions (Jetpack)', 'jetpack' ), $widget_ops, $control_ops );
+
+		add_action( 'init', array( $this, 'maybe_add_style' ) );
+	}
+
+	function maybe_add_style() {
+	    if ( is_active_widget( false, false, $this->id_base, true ) ) {
+		wp_register_style( 'jetpack-subscriptions', plugins_url( 'subscriptions/subscriptions.css', __FILE__ ) );
+		wp_enqueue_style( 'jetpack-subscriptions' );
+	    }
 	}
 
 	function widget( $args, $instance ) {
 		global $current_user;
+
+		
 
 		$source                 = 'widget';
 		$instance            	= wp_parse_args( (array) $instance, $this->defaults() );
@@ -573,8 +585,11 @@ class Jetpack_Subscriptions_Widget extends WP_Widget {
 		if ( ! is_array( $subscribers_total ) )
 			$show_subscribers_total = FALSE;
 
+		// Give the input element a unique ID  
+		$subscribe_field_id = apply_filters( 'subscribe_field_id', 'subscribe-field', $widget_id ); 
+
 		echo $args['before_widget'];
-		echo $args['before_title'] . '<label for="subscribe-field">' . esc_attr( $instance['title'] ) . '</label>' . $args['after_title'] . "\n";
+		echo $args['before_title'] . '<label for="' . esc_attr( $subscribe_field_id ) . '">' . esc_attr( $instance['title'] ) . '</label>' . $args['after_title'] . "\n"; 
 
 		$referer = ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -609,7 +624,7 @@ class Jetpack_Subscriptions_Widget extends WP_Widget {
 		<form action="" method="post" accept-charset="utf-8" id="subscribe-blog-<?php echo $widget_id; ?>">
 			<?php
 			if ( ! isset ( $_GET['subscribe'] ) ) {
-				?><p><?php echo $subscribe_text ?></p><?php
+				?><p id="subscribe-text"><?php echo $subscribe_text ?></p><?php
 			}
 
 			if ( $show_subscribers_total && 0 < $subscribers_total['value'] ) {
@@ -617,9 +632,9 @@ class Jetpack_Subscriptions_Widget extends WP_Widget {
 			}
 			?>
 
-			<p><input type="text" name="email" style="width: 95%; padding: 1px 2px" value="<?php echo !empty( $current_user->user_email ) ? esc_attr( $current_user->user_email ) : esc_html__( 'Email Address', 'jetpack' ); ?>" id="subscribe-field" onclick="if ( this.value == '<?php esc_html_e( 'Email Address', 'jetpack' ) ?>' ) { this.value = ''; }" onblur="if ( this.value == '' ) { this.value = '<?php esc_html_e( 'Email Address', 'jetpack' ) ?>'; }" /></p>
+			<p id="subscribe-email"><input type="text" name="email" value="<?php echo !empty( $current_user->user_email ) ? esc_attr( $current_user->user_email ) : esc_html__( 'Email Address', 'jetpack' ); ?>" id="<?php echo esc_attr($subscribe_field_id) ?>" onclick="if ( this.value == '<?php esc_html_e( 'Email Address', 'jetpack' ) ?>' ) { this.value = ''; }" onblur="if ( this.value == '' ) { this.value = '<?php esc_html_e( 'Email Address', 'jetpack' ) ?>'; }" /></p>
 
-			<p>
+			<p id="subscribe-submit">
 				<input type="hidden" name="action" value="subscribe" />
 				<input type="hidden" name="source" value="<?php echo esc_url( $referer ); ?>" />
 				<input type="hidden" name="sub-type" value="<?php echo esc_attr( $source ); ?>" />

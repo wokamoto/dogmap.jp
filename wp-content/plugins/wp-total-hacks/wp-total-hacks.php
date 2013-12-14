@@ -4,7 +4,7 @@ Plugin Name: WP Total Hacks
 Author: Takayuki Miyauchi
 Plugin URI: http://wpist.me/wp/wp-total-hacks/
 Description: WP Total Hacks can customize your WordPress.
-Version: 1.4.0
+Version: 1.5.0
 Author URI: http://wpist.me/
 Domain Path: /languages
 Text Domain: wp-total-hacks
@@ -325,7 +325,7 @@ public function login_head()
 {
     if ($this->op("wfb_login_logo")) {
         printf(
-            '<style type="text/css">h1 a {background-image: url(%s) !important;}</style>',
+            '<style type="text/css">h1 a {background-image: url(%s) !important;}#login h1 a { width: auto !important; background-size: auto !important; }</style>',
             $this->remove_scheme(esc_url($this->op('wfb_login_logo')))
         );
     }
