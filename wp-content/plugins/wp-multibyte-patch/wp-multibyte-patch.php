@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Multibyte Patch
 Description: Multibyte functionality enhancement for the WordPress Japanese package.
-Version: 1.8
+Version: 1.9
 Plugin URI: http://eastcoder.com/code/wp-multibyte-patch/
 Author: Seisuke Kuraishi
 Author URI: http://tinybit.co.jp/
@@ -15,7 +15,7 @@ Domain Path: /languages
  * Multibyte functionality enhancement for the WordPress Japanese package.
  *
  * @package WP_Multibyte_Patch
- * @version 1.8
+ * @version 1.9
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2013 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -47,6 +47,7 @@ class multibyte_patch {
 		'patch_force_character_count' => false,
 		'patch_force_twentytwelve_open_sans_off' => false,
 		'patch_force_twentythirteen_google_fonts_off' => false,
+		'patch_force_twentyfourteen_google_fonts_off' => false,
 		'patch_sanitize_file_name' => true,
 		'patch_bp_create_excerpt' => false,
 		'bp_excerpt_mblength' => 110,
@@ -60,7 +61,7 @@ class multibyte_patch {
 	var $debug_suffix = '';
 	var $textdomain = 'wp-multibyte-patch';
 	var $lang_dir = 'languages';
-	var $required_version = '3.7-RC1';
+	var $required_version = '3.8-RC2';
 	var $query_based_vars = array();
 
 	// For fallback purpose only. (1.6)
@@ -290,43 +291,8 @@ class multibyte_patch {
 		wp_dequeue_style( 'twentythirteen-fonts' );
 	}
 
-	function wp_dashboard_recent_drafts( $drafts = false ) {
-		if ( !$drafts ) {
-			$drafts_query = new WP_Query( array(
-					'post_type' => 'post',
-					'post_status' => 'draft',
-					'author' => $GLOBALS['current_user']->ID,
-					'posts_per_page' => 5,
-					'orderby' => 'modified',
-					'order' => 'DESC'
-				) );
-			$drafts =& $drafts_query->posts;
-		}
-
-		if ( $drafts && is_array( $drafts ) ) {
-			$list = array();
-			foreach ( $drafts as $draft ) {
-				$url = get_edit_post_link( $draft->ID );
-				$title = _draft_or_post_title( $draft->ID );
-				$item = "<h4><a href='$url' title='" . sprintf( __( 'Edit &#8220;%s&#8221;' ), esc_attr( $title ) ) . "'>" . esc_html( $title ) . "</a> <abbr title='" . get_the_time( __( 'Y/m/d g:i:s A' ), $draft ) . "'>" . get_the_time( get_option( 'date_format' ), $draft ) . '</abbr></h4>';
-				$item .= '<p>' . $this->trim_multibyte_excerpt( $draft->post_content, $this->conf['dashboard_recent_drafts_mblength'], $more = '&hellip;', $this->blog_encoding ) . '</p>';
-				$list[] = $item;
-			}
-?>
-		<ul>
-			<li><?php echo join( "</li>\n<li>", $list ); ?></li>
-		</ul>
-		<p class="textright"><a href="edit.php?post_status=draft" ><?php _e( 'View all' ); ?></a></p>
-	<?php
-		} else {
-			_e( 'There are no drafts at the moment' );
-		}
-	}
-
-	function dashboard_recent_drafts() {
-		global $wp_meta_boxes;
-		if ( !empty( $wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']['callback'] ) )
-			$wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']['callback'] = array( $this, 'wp_dashboard_recent_drafts' );
+	function force_twentyfourteen_google_fonts_off() {
+		wp_dequeue_style( 'twentyfourteen-lato' );
 	}
 
 	function query_based_settings() {
@@ -362,6 +328,11 @@ class multibyte_patch {
 		if ( false !== $this->conf['patch_force_twentythirteen_google_fonts_off'] && 'twentythirteen' == get_template() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'force_twentythirteen_google_fonts_off' ), 99 );
 			add_action( 'admin_print_styles-appearance_page_custom-header', array( $this, 'force_twentythirteen_google_fonts_off' ), 99 );
+		}
+
+		if ( false !== $this->conf['patch_force_twentyfourteen_google_fonts_off'] && 'twentyfourteen' == get_template() ) {
+			add_action( 'wp_enqueue_scripts', array( $this, 'force_twentyfourteen_google_fonts_off' ), 99 );
+			add_action( 'admin_print_scripts-appearance_page_custom-header', array( $this, 'force_twentyfourteen_google_fonts_off' ), 99 );
 		}
 	}
 
@@ -410,9 +381,6 @@ class multibyte_patch {
 
 		if ( false !== $this->conf['patch_word_count_js'] )
 			add_action( 'wp_default_scripts', array( $this, 'word_count_js' ), 9 );
-
-		if ( false !== $this->conf['patch_dashboard_recent_drafts'] )
-			add_action( 'wp_dashboard_setup', array( $this, 'dashboard_recent_drafts' ) );
 
 		add_action( 'after_setup_theme', array( $this, 'filters_after_setup_theme' ), 99 );
 	}

@@ -1,6 +1,9 @@
 @charset "utf-8";
 
+body.branch-3-7 *:not(textarea) {
+	font-family: sans-serif !important;
+}
+
 body *:not(textarea) {
 	font-style: normal !important;
-	font-family: sans-serif !important;
 }

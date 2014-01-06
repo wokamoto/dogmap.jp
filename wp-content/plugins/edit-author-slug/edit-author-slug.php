@@ -15,11 +15,13 @@
  * Plugin Name: Edit Author Slug
  * Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
  * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version: 0.9.5
- * Tested With: 3.2.1, 3.3.2, 3.4, 3.5.1, 3.6
+ * Version: 0.9.6
+ * Tested With: 3.6.1, 3.7.1, 3.8.1
  * Author: Brandon Allen
  * Author URI: http://brandonallen.org/
- * License: GPL2
+ * License: GPL2+
+ * Text Domain: edit-author-slug
+ * Domain Path: /languages
  */
 
 /*
@@ -163,6 +165,9 @@ final class BA_Edit_Author_Slug {
 			// Author base
 			$this->author_base = 'author';
 		}
+
+		// Misc
+		$this->domain = 'edit-author-slug';
 	}
 
 	/**
@@ -197,7 +202,30 @@ final class BA_Edit_Author_Slug {
 		add_action( 'init',       array( $this, 'author_base_rewrite'  ) );
 
 		// Localize
-		load_plugin_textdomain( 'edit-author-slug', false, dirname( $this->plugin_dir ) . '/languages/' );
+		add_action( 'plugins_loaded',       array( $this, 'load_textdomain'  ) );
+	}
+
+	/**
+	 * Load the translation file for current language. Checks the default WordPress
+	 * languages folder first, then inside edit-author-slug inside the default WordPress
+	 * languages folder, then inside edit-author-slug plugin languages , and then the
+	 * WordPress plugins folder.
+	 *
+	 * Note that custom translation files inside the bbPress plugin folder
+	 * will be removed on edit-author-slug updates. If you're creating custom
+	 * translation files, please use the global language folder.
+	 *
+	 * @since 0.9.6
+	 *
+	 * @uses apply_filters() Calls 'plugin_locale' with {@link get_locale()} value
+	 * @uses load_textdomain() To load the textdomain
+	 * @uses load_plugin_textdomain() To load the textdomain inside the 'plugin/languages' folder
+	 */
+	public function load_textdomain() {
+
+		// Look in wp-content/plugins/edit-author-slug/languages first
+		// fallback to wp-content/languages/plugins
+		load_plugin_textdomain( $this->domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**

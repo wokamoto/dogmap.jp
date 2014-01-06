@@ -140,7 +140,7 @@ private function add_last_modified()
 
 public function admin_menu()
 {
-    global $nginxchampuru;
+    global $nginxchampuru, $wp_version;
 
     $this->default_cache_params = array(
         'is_home'     => __("Home", "nginxchampuru"),
@@ -156,15 +156,25 @@ public function admin_menu()
         'single' => __('Flush current page only.', 'nginxchampuru'),
     );
 
+    $icon = 'none';
+    if ( version_compare( $wp_version, '3.8', '<' ) ) {
+        $icon = $nginxchampuru->get_plugin_url().'/img/nginx.png';
+    }
+
     $hook = add_menu_page(
         "Nginx Cache",
         "Nginx Cache",
         "update_core",
         "nginx-champuru",
         array(&$this, "admin_panel"),
-        $nginxchampuru->get_plugin_url().'/img/nginx.png',
+        $icon,
         "3"
     );
+
+    if ( version_compare( $wp_version, '3.8', '>=' ) ) {
+        add_action('admin_enqueue_scripts', array(&$this, 'admin_menu_styles'));
+    }
+
     add_action('admin_print_styles-'.$hook, array(&$this, 'admin_styles'));
     add_action('admin_head-'.$hook, array(&$this, 'admin_head'));
 }
@@ -205,11 +215,23 @@ public function admin_styles()
     global $nginxchampuru;
     wp_register_style(
         "nginxchampuru",
-        $nginxchampuru->get_plugin_url().'/admin.css',
+        $nginxchampuru->get_plugin_url().'/css/admin.min.css',
         array(),
-        filemtime($nginxchampuru->get_plugin_dir()."/admin.css")
+        filemtime($nginxchampuru->get_plugin_dir()."/css/admin.min.css")
     );
     wp_enqueue_style("nginxchampuru");
+}
+
+public function admin_menu_styles()
+{
+    global $nginxchampuru;
+    wp_register_style(
+        "nginxchampuru-menu",
+        $nginxchampuru->get_plugin_url().'/css/menu.css',
+        array(),
+        filemtime($nginxchampuru->get_plugin_dir()."/css/menu.css")
+    );
+    wp_enqueue_style("nginxchampuru-menu");
 }
 
 public function admin_bar_menu($bar)

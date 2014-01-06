@@ -3,7 +3,7 @@
  * WP Multibyte Patch Japanese Locale Extension
  *
  * @package WP_Multibyte_Patch
- * @version 1.8
+ * @version 1.9
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2013 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -153,6 +153,10 @@ if ( class_exists( 'multibyte_patch' ) ) :
 	function wp_trim_words( $text = '', $num_words = 110, $more = '', $original_text = '' ) {
 		if ( 'characters' != _x( 'words', 'word count: words or characters?' ) )
 			return $text;
+
+		// If the caller is wp_dashboard_recent_drafts()
+		if( false !== $this->conf['patch_dashboard_recent_drafts'] && 10 === $num_words && is_admin() && strpos( wp_debug_backtrace_summary(), 'wp_dashboard_recent_drafts' ) )
+			$num_words = $this->conf['dashboard_recent_drafts_mblength'];
 
 		$text = $original_text;
 		$text = wp_strip_all_tags( $text );

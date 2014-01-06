@@ -35,15 +35,15 @@ $wpmp_conf['excerpt_more'] = ' [&hellip;]';
 /**
  * get_comment_excerpt() 抜粋の最大文字数
  *
- * この設定は comment_excerpt() (ダッシュボードの最近のコメントウィジェットの抜粋で利用) に適用されます。
+ * この設定は comment_excerpt() (ダッシュボード > アクティビティ > コメント の抜粋で利用) に適用されます。
  * この設定は $wpmp_conf['patch_get_comment_excerpt'] が false の場合は無効となります。
  */
 $wpmp_conf['comment_excerpt_mblength'] = 40;
 
 /**
- * ダッシュボード最近の下書きウィジェット抜粋の最大文字数
+ * ダッシュボード「下書き」抜粋の最大文字数
  *
- * この設定は、ダッシュボードの最近の下書きウィジェットの抜粋に適用されます。
+ * この設定は、ダッシュボード > クイックドラフト > 下書き の抜粋に適用されます。
  * この設定は $wpmp_conf['patch_dashboard_recent_drafts'] が false の場合は無効となります。
  */
 $wpmp_conf['dashboard_recent_drafts_mblength'] = 40;
@@ -98,5 +98,6 @@ $wpmp_conf['patch_word_count_js'] = true;
 $wpmp_conf['patch_force_character_count'] = true;
 $wpmp_conf['patch_force_twentytwelve_open_sans_off'] = true;
 $wpmp_conf['patch_force_twentythirteen_google_fonts_off'] = false;
+$wpmp_conf['patch_force_twentyfourteen_google_fonts_off'] = false;
 $wpmp_conf['patch_sanitize_file_name'] = true;
 $wpmp_conf['patch_bp_create_excerpt'] = false;
