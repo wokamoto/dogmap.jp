@@ -4,7 +4,7 @@ Donate link: http://ninjax.cc/
 Tags: nginx, reverse proxy, cache
 Requires at least: 3.4
 Tested up to: 3.8
-Stable tag: 2.2.0
+Stable tag: 2.4.0
 
 Provides some functions of controlling Nginx proxy server cache.
 
@@ -41,14 +41,17 @@ Show list of all proxy caches.
 See help.
 `wp help nginx`
 
-= Translator =
-* English(en) - [JOTAKI Taisuke](https://twitter.com/#!/tekapo)
-* Japanese(Ja) - [JOTAKI Taisuke](https://twitter.com/#!/tekapo)
+= Languages =
+* English(en) - [JOTAKI Taisuke](http://tekapo.com/)
+* Japanese(Ja) - [JOTAKI Taisuke](http://tekapo.com/)
+* Vietnamese(vi) - [Trong](http://bizover.net/)
 
 = Contributor =
 
 * [Ninjax Team](http://ninjax.cc/) 
-* [Takayuki Miyauchi](http://firegoby.theta.ne.jp/)
+* [miyauchi](http://profiles.wordpress.org/miyauchi/)
+* [wokamoto](http://profiles.wordpress.org/wokamoto/)
+* [gatespace](http://profiles.wordpress.org/gatespace/)
 
 == Installation ==
 
@@ -91,6 +94,20 @@ Setting the key for the reverse cache proxy.
 
 
 == Changelog ==
+
+= 2.4.0 =
+
+* Bug fix. (SQL faild at RDS on the AWS.)
+
+https://github.com/megumiteam/nginx-cache-controller/compare/2.3.0...2.4.0
+
+= 2.3.0 =
+* Bug fix. (Menu doen't shown when DISALLOW_FILE_MODS is enabled.)
+
+https://github.com/megumiteam/nginx-cache-controller/compare/2.2.1...2.3.0
+
+= 2.2.1 =
+* Add language Vietnamese (vi).
 
 = 2.2.0 =
 * Add Grunt.

@@ -1,10 +1,9 @@
 === oEmbed Gist ===
 Contributors: miyauchi
-Donate link: https://www.paypal.com/jp/cgi-bin/webscr?cmd=_flow&SESSION=V9ggRQYdPscPXHHzwIMAG2o2RavMQO8KLdFTxHm3dzuX2gDiDHw-k1ZBw5C&dispatch=50a222a57771920b6a3d7b606239e4d529b525e0b7e69bf0224adecfb0124e9b61f737ba21b0819838956b846fa597911f234fb937456ea7
 Tags: url, link, oembed, visual editor, post, gist, github
 Requires at least: 3.0
-Tested up to: 3.5
-Stable tag: 1.4.0
+Tested up to: 3.8
+Stable tag: 1.6.0
 
 Embed your source from gist into WordPress easily.
 
@@ -24,7 +23,7 @@ PHP5 is required!
 
 = Support =
 
-* [Plugin Homepage](http://firegoby.theta.ne.jp/wp/oembed-gist)
+* [GitHub](https://github.com/miya0001/oembed-gist)
 * [Support](http://wordpress.org/tags/oembed-gist)
 
 
@@ -42,6 +41,12 @@ PHP5 is required!
 1. It just appears!
 
 == Changelog ==
+
+= 1.6.0 =
+* https://github.com/miya0001/oembed-gist/compare/1.5.0...1.6.0
+
+= 1.5.0 =
+* Fix problem with JetPack 2.9. Thanks [rickrduncan](http://wordpress.org/support/profile/rickrduncan) for patch.
 
 = 1.4.0 =
 * fixed for new permalink structure.

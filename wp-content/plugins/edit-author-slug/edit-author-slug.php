@@ -15,7 +15,7 @@
  * Plugin Name: Edit Author Slug
  * Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
  * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version: 0.9.6
+ * Version: 1.0
  * Tested With: 3.6.1, 3.7.1, 3.8.1
  * Author: Brandon Allen
  * Author URI: http://brandonallen.org/
@@ -54,133 +54,213 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 final class BA_Edit_Author_Slug {
 
-	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var string Edit Author Slug Version
-	 */
-	public $version = '0.9.5';
+	/** Magic *****************************************************************/
 
 	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var int Edit Author Slug DB Version
+	 * Edit Author Slug uses many variables, several of which can be filtered to
+	 * customize the way it operates. Most of these variables are stored in a
+	 * private array that gets updated with the help of PHP magic methods.
+	 *
+	 * This is a precautionary measure, to avoid potential errors produced by
+	 * unanticipated direct manipulation of Edit Author Slug's run-time data.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see BA_Edit_Author_Slug::setup_globals()
+	 * @var array
 	 */
-	public $db_version = 158;
+	private $data;
+
+	/** Singleton ****************************************************************/
 
 	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var int Edit Author Slug Currently Installed DB Version
+	 * Main BA_Edit_Author_Slug Instance
+	 *
+	 * Insures that only one instance of BA_Edit_Author_Slug exists in memory at any one
+	 * time. Also prevents needing to define globals all over the place.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @staticvar object $instance
+	 * @uses BA_Edit_Author_Slug::setup_globals() Setup the globals needed.
+	 * @uses BA_Edit_Author_Slug::includes() Include the required files.
+	 * @uses BA_Edit_Author_Slug::setup_actions() Setup the hooks and actions.
+	 * @see ba_eas()
+	 * @return The one true BA_Edit_Author_Slug
 	 */
-	public $current_db_version = 0;
+	public static function instance() {
+
+		// Store the instance locally to avoid private static replication
+		static $instance = null;
+
+		// Only run these methods if they haven't been ran previously
+		if ( null === $instance ) {
+			$instance = new BA_Edit_Author_Slug;
+			$instance->setup_globals();
+			$instance->includes();
+			$instance->setup_actions();
+		}
+
+		// Always return the instance
+		return $instance;
+	}
+
+	/** Magic Methods ************************************************************/
 
 	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var string Result of __FILE__
-	 */
-	public $file = '';
-
-	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var string Edit Author Slug plugin directory
-	 */
-	public $plugin_dir = '';
-
-	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var string Edit Author Slug plugin URL
-	 */
-	public $plugin_url = '';
-
-	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var string Edit Author Slug plugin basename
-	 */
-	public $plugin_basename = '';
-
-	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var string Author base
-	 */
-	public $author_base = '';
-
-	/**
-	 * PHP5 constructor
+	 * A dummy constructor to prevent BA_Edit_Author_Slug from being loaded more than once.
 	 *
 	 * @since 0.7.0
+	 *
+	 * @see BA_Edit_Author_Slug::instance()
+	 * @see ba_eas();
 	 */
-	public function __construct() {
-		$this->setup_globals();
-		$this->includes();
-		$this->setup_actions();
-	}
+	private function __construct() { /* Do nothing here */ }
+
+	/**
+	 * A dummy magic method to prevent BA_Edit_Author_Slug from being cloned
+	 *
+	 * @since 1.0.0
+	 */
+	public function __clone() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' ); }
+
+	/**
+	 * A dummy magic method to prevent BA_Edit_Author_Slug from being unserialized
+	 *
+	 * @since 1.0.0
+	 */
+	public function __wakeup() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' ); }
+
+	/**
+	 * Magic method for checking the existence of a certain custom field
+	 *
+	 * @since 1.0.0
+	 */
+	public function __isset( $key ) { return isset( $this->data->$key ); }
+
+	/**
+	 * Magic method for getting BA_Edit_Author_Slug variables
+	 *
+	 * @since 1.0.0
+	 */
+	public function __get( $key ) { return isset( $this->data->$key ) ? $this->data->$key : null; }
+
+	/**
+	 * Magic method for setting BA_Edit_Author_Slug variables
+	 *
+	 * @since 1.0.0
+	 */
+	public function __set( $key, $value ) { $this->data->$key = $value; }
+
+	/**
+	 * Magic method for unsetting BA_Edit_Author_Slug variables
+	 *
+	 * @since 1.0.0
+	 */
+	public function __unset( $key ) { if ( isset( $this->data->$key ) ) unset( $this->data->$key ); }
+
+	/**
+	 * Magic method to prevent notices and errors from invalid method calls
+	 *
+	 * @since 1.0.0
+	 */
+	public function __call( $name = '', $args = array() ) { unset( $name, $args ); return null; }
+
+	/** Private Methods *******************************************************/
 
 	/**
 	 * Edit Author Slug global variables.
 	 *
 	 * @since 0.7.0
 	 *
-	 * @uses plugin_dir_path() To generate Edit Author Slug plugin path
-	 * @uses plugin_dir_url() To generate Edit Author Slug plugin url
-	 * @uses get_option()  To get the Edit Author Slug options
+	 * @uses plugin_dir_path() To generate Edit Author Slug plugin path.
+	 * @uses plugin_dir_url() To generate Edit Author Slug plugin url.
+	 * @uses plugin_basename() To get the plugin basename.
+	 * @uses get_option() To get the Edit Author Slug options.
+	 * @uses absint() To cast db variables as absolute integers.
 	 */
 	private function setup_globals() {
-		// Edit Author Slug root directory
+
+		/** Magic *******************************************************************/
+
+		$this->data = new stdClass();
+
+		/** Versions ****************************************************************/
+
+		$this->version            = '1.0';
+		$this->db_version         = 133;
+		$this->current_db_version = 0;
+
+		/** Paths *******************************************************************/
+
 		$this->file            = __FILE__;
 		$this->plugin_dir      = plugin_dir_path( $this->file );
 		$this->plugin_url      = plugin_dir_url(  $this->file );
 		$this->plugin_basename = plugin_basename( $this->file );
 
+		/** Miscellaneous ***********************************************************/
+
+		$this->domain = 'edit-author-slug';
+
+		/** Options *****************************************************************/
+
+		// Setup author base
+		$this->author_base = 'author';
+
 		// Options
-		if ( $base = get_option( '_ba_eas_author_base' ) ) {
+		if ( $base = get_option( '_ba_eas_author_base', 'author' ) ) {
 			// Author base
-			$this->author_base = 'author';
-			if ( 'author' != $base )
+			if ( !empty( $base ) ) {
 				$this->author_base = $base;
+			}
 
 			// Current DB version
-			$db_version = get_option( '_ba_eas_db_version', 0 );
-			if ( !empty( $db_version ) )
-				$this->current_db_version = (int) $db_version;
+			$this->current_db_version = absint( get_option( '_ba_eas_db_version', 0 ) );
 
 		// Pre-0.9 Back compat
 		} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
 			// Author base
-			$this->author_base = 'author';
-			if ( 'author' != $options['author_base'] )
+			if ( !empty( $options['author_base'] ) ) {
 				$this->author_base = $options['author_base'];
+			}
 
 			// Current DB version
-			if ( !empty( $options['db_version'] ) )
-				$this->current_db_version = (int) $options['db_version'];
-
-		// Something has gone horribly wrong if this happens
-		} else {
-			// Author base
-			$this->author_base = 'author';
+			if ( !empty( $options['db_version'] ) ) {
+				$this->current_db_version = absint( $options['db_version'] );
+			}
 		}
 
-		// Misc
-		$this->domain = 'edit-author-slug';
+		// Load auto-update option
+		$this->do_auto_update = absint( get_option( '_ba_eas_do_auto_update', 0 ) );
+
+		// Load the default nicename structure for auto-update
+		$default_user_nicename = get_option( '_ba_eas_default_user_nicename', 'username' );
+		$this->default_user_nicename = ( !empty( $default_user_nicename ) ) ? $default_user_nicename : 'username';
+
+		// Load role-based author slug option
+		$this->do_role_based = absint( get_option( '_ba_eas_do_role_based', 0 ) );
+
+		// Load role-based author slug option
+		$this->role_slugs = array();
 	}
 
 	/**
 	 * Include necessary files.
 	 *
 	 * @since 0.7.0
+	 *
+	 * @uses is_admin() To load admin specific functions.
 	 */
 	private function includes() {
-		if ( is_admin() )
-			require_once( $this->plugin_dir . 'includes/admin-functions.php' );
 
+		// Load the core functions
 		require_once( $this->plugin_dir . 'includes/general-functions.php' );
-		require_once( $this->plugin_dir . 'includes/hooks.php' );
+		require_once( $this->plugin_dir . 'includes/hooks.php'             );
+
+		// Maybe load the admin functions
+		if ( is_admin() ) {
+			require_once( $this->plugin_dir . 'includes/admin-functions.php' );
+		}
 	}
 
 	/**
@@ -188,10 +268,9 @@ final class BA_Edit_Author_Slug {
 	 *
 	 * @since 0.7.0
 	 *
-	 * @uses register_activation_hook() To register the activation hook
-	 * @uses register_deactivation_hook() To register the deactivation hook
-	 * @uses add_action() To call BA_Edit_Author_Slug::author_base_rewrite
-	 * @uses load_plugin_textdomain()
+	 * @uses register_activation_hook() To register the activation hook.
+	 * @uses register_deactivation_hook() To register the deactivation hook.
+	 * @uses add_action() To call various hooks.
 	 */
 	private function setup_actions() {
 		// Register Edit Author Slug activation/deactivation sequences
@@ -199,33 +278,33 @@ final class BA_Edit_Author_Slug {
 		register_deactivation_hook( $this->file, 'ba_eas_deactivation' );
 
 		// Author Base Actions
-		add_action( 'init',       array( $this, 'author_base_rewrite'  ) );
+		add_action( 'after_setup_theme', array( $this, 'set_role_slugs')           );
+		add_action( 'init',              array( $this, 'author_base_rewrite' ), 10 );
+		add_action( 'init',              array( $this, 'add_rewrite_tags' ),    20 );
 
 		// Localize
-		add_action( 'plugins_loaded',       array( $this, 'load_textdomain'  ) );
+		add_action( 'plugins_loaded',    array( $this, 'load_textdomain' )         );
 	}
 
+	/** Public Methods ***********************************************************/
+
 	/**
-	 * Load the translation file for current language. Checks the default WordPress
-	 * languages folder first, then inside edit-author-slug inside the default WordPress
-	 * languages folder, then inside edit-author-slug plugin languages , and then the
-	 * WordPress plugins folder.
+	 * Load the translation file for current language. Checks the Edit Author Slug
+	 * languages folder first, then inside the default WP language plugins folder.
 	 *
-	 * Note that custom translation files inside the bbPress plugin folder
+	 * Note that custom translation files inside the Edit Author Slug plugin folder
 	 * will be removed on edit-author-slug updates. If you're creating custom
-	 * translation files, please use the global language folder.
+	 * translation files, please use the global language folder (ie - wp-content/languages/plugins).
 	 *
 	 * @since 0.9.6
 	 *
-	 * @uses apply_filters() Calls 'plugin_locale' with {@link get_locale()} value
-	 * @uses load_textdomain() To load the textdomain
-	 * @uses load_plugin_textdomain() To load the textdomain inside the 'plugin/languages' folder
+	 * @uses load_plugin_textdomain() To load the textdomain inside the 'plugin/languages' folder.
 	 */
 	public function load_textdomain() {
 
 		// Look in wp-content/plugins/edit-author-slug/languages first
 		// fallback to wp-content/languages/plugins
-		load_plugin_textdomain( $this->domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( $this->domain, false, dirname( $this->plugin_basename ) . '/languages/' );
 	}
 
 	/**
@@ -236,20 +315,89 @@ final class BA_Edit_Author_Slug {
 	 *
 	 * @since 0.4.0
 	 *
-	 * @global object $wp_rewrite Adds rewrite tags and permastructs.
-	 * @uses do_action() calls 'ba_eas_author_base_rewrite' hook
-	 * @uses flush_rewrite_rules() Flush the rules on change
+	 * @uses ba_eas_do_role_based_author_base() To check if we're doing role-based author bases.
 	 */
 	public function author_base_rewrite() {
-		global $wp_rewrite;
 
-		if ( !empty( $this->author_base ) && 'author' != $this->author_base )
-			$wp_rewrite->author_base = $this->author_base;
+		// Are we doing a role-based author base?
+		if ( ba_eas_do_role_based_author_base() ) {
+
+			$GLOBALS['wp_rewrite']->author_base = '%ba_eas_author_role%';
+
+		// Has the author base changed from the default?
+		} elseif ( !empty( $this->author_base ) && 'author' != $this->author_base ) {
+
+			$GLOBALS['wp_rewrite']->author_base = $this->author_base;
+		}
+	}
+
+	/**
+	 * Set the role_slugs global
+	 *
+	 * @since 1.0.0
+	 *
+	 * @uses ba_eas_get_editable_roles() To get an array of editable_roles.
+	 * @uses get_option() To get the custom role slugs array.
+	 * @uses wp_parse_args() To merge our custom role slugs array with the default role slugs.
+	 */
+	public function set_role_slugs() {
+
+		// Get editable_roles array
+		$editable_roles = ba_eas_get_editable_roles();
+
+		// Merge system roles with any customizations we may have
+		$roles = wp_parse_args( get_option( '_ba_eas_role_slugs', array() ), $editable_roles );
+
+		// Set the slugs global
+		$this->role_slugs = $roles;
+	}
+
+	/** Custom Rewrite Rules *****************************************************/
+
+	/**
+	 * Add the Edit Author Slug rewrite tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @uses ba_eas_do_role_based_author_base() To check if we're doing role-based author bases.
+	 * @uses wp_list_pluck() To get only the role slugs.
+	 * @uses add_rewrite_tag() To add the rewrite tags.
+	 */
+	public function add_rewrite_tags() {
+
+		// Should we be here?
+		if ( !ba_eas_do_role_based_author_base() ) {
+			return;
+		}
+
+		// Get the role slugs to add the rewrite tag
+		$role_slugs = wp_list_pluck( $this->role_slugs, 'slug' );
+
+		// Add the author base as a fallback
+		$role_slugs[] = ba_eas()->author_base;
+
+		// Add the role-based rewrite tag, and the expected role slugs
+		add_rewrite_tag( '%ba_eas_author_role%', '(' . implode( '|', array_values( $role_slugs ) ) . ')' );
 	}
 }
 
+/**
+ * The main function responsible for returning the one true BA_Edit_Author_Slug Instance
+ * to functions everywhere.
+ *
+ * Use this function like you would a global variable, except without needing
+ * to declare the global.
+ *
+ * Example: <?php $ba_eas = ba_eas(); ?>
+ *
+ * @return The one true BA_Edit_Author_Slug Instance
+ */
+function ba_eas() {
+	return BA_Edit_Author_Slug::instance();
+}
+
 // Places everyone! The show is starting!
-$GLOBALS['ba_eas'] = new BA_Edit_Author_Slug();
+ba_eas();
 
 endif; //end class BA_Edit_Author_Slug
 
@@ -258,7 +406,7 @@ endif; //end class BA_Edit_Author_Slug
  *
  * @since 0.7.0
  *
- * @uses do_action() Calls 'ba_eas_activation' hook
+ * @uses do_action() Calls 'ba_eas_activation' hook.
  */
 function ba_eas_activation() {
 	do_action( 'ba_eas_activation' );
@@ -272,7 +420,7 @@ function ba_eas_activation() {
  *
  * @since 0.7.0
  *
- * @uses do_action() Calls 'ba_eas_deactivation' hook
+ * @uses do_action() Calls 'ba_eas_deactivation' hook.
  */
 function ba_eas_deactivation() {
 	do_action( 'ba_eas_deactivation' );
@@ -280,5 +428,3 @@ function ba_eas_deactivation() {
 	// Courtesy flush
 	delete_option( 'rewrite_rules' );
 }
-
-?>

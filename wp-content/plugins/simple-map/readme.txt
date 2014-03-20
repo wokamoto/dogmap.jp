@@ -3,10 +3,10 @@ Contributors: miyauchi
 Donate link: http://wpist.me/
 Tags: widget
 Requires at least: 3.3
-Tested up to: 3.8
-Stable tag: 1.2.0
+Tested up to: 3.9
+Stable tag: 1.6.0
 
-Easy way to embed google map(s) using [gmaps.js](http://hpneo.github.com/gmaps/).
+Easy way to embed google map(s).
 
 == Description ==
 
@@ -53,6 +53,8 @@ Please contact to me.
 
 * [Takayuki Miyauchi](http://firegoby.jp/)
 * [Zoltán Balogh](http://birdcreation.com/)
+* [Takanobu Watanabe](https://github.com/tknv)
+* [Shinichi Nishikawa](http://th-daily.shinichi.me/)
 
 == Installation ==
 
@@ -79,18 +81,40 @@ You can also use coordinates, set width, height and zoom:
 
 [map lat="37.77493" lng="-122.41942" width="100%" height="400px" zoom="15"]
 Text you would
-like to appear 
-as a tooltip 
+like to appear
+as a tooltip
 goes here
 [/map]
 
-In this case there will be a marker on the map with a tooltip appearing on click on said marker. 
+In this case there will be a marker on the map with a tooltip appearing on click on said marker.
 You can use simple html as the tooltip content.
+
+== Screenshots ==
+
+1. Very easy.
+2. Info Window.
+3. Mobile Support. (Google static map)
 
 == Changelog ==
 
+= 1.6.0 =
+* update gmaps.js 0.4.9 to 0.4.11
+
+= 1.5.0 =
+* enable ssl source of google map api js
+
+= 1.4.0 =
+* change URL match pattern.
+
+= 1.3.0 =
+* Update gmaps.js to 0.4.9.
+
+= 1.2.0 =
+* Tested on the WordPress 3.8.
+* Add Grunt.
+
 = 1.1.0 =
-*Added support for gmaps.js tooltip on markers
+* Added support for gmaps.js tooltip on markers
 
 = 1.0.0 =
 * Delete hl=ja param from static map link uri.

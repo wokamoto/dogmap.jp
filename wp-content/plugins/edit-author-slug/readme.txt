@@ -1,9 +1,9 @@
 === Edit Author Slug ===
 Contributors: thebrandonallen
-Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user
+Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 3.6.1
 Tested up to: 3.8.1
-Stable tag: 0.9.6
+Stable tag: 1.0
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -16,6 +16,10 @@ http://example.com/author/username/
 
 Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
+
+or using a role-based author base
+http://example.com/ida/master-splinter/ (for an Administrator Role)
+http://example.com/koga/leonardo/ (for a Subscriber Role)
 
 #### Translations Available
 * Dutch - props Juliette Reinders Folmer
@@ -50,6 +54,14 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 == Changelog ==
 
+= 1.0 =
+* Added ability to do role-based author bases
+* Added ability to use role-based author templates
+* Moderate code refactoring
+* Various code fixes and improvements
+* Add "nickname" as option for auto-update
+* First pass at unit test (only checks if the plugin is installed, for now)
+
 = 0.9.6 =
 * Fixed loading of translation files. Looks in wp-content/plugins/edit-author-slug/languages. If you're running 3.7+ (and you are... aren't you?), it will fall back to wp-content/languages/plugins if a proper localization can't be found in the edit-author-slug folder.
 
@@ -71,7 +83,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 = 0.9.1 =
 * Add 'Settings' link to plugins list table
 
-= 0.9.0 =
+= 0.9 =
 * Allow Author Slug to be automatically created/updated based on a defined structure
 * Switched to using the Settings API, which also means that all options moved to the Settings > Edit Author Slug page
 * Various code improvements/optimizations
@@ -79,7 +91,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 = 0.8.1 =
 * Fix a bug that prevented non-admin users from updating their profile
 
-= 0.8.0 =
+= 0.8 =
 * Drastically improved error handling and feedback for author slug editing.
 * Restore duplicate author slug check as old method could alter the slug without any sort of warning.
 * Further improve the logic for flushing rewrite rules.
@@ -154,6 +166,9 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0 =
+Role-based author bases are here!
 
 = 0.4 =
 Adds ability to change the Author Base (not a required upgrade)

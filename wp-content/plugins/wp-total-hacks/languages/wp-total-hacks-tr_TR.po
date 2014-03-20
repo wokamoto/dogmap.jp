@@ -7,37 +7,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Total Hacks Turkish\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-total-hacks\n"
-"POT-Creation-Date: 2013-04-10 08:33:29+00:00\n"
-"PO-Revision-Date: 2011-09-21 18:20+0200\n"
-"Last-Translator: Serkan Algur <info@kaisercrazy.com>\n"
+"POT-Creation-Date: 2014-03-14 10:20:39+00:00\n"
+"PO-Revision-Date: 2014-01-24 09:02+0200\n"
+"Last-Translator: Serkan Algur <info@wpadami.com>\n"
 "Language-Team: kaisercrazy <info@kaisercrazy.com>\n"
-"Language: \n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: TURKISH\n"
-"X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-Basepath: .\n"
 
-#: includes/admin.php:248 includes/form/appearance.php:11
+#: includes/admin.php:260 includes/form/appearance.php:11
 #: includes/form/appearance.php:35 includes/form/site.php:9
 #: includes/form/site.php:19
 msgid "Select File"
 msgstr "Gözat"
 
-#: includes/admin.php:381
+#: includes/admin.php:393
 msgid "Saved."
 msgstr "Kaydedildi."
 
-#: includes/admin.php:388
+#: includes/admin.php:400
 msgid "Save Changes"
 msgstr "Değişiklikleri Kaydet"
 
-#: includes/admin.php:433
+#: includes/admin.php:445
 msgid "Deactivate"
 msgstr "Etkisizleştir"
 
-#: includes/admin.php:435 includes/admin.php:437
+#: includes/admin.php:447 includes/admin.php:449
 msgid "Activate"
 msgstr "Etkinleştir"
 
@@ -198,11 +198,11 @@ msgstr "Devamını oku ibaresinin sayfalara eklenmesini gerektirir."
 
 #: includes/form/post.php:80
 msgid "Allow you to create child page for \"draft\"."
-msgstr ""
+msgstr "\"Taslak\" yazılar için alt sayfa oluşturmaya izin ver."
 
 #: includes/form/post.php:82
 msgid "You can create child page for non-publish Page."
-msgstr ""
+msgstr "Yayınlanmamış sayfalar için alt sayfa oluşutrabilirsiniz."
 
 #: includes/form/sidebar.php:2
 msgid "WordPress Plugins"
@@ -210,11 +210,11 @@ msgstr "WordPress Eklentileri"
 
 #: includes/form/sidebar.php:13
 msgid "Make WordPress Site Load Faster"
-msgstr ""
+msgstr "WordPress siteni daha hılzı yükle"
 
 #: includes/form/sidebar.php:14
 msgid "http://wpbooster.net/"
-msgstr ""
+msgstr "http://wpbooster.net/"
 
 #: includes/form/sidebar.php:18
 msgid "This Plugin needs your support"
@@ -224,11 +224,7 @@ msgstr "Bu eklentinin sizin desteğinize ihtiyacı var."
 msgid "Please help support the continued development."
 msgstr "Geliştirmenin devamının sağlanabilmesi için yardımda bulun"
 
-#: includes/form/sidebar.php:21
-msgid "$200+ makes you an official contributor."
-msgstr "200$ ve yukarısındaki bağışlar sizi katkıda bulunan kişilerden yapar"
-
-#: includes/form/sidebar.php:25
+#: includes/form/sidebar.php:24
 msgid "Contact"
 msgstr "İletişim"
 
@@ -246,7 +242,7 @@ msgstr "Lütfen .ico dosyası yükleyin"
 
 #: includes/form/site.php:10
 msgid "Use this favicon with administration screens."
-msgstr ""
+msgstr "Bu ikonu yönetim panelinde kullan."
 
 #: includes/form/site.php:15
 msgid "Add a apple-touch-icon"
@@ -309,60 +305,74 @@ msgid "Remove \"[...]\" from output of the_excerpt()."
 msgstr "the_excerpt() kodundan \"[...]\" ifadesini kaldır"
 
 #: includes/form/site.php:71
+#, fuzzy
+msgid "Block all pingbacks"
+msgstr "Kendine ping atmasını durdur"
+
+#: includes/form/site.php:73
+#, fuzzy
+msgid "Block all pingbacks."
+msgstr "Kendine ping atmasını durdur"
+
+#: includes/form/site.php:79
 msgid "Install Google Analytics"
 msgstr "Google Analytics Ekle"
 
-#: includes/form/site.php:73
+#: includes/form/site.php:81
 msgid "Add Google analytics code."
 msgstr "Google Analytics kodunuzu ekleyin"
 
-#: includes/form/site.php:80
+#: includes/form/site.php:88
 msgid "Exclude user logged in."
 msgstr "Kullanıcı girişini durdurun"
 
-#: includes/form/site.php:85
+#: includes/form/site.php:93
 msgid "Webmaster Tools Verification"
 msgstr "Webmaster Tools Onayı"
 
-#: includes/form/site.php:87
+#: includes/form/site.php:95
+#, fuzzy
 msgid ""
 "Enter your meta key \"content\" value to verify your blog with <a href="
-"\"https://www.google.com/webmasters/tools/\">Google Webmaster Tools</a>, <a "
-"href=\"https://siteexplorer.search.yahoo.com/\">Yahoo! Site Explorer</a>, "
-"and <a href=\"http://www.bing.com/webmaster\">Bing Webmaster Center</a>."
+"\"https://www.google.com/webmasters/tools/\">Google Webmaster Tools</a> and "
+"<a href=\"http://www.bing.com/webmaster\">Bing Webmaster Center</a>."
 msgstr ""
 "<a href=\"https://www.google.com/webmasters/tools/\">Google Webmaster Tools</"
 "a>, <a href=\"https://siteexplorer.search.yahoo.com/\">Yahoo! Site Explorer</"
 "a> ve <a href=\"http://www.bing.com/webmaster\">Bing Webmaster Center</a> "
 "sistemleriden aldığınızı meta \"content\" anahtarını girin "
 
-#: wp-total-hacks.php:378
+#: wp-total-hacks.php:390
 msgid "Settings"
 msgstr "Seçenekler"
 
-#: wp-total-hacks.php:381
+#: wp-total-hacks.php:393
 msgid "Donate"
 msgstr "Bağış Yap"
 
 #. Plugin Name of the plugin/theme
 msgid "WP Total Hacks"
-msgstr ""
+msgstr "WP Total Hacks"
 
 #. Plugin URI of the plugin/theme
 msgid "http://wpist.me/wp/wp-total-hacks/"
-msgstr ""
+msgstr "http://wpist.me/wp/wp-total-hacks/"
 
 #. Description of the plugin/theme
 msgid "WP Total Hacks can customize your WordPress."
-msgstr ""
+msgstr "Wp Total Hacks WordPress sisteminizi özelleştirebilir."
 
 #. Author of the plugin/theme
 msgid "Takayuki Miyauchi"
-msgstr ""
+msgstr "Takayuki Miyauchi"
 
 #. Author URI of the plugin/theme
 msgid "http://wpist.me/"
-msgstr ""
+msgstr "http://wpist.me/"
+
+#~ msgid "$200+ makes you an official contributor."
+#~ msgstr ""
+#~ "200$ ve yukarısındaki bağışlar sizi katkıda bulunan kişilerden yapar"
 
 #~ msgid "Disable Auto Save"
 #~ msgstr "Otomatik kaydı kapat"
