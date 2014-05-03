@@ -3,9 +3,9 @@
  * WP Multibyte Patch Japanese Locale Extension
  *
  * @package WP_Multibyte_Patch
- * @version 1.9
+ * @version 2.0
  * @author Seisuke Kuraishi <210pura@gmail.com>
- * @copyright Copyright (c) 2013 Seisuke Kuraishi, Tinybit Inc.
+ * @copyright Copyright (c) 2014 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
  * @link http://eastcoder.com/code/wp-multibyte-patch/
  */
@@ -146,8 +146,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		else
 			$url = $this->conf['admin_custom_css_url'];
 
-		wp_register_style( 'wpmp-admin-custom', $url, array(), false );
-		wp_enqueue_style( 'wpmp-admin-custom' );
+		wp_enqueue_style( 'wpmp-admin-custom', $url, array(), '20131223' );
 	}
 
 	function wp_trim_words( $text = '', $num_words = 110, $more = '', $original_text = '' ) {

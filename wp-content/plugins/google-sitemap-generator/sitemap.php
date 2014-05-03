@@ -1,297 +1,110 @@
 <?php
 
 /*
- $Id: sitemap.php 809744 2013-11-24 18:44:57Z arnee $
+ $Id: sitemap.php 898231 2014-04-19 17:33:31Z arnee $
 
  Google XML Sitemaps Generator for WordPress
  ==============================================================================
 
  This generator will create a sitemaps.org compliant sitemap of your WordPress blog.
- Currently homepage, posts, static pages, categories, archives and author pages are supported.
 
- The priority of a post depends on its comments. You can choose the way the priority
- is calculated in the options screen.
-
- Feel free to visit my website under www.arnebrachhold.de!
-
- For aditional details like installation instructions, please check the readme.txt and documentation.txt files.
+ For additional details like installation instructions, please check the readme.txt and documentation.txt files.
 
  Have fun!
    Arne
-
 
  Info for WordPress:
  ==============================================================================
  Plugin Name: Google XML Sitemaps
  Plugin URI: http://www.arnebrachhold.de/redir/sitemap-home/
  Description: This plugin will generate a special XML sitemap which will help search engines like Google, Yahoo, Bing and Ask.com to better index your blog.
- Version: 3.4
+ Version: 4.0.4
  Author: Arne Brachhold
  Author URI: http://www.arnebrachhold.de/
  Text Domain: sitemap
- Domain Path: /lang/
+ Domain Path: /lang
+
+
+ Copyright 2005 - 2014 ARNE BRACHHOLD  (email : himself - arnebrachhold - de)
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+ Please see license.txt for the full license.
 
 */
 
 /**
- * Loader class for the Google Sitemap Generator
+ * Check if the requirements of the sitemap plugin are met and loads the actual loader
  *
- * This class takes care of the sitemap plugin and tries to load the different parts as late as possible.
- * On normal requests, only this small class is loaded. When the sitemap needs to be rebuild, the generator itself is loaded.
- * The last stage is the user interface which is loaded when the administration page is requested.
+ * @package sitemap
+ * @since 4.0
  */
-class GoogleSitemapGeneratorLoader {
-	/**
-	 * Enabled the sitemap plugin with registering all required hooks
-	 *
-	 * If the sm_command and sm_key GET params are given, the function will init the generator to rebuild the sitemap.
-	 */
-	static function Enable() {
+function sm_Setup() {
 
-		//Check for 3.0 multisite, NOT supported yet!
-		if((defined('WP_ALLOW_MULTISITE') && WP_ALLOW_MULTISITE) || (function_exists('is_multisite') && is_multisite())) {
-			if(function_exists('is_super_admin') && is_super_admin()) {
-				add_action('admin_notices',  array('GoogleSitemapGeneratorLoader', 'AddMultisiteWarning'));
-			}
+	$fail = false;
 
-			return;
-		}
-
-		//Register the sitemap creator to wordpress...
-		add_action('admin_menu', array('GoogleSitemapGeneratorLoader', 'RegisterAdminPage'));
-
-		//Nice icon for Admin Menu (requires Ozh Admin Drop Down Plugin)
-		add_filter('ozh_adminmenu_icon', array('GoogleSitemapGeneratorLoader', 'RegisterAdminIcon'));
-
-		//Additional links on the plugin page
-		add_filter('plugin_row_meta', array('GoogleSitemapGeneratorLoader', 'RegisterPluginLinks'),10,2);
-
-		//Existing posts was deleted
-		add_action('delete_post', array('GoogleSitemapGeneratorLoader', 'CallCheckForAutoBuild'),9999,1);
-
-		//Existing post was published
-		add_action('publish_post', array('GoogleSitemapGeneratorLoader', 'CallCheckForAutoBuild'),9999,1);
-
-		//Existing page was published
-		add_action('publish_page', array('GoogleSitemapGeneratorLoader', 'CallCheckForAutoBuild'),9999,1);
-
-		//WP Cron hook
-		add_action('sm_build_cron', array('GoogleSitemapGeneratorLoader', 'CallBuildSitemap'),1,0);
-
-		//External build hook
-		add_action('sm_rebuild', array('GoogleSitemapGeneratorLoader', 'CallBuildNowRequest'),1,0);
-
-		//Robots.txt request
-		add_action('do_robots', array('GoogleSitemapGeneratorLoader', 'CallDoRobots'),100,0);
-
-		//Help topics for context sensitive help
-		add_filter('contextual_help_list', array('GoogleSitemapGeneratorLoader', 'CallHtmlShowHelpList'),9999,2);
-
-		//Check if this is a BUILD-NOW request (key will be checked later)
-		if(!empty($_GET["sm_command"]) && !empty($_GET["sm_key"])) {
-			GoogleSitemapGeneratorLoader::CallCheckForManualBuild();
-		}
-
-		//Check if the result of a ping request should be shown
-		if(!empty($_GET["sm_ping_service"])) {
-			GoogleSitemapGeneratorLoader::CallShowPingResult();
-		}
+	//Check minimum PHP requirements, which is 5.1 at the moment.
+	if (version_compare(PHP_VERSION, "5.1", "<")) {
+		add_action('admin_notices', 'sm_AddPhpVersionError');
+		$fail = true;
 	}
 
-	/**
-	 * Outputs the warning bar if multisite mode is activated
-	 */
-	static function AddMultisiteWarning() {
-		echo "<div id='sm-multisite-warning' class='error fade'><p><strong>".__('This version of Google XML Sitemaps is not multisite compatible.','sitemap')."</strong><br /> ".sprintf(__('Unfortunately this version of the Google XML Sitemaps plugin was not tested with the multisite feature of WordPress 3.0 yet. <br />The plugin will not be active until you disable the multisite mode. <br />Or you can <a href="%1$s">try the new beta</a> which supports all the new WordPress features!','sitemap'), "http://www.arnebrachhold.de/redir/sitemap-info-beta/")."</p></div>";
+	//Check minimum WP requirements, which is 3.3 at the moment.
+	if (version_compare($GLOBALS["wp_version"], "3.3", "<")) {
+		add_action('admin_notices', 'sm_AddWpVersionError');
+		$fail = true;
 	}
 
-	/**
-	 * Registers the plugin in the admin menu system
-	 */
-	static function RegisterAdminPage() {
-		if (function_exists('add_options_page')) {
-			$slug = GoogleSitemapGeneratorLoader::GetBaseName();
-			add_options_page(__('XML-Sitemap Generator','sitemap'), __('XML-Sitemap','sitemap'), 'level_10', $slug, array('GoogleSitemapGeneratorLoader','CallHtmlShowOptionsPage'));
-		}
-	}
-
-	static function RegisterAdminIcon($hook) {
-		if ( $hook == GoogleSitemapGeneratorLoader::GetBaseName() && function_exists('plugins_url')) {
-			return plugins_url('img/icon-arne.gif',GoogleSitemapGeneratorLoader::GetBaseName());
-		}
-		return $hook;
-	}
-
-	static function RegisterPluginLinks($links, $file) {
-		$base = GoogleSitemapGeneratorLoader::GetBaseName();
-		if ($file == $base) {
-			$links[] = '<a href="options-general.php?page=' . GoogleSitemapGeneratorLoader::GetBaseName() .'">' . __('Settings','sitemap') . '</a>';
-			$links[] = '<a href="http://www.arnebrachhold.de/redir/sitemap-plist-faq/">' . __('FAQ','sitemap') . '</a>';
-			$links[] = '<a href="http://www.arnebrachhold.de/redir/sitemap-plist-support/">' . __('Support','sitemap') . '</a>';
-			$links[] = '<a href="http://www.arnebrachhold.de/redir/sitemap-plist-donate/">' . __('Donate','sitemap') . '</a>';
-		}
-		return $links;
-	}
-
-	/**
-	 * Invokes the HtmlShowOptionsPage method of the generator
-	 */
-	static function CallHtmlShowOptionsPage() {
-		if(GoogleSitemapGeneratorLoader::LoadPlugin()) {
-			$gs = &GoogleSitemapGenerator::GetInstance();
-			$gs->HtmlShowOptionsPage();
-		}
-	}
-
-	/**
-	 * Invokes the CheckForAutoBuild method of the generator
-	 */
-	static function CallCheckForAutoBuild($args) {
-		if(GoogleSitemapGeneratorLoader::LoadPlugin()) {
-			$gs = &GoogleSitemapGenerator::GetInstance();
-			$gs->CheckForAutoBuild($args);
-		}
-	}
-
-	/**
-	 * Invokes the CheckForAutoBuild method of the generator
-	 */
-	static function CallBuildNowRequest() {
-		if(GoogleSitemapGeneratorLoader::LoadPlugin()) {
-			$gs = &GoogleSitemapGenerator::GetInstance();
-			$gs->BuildNowRequest();
-		}
-	}
-
-	/**
-	 * Invokes the BuildSitemap method of the generator
-	 */
-	static function CallBuildSitemap() {
-		if(GoogleSitemapGeneratorLoader::LoadPlugin()) {
-			$gs = &GoogleSitemapGenerator::GetInstance();
-			$gs->BuildSitemap();
-		}
-	}
-
-	/**
-	 * Invokes the CheckForManualBuild method of the generator
-	 */
-	static function CallCheckForManualBuild() {
-		if(GoogleSitemapGeneratorLoader::LoadPlugin()) {
-			$gs = &GoogleSitemapGenerator::GetInstance();
-			$gs->CheckForManualBuild();
-		}
-	}
-
-	/**
-	 * Invokes the ShowPingResult method of the generator
-	 */
-	static function CallShowPingResult() {
-		if(GoogleSitemapGeneratorLoader::LoadPlugin()) {
-			$gs = &GoogleSitemapGenerator::GetInstance();
-			$gs->ShowPingResult();
-		}
-	}
-
-
-	static function CallHtmlShowHelpList($filterVal,$screen) {
-
-		$id = get_plugin_page_hookname(GoogleSitemapGeneratorLoader::GetBaseName(),'options-general.php');
-
-		if($screen == $id) {
-			$links = array(
-				__('Plugin Homepage','sitemap')=>'http://www.arnebrachhold.de/redir/sitemap-help-home/',
-				__('My Sitemaps FAQ','sitemap')=>'http://www.arnebrachhold.de/redir/sitemap-help-faq/'
-			);
-
-			$filterVal[$id] = '';
-
-			$i=0;
-			foreach($links AS $text=>$url) {
-				$filterVal[$id].='<a href="' . $url . '">' . $text . '</a>' . ($i < (count($links)-1)?'<br />':'') ;
-				$i++;
-			}
-		}
-		return $filterVal;
-	}
-
-	static function CallDoRobots() {
-		if(GoogleSitemapGeneratorLoader::LoadPlugin()) {
-			$gs = &GoogleSitemapGenerator::GetInstance();
-			$gs->DoRobots();
-		}
-	}
-
-	/**
-	 * Loads the actual generator class and tries to raise the memory and time limits if not already done by WP
-	 *
-	 * @return boolean true if run successfully
-	 */
-	static function LoadPlugin() {
-
-		$mem = abs(intval(@ini_get('memory_limit')));
-		if($mem && $mem < 64) {
-			@ini_set('memory_limit', '64M');
-		}
-
-		$time = abs(intval(@ini_get("max_execution_time")));
-		if($time != 0 && $time < 120) {
-			@set_time_limit(120);
-		}
-
-		if(!class_exists("GoogleSitemapGenerator")) {
-
-			$path = trailingslashit(dirname(__FILE__));
-
-			if(!file_exists( $path . 'sitemap-core.php')) return false;
-			require_once($path. 'sitemap-core.php');
-		}
-
-		GoogleSitemapGenerator::Enable();
-		return true;
-	}
-
-	/**
-	 * Returns the plugin basename of the plugin (using __FILE__)
-	 *
-	 * @return string The plugin basename, "sitemap" for example
-	 */
-	static function GetBaseName() {
-		//return "sitemap.php";
-		return plugin_basename(__FILE__);
-	}
-
-	/**
-	 * Returns the name of this loader script, using __FILE__
-	 *
-	 * @return string The __FILE__ value of this loader script
-	 */
-	static function GetPluginFile() {
-		return __FILE__;
-	}
-
-	/**
-	 * Returns the plugin version
-	 *
-	 * Uses the WP API to get the meta data from the top of this file (comment)
-	 *
-	 * @return string The version like 3.1.1
-	 */
-	static function GetVersion() {
-		if(!isset($GLOBALS["sm_version"])) {
-			if(!function_exists('get_plugin_data')) {
-				if(file_exists(ABSPATH . 'wp-admin/includes/plugin.php')) require_once(ABSPATH . 'wp-admin/includes/plugin.php'); //2.3+
-				else if(file_exists(ABSPATH . 'wp-admin/admin-functions.php')) require_once(ABSPATH . 'wp-admin/admin-functions.php'); //2.1
-				else return "0.ERROR";
-			}
-			$data = get_plugin_data(__FILE__, false, false);
-			$GLOBALS["sm_version"] = $data['Version'];
-		}
-		return $GLOBALS["sm_version"];
+	if (!$fail) {
+		require_once(trailingslashit(dirname(__FILE__)) . "sitemap-loader.php");
 	}
 }
 
-//Enable the plugin for the init hook, but only if WP is loaded. Calling this php file directly will do nothing.
-if(defined('ABSPATH') && defined('WPINC')) {
-	add_action("init",array("GoogleSitemapGeneratorLoader","Enable"),1000,0);
+/**
+ * Adds a notice to the admin interface that the WordPress version is too old for the plugin
+ *
+ * @package sitemap
+ * @since 4.0
+ */
+function sm_AddWpVersionError() {
+	echo "<div id='sm-version-error' class='error fade'><p><strong>" . __('Your WordPress version is too old for XML Sitemaps.', 'sitemap') . "</strong><br /> " . sprintf(__('Unfortunately this release of Google XML Sitemaps requires at least WordPress %4$s. You are using Wordpress %2$s, which is out-dated and insecure. Please upgrade or go to <a href="%1$s">active plugins</a> and deactivate the Google XML Sitemaps plugin to hide this message. You can download an older version of this plugin from the <a href="%3$s">plugin website</a>.', 'sitemap'), "plugins.php?plugin_status=active", $GLOBALS["wp_version"], "http://www.arnebrachhold.de/redir/sitemap-home/","3.3") . "</p></div>";
 }
+
+/**
+ * Adds a notice to the admin interface that the WordPress version is too old for the plugin
+ *
+ * @package sitemap
+ * @since 4.0
+ */
+function sm_AddPhpVersionError() {
+	echo "<div id='sm-version-error' class='error fade'><p><strong>" . __('Your PHP version is too old for XML Sitemaps.', 'sitemap') . "</strong><br /> " . sprintf(__('Unfortunately this release of Google XML Sitemaps requires at least PHP %4$s. You are using PHP %2$s, which is out-dated and insecure. Please ask your web host to update your PHP installation or go to <a href="%1$s">active plugins</a> and deactivate the Google XML Sitemaps plugin to hide this message. You can download an older version of this plugin from the <a href="%3$s">plugin website</a>.', 'sitemap'), "plugins.php?plugin_status=active", PHP_VERSION, "http://www.arnebrachhold.de/redir/sitemap-home/","5.1") . "</p></div>";
+}
+
+/**
+ * Returns the file used to load the sitemap plugin
+ *
+ * @package sitemap
+ * @since 4.0
+ * @return string The path and file of the sitemap plugin entry point
+ */
+function sm_GetInitFile() {
+	return __FILE__;
+}
+
+//Don't do anything if this file was called directly
+if (defined('ABSPATH') && defined('WPINC') && !class_exists("GoogleSitemapGeneratorLoader", false)) {
+	sm_Setup();
+}
+

@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Multibyte Patch
 Description: Multibyte functionality enhancement for the WordPress Japanese package.
-Version: 1.9
+Version: 2.0
 Plugin URI: http://eastcoder.com/code/wp-multibyte-patch/
 Author: Seisuke Kuraishi
 Author URI: http://tinybit.co.jp/
@@ -15,9 +15,9 @@ Domain Path: /languages
  * Multibyte functionality enhancement for the WordPress Japanese package.
  *
  * @package WP_Multibyte_Patch
- * @version 1.9
+ * @version 2.0
  * @author Seisuke Kuraishi <210pura@gmail.com>
- * @copyright Copyright (c) 2013 Seisuke Kuraishi, Tinybit Inc.
+ * @copyright Copyright (c) 2014 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
  * @link http://eastcoder.com/code/wp-multibyte-patch/
  */
@@ -61,7 +61,7 @@ class multibyte_patch {
 	var $debug_suffix = '';
 	var $textdomain = 'wp-multibyte-patch';
 	var $lang_dir = 'languages';
-	var $required_version = '3.8-RC2';
+	var $required_version = '3.9-RC1';
 	var $query_based_vars = array();
 
 	// For fallback purpose only. (1.6)
@@ -270,11 +270,11 @@ class multibyte_patch {
 	}
 
 	function wplink_js( &$scripts ) {
-		$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/wplink{$this->debug_suffix}.js", array( 'jquery', 'wpdialogs' ), false, 1 );
+		$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20140410', 1 );
 	}
 
 	function word_count_js( &$scripts ) {
-		$scripts->add( 'word-count', plugin_dir_url( __FILE__ ) . "js/word-count{$this->debug_suffix}.js", array( 'jquery' ),  false, 1 );
+		$scripts->add( 'word-count', plugin_dir_url( __FILE__ ) . "js/word-count{$this->debug_suffix}.js", array( 'jquery' ),  '20131219', 1 );
 	}
 
 	function force_character_count( $translations = '', $text = '', $context = '' ) {

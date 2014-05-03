@@ -4,22 +4,10 @@
  *
  */
 $callback = trim(esc_html(get_query_var('callback')));
-$charset  = get_bloginfo('charset');
-
-if (!function_exists('json_encode')) {
-	// For PHP < 5.2.0
-	function json_encode( $string ) {
-		if ( !class_exists('Services_JSON') ) {
-			require_once( 'class-json.php' );
-		}
-		$json = new Services_JSON();
-		return $json->encode( $string );
-	}
-}
+$charset  = get_option('charset');
 
 if ( have_posts() ) {
-
-	global $wp_query, $fj_feed_json;
+	global $wp_query;
 	$query_array = $wp_query->query;
 
 	// Make sure query args are always in the same order
@@ -75,6 +63,6 @@ if ( have_posts() ) {
 	}
 
 } else {
-	header("HTTP/1.0 404 Not Found");
+	status_header('404');
 	wp_die("404 Not Found");
 }

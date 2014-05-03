@@ -4,14 +4,14 @@ Plugin Name: Simple Category Search
 Plugin URI: http://wordpress.org/extend/plugins/simple-category-search/
 Description: You can choose (child) categories and see the posts belong to the chosen category with AJAX.
 Author: wokamoto
-Version: 0.2.0
+Version: 0.2.1
 Author URI: http://dogmap.jp/
 
 License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
 
-  Copyright 2011 wokamoto (email : wokamoto1973@gmail.com)
+  Copyright 2011-2014 wokamoto (email : wokamoto1973@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,17 +28,32 @@ License:
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+$simple_category_search = SimpleCategorySearch::get_instance();
+$simple_category_search->init();
+
 class SimpleCategorySearch {
+	static $instance;
+
 	const SHORT_CODE = 'category-search';
 	const SELECT_CLASS = 'categories_search';
 	const RESULT_CLASS = 'search_result';
 
-	function __construct() {
-		add_shortcode(self::SHORT_CODE, array(&$this, 'shortcode_handler'));
+    private function __construct() {}
 
-		add_action('wp_print_scripts', array(&$this, 'add_scripts'));
-		add_action('wp_footer', array(&$this, 'add_footer'));
-		add_action('init', array(&$this, 'wp_init'));
+    public static function get_instance() {
+        if( !isset( self::$instance ) ) {
+            $c = __CLASS__;
+            self::$instance = new $c();
+        }
+        return self::$instance;
+    }
+
+	public function init() {
+		add_shortcode(self::SHORT_CODE, array($this, 'shortcode_handler'));
+
+		add_action('wp_print_scripts', array($this, 'add_scripts'));
+		add_action('wp_footer', array($this, 'add_footer'));
+		add_action('init', array($this, 'wp_init'));
 	}
 
 	//**************************************************************************************
@@ -75,7 +90,6 @@ class SimpleCategorySearch {
 	public function add_scripts() {
 		if (!$this->has_shortcode(self::SHORT_CODE))
 			return;
-
 		wp_enqueue_script('jquery');
 	}
 
@@ -86,9 +100,9 @@ class SimpleCategorySearch {
 		if (!$this->has_shortcode(self::SHORT_CODE))
 			return;
 
-		$site_url = $this->wp_site_url();
+		$site_url = site_url();
 		$img = '<img src="%1$s" class="%2$s" style="float:left;width:16p;height:16px;" />';
-		$loading_img = sprintf($img, $this->wp_admin_url('images/wpspin_light.gif'), 'loading');
+		$loading_img = sprintf($img, admin_url('images/wpspin_light.gif'), 'loading');
 
 		$output  = '<script type="text/javascript">//<![CDATA[' . "\n";
 		$output .= '(function($){$(document).ready(function() {';
@@ -222,8 +236,8 @@ EOT;
 		}
 
 		if ($result !== FALSE) {
-			header('Content-Type: application/json; charset='. get_bloginfo('charset'));
-			echo $this->json_encode($result);
+			header('Content-Type: application/json; charset='. get_option('charset'));
+			echo json_encode($result);
 			exit;
 		}
 	}
@@ -284,39 +298,4 @@ EOT;
 		}
 		return $child_categories;
 	}
-
-	// json encode
-	private function json_encode($content){
-		if ( function_exists('json_encode') ) {
-			return json_encode( $content );
-		} else {
-			// For PHP < 5.2.0
-			if ( !class_exists('Services_JSON') )
-				require_once( dirname(__FILE__).'/includes/class-json.php' );
-			$json = new Services_JSON();
-			return $json->encode( $content );
-		}
-	}
-
-	// wp site url
-	private function wp_site_url($path = '') {
-		$siteurl = trailingslashit(get_option('siteurl'));
-		return $siteurl . $path;
-	}
-
-	// wp admin url
-	private function wp_admin_url($path = '') {
-		$adminurl = '';
-		if ( defined( 'WP_SITEURL' ) && '' != WP_SITEURL )
-			$adminurl = WP_SITEURL . '/wp-admin/';
-		elseif ( function_exists( 'get_bloginfo' ) && '' != get_bloginfo( 'wpurl' ) )
-			$adminurl = get_bloginfo( 'wpurl' ) . '/wp-admin/';
-		elseif ( strpos( $_SERVER['PHP_SELF'], 'wp-admin' ) !== false )
-			$adminurl = '';
-		else
-			$adminurl = 'wp-admin/';
-		return trailingslashit($adminurl) . $path;
-	}
 }
-
-new SimpleCategorySearch();
