@@ -73,7 +73,7 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 			[
 				{
 					text: '<?php _e( 'Send', 'p3-profiler' ); ?>',
-					'class' : 'button-secondary',
+					'class' : 'button-secondary email-send',
 					click: function() {
 						data = {
 							'p3_to'      : jQuery( '#p3-email-results-to' ).val(),
@@ -705,7 +705,7 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 
 	<!-- Plugin bar chart -->
 	<div id="p3-tabs-5">
-		<h2><?php _e( 'Detailed Breakdown', 'p3-profiler' ); ?></h2>
+		<h2 class="detailed-title"><?php _e( 'Detailed Breakdown', 'p3-profiler' ); ?></h2>
 		<div class="p3-plugin-graph">
 			<table>
 				<tr>
@@ -715,10 +715,10 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 						</div>
 					</td>
 					<td rowspan="2">
-						<div class="p3-graph-holder" id="p3-holder_<?php echo $component_breakdown_chart_id; ?>"></div>
+						<div class="p3-graph-holder detailed-graph" id="p3-holder_<?php echo $component_breakdown_chart_id; ?>"></div>
 					</td>
 					<td>
-						<h3><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
+						<h3 class="breakdown-legend"><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
 					</td>
 				</tr>
 				<tr>
@@ -740,15 +740,15 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 	
 	<!-- Plugin pie chart div -->
 	<div id="p3-tabs-1">
-		<h2><?php _e( 'Runtime by Plugin', 'p3-profiler' ); ?></h2>
+		<h2 class="runtime-title"><?php _e( 'Runtime by Plugin', 'p3-profiler' ); ?></h2>
 		<div class="p3-plugin-graph" style="width: 570px;">
 			<table>
 				<tr>
 					<td rowspan="2">
-						<div style="width: 370px;" class="p3-graph-holder" id="p3-holder_<?php echo $pie_chart_id; ?>"></div>
+						<div style="width: 370px;" class="p3-graph-holder runtime-graph" id="p3-holder_<?php echo $pie_chart_id; ?>"></div>
 					</td>
 					<td>
-						<h3><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
+						<h3 class="runtime-legend"><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
 					</td>
 				</tr>
 				<tr>
@@ -762,7 +762,7 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 
 	<!-- Runtime line chart div -->
 	<div id="p3-tabs-2">
-		<h2><?php _e( 'Summary Timeline', 'p3-profiler' ); ?></h2>
+		<h2 class="summary-title"><?php _e( 'Summary Timeline', 'p3-profiler' ); ?></h2>
 		<div class="p3-plugin-graph">
 			<table>
 				<tr>
@@ -772,10 +772,10 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 						</div>
 					</td>
 					<td rowspan="2">
-						<div class="p3-graph-holder" id="p3-holder_<?php echo $runtime_chart_id; ?>"></div>
+						<div class="p3-graph-holder summary-graph" id="p3-holder_<?php echo $runtime_chart_id; ?>"></div>
 					</td>
 					<td>
-						<h3><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
+						<h3 class="summary-legend"><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
 					</td>
 				</tr>
 				<tr>
@@ -797,7 +797,7 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 
 	<!-- Query line chart div -->
 	<div id="p3-tabs-3">
-		<h2><?php _e( 'Query Timeline', 'p3-profiler' ); ?></h2>
+		<h2 class="query-title"><?php _e( 'Query Timeline', 'p3-profiler' ); ?></h2>
 		<div class="p3-plugin-graph">
 			<table>
 				<tr>
@@ -807,10 +807,10 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 						</div>
 					</td>
 					<td rowspan="2">
-						<div class="p3-graph-holder" id="p3-holder_<?php echo $query_chart_id; ?>"></div>
+						<div class="p3-graph-holder query-graph" id="p3-holder_<?php echo $query_chart_id; ?>"></div>
 					</td>
 					<td>
-						<h3><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
+						<h3 class="query-legend"><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
 					</td>
 				</tr>
 				<tr>
@@ -832,7 +832,7 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 
 	<!-- Component runtime chart div -->
 	<div id="p3-tabs-6">
-		<h2><?php _e( 'Detailed Timeline', 'p3-profiler' ); ?></h2>
+		<h2 class="detailed-timeline-title"><?php _e( 'Detailed Timeline', 'p3-profiler' ); ?></h2>
 		<div class="p3-plugin-graph">
 			<table>
 				<tr>
@@ -842,10 +842,10 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 						</div>
 					</td>
 					<td rowspan="2">
-						<div class="p3-graph-holder" id="p3-holder_<?php echo $component_runtime_chart_id; ?>"></div>
+						<div class="p3-graph-holder detailed-timeline-graph" id="p3-holder_<?php echo $component_runtime_chart_id; ?>"></div>
 					</td>
 					<td>
-						<h3><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
+						<h3 class="detailed-timeline-legend"><?php _ex( 'Legend', 'How to interpret the chart or graph', 'p3-profiler' ); ?></h3>
 					</td>
 				</tr>
 				<tr>
@@ -875,95 +875,95 @@ $component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
 				<table class="p3-results-table" id="p3-results-table" cellpadding="0" cellspacing="0" border="0">
 					<tbody>
 						<tr class="advanced">
-							<td class="qtip-tip" title="<?php esc_attr_e( "The time the site took to load. This is an observed measurement (start timing when the page was requested, stop timing when the page was delivered to the browser, calculate the difference). Lower is better.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip tlt-label" title="<?php esc_attr_e( "The time the site took to load. This is an observed measurement (start timing when the page was requested, stop timing when the page was delivered to the browser, calculate the difference). Lower is better.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Total Load Time:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="tlt-data">
 								<?php printf( '%.4f', self::$profile->averages['total'] ); ?><?php _e( 'seconds', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr>
-							<td class="qtip-tip" title="<?php esc_attr_e( "The calculated total load time minus the profile overhead. This is closer to your site's real-life load time. Lower is better.", 'p3-profiler' ); ?>">
-								<strong><?php _e( 'Site Load Time', 'p3-profiler' ); ?></small></em></strong>
+							<td class="qtip-tip slt-label" title="<?php esc_attr_e( "The calculated total load time minus the profile overhead. This is closer to your site's real-life load time. Lower is better.", 'p3-profiler' ); ?>">
+								<strong><?php _e( 'Site Load Time:', 'p3-profiler' ); ?></small></em></strong>
 							</td>
-							<td>
+							<td class="slt-data">
 								<?php printf( '%.4f', self::$profile->averages['site'] ); ?><?php _e( 'seconds', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr class="advanced">
-							<td class="qtip-tip" title="<?php esc_attr_e( "The load time spent profiling code. Because the profiler slows down your load time, it is important to know how much impact the profiler has. However, it doesn't impact your site's	real-life load time.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip poh-label" title="<?php esc_attr_e( "The load time spent profiling code. Because the profiler slows down your load time, it is important to know how much impact the profiler has. However, it doesn't impact your site's	real-life load time.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Profile Overhead:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="poh-data">
 								<?php printf( '%.4f', self::$profile->averages['profile'] ); ?><?php _e( 'seconds', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr>
-							<td class="qtip-tip" title="<?php esc_attr_e( "The load time caused by plugins. Because of WordPress' construction, we can trace a function call  from a plugin through a theme through the core. The profiler prioritizes plugin calls first, theme calls second, and core calls last. Lower is better.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip plt-label" title="<?php esc_attr_e( "The load time caused by plugins. Because of WordPress' construction, we can trace a function call  from a plugin through a theme through the core. The profiler prioritizes plugin calls first, theme calls second, and core calls last. Lower is better.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Plugin Load Time:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="plt-data">
 								<?php printf( '%.4f', self::$profile->averages['plugins'] ); ?><?php _e( 'seconds', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr>
-							<td class="qtip-tip" title="<?php esc_attr_e( "The load time spent applying the theme. Because of WordPress' construction, we can trace a function call from a plugin through a theme through the core. The profiler prioritizes plugin calls first, theme calls second, and core calls last. Lower is better.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip theme-label" title="<?php esc_attr_e( "The load time spent applying the theme. Because of WordPress' construction, we can trace a function call from a plugin through a theme through the core. The profiler prioritizes plugin calls first, theme calls second, and core calls last. Lower is better.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Theme Load Time:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="theme-data">
 								<?php printf( '%.4f', self::$profile->averages['theme'] ); ?><?php _e( 'seconds', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr>
-							<td class="qtip-tip" title="<?php esc_attr_e( "The load time caused by the WordPress core. Because of WordPress' construction, we can trace a function call from a plugin through a theme through the core. The profiler prioritizes plugin calls first, theme calls second, and core calls last. This will probably be constant.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip clt-label" title="<?php esc_attr_e( "The load time caused by the WordPress core. Because of WordPress' construction, we can trace a function call from a plugin through a theme through the core. The profiler prioritizes plugin calls first, theme calls second, and core calls last. This will probably be constant.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Core Load Time:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="clt-data">
 								<?php printf( '%.4f', self::$profile->averages['core'] ); ?><?php _e( 'seconds', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr class="advanced">
-							<td class="qtip-tip" title="<?php esc_attr_e( "This is the difference between the observed runtime (what actually happened) and expected runtime (adding the plugin runtime, theme runtime, core runtime, and profiler overhead). There are several reasons this margin of error can exist. Most likely, the profiler is missing microseconds while adding the runtime it observed. Using a network clock to set the time (NTP) can also cause minute timing changes. Ideally, this number should be zero, but there's nothing you can do to change it. It will give you an idea of how accurate the other results are.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip moe-label" title="<?php esc_attr_e( "This is the difference between the observed runtime (what actually happened) and expected runtime (adding the plugin runtime, theme runtime, core runtime, and profiler overhead). There are several reasons this margin of error can exist. Most likely, the profiler is missing microseconds while adding the runtime it observed. Using a network clock to set the time (NTP) can also cause minute timing changes. Ideally, this number should be zero, but there's nothing you can do to change it. It will give you an idea of how accurate the other results are.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Margin of Error:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="moe-data">
 								<?php printf( '%.4f', self::$profile->averages['drift'] ); ?><?php _e( 'seconds', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 								<br />
 								<em class="p3-em">
-									(<span class="qtip-tip" title="<?php esc_attr_e( "How long the site took to load. This is an observed measurement (start timing when the page was requested, stop timing when the page was delivered to the browser, calculate the difference).", 'p3-profiler' ); ?>"><?php printf( '%.4f', self::$profile->averages['observed'] ); ?> <?php _e( 'observed', 'p3-profiler' ); ?></span>,
-									<span class="qtip-tip" title="<?php esc_attr_e( "The expected site load time calculated by adding plugin load time, core load time, theme load time, and profiler overhead.", 'p3-profiler' ); ?>"><?php printf( '%.4f', self::$profile->averages['expected'] ); ?> <?php _e( 'expected', 'p3-profiler' ); ?></span>)
+									(<span class="qtip-tip moe-observed" title="<?php esc_attr_e( "How long the site took to load. This is an observed measurement (start timing when the page was requested, stop timing when the page was delivered to the browser, calculate the difference).", 'p3-profiler' ); ?>"><?php printf( '%.4f', self::$profile->averages['observed'] ); ?> <?php _e( 'observed', 'p3-profiler' ); ?></span>,
+									<span class="qtip-tip moe-expected" title="<?php esc_attr_e( "The expected site load time calculated by adding plugin load time, core load time, theme load time, and profiler overhead.", 'p3-profiler' ); ?>"><?php printf( '%.4f', self::$profile->averages['expected'] ); ?> <?php _e( 'expected', 'p3-profiler' ); ?></span>)
 								</em>
 							</td>
 						</tr>
 						<tr class="advanced">
-							<td class="qtip-tip" title="<?php esc_attr_e( "The number of visits registered during a profiling session.  More visits produce a more accurate summary.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip visits-label" title="<?php esc_attr_e( "The number of visits registered during a profiling session.  More visits produce a more accurate summary.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Visits:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="visits-data">
 								<?php echo number_format( self::$profile->visits ); ?>
 							</td>
 						</tr>
 						<tr class="advanced">
-							<td class="qtip-tip" title="<?php esc_attr_e( "The number of PHP ticks recorded during the profiling session.  A tick is loosely correlated to a PHP statement or function call.  Fewer is better.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip num-ticks-label" title="<?php esc_attr_e( "The number of PHP ticks recorded during the profiling session.  A tick is loosely correlated to a PHP statement or function call.  Fewer is better.", 'p3-profiler' ); ?>">
 								<strong><?php _e ( 'Number of PHP ticks:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="num-ticks-data">
 								<?php echo number_format( self::$profile->averages['plugin_calls'] ); ?> <?php _e( 'calls', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr>
-							<td class="qtip-tip" title="<?php esc_attr_e( "The amount of RAM usage observed.  This is reported by memory_get_peak_usage(). Lower is better.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip mu-label" title="<?php esc_attr_e( "The amount of RAM usage observed.  This is reported by memory_get_peak_usage(). Lower is better.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'Memory Usage:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="mu-data">
 								<?php echo number_format( self::$profile->averages['memory'] / 1024 / 1024, 2 ); ?> <?php _ex( 'MB', 'Abbreviation for megabytes', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
 						<tr>
-							<td class="qtip-tip" title="<?php esc_attr_e( "The count of queries sent to the database.  This is reported by the WordPress function get_num_queries(). Lower is better.", 'p3-profiler' ); ?>">
+							<td class="qtip-tip mq-label" title="<?php esc_attr_e( "The count of queries sent to the database.  This is reported by the WordPress function get_num_queries(). Lower is better.", 'p3-profiler' ); ?>">
 								<strong><?php _e( 'MySQL Queries:', 'p3-profiler' ); ?></strong>
 							</td>
-							<td>
+							<td class="mq-data">
 								<?php echo round( self::$profile->averages['queries'] ); ?> <?php _e( 'queries', 'p3-profiler' ); ?> <em class="p3-em"><?php _ex( 'avg.', "Abbreviation for 'average'", 'p3-profiler' ); ?></em>
 							</td>
 						</tr>
@@ -1062,7 +1062,7 @@ $plugin_list
 	<!-- Email sending dialog -->
 	<div id="p3-email-sending-dialog" class="p3-dialog">
 		<div id="p3-email-sending-loading">
-			<img src="<?php echo get_site_url() . '/wp-admin/images/loading.gif' ?>" height="16" width="16" title="<? esc_attr_e( 'Loading', 'p3-profiler' ); ?>" alt="<?php esc_attr_e( 'Loading', 'p3-profiler' ); ?>" />
+			<img src="<?php echo get_site_url() . '/wp-admin/images/loading.gif' ?>" height="16" width="16" title="<?php esc_attr_e( 'Loading', 'p3-profiler' ); ?>" alt="<?php esc_attr_e( 'Loading', 'p3-profiler' ); ?>" />
 		</div>
 		<div id="p3-email-sending-error">
 			<?php _e( 'There was a problem sending the e-mail:', 'p3-profiler' ); ?> <span id="p3-email-error"></span>
@@ -1071,7 +1071,7 @@ $plugin_list
 			<?php _e( 'Your report was sent successfully to', 'p3-profiler' ); ?> <span id="p3-email-success-recipient"></span>
 		</div>
 		<div id="p3-email-sending-close">
-			<input type="checkbox" id="p3-email-sending-close-submit" checked="checked" /><label for="p3-email-sending-close-submit"><?php _e( 'Done', 'p3-profiler' ); ?></label>
+			<input type="checkbox" id="p3-email-sending-close-submit" checked="checked" /><label for="p3-email-sending-close-submit" class="p3-email-sending-close"><?php _e( 'Done', 'p3-profiler' ); ?></label>
 		</div>
 	</div>
 

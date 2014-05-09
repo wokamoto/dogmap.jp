@@ -74,7 +74,7 @@ if ( !defined('P3_PATH') )
 
 <div class="p3-question">
 	<a name="top">&nbsp;</a>
-	<h2 class="p3-help-question"><?php _e( 'Contents', 'p3-profiler' ); ?></h2>
+	<h2 class="p3-help-question q-content"><?php _e( 'Contents', 'p3-profiler' ); ?></h2>
 	<blockquote>
 		<div id="p3-help-toc"></div>
 	</blockquote>
@@ -82,8 +82,8 @@ if ( !defined('P3_PATH') )
 
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( 'What does the P3 plugin do?', 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-plugin-do"><?php _e( 'What does the P3 plugin do?', 'p3-profiler' ); ?></h2>
+	<blockquote class="q-plugin-do-data">
 		<?php _e( "This plugin does just what its name says, it creates a profile of your WordPress site's plugins' performance by measuring their impact on your site's load time.
 <br /><br />
 Often times, WordPress sites load slowly because of poorly-configured plugins or because there are so many of them. This plugin can help you narrow down the cause of your site's slowness.", 'p3-profiler' ); ?>
@@ -91,15 +91,15 @@ Often times, WordPress sites load slowly because of poorly-configured plugins or
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( 'How do I use this?', 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-how-use"><?php _e( 'How do I use this?', 'p3-profiler' ); ?></h2>
+	<blockquote class="q-how-use-data">
 		<?php _e( "Simply click \"Start Scan\" to run an automated scan of your site. The scanner generates some traffic on your site and monitors your site's performance on the server, then shows you the results. With this information, you can decide what action to take.", 'p3-profiler' ); ?>
 	</blockquote>
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( 'What do I do with these results?', 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-results"><?php _e( 'What do I do with these results?', 'p3-profiler' ); ?></h2>
+	<blockquote class="q-results-data">
 		<?php printf( __("If your site loads in an acceptable time (usually &lt; 0.5 seconds), you might consider other explanation for sluggish loading. For example, loading large images, large videos, or a lot of content can cause slowness. Tools like <a href=\"%1\$s\" target=\"_blank\">%2\$s</a>, <a href=\"%3\$s\" target=\"_blank\">%4\$s</a>, <a href=\"%5\$s\" target=\"_blank\">%6\$s</a>, or <a href=\"%7\$s\" target=\"_blank\">%8\$s</a> or <a href=\"%9\$s\" target=\"_blank\">%10\$s</a> can show you a connection breakdown of your site's content.", 'p3-profiler' ),
 		'http://www.webpagetest.org/',                                         __( 'webpagetest.org', 'p3-profiler' ),
 		'http://getfirebug.com/',                                              __( 'Firebug', 'p3-profiler' ),
@@ -111,8 +111,8 @@ Often times, WordPress sites load slowly because of poorly-configured plugins or
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question" data-question-id="q-circumvent-cache"><?php _e( 'How do I fix "No visits recorded..." ?', 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-no-visits" data-question-id="q-circumvent-cache"><?php _e( 'How do I fix "No visits recorded..." ?', 'p3-profiler' ); ?></h2>
+	<blockquote class="q-no-visits-data">
 		<?php _e( 'This error message means that after being disabled, the profiler did not record any traffic on your site.  There are several common causes for this:', 'p3-profiler' ); ?>
 		<ul>
 			<li>
@@ -141,15 +141,15 @@ Often times, WordPress sites load slowly because of poorly-configured plugins or
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( 'Why did P3 only record 2 or 3 visits during the scan?', 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-few-visits"><?php _e( 'Why did P3 only record 2 or 3 visits during the scan?', 'p3-profiler' ); ?></h2>
+	<blockquote class="q-few-visits-data">
 		<?php _e( "If your site is using a caching plugin, some pages might be cached in your browser or on the server and are loading before before WordPress can generate them.  When this happens, the P3 plugin doesn't load and doesn't record any traffic.  Please enable the \"Attempt to circumvent browser cache\" option in the advanced settings.", 'p3-profiler' ); ?>
 	</blockquote>
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "How does this work?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-p3-work"><?php _e( "How does this work?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-p3-work-data">
 		<?php printf( __("When you activate the plugin by clicking \"Start Scan,\" it detects visits from your IP address, and actively monitors all <a href=\"%s\" target=\"_blank\">php user defined function calls</a> while the server generates your WordPress pages. It then records the information in a report file you can view later. When the scan is complete, or you click \"Stop Scan,\" the plugin becomes dormant again.", 'p3-profiler'),
 			'http://php.net/functions'
 		); ?>
@@ -157,8 +157,8 @@ Often times, WordPress sites load slowly because of poorly-configured plugins or
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "How does my site load the plugin?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-site-load"><?php _e( "How does my site load the plugin?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-site-load-data">
 		<?php printf( __("This plugin automatically creates a <a href=\"%s\" target=\"_blank\">must-use</a> plugin to load before other plugins. If that doesn't work, it runs like a regular plugin.", 'p3-profiler' ),
 			'http://codex.wordpress.org/Must_Use_Plugins'
 		); ?>
@@ -181,8 +181,8 @@ Often times, WordPress sites load slowly because of poorly-configured plugins or
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "How accurate are these results?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-accurate"><?php _e( "How accurate are these results?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-accurate-data">
 		<?php printf( __( "The results have an inherent margin of error because of the nature of the tool and its multi-layered design. The plugin changes the environment to measure it, and that makes it impossible to get completely accurate results.
 <br /><br />
 It gets really close, though! The \"margin of error\" on the Advanced Metrics page displays the discrepancy between the measured results (the time for your site's PHP code to completely run) and the expected results (sum of the plugins, core, theme, profile load times) to show you the plugin's accuracy.
@@ -194,8 +194,8 @@ If you want more accurate results, you'll need to resort to a different profiler
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "Why are some plugins slow?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-plugins-slow"><?php _e( "Why are some plugins slow?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-plugins-slow-data">
 		<?php _e( "WordPress is a complex ecosystem of plugins and themes, and it lives on a complex ecosystem of software on your web server.
 <br /><br />
 If a plugin runs slowly just once, it's probably an anomaly, a transient hiccup, and you can safely ignore it.
@@ -209,8 +209,8 @@ If a plugin consistently shows slowness, you might want to contact the plugin au
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "How are these results different from YSlow / PageSpeed / Webpagetest.org / Pingdom Tools?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-different"><?php _e( "How are these results different from YSlow / PageSpeed / Webpagetest.org / Pingdom Tools?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-different-data">
 		<?php printf( __("This plugin measures how your site was generated on the server. Tools like <a href=\"%1\$s\" target=\"_blank\">%2\$s</a>, <a href=\"%3\$s\" target=\"_blank\">%4\$s</a>, <a href=\"%5\$s\" target=\"_blank\">%6\$s</a>, and <a href=\"%7\$s\" target=\"_blank\">%8\$s</a> measure how your site looks to the browser.", 'p3-profiler'),
 			'http://developer.yahoo.com/yslow/',         __( 'YSlow', 'p3-profiler' ),
 			'https://developers.google.com/pagespeed/',  __( 'PageSpeed', 'p3-profiler' ),
@@ -221,8 +221,8 @@ If a plugin consistently shows slowness, you might want to contact the plugin au
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "What can interfere with testing?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-interfere"><?php _e( "What can interfere with testing?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-interfere-data">
 		<?php _e( "Opcode optimizers can interfere with PHP backtraces. Leaving opcode optimizers turned on will result in timing that more accurately reflects your site's real performance, but the function calls to plugins may be \"optimized\" out of the backtraces and some plugins (especially those with only one hook) might not show up. Disabling opcode caches results in slower times, but shows all plugins.
 <br /><br />
 By default, this plugin attempts to disable any detected opcode optimizers when it runs. You can change this setting by clicking \"Advanced Settings\" under \"Start Scan.\"
@@ -232,8 +232,8 @@ Caching plugins that have an option to disable caches for logged in users will n
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question" data-question-id="q-opcode-optimizer"><?php _e( "Is my site using an opcode optimizer?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-opcode" data-question-id="q-opcode-optimizer"><?php _e( "Is my site using an opcode optimizer?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-opcode-data">
 		<?php $detected = 0; if ( extension_loaded( 'xcache' ) ) { $detected++; ?>
 			<?php _e( "Your site is using XCache.  Although XCache reports that no opcode optimization won't be implemented until version 2.0, this has been known to cause problems with P3.", 'p3-profiler' ); ?>
 			<br />
@@ -284,8 +284,8 @@ Caching plugins that have an option to disable caches for logged in users will n
 
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "How much room do these profiles take up on my server", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-space"><?php _e( "How much room do these profiles take up on my server?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-space-data">
 		<?php
 		$total_size = 0;
 		$dir        = opendir( P3_PROFILES_PATH );
@@ -305,8 +305,8 @@ Caching plugins that have an option to disable caches for logged in users will n
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "Is this plugin always running?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-running"><?php _e( "Is this plugin always running?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-running-data">
 		<?php _e( "The short answer is no.
 <br /><br />
 The more detailed answer is the loader is always running, but checks very early in the page loading process to see if you've enabled profiling mode and if the user's IP address matches the IP address the plugin is monitoring. For multisite installations, it also matches the site URL. If all these match, the plugin becomes active and profiles. Otherwise, your site loads as normal with no other code overhead.
@@ -316,8 +316,8 @@ Deactivating the plugin ensures it's not running at all, and does not delete you
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "How can I test specific pages on my site?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-specific"><?php _e( "How can I test specific pages on my site?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-specfic-data">
 		<?php _e( "When you start a scan, choose \"Manual Scan\" and then you can visit specific links on your site that you want to profile. If you want to profile the admin section, just click the \"X\" in the top right of the scan window and you'll be returned to your admin section. You can browse as normal, then come back to the profile page and click \"Stop Scan\" when you're ready to view the results.
 <br /><br />
 To scan your site as an anonymous user, select \"Manual Mode\" as above, but instead of clicking your site in the scan window, open a different browser (or an incognito window) and browse your site as a logged out user. When you're done, close that browser and return to your admin. Click \"I'm done\" and view your scan results.", 'p3-profiler' ); ?>
@@ -325,8 +325,8 @@ To scan your site as an anonymous user, select \"Manual Mode\" as above, but ins
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "My plugins don't seem to cause site slowness.  Why is my site still slow?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-still-slow"><?php _e( "My plugins don't seem to cause site slowness.  Why is my site still slow?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-still-slow-data">
 		<?php printf( __( "Your site can be slow for a number of reasons. Your site could have a lot of traffic, other sites on your server could have a lot of traffic, you could be referencing content from other sites that are slow, your Internet connection could be slow, your server could be out of RAM, your site could be very image heavy, your site could require a lot of HTTP requests, etc. In short, a lot of factors can cause slowness on your site
 <br /><br />
 Your next stop should be to use <a href=\"%1\$s\" target=\"_blank\">%2\$s</a>, <a href=\"%3\$s\" target=\"_blank\">%4\$s</a>, <a href=\"%5\$s\" target=\"_blank\">%6\$s</a>, <a href=\"%7\$s\" target=\"_blank\">%8\$s</a>, and your browser's development tools like <a href=\"%9\$s\" target=\"_blank\">%10\$s</a> for Firefox, <a href=\"%11\$s\" target=\"_blank\">%12\$s</a> for Chrome, or <a href=\"%13\$s\" target=\"_blank\">%14\$s</a> for Safari.
@@ -344,8 +344,8 @@ After you've tuned your site up as much as possible, if you're still not happy w
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question" data-question-id="q-debug-log"><?php _e( "Where can I view the debug log?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-debug" data-question-id="q-debug-log"><?php _e( "Where can I view the debug log?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-debug-data">
 		<?php printf( __( "Debug mode will record 100 visits to your site, then turn off automatically.  You can view the log below.  The entries are shown in reverse order with the latest visits appearing at the top of the list.  You can also <a href=\"%1\$s\" class=\"button-secondary\">Clear the log</a> or <a href=\"%2\$s\" class=\"button-secondary\">Download the log</a> as a CSV.", 'p3-profiler' ),
 			wp_nonce_url( add_query_arg( array( 'p3_action' => 'clear-debug-log' ) ), 'p3-clear-debug-log' ),
 			wp_nonce_url( add_query_arg( array( 'p3_action' => 'download-debug-log' ) ), 'p3-download-debug-log' )
@@ -421,8 +421,8 @@ After you've tuned your site up as much as possible, if you're still not happy w
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "What if I get a warning about usort()?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-usort"><?php _e( "What if I get a warning about usort()?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-usort-data">
 		<?php printf( _x( "Warning messages like this: <code>Warning: usort() [function.usort]: Array was modified by the user comparison function</code> are due to a known php bug.  See <a href=\"%s\" target=\"_blank\">php bug #50688</a> for more information.  This warning does not affect the functionality of your site and it is not visible to your users.", 'Warning message is taken verbatim from PHP output', 'p3-profiler' ),
 			'https://bugs.php.net/bug.php?id=50688'
 		); ?>
@@ -430,8 +430,8 @@ After you've tuned your site up as much as possible, if you're still not happy w
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "Does this plugin increase memory usage on my site?", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-memory"><?php _e( "Does this plugin increase memory usage on my site?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-memory-data">
 		<?php printf( __( "When you run a performance scan on your site, the memory requirements go up during the scan.  Accordingly, P3 sets your <a href=\"%1\$s\" target=\"_blank\">%2\$s</a> to 256 MB and <a href=\"%3\$s\" target=\"_blank\">%4\$s</a> to 90 seconds during a performance scan.  These changes are not permanent and are only in effect when a performance scan is actively running.", 'p3-profiler' ),
 			'http://www.php.net/manual/en/ini.core.php#ini.memory-limit',  __( 'memory limit', 'p3-profiler' ),
 			'http://php.net/set_time_limit',                               __( 'time limit', 'p3-profiler' )
@@ -440,8 +440,8 @@ After you've tuned your site up as much as possible, if you're still not happy w
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question" style="border-bottom-width: 0px !important;"><?php _e( 'Glossary', 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-glossary" style="border-bottom-width: 0px !important;"><?php _e( 'Glossary', 'p3-profiler' ); ?></h2>
+	<blockquote class="q-glossary-data">
 		<div>
 			<div id="p3-glossary-container">
 				<div class="ui-widget-header" id="p3-glossary-header" style="padding: 8px;">
@@ -563,8 +563,8 @@ Ideally, this number should be zero, but there's nothing you can do to change it
 </div>
 
 <div class="p3-question">
-	<h2 class="p3-help-question"><?php _e( "License", 'p3-profiler' ); ?></h2>
-	<blockquote>
+	<h2 class="p3-help-question q-license"><?php _e( "License", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-license-data">
 		<?php printf( __( 'P3 (Plugin Performance Profiler) is Copyright &copy; %1$s - %2$s <a href="%3$s" target="_blank">GoDaddy.com</a>.  All rights reserved.', 'p3-profiler' ), 2011, date( 'Y' ), 'http://www.godaddy.com/' ); ?>
 		<br /><br />
 		<?php printf( __( "This program is offered under the terms of the GNU General Public License Version 2 as published by the Free Software Foundation.

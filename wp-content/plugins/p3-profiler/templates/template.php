@@ -59,16 +59,16 @@ if ( 'current-scan' == self::$action || !empty( $_REQUEST['current_scan'] ) ) {
 
 	<!-- Header icon / title -->
 	<div id="icon-plugins" class="icon32"><br/></div>
-	<h2><?php _e( 'P3 - Plugin Performance Profiler', 'p3-profiler' ); ?></h2>
+	<h2 class="plugin-name"><?php _e( 'P3 - Plugin Performance Profiler', 'p3-profiler' ); ?></h2>
 
 	<!-- Header navbar -->
 	<div class="ui-widget-header" id="p3-navbar">
 		<div>
 			<input type="radio" name="p3-nav" id="button-current-scan" <?php echo $button_current_checked; ?> />
-			<label for="button-current-scan"><?php _e( 'Current', 'p3-profiler' ); ?></label>
+			<label for="button-current-scan" class="current-tab"><?php _e( 'Current', 'p3-profiler' ); ?></label>
 			<input type="radio" name="p3-nav" id="button-history-scans" <?php echo $button_history_checked; ?> />
-			<label for="button-history-scans"><?php _e( 'History', 'p3-profiler' ); ?></label>
-			<input type="radio" name="p3-nav" id="button-help" <?php echo $button_help_checked; ?> /><label for="button-help"><?php _e( 'Help', 'p3-profiler' ); ?></label>
+			<label for="button-history-scans" class="history-tab"><?php _e( 'History', 'p3-profiler' ); ?></label>
+			<input type="radio" name="p3-nav" id="button-help" <?php echo $button_help_checked; ?> /><label for="button-help" class="help-tab"><?php _e( 'Help', 'p3-profiler' ); ?></label>
 		</div>
 		
 		<div id="p3-scan-label">

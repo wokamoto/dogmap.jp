@@ -43,6 +43,14 @@ function p3_profiler_get_ip() {
  */
 function p3_profiler_disable() {
 	$opts = get_option( 'p3-profiler_options' );
+	$uploads_dir = wp_upload_dir();
+	$path        = $uploads_dir['basedir'] . DIRECTORY_SEPARATOR . 'profiles' . DIRECTORY_SEPARATOR . $opts['profiling_enabled']['name'] . '.json';
+	$transient   = get_option( 'p3_scan_' . $opts['profiling_enabled']['name'] );
+	if ( false === $transient ) {
+		$transient = '';
+	}
+	file_put_contents( $path, $transient );
+	delete_option( 'p3_scan_' . $opts['profiling_enabled']['name'], $transient );
 	$opts['profiling_enabled'] = false;
 	update_option( 'p3-profiler_options', $opts );
 }

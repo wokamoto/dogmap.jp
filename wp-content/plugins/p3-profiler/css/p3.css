@@ -385,3 +385,8 @@ div#p3-reminder-wrapper {
 	text-align: center;
 	background-color: #f0f8fe;
 }
+
+/** http://wordpress.org/support/topic/plugin-broken-with-wp-371?replies=14#post-4976803 **/
+.ui-front {
+	z-index: 100 !important;
+}
