@@ -1,7 +1,7 @@
 <?php
 /*
 
- $Id: sitemap-builder.php 899565 2014-04-21 16:30:49Z arnee $
+ $Id: sitemap-builder.php 925789 2014-06-03 17:03:07Z arnee $
 
 */
 /**
@@ -13,21 +13,28 @@
  */
 class GoogleSitemapGeneratorStandardBuilder {
 
+	/**
+	 * Creates a new GoogleSitemapGeneratorStandardBuilder instance
+	 */
 	public function __construct() {
 		add_action("sm_build_index", array($this, "Index"), 10, 1);
 		add_action("sm_build_content", array($this, "Content"), 10, 3);
+
+		add_filter("sm_sitemap_for_post", array($this, "GetSitemapUrlForPost"), 10, 3);
 	}
 
 	/**
+	 * Generates the content of the requested sitemap
+	 *
 	 * @param $gsg GoogleSitemapGenerator
-	 * @param $type String
-	 * @param $params array
+	 * @param $type String The type of the sitemap
+	 * @param $params String Parameters for the sitemap
 	 */
 	public function Content($gsg, $type, $params) {
 
 		switch($type) {
 			case "pt":
-				$this->BuildPosts($gsg, $type, $params);
+				$this->BuildPosts($gsg, $params);
 				break;
 			case "archives":
 				$this->BuildArchives($gsg);
@@ -48,53 +55,12 @@ class GoogleSitemapGeneratorStandardBuilder {
 	}
 
 	/**
-	 * Adds a condition to the query to filter out password protected posts
-	 * @param $where The where statement
-	 * @return String Changed where statement
-	 */
-	public function FilterPassword($where) {
-		global $wpdb;
-		$where .= "AND ($wpdb->posts.post_password = '') ";
-		return $where;
-	}
-
-	/**
-	 * Adds the list of required fields to the query so no big fields like post_content will be selected
-	 * @param $fields The current fields
-	 * @return String Changed fields statement
-	 */
-	public function FilterFields($fields) {
-		global $wpdb;
-
-		$newFields = array(
-			$wpdb->posts . ".ID",
-			$wpdb->posts . ".post_author",
-			$wpdb->posts . ".post_date",
-			$wpdb->posts . ".post_date_gmt",
-			$wpdb->posts . ".post_content",
-			$wpdb->posts . ".post_title",
-			$wpdb->posts . ".post_excerpt",
-			$wpdb->posts . ".post_status",
-			$wpdb->posts . ".post_name",
-			$wpdb->posts . ".post_modified",
-			$wpdb->posts . ".post_modified_gmt",
-			$wpdb->posts . ".post_content_filtered",
-			$wpdb->posts . ".post_parent",
-			$wpdb->posts . ".guid",
-			$wpdb->posts . ".post_type", "post_mime_type",
-			$wpdb->posts . ".comment_count"
-		);
-
-		$fields = implode(", ", $newFields);
-		return $fields;
-	}
-
-
-	/**
+	 * Generates the content for the post sitemap
+	 *
 	 * @param $gsg GoogleSitemapGenerator
-	 * @param $params String
+	 * @param $params string
 	 */
-	public function BuildPosts($gsg, $type, $params) {
+	public function BuildPosts($gsg, $params) {
 
 		if(!$pts = strrpos($params, "-")) return;
 
@@ -106,66 +72,114 @@ class GoogleSitemapGeneratorStandardBuilder {
 
 		$params = substr($params, $pts + 1);
 
-		global $wp_version;
+		/**@var $wpdb wpdb */
+		global $wpdb;
 
 		if(preg_match('/^([0-9]{4})\-([0-9]{2})$/', $params, $matches)) {
 			$year = $matches[1];
 			$month = $matches[2];
 
-			//All comments as an asso. Array (postID=>commentCount)
-			$comments = ($gsg->GetOption("b_prio_provider") != "" ? $gsg->GetComments() : array());
-
-			//Full number of comments
-			$commentCount = (count($comments) > 0 ? $gsg->GetCommentCount($comments) : 0);
-
-			$qp = $this->BuildPostQuery($gsg, $postType);
-
-			$qp['year'] = $year;
-			$qp['monthnum'] = $month;
-
-			//Don't retrieve and update meta values and taxonomy terms if they are not used in the permalink
-			$struct = get_option('permalink_structure');
-			if(strpos($struct, "%category%") === false && strpos($struct, "%tag%") == false) {
-				$qp['update_post_term_cache'] = false;
+			//Excluded posts by ID
+			$excludedPostIDs = $gsg->GetExcludedPostIDs($gsg);
+			$exPostSQL = "";
+			if(count($excludedPostIDs) > 0) {
+				$exPostSQL = "AND p.ID NOT IN (" . implode(",", $excludedPostIDs) . ")";
 			}
 
-			$qp['update_post_meta_cache'] = false;
+			//Excluded categories by taxonomy ID
+			$excludedCategoryIDs = $gsg->GetExcludedCategoryIDs($gsg);
+			$exCatSQL = "";
+			if(count($excludedCategoryIDs) > 0) {
+				$exCatSQL = "AND ( p.ID NOT IN ( SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN (" . implode(",", $excludedCategoryIDs) . ")))";
+			}
 
-			//Add filter to remove password protected posts
-			add_filter('posts_search', array($this, 'FilterPassword'), 10, 1);
+			//Statement to query the actual posts for this post type
+			$qs = "
+				SELECT
+					p.ID,
+					p.post_author,
+					p.post_status,
+					p.post_name,
+					p.post_parent,
+					p.post_type,
+					p.post_date,
+					p.post_date_gmt,
+					p.post_modified,
+					p.post_modified_gmt,
+					p.comment_count
+				FROM
+					{$wpdb->posts} p
+				WHERE
+					p.post_password = ''
+					AND p.post_type = '%s'
+					AND p.post_status = 'publish'
+					AND YEAR(p.post_date_gmt) = %d
+					AND MONTH(p.post_date_gmt) = %d
+					{$exPostSQL}
+					{$exCatSQL}
+				ORDER BY
+					p.post_date_gmt DESC
+			";
 
-			//Add filter to filter the fields
-			add_filter('posts_fields', array($this, 'FilterFields'), 10, 1);
+			//Query for counting all relevant posts for this post type
+			$qsc = "
+				SELECT
+					COUNT(*)
+				FROM
+					{$wpdb->posts} p
+				WHERE
+					p.post_password = ''
+					AND p.post_type = '%s'
+					AND p.post_status = 'publish'
+					{$exPostSQL}
+					{$exCatSQL}
+			";
 
-			$posts = get_posts($qp);
+			$q = $wpdb->prepare($qs, $postType, $year, $month);
 
-			//Remove the filter again
-			remove_filter("posts_where", array($this, 'FilterPassword'), 10, 1);
-			remove_filter("posts_fields", array($this, 'FilterFields'), 10, 1);
+			$posts = $wpdb->get_results($q);
 
-			if($postCount = count($posts) > 0) {
-
-				$prioProvider = NULL;
+			if(($postCount = count($posts)) > 0) {
+				/** @var $priorityProvider GoogleSitemapGeneratorPrioProviderBase */
+				$priorityProvider = NULL;
 
 				if($gsg->GetOption("b_prio_provider") != '') {
+
+					//Number of comments for all posts
+					$cacheKey = __CLASS__ . "::commentCount";
+					$commentCount = wp_cache_get($cacheKey,'sitemap');
+					if ($commentCount == false) {
+						$commentCount = $wpdb->get_var("SELECT COUNT(*) as `comment_count` FROM {$wpdb->comments} WHERE `comment_approved`='1'");
+						wp_cache_set($cacheKey, $commentCount, 'sitemap', 20);
+					}
+
+					//Number of all posts matching our criteria
+					$cacheKey = __CLASS__  . "::totalPostCount::$postType";
+					$totalPostCount = wp_cache_get($cacheKey,'sitemap');
+					if($totalPostCount === false) {
+						$totalPostCount = $wpdb->get_var($wpdb->prepare($qsc,$postType));
+						wp_cache_add($cacheKey,$totalPostCount, 'sitemap', 20);
+					}
+
+					//Initialize a new priority provider
 					$providerClass = $gsg->GetOption('b_prio_provider');
-					$prioProvider = new $providerClass($commentCount, $postCount);
+					$priorityProvider = new $providerClass($commentCount, $totalPostCount);
 				}
 
 				//Default priorities
-				$default_prio_posts = $gsg->GetOption('pr_posts');
-				$default_prio_pages = $gsg->GetOption('pr_pages');
-
-				//Change frequencies
-				$cf_pages = $gsg->GetOption('cf_pages');
-				$cf_posts = $gsg->GetOption('cf_posts');
+				$defaultPriorityForPosts = $gsg->GetOption('pr_posts');
+				$defaultPriorityForPages = $gsg->GetOption('pr_pages');
 
 				//Minimum priority
-				$minPrio = $gsg->GetOption('pr_posts_min');
+				$minimumPriority = $gsg->GetOption('pr_posts_min');
+
+				//Change frequencies
+				$changeFrequencyForPosts = $gsg->GetOption('cf_posts');
+				$changeFrequencyForPages = $gsg->GetOption('cf_pages');
 
 				//Page as home handling
 				$homePid = 0;
-				$home = get_bloginfo('url');
+				$home = get_home_url();
 				if('page' == get_option('show_on_front') && get_option('page_on_front')) {
 					$pageOnFront = get_option('page_on_front');
 					$p = get_post($pageOnFront);
@@ -174,42 +188,62 @@ class GoogleSitemapGeneratorStandardBuilder {
 
 				foreach($posts AS $post) {
 
-					$permalink = get_permalink($post->ID);
+					//Fill the cache with our DB result. Since it's incomplete (no text-content for example), we will clean it later.
+					//This is required since the permalink function will do a query for every post otherwise.
+					//wp_cache_add($post->ID, $post, 'posts');
 
-					//Exclude the home page and placeholder items by some plugins...
-					if(!empty($permalink) && $permalink != $home && $post->ID != $homePid && $permalink != "#") {
+					//Full URL to the post
+					$permalink = get_permalink($post);
+
+					//Exclude the home page and placeholder items by some plugins. Also include only internal links.
+					if(
+						!empty($permalink)
+						&& $permalink != $home
+						&& $post->ID != $homePid
+						&& strpos( $permalink, $home) !== false
+					) {
 
 						//Default Priority if auto calc is disabled
-						$prio = ($postType == 'page' ? $default_prio_pages : $default_prio_posts);
+						$priority = ($postType == 'page' ? $defaultPriorityForPages : $defaultPriorityForPosts);
 
 						//If priority calc. is enabled, calculate (but only for posts, not pages)!
-						if($prioProvider !== null && $postType == 'post') {
-							//Comment count for this post
-							$cmtcnt = (isset($comments[$post->ID]) ? $comments[$post->ID] : 0);
-							$prio = $prioProvider->GetPostPriority($post->ID, $cmtcnt, $post);
+						if($priorityProvider !== null && $postType == 'post') {
+							$priority = $priorityProvider->GetPostPriority($post->ID, $post->comment_count, $post);
 						}
 
-						if($postType == 'post' && $minPrio > 0 && $prio < $minPrio) $prio = $minPrio;
+						//Ensure the minimum priority
+						if($postType == 'post' && $minimumPriority > 0 && $priority < $minimumPriority) $priority = $minimumPriority;
 
-						$gsg->AddUrl($permalink, $gsg->GetTimestampFromMySql(($post->post_modified_gmt && $post->post_modified_gmt != '0000-00-00 00:00:00'
-								? $post->post_modified_gmt
-								: $post->post_date_gmt)), ($postType == 'page' ? $cf_pages
-								: $cf_posts), $prio, $post->ID);
-
+						//ADdd the URL to the sitemap
+						$gsg->AddUrl(
+							$permalink,
+							$gsg->GetTimestampFromMySql($post->post_modified_gmt && $post->post_modified_gmt != '0000-00-00 00:00:00'? $post->post_modified_gmt : $post->post_date_gmt),
+							($postType == 'page' ? $changeFrequencyForPages : $changeFrequencyForPosts),
+							$priority, $post->ID);
 					}
+
+					//Why not use clean_post_cache? Because some plugin will go crazy then (lots of database queries)
+					//The post cache was not populated in a clean way, so we also won't delete it using the API.
+					//wp_cache_delete( $post->ID, 'posts' );
+					unset($post);
 				}
 			}
+
+			unset($posts);
 		}
 	}
 
 	/**
+	 * Generates the content for the archives sitemap
+	 *
 	 * @param $gsg GoogleSitemapGenerator
 	 */
 	public function BuildArchives($gsg) {
-		global $wpdb, $wp_version;
+		/** @var $wpdb wpdb */
+		global $wpdb;
 		$now = current_time('mysql', true);
 
-		$arcresults = $wpdb->get_results("
+		$archives = $wpdb->get_results("
 			SELECT DISTINCT
 				YEAR(post_date_gmt) AS `year`,
 				MONTH(post_date_gmt) AS `month`,
@@ -228,25 +262,26 @@ class GoogleSitemapGeneratorStandardBuilder {
 				post_date_gmt DESC
 		");
 
-		if($arcresults) {
-			foreach($arcresults as $arcresult) {
+		if($archives) {
+			foreach($archives as $archive) {
 
-				$url = get_month_link($arcresult->year, $arcresult->month);
-				$changeFreq = "";
+				$url = get_month_link($archive->year, $archive->month);
 
 				//Archive is the current one
-				if($arcresult->month == date("n") && $arcresult->year == date("Y")) {
+				if($archive->month == date("n") && $archive->year == date("Y")) {
 					$changeFreq = $gsg->GetOption("cf_arch_curr");
 				} else { // Archive is older
 					$changeFreq = $gsg->GetOption("cf_arch_old");
 				}
 
-				$gsg->AddUrl($url, $gsg->GetTimestampFromMySql($arcresult->last_mod), $changeFreq, $gsg->GetOption("pr_arch"));
+				$gsg->AddUrl($url, $gsg->GetTimestampFromMySql($archive->last_mod), $changeFreq, $gsg->GetOption("pr_arch"));
 			}
 		}
 	}
 
 	/**
+	 * Generates the misc sitemap
+	 *
 	 * @param $gsg GoogleSitemapGenerator
 	 */
 	public function BuildMisc($gsg) {
@@ -255,14 +290,13 @@ class GoogleSitemapGeneratorStandardBuilder {
 
 		if($gsg->GetOption("in_home")) {
 			$home = get_bloginfo('url');
-			$homePid = 0;
+
 			//Add the home page (WITH a slash!)
 			if($gsg->GetOption("in_home")) {
 				if('page' == get_option('show_on_front') && get_option('page_on_front')) {
 					$pageOnFront = get_option('page_on_front');
 					$p = get_post($pageOnFront);
 					if($p) {
-						$homePid = $p->ID;
 						$gsg->AddUrl(trailingslashit($home), $gsg->GetTimestampFromMySql(($p->post_modified_gmt && $p->post_modified_gmt != '0000-00-00 00:00:00'
 								? $p->post_modified_gmt
 								: $p->post_date_gmt)), $gsg->GetOption("cf_home"), $gsg->GetOption("pr_home"));
@@ -283,10 +317,13 @@ class GoogleSitemapGeneratorStandardBuilder {
 	}
 
 	/**
+	 * Generates the author sitemap
+	 *
 	 * @param $gsg GoogleSitemapGenerator
 	 */
 	public function BuildAuthors($gsg) {
-		global $wpdb, $wp_version;
+		/** @var $wpdb wpdb */
+		global $wpdb;
 
 		//Unfortunately there is no API function to get all authors, so we have to do it the dirty way...
 		//We retrieve only users with published and not password protected enabled post types
@@ -306,7 +343,7 @@ class GoogleSitemapGeneratorStandardBuilder {
 				WHERE
 					p.post_author = u.ID
 					AND p.post_status = 'publish'
-					AND p.post_type IN('" . implode("','", array_map(array($wpdb, 'escape'), $enabledPostTypes)) . "')
+					AND p.post_type IN('" . implode("','", array_map('esc_sql', $enabledPostTypes)) . "')
 					AND p.post_password = ''
 				GROUP BY
 					u.ID,
@@ -322,8 +359,14 @@ class GoogleSitemapGeneratorStandardBuilder {
 		}
 	}
 
-
-	public function FilterTermsQuery($selects, $args) {
+	/**
+	 * Filters the terms query to only include published posts
+	 *
+	 * @param $selects string[]
+	 * @return string[]
+	 */
+	public function FilterTermsQuery($selects) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		$selects[] = "
 		( /* ADDED BY XML SITEMAPS */
@@ -337,16 +380,20 @@ class GoogleSitemapGeneratorStandardBuilder {
 				AND p.post_status = 'publish'
 				AND p.post_password = ''
 				AND r.term_taxonomy_id = tt.term_taxonomy_id
-		) as _mod_date";
+		) as _mod_date
+		 /* END ADDED BY XML SITEMAPS */
+		";
 
 		return $selects;
 	}
 
 	/**
+	 * Generates the taxonomies sitemap
+	 *
 	 * @param $gsg GoogleSitemapGenerator
+	 * @param $taxonomy string The Taxonomy
 	 */
 	public function BuildTaxonomies($gsg, $taxonomy) {
-		global $wpdb;
 
 		$enabledTaxonomies = $this->GetEnabledTaxonomies($gsg);
 		if(in_array($taxonomy, $enabledTaxonomies)) {
@@ -368,6 +415,12 @@ class GoogleSitemapGeneratorStandardBuilder {
 		}
 	}
 
+	/**
+	 * Returns the enabled taxonomies. Only taxonomies with posts are returned.
+	 *
+	 * @param GoogleSitemapGenerator $gsg
+	 * @return array
+	 */
 	public function GetEnabledTaxonomies(GoogleSitemapGenerator $gsg) {
 
 		$enabledTaxonomies = $gsg->GetOption("in_tax");
@@ -383,59 +436,35 @@ class GoogleSitemapGeneratorStandardBuilder {
 	}
 
 	/**
+	 * Generates the external sitemap
+	 *
 	 * @param $gsg GoogleSitemapGenerator
 	 */
 	public function BuildExternals($gsg) {
 		$pages = $gsg->GetPages();
 		if($pages && is_array($pages) && count($pages) > 0) {
 			foreach($pages AS $page) {
+				/** @var $page GoogleSitemapGeneratorPage */
 				$gsg->AddUrl($page->GetUrl(), $page->getLastMod(), $page->getChangeFreq(), $page->getPriority());
 			}
 		}
 	}
 
-	public function BuildPostQuery($gsg, $postType) {
-		//Default Query Parameters
-		$qp = array(
-			'post_type' => $postType,
-			'numberposts' => 0,
-			'nopaging' => true,
-			'suppress_filters' => false
-		);
-
-
-		$excludes = $gsg->GetExcludedPostIDs($gsg);
-
-		if(count($excludes) > 0) {
-			$qp["post__not_in"] = $excludes;
-		}
-
-		// Excluded category IDs
-		$exclCats = $gsg->GetExcludedCategoryIDs($gsg);
-
-		if(count($exclCats) > 0) {
-			$qp["category__not_in"] = $exclCats;
-		}
-
-		return $qp;
-	}
-
 	/**
+	 * Generates the sitemap index
+	 *
 	 * @param $gsg GoogleSitemapGenerator
 	 */
 	public function Index($gsg) {
 		/**
 		 * @var $wpdb wpdb
 		 */
-		global $wpdb, $wp_version;
-
+		global $wpdb;
 
 		$blogUpdate = strtotime(get_lastpostmodified('gmt'));
 
 		$gsg->AddSitemap("misc", null, $blogUpdate);
 
-		if($gsg->GetOption("in_arch")) $gsg->AddSitemap("archives", null, $blogUpdate);
-		if($gsg->GetOption("in_auth")) $gsg->AddSitemap("authors", null, $blogUpdate);
 
 		$taxonomies = $this->GetEnabledTaxonomies($gsg);
 		foreach($taxonomies AS $tax) {
@@ -443,9 +472,19 @@ class GoogleSitemapGeneratorStandardBuilder {
 		}
 
 		$pages = $gsg->GetPages();
-		if(count($pages) > 0) $gsg->AddSitemap("externals", null, $blogUpdate);
+		if(count($pages) > 0) {
+			foreach($pages AS $page) {
+				if($page instanceof GoogleSitemapGeneratorPage && $page->GetUrl()) {
+					$gsg->AddSitemap("externals", null, $blogUpdate);
+					break;
+				}
+			}
+		}
 
 		$enabledPostTypes = $gsg->GetActivePostTypes();
+
+		$hasEnabledPostTypesPosts = false;
+		$hasPosts = false;
 
 		if(count($enabledPostTypes) > 0) {
 
@@ -485,12 +524,43 @@ class GoogleSitemapGeneratorStandardBuilder {
 				$posts = $wpdb->get_results($q);
 
 				if($posts) {
+					if($postType=="post") $hasPosts = true;
+
+					$hasEnabledPostTypesPosts = true;
+
 					foreach($posts as $post) {
 						$gsg->AddSitemap("pt", $postType . "-" . sprintf("%04d-%02d", $post->year, $post->month), $gsg->GetTimestampFromMySql($post->last_mod));
 					}
 				}
 			}
 		}
+
+		//Only include authors if there is a public post with a enabled post type
+		if($gsg->GetOption("in_auth") && $hasEnabledPostTypesPosts) $gsg->AddSitemap("authors", null, $blogUpdate);
+
+		//Only include archived if there are posts with postType post
+		if($gsg->GetOption("in_arch") && $hasPosts) $gsg->AddSitemap("archives", null, $blogUpdate);
+	}
+
+	/**
+	 * Return the URL to the sitemap related to a specific post
+	 *
+	 * @param array $urls
+	 * @param $gsg GoogleSitemapGenerator
+	 * @param $postID int The post ID
+	 *
+	 * @return string[]
+	 */
+	public function GetSitemapUrlForPost(array $urls, $gsg, $postID) {
+		$post = get_post($postID);
+		if($post) {
+			$lastModified = $gsg->GetTimestampFromMySql($post->post_modified_gmt);
+
+			$url = $gsg->GetXmlUrl("pt", $post->post_type . "-" . date("Y-m", $lastModified));
+			$urls[] = $url;
+		}
+
+		return $urls;
 	}
 }
 
