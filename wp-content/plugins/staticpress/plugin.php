@@ -2,9 +2,9 @@
 /*
 Plugin Name: StaticPress
 Author: wokamoto
-Plugin URI: https://github.com/megumiteam/staticpress
+Plugin URI: http://en.staticpress.net/
 Description: Transform your WordPress into static websites and blogs.
-Version: 0.4.3.4
+Version: 0.4.4
 Author URI: http://www.digitalcube.jp/
 Text Domain: static-press
 Domain Path: /languages
@@ -13,7 +13,7 @@ License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
 
-  Copyright 2013 (email : wokamoto1973@gmail.com)
+  Copyright 2013 - 2015 (email : wokamoto@digitalcube.jp)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@ add_filter('StaticPress::put_content', array($staticpress, 'rewrite_generator_ta
 add_filter('StaticPress::put_content', array($staticpress, 'add_last_modified'), 10, 2);
 add_filter('StaticPress::put_content', array($staticpress, 'remove_link_tag'), 10, 2);
 add_filter('StaticPress::put_content', array($staticpress, 'replace_relative_URI'), 10, 2);
+add_filter('https_local_ssl_verify', '__return_false');
 
 register_activation_hook(__FILE__, array($staticpress, 'activate'));
 register_deactivation_hook(__FILE__, array($staticpress, 'deactivate'));

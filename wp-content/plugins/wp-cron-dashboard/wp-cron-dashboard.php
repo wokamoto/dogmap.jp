@@ -4,7 +4,7 @@ Plugin Name: WP-Cron Dashboard
 Plugin URI: http://wppluginsj.sourceforge.jp/i18n-ja_jp/wp-cron-dashboard/
 Description: WP-Cron Dashboard Display for Wordpress
 Author: wokamoto
-Version: 1.1.5
+Version: 1.1.7
 Author URI: http://dogmap.jp/
 Text Domain: wp-cron-dashboard
 Domain Path: /languages/
@@ -40,9 +40,6 @@ class CronDashboard {
 	/*
 	* Constructor
 	*/
-	function CronDashboard() {
-		$this->__construct();
-	}
 	function __construct() {
 		$this->_set_plugin_dir(__FILE__);
 		$this->_load_textdomain();
@@ -112,12 +109,15 @@ class CronDashboard {
 
 		$crons = '';
 		if (isset($_POST['submit'])) {
-			$crons = $this->_unschedule_event($_POST['time'], $_POST['procname'], $_POST['key']);
+			$key = esc_html(isset($_POST['key']) ? $_POST['key'] : '');
+			$procname = esc_html(isset($_POST['procname']) ? $_POST['procname'] : '');
+			$proctime = esc_html(isset($_POST['time']) ? $_POST['time'] : '');
+			$crons = $this->_unschedule_event($proctime, $procname, $key);
 
 			// Note snuff
 			$note .= '<div id="message" class="updated fade"><p>';
 			$note .= __('Sucessfully unscheduled',$this->textdomain_name)." ";
-			$note .= $_POST['procname'];
+			$note .= $procname;
 			$note .= " (".date($datetime_format,$this->get_tz_timestamp($_POST['time'])).")";
 			$note .= '</p></div>'."\n";
 		}

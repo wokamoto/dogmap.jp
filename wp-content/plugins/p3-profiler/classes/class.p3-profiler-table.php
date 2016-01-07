@@ -164,13 +164,13 @@ class P3_Profiler_Table extends WP_List_Table {
 	 * @return string
 	 */
 	private function _action_links( $key, $display ) {
-		$url = add_query_arg(
+		$url = esc_url( add_query_arg(
 			array(
 				'p3_action' => 'view-scan',
 				'name' => $key,
 				'current_scan' => null,
 			)
-		);
+		) );
 		$ret  = '<a href="' . esc_attr( $url ). '" title="' . esc_attr__( 'View the results of this scan', 'p3-profiler' ) . '"><strong>' . $display . '</strong></a>';
 		$ret .= '<div class="row-actions-visible">';
 		$ret .= '  <span class="view">';

@@ -1,6 +1,20 @@
+/* jshint onevar: false, smarttabs: true */
+/* global ajaxurl */
+/* global isRtl */
+
 jQuery( function( $ ) {
+	var widgets_shell = $( 'div#widgets-right' );
+
+	if ( ! widgets_shell.length || ! $( widgets_shell ).find( '.widget-control-actions' ).length ) {
+		widgets_shell = $( 'form#customize-controls' );
+	}
+
 	function setWidgetMargin( $widget ) {
+
 		if ( $( 'body' ).hasClass( 'wp-customizer' ) ) {
+			// set the inside widget 2 top this way we can see the widget settings
+			$widget.find('.widget-inside').css( 'top', 0 );
+
 			return;
 		}
 
@@ -9,14 +23,20 @@ jQuery( function( $ ) {
 			// contain the visibility settings. IE wasn't handling the
 			// margin-left value properly.
 
-			if ( $widget.attr( 'style' ) )
+			if ( $widget.attr( 'style' ) ) {
 				$widget.data( 'original-style', $widget.attr( 'style' ) );
+			}
 
 			var currentWidth = $widget.width();
 
 			if ( currentWidth < 400 ) {
 				var extra = 400 - currentWidth;
-				$widget.css( 'position', 'relative' ).css( 'left', '-' + extra + 'px' ).css( 'width', '400px' );
+				if( isRtl ) {
+					$widget.css( 'position', 'relative' ).css( 'right', '-' + extra + 'px' ).css( 'width', '400px' );
+				} else {
+					$widget.css( 'position', 'relative' ).css( 'left', '-' + extra + 'px' ).css( 'width', '400px' );
+				}
+
 			}
 		}
 		else if ( $widget.data( 'original-style' ) ) {
@@ -28,10 +48,10 @@ jQuery( function( $ ) {
 		}
 	}
 
-	$( "a.display-options" ).each( function() {
+	$( 'a.display-options' ).each( function() {
 		var $displayOptionsButton = $( this ),
-			$widget = $displayOptionsButton.closest( "div.widget" );
-		$displayOptionsButton.insertBefore( $widget.find( "input.widget-control-save" ) );
+			$widget = $displayOptionsButton.closest( 'div.widget' );
+		$displayOptionsButton.insertBefore( $widget.find( 'input.widget-control-save' ) );
 
 		// Widgets with no configurable options don't show the Save button's container.
 		$displayOptionsButton
@@ -44,61 +64,74 @@ jQuery( function( $ ) {
 
 	} );
 
-	$( "div#widgets-right, form#customize-controls" ).on( "click", "a.add-condition", function( e ) {
+	widgets_shell.on( 'click.widgetconditions', 'a.add-condition', function( e ) {
 		e.preventDefault();
-		var $condition = $( this ).closest( "div.condition" ),
+
+		var $condition = $( this ).closest( 'div.condition' ),
 			$conditionClone = $condition.clone().insertAfter( $condition );
-		$conditionClone.find( "select.conditions-rule-major" ).val( "" );
-		$conditionClone.find( "select.conditions-rule-minor" ).html( "" ).attr( "disabled" );
-	} ).on( "click", "a.display-options", function ( e ) {
+
+		$conditionClone.find( 'select.conditions-rule-major' ).val( '' );
+		$conditionClone.find( 'select.conditions-rule-minor' ).html( '' ).attr( 'disabled' );
+		$conditionClone.find( 'span.conditions-rule-has-children' ).hide().html( '' );
+	} );
+
+	widgets_shell.on( 'click.widgetconditions', 'a.display-options', function ( e ) {
 		e.preventDefault();
 
 		var $displayOptionsButton = $( this ),
-			$widget = $displayOptionsButton.closest( "div.widget" );
+			$widget = $displayOptionsButton.closest( 'div.widget' );
 
-		$widget.find( "div.widget-conditional" ).toggleClass( "widget-conditional-hide" );
-		$( this ).toggleClass( "active" );
-		$widget.toggleClass( "expanded" );
+		$widget.find( 'div.widget-conditional' ).toggleClass( 'widget-conditional-hide' );
+		$( this ).toggleClass( 'active' );
+		$widget.toggleClass( 'expanded' );
 		setWidgetMargin( $widget );
 
-		if ( $( this ).hasClass( 'active' ) )
+		if ( $( this ).hasClass( 'active' ) ) {
 			$widget.find( 'input[name=widget-conditions-visible]' ).val( '1' );
-		else
+		} else {
 			$widget.find( 'input[name=widget-conditions-visible]' ).val( '0' );
+		}
 
 	} );
 
-	$( "div#widgets-right, form#customize-controls" ).on( "click", "a.delete-condition", function( e ) {
+	widgets_shell.on( 'click.widgetconditions', 'a.delete-condition', function( e ) {
 		e.preventDefault();
 
-		var $condition = $( this ).closest( "div.condition" );
+		var $condition = $( this ).closest( 'div.condition' );
 
-		if ( $condition.is( ":first-child" ) && $condition.is( ":last-child" ) ) {
-			$( this ).closest( "div.widget" ).find( "a.display-options" ).click();
-			$condition.find( "select.conditions-rule-major" ).val( "" ).change();
+		if ( $condition.is( ':first-child' ) && $condition.is( ':last-child' ) ) {
+			$( this ).closest( 'div.widget' ).find( 'a.display-options' ).click();
+			$condition.find( 'select.conditions-rule-major' ).val( '' ).change();
 		} else {
 			$condition.detach();
 		}
-	} ).on( "click", "div.widget-top", function() {
-		var $widget = $( this ).closest( "div.widget" ),
-			$displayOptionsButton = $widget.find( "a.display-options" );
+	} );
 
-		if ( $displayOptionsButton.hasClass( "active" ) ) {
-			$displayOptionsButton.attr( "opened", "true" );
+	widgets_shell.on( 'click.widgetconditions', 'div.widget-top', function() {
+		var $widget = $( this ).closest( 'div.widget' ),
+			$displayOptionsButton = $widget.find( 'a.display-options' );
+
+		if ( $displayOptionsButton.hasClass( 'active' ) ) {
+			$displayOptionsButton.attr( 'opened', 'true' );
 		}
 
-		if ( $displayOptionsButton.attr( "opened" ) ) {
-			$displayOptionsButton.removeAttr( "opened" );
-			$widget.toggleClass( "expanded" );
+		if ( $displayOptionsButton.attr( 'opened' ) ) {
+			$displayOptionsButton.removeAttr( 'opened' );
+			$widget.toggleClass( 'expanded' );
 			setWidgetMargin( $widget );
 		}
 	} );
 
-	$( document ).on( "change", "select.conditions-rule-major", function() {
-		var $conditionsRuleMajor = $ ( this );
-		var $conditionsRuleMinor = $conditionsRuleMajor.siblings( "select.conditions-rule-minor:first" );
+	$( document ).on( 'change.widgetconditions', 'select.conditions-rule-major', function() {
+		var $conditionsRuleMajor = $ ( this ),
+			$conditionsRuleMinor = $conditionsRuleMajor.siblings( 'select.conditions-rule-minor:first' ),
+			$conditionsRuleHasChildren = $conditionsRuleMajor.siblings( 'span.conditions-rule-has-children' );
 
 		if ( $conditionsRuleMajor.val() ) {
+			if ( $conditionsRuleMajor.val() !== 'page' ){
+				$conditionsRuleHasChildren.hide().html( '' );
+			}
+
 			$conditionsRuleMinor.html( '' ).append( $( '<option/>' ).text( $conditionsRuleMinor.data( 'loading-text' ) ) );
 
 			var data = {
@@ -107,10 +140,31 @@ jQuery( function( $ ) {
 			};
 
 			jQuery.post( ajaxurl, data, function( html ) {
-				$conditionsRuleMinor.html( html ).removeAttr( "disabled" );
+				$conditionsRuleMinor.html( html ).removeAttr( 'disabled' );
 			} );
 		} else {
-			$conditionsRuleMajor.siblings( "select.conditions-rule-minor" ).attr( "disabled", "disabled" ).html( "" );
+			$conditionsRuleMajor.siblings( 'select.conditions-rule-minor' ).attr( 'disabled', 'disabled' ).html( '' );
+			$conditionsRuleHasChildren.hide().html( '' );
+		}
+	} );
+
+	$( document ).on( 'change.widgetconditions', 'select.conditions-rule-minor', function() {
+		var $conditionsRuleMinor = $ ( this ),
+			$conditionsRuleMajor = $conditionsRuleMinor.siblings( 'select.conditions-rule-major' ),
+			$conditionsRuleHasChildren = $conditionsRuleMinor.siblings( 'span.conditions-rule-has-children' );
+
+		if ( $conditionsRuleMajor.val() === 'page' ) {
+			var data = {
+				action: 'widget_conditions_has_children',
+				major: $conditionsRuleMajor.val(),
+				minor: $conditionsRuleMinor.val()
+			};
+
+			jQuery.post( ajaxurl, data, function( html ) {
+				$conditionsRuleHasChildren.html( html ).show();
+			} );
+		} else {
+			$conditionsRuleHasChildren.hide().html( '' );
 		}
 	} );
 } );

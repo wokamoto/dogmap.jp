@@ -1,5 +1,5 @@
 <?php
- 
+
 class Jetpack_Comic {
 	const POST_TYPE = 'jetpack-comic';
 
@@ -24,6 +24,12 @@ class Jetpack_Comic {
 	function __construct() {
 		// Make sure the post types are loaded for imports
 		add_action( 'import_start', array( $this, 'register_post_types' ) );
+
+		// Add to REST API post type whitelist
+		add_filter( 'rest_api_allowed_post_types', array( $this, 'allow_rest_api_type' ) );
+
+		// If called via REST API, we need to register later in lifecycle
+		add_action( 'restapi_theme_init', array( $this, 'maybe_register_post_types' ) );
 
 		// Return early if theme does not support Jetpack Comic.
 		if ( ! ( $this->site_supports_comics() ) )
@@ -72,6 +78,7 @@ class Jetpack_Comic {
 		add_action( 'admin_footer-edit.php', array( $this, 'admin_footer' ) );
 		add_action( 'load-edit.php', array( $this, 'bulk_edit' ) );
 		add_action( 'admin_notices', array( $this, 'bulk_edit_notices' ) );
+
 	}
 
 	public function admin_footer() {
@@ -166,7 +173,12 @@ class Jetpack_Comic {
 	}
 
 	public function register_scripts() {
-		wp_enqueue_style( 'jetpack-comics-style', plugins_url( 'comics/comics.css', __FILE__ ) );
+		if( is_rtl() ) {
+			wp_enqueue_style( 'jetpack-comics-style', plugins_url( 'comics/rtl/comics-rtl.css', __FILE__ ) );
+		} else {
+			wp_enqueue_style( 'jetpack-comics-style', plugins_url( 'comics/comics.css', __FILE__ ) );
+		}
+
 		wp_enqueue_script( 'jetpack-comics', plugins_url( 'comics/comics.js', __FILE__ ), array( 'jquery', 'jquery.spin' ) );
 
 		$options = array(
@@ -189,6 +201,14 @@ class Jetpack_Comic {
 		wp_enqueue_style( 'jetpack-comics-admin', plugins_url( 'comics/admin.css', __FILE__ ) );
 	}
 
+	public function maybe_register_post_types() {
+		// Return early if theme does not support Jetpack Comic.
+		if ( ! ( $this->site_supports_comics() ) )
+			return;
+
+		$this->register_post_types();
+	}
+
 	function register_post_types() {
 		if ( post_type_exists( self::POST_TYPE ) ) {
 			return;
@@ -197,18 +217,21 @@ class Jetpack_Comic {
 		register_post_type( self::POST_TYPE, array(
 			'description' => __( 'Comics', 'jetpack' ),
 			'labels' => array(
-				'name'               => esc_html__( 'Comics',                   'jetpack' ),
-				'singular_name'      => esc_html__( 'Comic',                    'jetpack' ),
-				'menu_name'          => esc_html__( 'Comics',                   'jetpack' ),
-				'all_items'          => esc_html__( 'All Comics',               'jetpack' ),
-				'add_new'            => esc_html__( 'Add New',                  'jetpack' ),
-				'add_new_item'       => esc_html__( 'Add New Comic',            'jetpack' ),
-				'edit_item'          => esc_html__( 'Edit Comic',               'jetpack' ),
-				'new_item'           => esc_html__( 'New Comic',                'jetpack' ),
-				'view_item'          => esc_html__( 'View Comic',               'jetpack' ),
-				'search_items'       => esc_html__( 'Search Comics',            'jetpack' ),
-				'not_found'          => esc_html__( 'No Comics found',          'jetpack' ),
-				'not_found_in_trash' => esc_html__( 'No Comics found in Trash', 'jetpack' ),
+				'name'                  => esc_html__( 'Comics',                   'jetpack' ),
+				'singular_name'         => esc_html__( 'Comic',                    'jetpack' ),
+				'menu_name'             => esc_html__( 'Comics',                   'jetpack' ),
+				'all_items'             => esc_html__( 'All Comics',               'jetpack' ),
+				'add_new'               => esc_html__( 'Add New',                  'jetpack' ),
+				'add_new_item'          => esc_html__( 'Add New Comic',            'jetpack' ),
+				'edit_item'             => esc_html__( 'Edit Comic',               'jetpack' ),
+				'new_item'              => esc_html__( 'New Comic',                'jetpack' ),
+				'view_item'             => esc_html__( 'View Comic',               'jetpack' ),
+				'search_items'          => esc_html__( 'Search Comics',            'jetpack' ),
+				'not_found'             => esc_html__( 'No Comics found',          'jetpack' ),
+				'not_found_in_trash'    => esc_html__( 'No Comics found in Trash', 'jetpack' ),
+				'filter_items_list'     => esc_html__( 'Filter comics list',       'jetpack' ),
+				'items_list_navigation' => esc_html__( 'Comics list navigation',   'jetpack' ),
+				'items_list'            => esc_html__( 'Comics list',              'jetpack' ),
 			),
 			'supports' => array(
 				'title',
@@ -307,10 +330,12 @@ class Jetpack_Comic {
 			// so check manually whether the target blog supports comics.
 			switch_to_blog( $_SERVER['argv'][1] );
 			// The add_theme_support( 'jetpack-comic' ) won't fire on switch_to_blog, so check for Panel manually.
-			$supports_comics = ( ( function_exists( 'site_vertical' ) && 'comics' == site_vertical() ) 
-								|| current_theme_supports( self::POST_TYPE ) 
+			$supports_comics = ( ( function_exists( 'site_vertical' ) && 'comics' == site_vertical() )
+								|| current_theme_supports( self::POST_TYPE )
 								|| get_stylesheet() == 'pub/panel' );
 			restore_current_blog();
+
+			/** This action is documented in modules/custom-post-types/nova.php */
 			return (bool) apply_filters( 'jetpack_enable_cpt', $supports_comics, self::POST_TYPE );
 		}
 
@@ -334,6 +359,7 @@ class Jetpack_Comic {
 		/**
 		 * Filter it in case something else knows better.
 		 */
+		/** This action is documented in modules/custom-post-types/nova.php */
 		return (bool) apply_filters( 'jetpack_enable_cpt', $supports_comics, self::POST_TYPE );
 	}
 
@@ -475,6 +501,14 @@ class Jetpack_Comic {
 		return $query;
 	}
 
+	/**
+	 * Add to REST API post type whitelist
+	 */
+	public function allow_rest_api_type( $post_types ) {
+		$post_types[] = self::POST_TYPE;
+		return $post_types;
+	}
+
 }
 
 add_action( 'init', array( 'Jetpack_Comic', 'init' ) );
@@ -496,4 +530,3 @@ The WordPress.com Team", 'jetpack' );
 }
 
 add_filter( 'update_welcome_email_pre_replacement', 'comics_welcome_email', 10, 6 );
-

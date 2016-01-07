@@ -10,6 +10,10 @@ function jetpack_is_mobile( $kind = 'any', $return_matched_agent = false ) {
 	if ( empty( $_SERVER['HTTP_USER_AGENT'] ) || strpos( strtolower( $_SERVER['HTTP_USER_AGENT'] ), 'ipad' ) )
 		return false;
 
+	// Remove Samsung Galaxy tablets (SCH-I800) from being mobile devices
+	if ( strpos( strtolower( $_SERVER['HTTP_USER_AGENT'] ) , 'sch-i800') )
+		return false;
+
 	if( $ua_info->is_android_tablet() &&  $ua_info->is_kindle_touch() === false )
 		return false;
 
@@ -60,11 +64,11 @@ function jetpack_is_mobile( $kind = 'any', $return_matched_agent = false ) {
 
 class Jetpack_User_Agent_Info {
 
-	var $useragent;
-	var $matched_agent;
-    var $isTierIphone; //Stores whether is the iPhone tier of devices.
-    var $isTierRichCss; //Stores whether the device can probably support Rich CSS, but JavaScript (jQuery) support is not assumed.
-    var $isTierGenericMobile; //Stores whether it is another mobile device, which cannot be assumed to support CSS or JS (eg, older BlackBerry, RAZR)
+	public $useragent;
+	public $matched_agent;
+	public $isTierIphone; //Stores whether is the iPhone tier of devices.
+	public $isTierRichCss; //Stores whether the device can probably support Rich CSS, but JavaScript (jQuery) support is not assumed.
+	public $isTierGenericMobile; //Stores whether it is another mobile device, which cannot be assumed to support CSS or JS (eg, older BlackBerry, RAZR)
 
     private $_platform = null; //Stores the device platform name
 	const PLATFORM_WINDOWS 			= 'windows';
@@ -80,7 +84,7 @@ class Jetpack_User_Agent_Info {
 	const PLATFORM_ANDROID_TABLET	= 'android_tablet';
 	const PLATFORM_FIREFOX_OS		= 'firefoxOS';
 
-	var $dumb_agents = array(
+	public $dumb_agents = array(
 		'nokia', 'blackberry', 'philips', 'samsung', 'sanyo', 'sony', 'panasonic', 'webos',
 		'ericsson', 'alcatel', 'palm',
 		'windows ce', 'opera mini', 'series60', 'series40',
@@ -96,7 +100,7 @@ class Jetpack_User_Agent_Info {
 	);
 
    //The constructor. Initializes default variables.
-   function Jetpack_User_Agent_Info()
+   function __construct()
    {
    		if ( !empty( $_SERVER['HTTP_USER_AGENT'] ) )
        		$this->useragent = strtolower( $_SERVER['HTTP_USER_AGENT'] );
@@ -164,6 +168,8 @@ class Jetpack_User_Agent_Info {
 	 	  	return  'iphone-unknown';
 	   	elseif ( $this->is_ipad( 'ipad-not-safari' ) )
 	   		return 'ipad-unknown';
+	   	elseif ( $this->is_Nintendo_3DS() )
+	   		return 'nintendo-3ds';
 	   	else {
 	   		$agent = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 	   		$dumb_agents = $this->dumb_agents;
@@ -335,6 +341,12 @@ class Jetpack_User_Agent_Info {
 		}
 		elseif ( $this->is_kindle_touch() ) {
 			$this->matched_agent = 'kindle-touch';
+			$this->isTierIphone = true;
+			$this->isTierRichCss = false;
+			$this->isTierGenericMobile = false;
+		}
+		elseif ( $this->is_Nintendo_3DS() ) {
+			$this->matched_agent = 'nintendo-3ds';
 			$this->isTierIphone = true;
 			$this->isTierRichCss = false;
 			$this->isTierGenericMobile = false;
@@ -654,6 +666,7 @@ class Jetpack_User_Agent_Info {
 	 *  The rendering engine is on Opera's server.)
 	 *
 	 * Opera/9.80 (Windows NT 6.1; Opera Mobi/14316; U; en) Presto/2.7.81 Version/11.00"
+	 * Opera/9.50 (Nintendo DSi; Opera/507; U; en-US)
 	 */
 	static function is_opera_mobile( ) {
 
@@ -663,6 +676,8 @@ class Jetpack_User_Agent_Info {
 		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 
 		if ( strpos( $ua, 'opera' ) !== false && strpos( $ua, 'mobi' ) !== false )
+			return true;
+		elseif ( strpos( $ua, 'opera' ) !== false && strpos( $ua, 'nintendo dsi' ) !== false )
 			return true;
 		else
 			return false;
@@ -1178,45 +1193,47 @@ class Jetpack_User_Agent_Info {
 		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) )
 			return false;
 
-		if ( self::is_blackberry_10() )
+		if ( self::is_blackberry_10() ) {
 			return 'blackberry-10';
+		}
 
 		$agent = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 
 		$pos_blackberry = stripos( $agent, 'blackberry' );
 		if ( $pos_blackberry === false ) {
-			//not a blackberry device
+			// not a blackberry device
 			return false;
 		}
 
-		//blackberry devices OS 6.0 or higher
-		//Mozilla/5.0 (BlackBerry; U; BlackBerry 9670; en) AppleWebKit/534.3+ (KHTML, like Gecko) Version/6.0.0.286 Mobile Safari/534.3+
-		//Mozilla/5.0 (BlackBerry; U; BlackBerry 9800; en) AppleWebKit/534.1+ (KHTML, Like Gecko) Version/6.0.0.141 Mobile Safari/534.1+
-		//Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en-US) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.0.0 Mobile Safari/534.11+
+		// blackberry devices OS 6.0 or higher
+		// Mozilla/5.0 (BlackBerry; U; BlackBerry 9670; en) AppleWebKit/534.3+ (KHTML, like Gecko) Version/6.0.0.286 Mobile Safari/534.3+
+		// Mozilla/5.0 (BlackBerry; U; BlackBerry 9800; en) AppleWebKit/534.1+ (KHTML, Like Gecko) Version/6.0.0.141 Mobile Safari/534.1+
+		// Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en-US) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.0.0 Mobile Safari/534.11+
 		$pos_webkit = stripos( $agent, 'webkit' );
 		if ( $pos_webkit !== false ) {
-			//detected blackberry webkit browser
+			// detected blackberry webkit browser
 			$pos_torch = stripos( $agent, 'BlackBerry 9800' );
 			if ( $pos_torch !== false ) {
-				return 'blackberry-torch'; //match the torch first edition. the 2nd edition should use the OS7 and doesn't need any special rule
+				return 'blackberry-torch'; // match the torch first edition. the 2nd edition should use the OS7 and doesn't need any special rule
 			} else {
-				//detecting the BB OS version for devices running OS 6.0 or higher
+				// detecting the BB OS version for devices running OS 6.0 or higher
 				if ( preg_match( '#Version\/([\d\.]+)#i', $agent, $matches ) ) {
 					$version = $matches[1];
 					$version_num = explode( '.', $version );
-					if( is_array( $version_num ) === false || count( $version_num ) <= 1 )
-						return 'blackberry-6'; //not a BB device that match our rule.
-					else
-					return 'blackberry-'.$version_num[0];
+					if ( is_array( $version_num ) === false || count( $version_num ) <= 1 ) {
+						return 'blackberry-6'; // not a BB device that match our rule.
+					} else {
+						return 'blackberry-' . $version_num[0];
+					}
 				} else {
-					//if doesn't match returns the minimun version with a webkit browser. we should never fall here.
-					return 'blackberry-6'; //not a BB device that match our rule.
+					// if doesn't match returns the minimun version with a webkit browser. we should never fall here.
+					return 'blackberry-6'; // not a BB device that match our rule.
 				}
 			}
 		}
 
-		//blackberry devices <= 5.XX
-		//BlackBerry9000/5.0.0.93 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/179
+		// blackberry devices <= 5.XX
+		// BlackBerry9000/5.0.0.93 Profile/MIDP-2.0 Configuration/CLDC-1.1 VendorID/179
 		if ( preg_match( '#BlackBerry\w+\/([\d\.]+)#i', $agent, $matches ) ) {
 			$version = $matches[1];
 		} else {
@@ -1225,8 +1242,9 @@ class Jetpack_User_Agent_Info {
 
 		$version_num = explode( '.', $version );
 
-		if( is_array( $version_num ) === false || count( $version_num ) <= 1 )
+		if ( is_array( $version_num ) === false || count( $version_num ) <= 1 ) {
 			return false;
+		}
 		if ( $version_num[0] == 5 ) {
 			return 'blackberry-5';
 		} elseif ( $version_num[0] == 4 && $version_num[1] == 7 ) {
@@ -1239,7 +1257,6 @@ class Jetpack_User_Agent_Info {
 			return false;
 		}
 
-		return false;
 	}
 
 	/**
@@ -1257,17 +1274,19 @@ class Jetpack_User_Agent_Info {
 	 */
 	static function detect_blackberry_browser_version() {
 
-		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) )
-		return false;
+		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			return false;
+		}
 
 		$agent = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 
-		if ( self::is_blackberry_10() )
+		if ( self::is_blackberry_10() ) {
 			return 'blackberry-10';
+		}
 
 		$pos_blackberry = strpos( $agent, 'blackberry' );
 		if ( $pos_blackberry === false ) {
-			//not a blackberry device
+			// not a blackberry device
 			return false;
 		}
 
@@ -1279,13 +1298,14 @@ class Jetpack_User_Agent_Info {
 			if ( preg_match( '#BlackBerry\w+\/([\d\.]+)#i', $agent, $matches ) ) {
 				$version = $matches[1];
 			} else {
-				return false; //not a BB device that match our rule.
+				return false; // not a BB device that match our rule.
 			}
 
 			$version_num = explode( '.', $version );
 
-			if( is_array( $version_num ) === false || count( $version_num ) <= 1 )
-			return false;
+			if ( is_array( $version_num ) === false || count( $version_num ) <= 1 ) {
+				return false;
+			}
 
 			if ( $version_num[0] == 5 ) {
 				return 'blackberry-5';
@@ -1294,14 +1314,14 @@ class Jetpack_User_Agent_Info {
 			} elseif ( $version_num[0] == 4 && $version_num[1] == 6 ) {
 				return 'blackberry-4.6';
 			} else {
-				//A very old BB device is found or this is a BB device that doesn't match our rules.
+				// A very old BB device is found or this is a BB device that doesn't match our rules.
 				return false;
 			}
 		}
-		return false;
+
 	}
 
-	//Checks if a visitor is coming from one of the WordPress mobile apps
+	// Checks if a visitor is coming from one of the WordPress mobile apps
 	static function is_mobile_app() {
 
 		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) )
@@ -1322,6 +1342,24 @@ class Jetpack_User_Agent_Info {
 		foreach ( $app_agents as $app_agent ) {
 			if ( false !== strpos( $agent, $app_agent ) )
 			return true;
+		}
+		return false;
+	}
+
+  /*
+	 * Detects if the current browser is Nintendo 3DS handheld.
+	 *
+	 * example: Mozilla/5.0 (Nintendo 3DS; U; ; en) Version/1.7498.US
+	 * can differ in language, version and region
+	 */
+	static function is_Nintendo_3DS() {
+	 	if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			return false;
+		}
+
+		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
+		if ( strpos( $ua, 'nintendo 3ds' ) !== false ) {
+	   		return true;
 		}
 		return false;
 	}
@@ -1357,9 +1395,10 @@ class Jetpack_User_Agent_Info {
 			'alexa', 'altavista', 'ask jeeves', 'attentio', 'baiduspider', 'bingbot', 'chtml generic', 'crawler', 'fastmobilecrawl',
 			'feedfetcher-google', 'firefly', 'froogle', 'gigabot', 'googlebot', 'googlebot-mobile', 'heritrix', 'ia_archiver', 'irlbot',
 			'infoseek', 'jumpbot', 'lycos', 'mediapartners', 'mediobot', 'motionbot', 'msnbot', 'mshots', 'openbot',
-			'pss-webkit-request',
-			'pythumbnail', 'scooter', 'slurp', 'snapbot', 'spider', 'taptubot', 'technoratisnoop',
-			'teoma', 'twiceler', 'yahooseeker', 'yahooysmcm', 'yammybot',
+			'pss-webkit-request', 'pythumbnail', 'scooter', 'slurp', 'snapbot', 'spider', 'taptubot', 'technoratisnoop',
+			'teoma', 'twiceler', 'yahooseeker', 'yahooysmcm', 'yammybot', 'ahrefsbot', 'pingdom.com_bot', 'kraken', 'yandexbot',
+            		'twitterbot', 'tweetmemebot', 'openhosebot', 'queryseekerspider', 'linkdexbot', 'grokkit-crawler',
+            		'livelapbot', 'germcrawler', 'domaintunocrawler', 'grapeshotcrawler', 'cloudflare-alwaysonline',
 		);
 
 		foreach ( $bot_agents as $bot_agent ) {

@@ -3,7 +3,7 @@
 require dirname( __FILE__ ) . '/base.php';
 
 /**
- * Main Jetpack Comments class
+ * Main Comments class
  *
  * @package JetpackComments
  * @version 1.4
@@ -17,20 +17,20 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	 * Possible comment form sources
 	 * @var array
 	 */
-	var $id_sources = array();
+	public $id_sources = array();
 
 	/**
 	 * URL
 	 * @var string
 	 */
-	var $signed_url = '';
+	public $signed_url = '';
 
 	/**
 	 * The default comment form color scheme
 	 * @var string
 	 * @see ::set_default_color_theme_based_on_theme_settings()
 	 */
-	var $default_color_scheme =  'light';
+	public $default_color_scheme =  'light';
 
 	/** Methods ***************************************************************/
 
@@ -45,14 +45,24 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	}
 
 	/**
-	 * Main constructor for Jetpack Comments
+	 * Main constructor for Comments
 	 *
 	 * @since JetpackComments (1.4)
 	 */
 	public function __construct() {
 		parent::__construct();
 
-		// Jetpack Comments is loaded
+		// Comments is loaded
+
+		/**
+		 * Fires after the Jetpack_Comments object has been instantiated
+		 *
+		 * @module comments
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param array $jetpack_comments_loaded First element in array of type Jetpack_Comments
+		 **/
 		do_action_ref_array( 'jetpack_comments_loaded', array( $this ) );
 		add_action( 'after_setup_theme', array( $this, 'set_default_color_theme_based_on_theme_settings' ), 100 );
 	}
@@ -165,6 +175,20 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	 * @since JetpackComments (1.4)
 	 */
 	public function comment_form_before() {
+		/**
+		 * Filters the setting that determines if Jetpagk comments should be enabled for
+		 * the current post type.
+		 *
+		 * @module comments
+		 *
+		 * @since 3.8.1
+		 *
+		 * @param boolean $return Should comments be enabled?
+		 */
+		if ( ! apply_filters( 'jetpack_comment_form_enabled_for_' . get_post_type(), true ) ) {
+			return;
+		}
+
 		// Add some JS to the footer
 		add_action( 'wp_footer', array( $this, 'watch_comment_parent' ), 100 );
 
@@ -178,12 +202,25 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 	 * @since JetpackComments (1.4)
 	 */
 	public function comment_form_after() {
+		/** This filter is documented in modules/comments/comments.php */
+		if ( ! apply_filters( 'jetpack_comment_form_enabled_for_' . get_post_type(), true ) ) {
+			return;
+		}
 
 		// Throw it all out and drop in our replacement
 		ob_end_clean();
 
 		// If users are required to be logged in, and they're not, then we don't need to do anything else
 		if ( get_option( 'comment_registration' ) && !is_user_logged_in() ) {
+			/**
+			 * Changes the log in to comment prompt.
+			 *
+			 * @module comments
+			 *
+			 * @since 1.4.0
+			 *
+			 * @param string $var Default is "You must log in to post a comment."
+			 */
 			echo '<p class="must-log-in">' . sprintf( apply_filters( 'jetpack_must_log_in_to_comment', __( 'You must <a href="%s">log in</a> to post a comment.', 'jetpack' ) ), wp_login_url( get_permalink() . '#respond' ) ) . '</p>';
 			return;
 		}
@@ -209,6 +246,15 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 			'show_avatars'         => ( get_option( 'show_avatars' )         ? '1' : '0' ),
 			'avatar_default'       => get_option( 'avatar_default' ),
 			'greeting'             => get_option( 'highlander_comment_form_prompt', __( 'Leave a Reply', 'jetpack' ) ),
+			/**
+			 * Changes the comment form prompt.
+			 *
+			 * @module comments
+			 *
+			 * @since 2.3.0
+			 *
+			 * @param string $var Default is "Leave a Reply to %s."
+			 */
 			'greeting_reply'       => apply_filters( 'jetpack_comment_form_prompt_reply', __( 'Leave a Reply to %s' , 'jetpack' ) ),
 			'color_scheme'         => get_option( 'jetpack_comment_form_color_scheme', $this->default_color_scheme ),
 			'lang'                 => get_bloginfo( 'language' ),
@@ -385,6 +431,14 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 		// Bail if token is expired or not valid
 		if ( $check !== $post_array['sig'] )
 			wp_die( __( 'Invalid security token.', 'jetpack' ) );
+
+		/** This filter is documented in modules/comments/comments.php */
+		if ( ! apply_filters( 'jetpack_comment_form_enabled_for_' . get_post_type( $post_array['comment_post_ID'] ), true ) ) {
+			// In case the comment POST is legit, but the comments are
+			// now disabled, we don't allow the comment
+
+			wp_die( __( 'Comments are not allowed.', 'jetpack' ) );
+		}
 	}
 
 	/** Capabilities **********************************************************/
@@ -496,7 +550,7 @@ h1 span {
 </style>
 </head>
 <body>
-        <h1><?php printf( __( 'Submitting Comment%s', 'jetpack' ), '<span id="ellipsis" class="hidden">&hellip;</span>' ); ?></h1>
+	<h1><?php printf( __( 'Submitting Comment%s', 'jetpack' ), '<span id="ellipsis" class="hidden">&hellip;</span>' ); ?></h1>
 <script type="text/javascript">
 try {
 	window.parent.location = <?php echo json_encode( $url ); ?>;
@@ -507,7 +561,7 @@ try {
 }
 ellipsis = document.getElementById( 'ellipsis' );
 function toggleEllipsis() {
-        ellipsis.className = ellipsis.className ? '' : 'hidden';
+	ellipsis.className = ellipsis.className ? '' : 'hidden';
 }
 setInterval( toggleEllipsis, 1200 );
 </script>

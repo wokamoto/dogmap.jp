@@ -7,6 +7,7 @@
  * Requires Connection: No
  * Auto Activate: Yes
  * Module Tags: Social, Appearance
+ * Additional Search Queries: widget, widgets, facebook, gallery, twitter, gravatar, image, rss
  */
 
 function jetpack_load_widgets() {
@@ -15,7 +16,15 @@ function jetpack_load_widgets() {
 	foreach ( Jetpack::glob_php( dirname( __FILE__ ) . '/widgets' ) as $file ) {
 		$widgets_include[] = $file;
 	}
-
+	/**
+	 * Modify which Jetpack Widgets to register.
+	 *
+	 * @module widgets
+	 *
+	 * @since 2.2.1
+	 *
+	 * @param array $widgets_include An array of widgets to be registered.
+	 */
 	$widgets_include = apply_filters( 'jetpack_widgets_to_include', $widgets_include );
 
 	foreach( $widgets_include as $include ) {
@@ -36,18 +45,10 @@ function jetpack_widgets_configuration_load() {
 }
 
 /**
- * Loads file for front-end widget styles.
- */
-function jetpack_widgets_styles() {
-	wp_enqueue_style( 'jetpack-widgets', plugins_url( 'widgets/widgets.css', __FILE__ ), array(), '20121003' );
-}
-add_action( 'wp_enqueue_scripts', 'jetpack_widgets_styles' );
-
-/**
  * Add the "(Jetpack)" suffix to the widget names
  */
 function jetpack_widgets_add_suffix( $widget_name ) {
-    return sprintf( __( '%s (Jetpack)', 'jetpack' ), $widget_name );
+	return sprintf( __( '%s (Jetpack)', 'jetpack' ), $widget_name );
 }
 add_filter( 'jetpack_widget_name', 'jetpack_widgets_add_suffix' );
 

@@ -3,8 +3,8 @@ Contributors: wokamoto, megumithemes
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJCY7XB8F4&lc=JP&item_name=WordPress%20Plugins&item_number=wp%2dplugins&currency_code=JPY&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: security, login, one time password, twilio, 2-step verification
 Requires at least: 3.5
-Tested up to: 3.6
-Stable tag: 0.3.1
+Tested up to: 3.9.2
+Stable tag: 0.3.2
 
 This plugin enables 2-step verification using one-time password when you log in your WordPress.
 
@@ -12,6 +12,8 @@ This plugin enables 2-step verification using one-time password when you log in 
 
 You can set up 2-step verification using one-time password by this plugin.
 One-time password will be sent to your E-mail or your cell phone as a Short Message using Twilio.
+
+This plugin will soon require PHP 5.4 or higher.
 
 = Localization =
 "Spirits and Goblins" has been translated into languages. Our thanks and appreciation must go to the following for their contributions:
@@ -41,6 +43,10 @@ none
 3. User profile
 
 == Changelog == 
+
+**0.3.2 - September 4, 2014**
+
+Source code refactoring.
 
 **0.3.0 - June 24, 2013**
 

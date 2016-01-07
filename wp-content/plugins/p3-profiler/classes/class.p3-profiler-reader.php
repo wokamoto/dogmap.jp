@@ -226,7 +226,7 @@ if ( !defined('P3_PATH') )
 		$tmp                = $this->plugin_times;
 		$this->plugin_times = array();
 		foreach ( $tmp as $k => $v ) {
-			$k = $this->_get_plugin_name( $k );
+			$k = $this->get_plugin_name( $k );
 			$this->plugin_times[$k] = $v / $this->visits;
 		}
 
@@ -291,7 +291,7 @@ if ( !defined('P3_PATH') )
 				'breakdown' => array()
 			);
 			foreach ( $o->runtime->breakdown as $k => $v ) {
-				$name = $this->_get_plugin_name( $k );
+				$name = $this->get_plugin_name( $k );
 				if ( !array_key_exists( $name, $tmp['breakdown'] ) ) {
 					$tmp['breakdown'][$name] = 0;
 				}
@@ -303,12 +303,26 @@ if ( !defined('P3_PATH') )
 	}
 	
 	/**
+	 * Get a raw list (slugs only) of the detected plugins
+	 * @return array
+	 */
+	public function get_raw_plugin_list() {
+		$tmp = array();
+		foreach ( $this->_data as $o ) {
+			foreach( $o->runtime->breakdown as $k => $v ) {
+				$tmp[] = $k;
+			}
+		}
+		return array_unique( $tmp );
+	}
+
+	/**
 	 * Translate a plugin name
 	 * Uses get_plugin_data if available.
 	 * @param string $plugin Plugin name (possible paths will be guessed)
 	 * @return string
 	 */
-	private function _get_plugin_name( $plugin ) {
+	public function get_plugin_name( $plugin ) {
 		if ( function_exists( 'get_plugin_data' ) ) {
 			$plugin_info = array();
 			$possible_paths = array(

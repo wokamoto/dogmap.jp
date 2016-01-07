@@ -2,11 +2,15 @@
 /**
  * Module Name: Gravatar Hovercards
  * Module Description: Enable pop-up business cards over commenters’ Gravatars.
+ * Jumpstart Description: Let commenters link their profiles to their Gravatar accounts, making it easy for your visitors to learn more about your community.
  * Sort Order: 11
+ * Recommendation Order: 13
  * First Introduced: 1.1
  * Requires Connection: No
  * Auto Activate: Yes
  * Module Tags: Social, Appearance
+ * Feature: Jumpstart
+ * Additional Search Queries: gravatar, hovercards
  */
 
 define( 'GROFILES__CACHE_BUSTER', gmdate( 'YM' ) . 'aa' ); // Break CDN cache, increment when gravatar.com/js/gprofiles.js changes
@@ -27,7 +31,7 @@ function grofiles_hovercards_init() {
 }
 
 function gravatar_hovercards_configuration_load() {
-	wp_safe_redirect( admin_url( 'options-discussion.php#gravatar-hovercard-options' ) );
+	wp_safe_redirect( admin_url( 'options-discussion.php#show_avatars' ) );
 	exit;
 }
 
@@ -171,8 +175,15 @@ function grofiles_get_avatar( $avatar, $author ) {
 function grofiles_attach_cards() {
 	global $blog_id;
 
-	if ( 'disabled' == get_option( 'gravatar_disable_hovercards' ) )
+	// Is the display of Avatars disabled?
+	if ( ! get_option( 'show_avatars' ) ) {
 		return;
+	}
+
+	// Is the display of Gravatar Hovercards disabled?
+	if ( 'disabled' == get_option( 'gravatar_disable_hovercards' ) ) {
+		return;
+	}
 
 	wp_enqueue_script( 'grofiles-cards', ( is_ssl() ? 'https://secure' : 'http://s' ) . '.gravatar.com/js/gprofiles.js', array( 'jquery' ), GROFILES__CACHE_BUSTER, true );
 	wp_enqueue_script( 'wpgroho', plugins_url( 'wpgroho.js', __FILE__ ), array( 'grofiles-cards' ), false, true );
@@ -248,6 +259,15 @@ function grofiles_hovercards_data_html( $author ) {
  * @return array( data_key => data_callback, ... )
  */
 function grofiles_hovercards_data_callbacks() {
+	/**
+	 * Filter the Gravatar Hovercard PHP callbacks.
+	 *
+	 * @module gravatar-hovercards
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array $args Array of data callbacks.
+	 */
 	return apply_filters( 'grofiles_hovercards_data_callbacks', array() );
 }
 

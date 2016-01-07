@@ -50,7 +50,9 @@ function minileven_setup() {
 	 * If you're building a theme based on Minileven, use a find and replace
 	 * to change 'minileven' to the name of your theme in all the template files.
 	 */
+/*	Don't load a minileven textdomain, as it uses the Jetpack textdomain.
 	load_theme_textdomain( 'minileven', get_template_directory() . '/languages' );
+*/
 
 	// Add default posts and comments RSS feed links to <head>.
 	add_theme_support( 'automatic-feed-links' );
@@ -62,10 +64,7 @@ function minileven_setup() {
 	add_theme_support( 'post-formats', array( 'gallery' ) );
 
 	// Add support for custom backgrounds
-	if ( version_compare( $wp_version, '3.4', '>=' ) )
-		add_theme_support( 'custom-background' );
-	else
-		add_custom_background();
+	add_theme_support( 'custom-background' );
 
 	// Add support for post thumbnails
 	add_theme_support( 'post-thumbnails' );
@@ -156,6 +155,20 @@ function minileven_get_menu_location() {
 	$theme_slug = minileven_actual_current_theme();
 	$mods = get_option( "theme_mods_{$theme_slug}" );
 
+	if ( has_filter( 'jetpack_mobile_theme_menu' ) ) {
+
+		/**
+		 * Filter the menu displayed in the Mobile Theme.
+		 *
+		 * @module minileven
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param int $menu_id ID of the menu to display.
+		 */
+		return array( 'primary' => apply_filters( 'jetpack_mobile_theme_menu', $menu_id ) );
+	}
+
 	if ( isset( $mods['nav_menu_locations'] ) && ! empty( $mods['nav_menu_locations'] ) )
 		return $mods['nav_menu_locations'];
 
@@ -221,4 +234,30 @@ function minileven_get_gallery_images() {
 	}
 
 	return $images;
+}
+
+/**
+ * Allow plugins to filter where Featured Images are displayed.
+ * Default has Featured Images disabled on single view and pages.
+ *
+ * @uses is_search()
+ * @uses apply_filters()
+ * @return bool
+ */
+function minileven_show_featured_images() {
+	$enabled = ( is_home() || is_search() || is_archive() ) ? true : false;
+
+	/**
+	 * Filter where featured images are displayed in the Mobile Theme.
+	 *
+	 * By setting $enabled to true or false using functions like is_home() or
+	 * is_archive(), you can control where featured images are be displayed.
+	 *
+	 * @module minileven
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param bool $enabled True if featured images should be displayed, false if not.
+	 */
+	return (bool) apply_filters( 'minileven_show_featured_images', $enabled );
 }

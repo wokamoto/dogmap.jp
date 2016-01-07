@@ -1,3 +1,6 @@
+/* jshint onevar: false, devel: true, smarttabs: true */
+/* global GrunionFB_i18n: true, FB, ajax_nonce_shortcode, ajax_nonce_json, ajaxurl, postId */
+
 if ( ! window.FB ) {
 	window.FB = {};
 }
@@ -11,16 +14,18 @@ GrunionFB_i18n = jQuery.extend( {
 	optionsLabel: 'Options',
 	optionLabel: 'Option',
 	firstOptionLabel: 'First option',
-	problemGeneratingForm: "Oops, there was a problem generating your form.  You'll likely need to try again.",
-	moveInstructions: "Drag up or down\nto re-arrange",
+	problemGeneratingForm: 'Oops, there was a problem generating your form.  You\'ll likely need to try again.',
+	moveInstructions: 'Drag up or down\nto re-arrange',
 	moveLabel: 'move',
 	editLabel: 'edit',
 	savedMessage: 'Saved successfully',
 	requiredLabel: '(required)',
 	exitConfirmMessage: 'Are you sure you want to exit the form editor without saving?  Any changes you have made will be lost.',
+	maxNewFields: 5,
+	invalidEmail: ' is an invalid email address.'
 }, GrunionFB_i18n );
 
-GrunionFB_i18n.moveInstructions = GrunionFB_i18n.moveInstructions.replace( "\n", '<br />' );
+GrunionFB_i18n.moveInstructions = GrunionFB_i18n.moveInstructions.replace( '\n', '<br />' );
 
 FB.span = jQuery( '<span>' );
 FB.esc_html = function( string ) {
@@ -29,10 +34,10 @@ FB.esc_html = function( string ) {
 
 FB.esc_attr = function( string ) {
 	string = FB.esc_html( string );
-	return string.replace( '"', '&quot;' ).replace( "'", '&#039;' );
+	return string.replace( '"', '&quot;' ).replace( '\'', '&#039;' );
 };
 
-FB.ContactForm = function() {
+FB.ContactForm = (function() {
 	var fbForm = { // Main object that generated shortcode via AJAX call
 	'action' : 'grunion_shortcode',
 	'_ajax_nonce' : ajax_nonce_shortcode,
@@ -72,7 +77,7 @@ FB.ContactForm = function() {
 	};
 	var debug = false; // will print errors to log if true
 	var grunionNewCount = 0; // increment for new fields
-	var maxNewFields = 5;  // Limits number of new fields available
+	var maxNewFields = GrunionFB_i18n.maxNewFields;  // See filter in ../grunion-form-view.php
 	var optionsCache = {};
 	var optionsCount = 0; // increment for options
 	var shortcode;
@@ -108,20 +113,25 @@ FB.ContactForm = function() {
 			}
 		} catch(e) {
 			if (debug) {
-				console.log("addField(): " + e);
+				console.log('addField(): ' + e);
 			}
 		}
 	}
 	function addOption () {
 		try {
-			optionsCount++;
+			optionsCount = jQuery( '#fb-new-options .fb-options' ).length;
 			var thisId = jQuery('#fb-field-id').val();
 			var thisType = jQuery('#fb-new-type').val();
-			if (thisType === "radio") {
+			if (thisType === 'radio') {
 				// Add to right col
 				jQuery('#fb-new-options').append('<div id="fb-option-box-' + optionsCount + '" class="fb-new-fields"><span optionid="' + optionsCount + '" class="fb-remove-option"></span><label></label><input type="text" id="fb-option' + optionsCount + '" optionid="' + optionsCount + '" value="' + GrunionFB_i18n.optionLabel + '" class="fb-options" /><div>');
 				// Add to preview
 				jQuery('#fb-new-field' + thisId + ' .fb-fields').append('<div id="fb-radio-' + thisId + '-' + optionsCount + '"><input type="radio" disabled="disabled" id="fb-field' + thisId + '" name="radio-' + thisId + '" /><span>' + GrunionFB_i18n.optionLabel + '</span><div class="clear"></div></div>');
+			} else if ( 'checkbox-multiple' === thisType ) {
+				// Add to right col
+				jQuery('#fb-new-options').append('<div id="fb-option-box-' + optionsCount + '" class="fb-new-fields"><span optionid="' + optionsCount + '" class="fb-remove-option"></span><label></label><input type="text" id="fb-option' + optionsCount + '" optionid="' + optionsCount + '" value="' + GrunionFB_i18n.optionLabel + '" class="fb-options" /><div>');
+				// Add to preview
+				jQuery('#fb-new-field' + thisId + ' .fb-fields').append('<div id="fb-checkbox-multiple-' + thisId + '-' + optionsCount + '"><input type="checkbox" disabled="disabled" id="fb-field' + thisId + '" name="checkbox-multiple-' + thisId + '" /><span>' + GrunionFB_i18n.optionLabel + '</span><div class="clear"></div></div>');
 			} else {
 				// Add to right col
 				jQuery('#fb-new-options').append('<div id="fb-option-box-' + optionsCount + '" class="fb-new-fields"><span optionid="' + optionsCount + '" class="fb-remove-option"></span><label></label><input type="text" id="fb-option' + optionsCount + '" optionid="' + optionsCount + '" value="" class="fb-options" /><div>');
@@ -129,12 +139,12 @@ FB.ContactForm = function() {
 				jQuery('#fb-field'+ thisId).append('<option id="fb-' + thisId + '-' + optionsCount + '" value="' + thisId + '-' + optionsCount + '"></option>');
 			}
 			// Add to fbForm object
-			fbForm.fields[thisId].options[optionsCount] = "";
+			fbForm.fields[thisId].options[optionsCount] = '';
 			// Add focus to new field
 			jQuery('#fb-option' + optionsCount).focus().select();
 		} catch(e) {
 			if (debug) {
-				console.log("addOption(): " + e);
+				console.log('addOption(): ' + e);
 			}
 		}
 	}
@@ -148,7 +158,7 @@ FB.ContactForm = function() {
 				jQuery('#fb-field-id').val(index);
 				optionsCache[index] = {};
 				optionsCache[index].options = [];
-				if (value.type === "radio" || value.type === "select") {
+				if ( 'radio' === value.type || 'select' === value.type || 'checkbox-multiple' === value.type ) {
 					jQuery.each(value.options, function(i, value) {
 						optionsCache[index].options[i] = value;
 					});
@@ -157,17 +167,19 @@ FB.ContactForm = function() {
 			});
 		} catch(e) {
 			if (debug) {
-				console.log("buildPreview(): " + e);
+				console.log('buildPreview(): ' + e);
 			}
 		}
 	}
 	function customOptions (id, thisType) {
 		try {
 			var thisOptions = '';
-			for (i=0; i<optionsCache[id].options.length; i++) {
+			for (var i=0; i<optionsCache[id].options.length; i++) {
 				if (optionsCache[id].options[i] !== undefined) {
-					if (thisType === "radio") {
+					if (thisType === 'radio') {
 						thisOptions = thisOptions + '<div id="fb-radio-' + id + '-' + i + '"><input type="radio" id="fb-field' + id + '" name="radio-' + id + '" /><span>' + FB.esc_html( optionsCache[id].options[i] ) + '</span><div class="clear"></div></div>';
+					} else if ( 'checkbox-multiple' === thisType ) {
+						thisOptions = thisOptions + '<div id="fb-checkbox-multiple-' + id + '-' + i + '"><input type="checkbox" id="fb-field' + id + '" name="checkbox-multiple-' + id + '" /><span>' + FB.esc_html( optionsCache[id].options[i] ) + '</span><div class="clear"></div></div>';
 					} else {
 						thisOptions = thisOptions + '<option id="fb-' + id + '-' + i + '" value="' + id + '-' + i + '">' + FB.esc_html( optionsCache[id].options[i] ) + '</option>';
 					}
@@ -176,22 +188,22 @@ FB.ContactForm = function() {
 			return thisOptions;
 		} catch(e) {
 			if (debug) {
-				console.log("customOptions(): " + e);
+				console.log('customOptions(): ' + e);
 			}
 		}
 	}
 	function deleteField (that) {
 		try {
 			grunionNewCount--;
-			var thisId = that.attr("id");
+			var thisId = that.attr('id');
 			delete fbForm.fields[thisId];
-			jQuery("#"+thisId).parent().parent().remove();
+			jQuery('#' + thisId).parent().parent().remove();
 			if (grunionNewCount <= maxNewFields) {
 				jQuery('#fb-new-field').show();
 			}
 		} catch(e) {
 			if (debug) {
-				console.log("deleteField(): " + e);
+				console.log('deleteField(): ' + e);
 			}
 		}
 	}
@@ -203,7 +215,7 @@ FB.ContactForm = function() {
 			loadFieldEditor(thisId);
 		} catch(e) {
 			if (debug) {
-				console.log("editField(): " + e);
+				console.log('editField(): ' + e);
 			}
 		}
 	}
@@ -216,7 +228,7 @@ FB.ContactForm = function() {
 		} catch(e) {
 			alert( GrunionFB_i18n.problemGeneratingForm );
 			if (debug) {
-				console.log("grabShortcode(): " + e);
+				console.log('grabShortcode(): ' + e);
 			}
 		}
 	}
@@ -227,30 +239,31 @@ FB.ContactForm = function() {
 	function hidePopup () {
 		try {
 			// copied from wp-includes/js/thickbox/thickbox.js
-			jQuery("#TB_imageOff", window.parent.document).unbind("click");
-			jQuery("#TB_closeWindowButton", window.parent.document).unbind("click");
-			jQuery("#TB_window", window.parent.document).fadeOut("fast");
-			jQuery('#TB_window,#TB_overlay,#TB_HideSelect', window.parent.document).trigger("unload").unbind().remove();
-			jQuery("#TB_load", window.parent.document).remove();
-			if (typeof window.parent.document.body.style.maxHeight == "undefined") {//if IE 6
-				jQuery("body","html", window.parent.document).css({height: "auto", width: "auto"});
-				jQuery("html", window.parent.document).css("overflow","");
+			jQuery('#TB_imageOff', window.parent.document).unbind('click');
+			jQuery('#TB_closeWindowButton', window.parent.document).unbind('click');
+			jQuery('#TB_window', window.parent.document).fadeOut('fast');
+			jQuery('body', window.parent.document).removeClass('modal-open');
+			jQuery('#TB_window,#TB_overlay,#TB_HideSelect', window.parent.document).trigger('unload').unbind().remove();
+			jQuery('#TB_load', window.parent.document).remove();
+			if (typeof window.parent.document.body.style.maxHeight === 'undefined') {//if IE 6
+				jQuery('body', 'html', window.parent.document).css({height: 'auto', width: 'auto'});
+				jQuery('html', window.parent.document).css('overflow', '');
 			}
-			window.parent.document.onkeydown = "";
-			window.parent.document.onkeyup = "";
+			window.parent.document.onkeydown = '';
+			window.parent.document.onkeyup = '';
 			return false;
 		} catch(e) {
 			if (debug) {
-				console.log("hidePopup(): " + e);
+				console.log('hidePopup(): ' + e);
 			}
 		}
 	}
 	function hideShowEditLink (whichType, that) {
 		try {
-			if (whichType === "show") {
+			if (whichType === 'show') {
 				// Prevents showing links twice
-				if (jQuery(".fb-edit-field").is(":visible")) {
-					jQuery(".fb-edit-field").remove();
+				if (jQuery('.fb-edit-field').is(':visible')) {
+					jQuery('.fb-edit-field').remove();
 				}
 				that.find('label').prepend('<span class="right fb-edit-field" style="font-weight: normal;"><a href="" class="fb-reorder"><div style="display: none;">' + GrunionFB_i18n.moveInstructions + '</div>' + GrunionFB_i18n.moveLabel + '</a>&nbsp;&nbsp;<span style="color: #C7D8DE;">|</span>&nbsp;&nbsp;<a href="" class="fb-edit">' + GrunionFB_i18n.editLabel + '</a></span>');
 			} else {
@@ -258,7 +271,7 @@ FB.ContactForm = function() {
 			}
 		} catch(e) {
 			if (debug) {
-				console.log("hideShowEditLink(): " + e);
+				console.log('hideShowEditLink(): ' + e);
 			}
 		}
 	}
@@ -274,19 +287,18 @@ FB.ContactForm = function() {
 			jQuery('#fb-new-type').val(fbForm.fields[id].type);
 			// Load required
 			if (fbForm.fields[id].required) {
-				jQuery('#fb-new-required').prop("checked", true);
+				jQuery('#fb-new-required').prop('checked', true);
 			} else {
-				jQuery('#fb-new-required').prop("checked", false);
+				jQuery('#fb-new-required').prop('checked', false);
 			}
 			// Load options if there are any
-			if (thisType === "select" || thisType === "radio") {
-				var thisResult = '';
+			if ( 'select' === thisType || 'radio' === thisType || 'checkbox-multiple' === thisType ) {
 				var thisOptions = fbForm.fields[id].options;
 				jQuery('#fb-options').show();
-				jQuery('#fb-new-options').html(""); // Clear it all out
-				for (i=0; i<thisOptions.length; i++) {
+				jQuery('#fb-new-options').html(''); // Clear it all out
+				for (var i=0; i<thisOptions.length; i++) {
 					if (thisOptions[i] !== undefined) {
-						if (thisType === "radio") {
+						if (thisType === 'radio') {
 							jQuery('#fb-new-options').append('<div id="fb-option-box-' + i + '" class="fb-new-fields"><span optionid="' + i + '" class="fb-remove-option"></span><label></label><input type="text" id="fb-option' + i + '" optionid="' + i + '" value="' + FB.esc_attr( fbForm.fields[id].options[i] ) + '" class="fb-options" /><div>');
 						} else {
 							jQuery('#fb-new-options').append('<div id="fb-option-box-' + i + '" class="fb-new-fields"><span optionid="' + i + '" class="fb-remove-option"></span><label></label><input type="text" id="fb-option' + i + '" optionid="' + i + '" value="' + FB.esc_attr( fbForm.fields[id].options[i] ) + '" class="fb-options" /><div>');
@@ -298,7 +310,7 @@ FB.ContactForm = function() {
 			hideDesc();
 		} catch(e) {
 			if (debug) {
-				console.log("loadFieldEditor(): " + e);
+				console.log('loadFieldEditor(): ' + e);
 			}
 		}
 	}
@@ -311,8 +323,9 @@ FB.ContactForm = function() {
 				fbForm.fields = defaultFields;
 			} else {
 				jQuery.each(data.fields, function(index, value) {
-					if ( 1 == value.required )
+					if ( 1 === parseInt(value.required, 10) ) {
 						value.required = 'true';
+					}
 					fbForm.fields[index] = value;
 				});
 				fbForm.to = data.to;
@@ -320,7 +333,7 @@ FB.ContactForm = function() {
 			}
 		} catch(e) {
 			if (debug) {
-				console.log("parseShortcode(): " + e);
+				console.log('parseShortcode(): ' + e);
 			}
 		}
 	}
@@ -332,8 +345,10 @@ FB.ContactForm = function() {
 			// Remove from right
 			jQuery('#fb-option-box-' + optionId).remove();
 			// Remove from preview
-			if (thisType === "radio") {
+			if (thisType === 'radio') {
 				jQuery('#fb-radio-' + thisId + '-' + optionId).remove();
+			} else if ( 'checkbox-multiple' === thisType ) {
+				jQuery('#fb-checkbox-multiple-' + thisId + '-' + optionId).remove();
 			} else {
 				jQuery('#fb-' + thisId + '-' + optionId).remove();
 			}
@@ -342,7 +357,7 @@ FB.ContactForm = function() {
 			if (idx !== -1) { fbForm.fields[thisId].options.splice(idx, 1); }
 		} catch(e) {
 			if (debug) {
-				console.log("removeOption(): " + e);
+				console.log('removeOption(): ' + e);
 			}
 		}
 	}
@@ -355,7 +370,7 @@ FB.ContactForm = function() {
 			fbForm.fields[thisId].options = []; // Removes all options
 		} catch(e) {
 			if (debug) {
-				console.log("removeOptions(): " + e);
+				console.log('removeOptions(): ' + e);
 			}
 		}
 	}
@@ -375,19 +390,22 @@ FB.ContactForm = function() {
 				}
 
 				var win = window.dialogArguments || opener || parent || top;
+				var currentCode;
 				if (isVisual) {
-					var currentCode = win.tinyMCE.activeEditor.getContent();
+					currentCode = win.tinyMCE.activeEditor.getContent();
 				} else {
-					var currentCode = jQuery('#editorcontainer textarea', window.parent.document).val();
+					currentCode = jQuery('#editorcontainer textarea', window.parent.document).val();
 					/* WP 3.3+ */
-					if ( typeof currentCode != 'string' ) {
+					if ( typeof currentCode !== 'string' ) {
 						currentCode = jQuery( '.wp-editor-area', window.parent.document ).val();
 					}
 				}
-				var regexp = new RegExp("\\[contact-form\\b.*?\\/?\\](?:[\\s\\S]+?\\[\\/contact-form\\])?");
+				var regexp = new RegExp('\\[contact-form\\b.*?\\/?\\](?:[\\s\\S]+?\\[\\/contact-form\\])?');
 
 				// Remove new lines that cause BR tags to show up
 				response = response.replace(/\n/g,' ');
+				// Convert characters to comma
+				response = response.replace( /%26#x002c;/g , ',' );
 
 				// Add new shortcode
 				if (currentCode.match(regexp)) {
@@ -415,7 +433,7 @@ FB.ContactForm = function() {
 			});
 		} catch(e) {
 			if (debug) {
-				console.log("sendShortcodeToEditor(): " + e);
+				console.log('sendShortcodeToEditor(): ' + e);
 			}
 		}
 	}
@@ -433,17 +451,22 @@ FB.ContactForm = function() {
 			}, 2500);
 		} catch(e) {
 			if (debug) {
-				console.log("showAndHideMessage(): " + e);
+				console.log('showAndHideMessage(): ' + e);
 			}
 		}
 	}
 	function switchTabs (whichType) {
 		try {
-			if (whichType === "preview") {
+			if (whichType === 'preview') {
+				if ( ! validateEmails( jQuery( '#fb-field-my-email' ).val() ) ) {
+					return;
+				}
 				jQuery('#tab-preview a').addClass('current');
 				jQuery('#tab-settings a').removeClass('current');
 				jQuery('#fb-preview-form, #fb-desc').show();
 				jQuery('#fb-email-settings, #fb-email-desc').hide();
+				showAndHideMessage( GrunionFB_i18n.savedMessage );
+
 			} else {
 				jQuery('#tab-preview a').removeClass('current');
 				jQuery('#tab-settings a').addClass('current');
@@ -453,9 +476,31 @@ FB.ContactForm = function() {
 			}
 		} catch(e) {
 			if (debug) {
-				console.log("switchTabs(): " + e);
+				console.log('switchTabs(): ' + e);
 			}
 		}
+	}
+	function validateEmails( emails ) {
+		// Field is allwed to be empty :)
+		if ( 0 === emails.length ) {
+			return true;
+		}
+
+		var $e, emailList = emails.split( ',' );
+
+		for ( $e = 0 ; $e < emailList.length ; $e++ ) {
+			if ( false === validateEmail( emailList[ $e ] ) ) {
+				alert( emailList[ $e ] + GrunionFB_i18n.invalidEmail );
+				return false;
+			}
+		}
+
+		return true;
+	}
+	/* Uses The Official Standard: RFC 5322 -- http://www.regular-expressions.info/email.html */
+	function validateEmail( email ) {
+		var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;
+		return re.test( email );
 	}
 	function updateLabel () {
 		try {
@@ -471,7 +516,7 @@ FB.ContactForm = function() {
 			fbForm.fields[thisId].label = thisLabel;
 		} catch(e) {
 			if (debug) {
-				console.log("updateLabel(): " + e);
+				console.log('updateLabel(): ' + e);
 			}
 		}
 	}
@@ -481,7 +526,7 @@ FB.ContactForm = function() {
 			fbForm.to = thisEmail;
 		} catch(e) {
 			if (debug) {
-				console.log("updateMyEmail(): " + e);
+				console.log('updateMyEmail(): ' + e);
 			}
 		}
 	}
@@ -492,8 +537,10 @@ FB.ContactForm = function() {
 			var thisOptionValue = that.val();
 			var thisType = jQuery('#fb-new-type').val();
 			// Update preview
-			if (thisType === "radio") {
+			if (thisType === 'radio') {
 				jQuery('#fb-radio-' + thisId + '-' + thisOptionid + ' span').text(thisOptionValue);
+			} else if ( 'checkbox-multiple' === thisType ) {
+				jQuery('#fb-checkbox-multiple-' + thisId + '-' + thisOptionid + ' span').text(thisOptionValue);
 			} else {
 				jQuery('#fb-' + thisId + '-' + thisOptionid).text(thisOptionValue);
 			}
@@ -501,7 +548,7 @@ FB.ContactForm = function() {
 			fbForm.fields[thisId].options[thisOptionid] = thisOptionValue;
 		} catch(e) {
 			if (debug) {
-				console.log("updateOption(): " + e);
+				console.log('updateOption(): ' + e);
 			}
 		}
 	}
@@ -519,7 +566,7 @@ FB.ContactForm = function() {
 			}
 		} catch(e) {
 			if (debug) {
-				console.log("updateRequired(): " + e);
+				console.log('updateRequired(): ' + e);
 			}
 		}
 	}
@@ -529,16 +576,15 @@ FB.ContactForm = function() {
 			fbForm.subject = thisSubject;
 		} catch(e) {
 			if (debug) {
-				console.log("updateSubject(): " + e);
+				console.log('updateSubject(): ' + e);
 			}
 		}
 	}
 	function updateType(thisType, thisLabelText, thisRequired) {
 		try {
-			var isLoaded = thisType;
 			var thisId = jQuery('#fb-field-id').val();
-			if (!thisType) { var thisType = jQuery('#fb-new-type').val(); }
-			if (!thisLabelText) { var thisLabelText = jQuery('#fb-new-field' + thisId + ' .label-text').text(); }
+			if (!thisType) { thisType = jQuery('#fb-new-type').val(); }
+			if (!thisLabelText) { thisLabelText = jQuery('#fb-new-field' + thisId + ' .label-text').text(); }
 			var isRequired = (thisRequired) ? '<span class="label-required">' + GrunionFB_i18n.requiredLabel + '</span>' : '';
 			var thisLabel = '<label fieldid="' + thisId + '" for="fb-field' +  thisId + '"><span class="label-text">' + FB.esc_html( thisLabelText ) + '</span>' + isRequired + '</label>';
 			var thisRadio = '<input type="radio" name="radio-' + thisId + '" id="fb-field' + thisId + ' "disabled="disabled" />';
@@ -546,24 +592,39 @@ FB.ContactForm = function() {
 			var thisRadioRemove = '<div class="fb-remove fb-remove-small" id="' +  thisId + '"></div>';
 			var thisRemove = '<div class="fb-remove" id="' +  thisId + '"></div>';
 			var thisCheckbox = '<input type="checkbox" id="fb-field' + thisId + '" "disabled="disabled" />';
+			var thisCheckboxMultiple = '<input type="checkbox" id="fb-field' + thisId + '" "disabled="disabled" />';
+			var thisCheckboxMultipleRemove = '<div class="fb-remove fb-remove-small" id="' +  thisId + '"></div>';
 			var thisText = '<input type="text" id="fb-field' + thisId + '" "disabled="disabled" />';
 			var thisTextarea = '<textarea id="fb-field' + thisId + '" "disabled="disabled"></textarea>';
 			var thisClear = '<div class="clear"></div>';
 			var thisSelect = '<select id="fb-field' + thisId + '" fieldid="' + thisId + '"><option id="fb-' + thisId + '-' + optionsCount + '" value="' + thisId + '-' + optionsCount + '">' + GrunionFB_i18n.firstOptionLabel + '</option></select>';
 			switch (thisType) {
-				case "checkbox":
+				case 'checkbox':
 					removeOptions();
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisRadioRemove + thisCheckbox + thisRadioLabel + thisClear);
 					break;
-				case "email":
+				case 'checkbox-multiple':
+					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisLabel + thisCheckboxMultipleRemove + '<div fieldid="' + thisId + '" id="fb-custom-checkbox-multiple' + thisId + '"></div>');
+					if (optionsCache[thisId] !== undefined && optionsCache[thisId].options.length !== 0) {
+						fbForm.fields[thisId].options = optionsCache[thisId].options;
+						jQuery('#fb-custom-checkbox-multiple' + thisId).append(customOptions(thisId, thisType));
+					} else {
+						jQuery('#fb-new-options').html('<label for="fb-option0">' + GrunionFB_i18n.optionsLabel + '</label><input type="text" id="fb-option0" optionid="0" value="' + GrunionFB_i18n.firstOptionLabel + '" class="fb-options" />');
+						jQuery('#fb-custom-checkbox-multiple' + thisId).append('<div id="fb-checkbox-multiple-' + thisId + '-0">' + thisCheckboxMultiple + '<span>' + GrunionFB_i18n.firstOptionLabel + '</span>' + thisClear + '</div>');
+						fbForm.fields[thisId].options[optionsCount] = GrunionFB_i18n.firstOptionLabel;
+					}
+					jQuery('#fb-options').show();
+					setTimeout(function () { jQuery('#fb-option0').focus().select(); }, 100);
+					break;
+				case 'email':
 					removeOptions();
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisRemove + thisLabel + thisText);
 					break;
-				case "name":
+				case 'name':
 					removeOptions();
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisRemove + thisLabel + thisText);
 					break;
-				case "radio":
+				case 'radio':
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisLabel + thisRadioRemove + '<div fieldid="' + thisId + '" id="fb-custom-radio' + thisId + '"></div>');
 					if (optionsCache[thisId] !== undefined && optionsCache[thisId].options.length !== 0) {
 						fbForm.fields[thisId].options = optionsCache[thisId].options;
@@ -576,7 +637,7 @@ FB.ContactForm = function() {
 					jQuery('#fb-options').show();
 					setTimeout(function () { jQuery('#fb-option0').focus().select(); }, 100);
 					break;
-				case "select":
+				case 'select':
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisRemove + thisLabel + thisSelect);
 					if (optionsCache[thisId] !== undefined && optionsCache[thisId].options.length !== 0) {
 						fbForm.fields[thisId].options = optionsCache[thisId].options;
@@ -588,15 +649,15 @@ FB.ContactForm = function() {
 					jQuery('#fb-options').show();
 					setTimeout(function () { jQuery('#fb-option0').focus().select(); }, 100);
 					break;
-				case "text":
+				case 'text':
 					removeOptions();
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisRemove + thisLabel + thisText);
 					break;
-				case "textarea":
+				case 'textarea':
 					removeOptions();
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisRemove + thisLabel + thisTextarea);
 					break;
-				case "url":
+				case 'url':
 					removeOptions();
 					jQuery('#fb-new-field' + thisId + ' .fb-fields').html(thisRemove + thisLabel + thisText);
 					break;
@@ -605,7 +666,7 @@ FB.ContactForm = function() {
 			fbForm.fields[thisId].type = thisType;
 		} catch(e) {
 			if (debug) {
-				console.log("updateType(): " + e);
+				console.log('updateType(): ' + e);
 			}
 		}
 	}
@@ -615,7 +676,7 @@ FB.ContactForm = function() {
 				//Thickbox won't resize for some reason, we are manually doing it here
 				var totalWidth = jQuery('body', window.parent.document).width();
 				var totalHeight = jQuery('body', window.parent.document).height();
-				var isIE6 = typeof document.body.style.maxHeight === "undefined";
+				var isIE6 = typeof document.body.style.maxHeight === 'undefined';
 
 				jQuery('#TB_window, #TB_iframeContent', window.parent.document).css('width', '768px');
 				jQuery('#TB_window', window.parent.document).css({ left: (totalWidth-768)/2 + 'px', top: '23px', position: 'absolute', marginLeft: '0' });
@@ -624,7 +685,7 @@ FB.ContactForm = function() {
 				}
 			} catch(e) {
 				if (debug) {
-					console.log("resizePop(): " + e);
+					console.log('resizePop(): ' + e);
 				}
 			}
 		},
@@ -632,11 +693,12 @@ FB.ContactForm = function() {
 			// Scroll to top of page
 			window.parent.scroll(0,0);
 			//Check for existing form data
+			var contentSource;
 			if (jQuery('#edButtonPreview', window.parent.document).hasClass('active') || jQuery( '#wp-content-wrap', window.parent.document ).hasClass( 'tmce-active' ) ) {
 				var win = window.dialogArguments || opener || parent || top;
-				var contentSource = win.tinyMCE.activeEditor.getContent();
+				contentSource = win.tinyMCE.activeEditor.getContent();
 			} else {
-				var contentSource = jQuery('#content', window.parent.document).val();
+				contentSource = jQuery('#content', window.parent.document).val();
 			}
 			var data = {
 				action: 'grunion_shortcode_to_json',
@@ -697,7 +759,6 @@ FB.ContactForm = function() {
 			});
 			jQuery('#fb-prev-form').click(function () {
 				switchTabs('preview');
-				showAndHideMessage( GrunionFB_i18n.savedMessage );
 				return false;
 			});
 			jQuery('#tab-settings a').click(function () {
@@ -734,13 +795,13 @@ FB.ContactForm = function() {
 				window.parent.location = thisHref;
 				return false;
 			});
-			jQuery("#sortable").sortable({
+			jQuery('#sortable').sortable({
 				axis: 'y',
 				handle: '.fb-reorder',
 				revert: true,
 				start: function() { jQuery('.fb-edit-field').hide(); }
 			});
-			jQuery("#draggable").draggable({
+			jQuery('#draggable').draggable({
 				axis: 'y',
 				handle: '.fb-reorder',
 				connectToSortable: '#sortable',
@@ -749,4 +810,4 @@ FB.ContactForm = function() {
 			});
 		}
 	};
-}();
+})();

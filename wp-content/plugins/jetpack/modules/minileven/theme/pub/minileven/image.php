@@ -46,6 +46,16 @@ get_header(); ?>
 	}
 ?>
 								<a href="<?php echo esc_url( $next_attachment_url ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>" rel="attachment"><?php
+
+								/**
+								 * Filter the Mobile Theme image size.
+								 *
+								 * @module minileven
+								 *
+								 * @since 1.8.0
+								 *
+								 * @param int Image size in pixels.
+								 */
 								$attachment_size = apply_filters( 'minileven_attachment_size', 848 );
 								echo wp_get_attachment_image( $post->ID, array( $attachment_size, 1024 ) ); // filterable image width with 1024px limit for image height.
 								?></a>
@@ -77,7 +87,7 @@ get_header(); ?>
 						?>
 						</div><!-- .attachment-meta-->
 					<?php if ( comments_open() ) : ?>
-					<span class="comments-link"><?php comments_popup_link( '<span class="leave-reply">' . __( 'Leave a reply', 'jetpack' ) . '</span>', __( '<b>1</b> Reply', 'minileven' , 'jetpack'), __( '<b>%</b> Replies', 'minileven' , 'jetpack') ); ?></span>
+					<span class="comments-link"><?php comments_popup_link( '<span class="leave-reply">' . __( 'Leave a reply', 'jetpack' ) . '</span>', __( '<b>1</b> Reply', 'jetpack' ), __( '<b>%</b> Replies', 'jetpack' ) ); ?></span>
 					<?php endif; // End if comments_open() ?>
 					<?php edit_post_link( __( 'Edit', 'jetpack' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer><!-- #entry-meta -->

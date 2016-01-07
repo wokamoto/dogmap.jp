@@ -5,6 +5,8 @@ class Publicize extends Publicize_Base {
 	function __construct() {
 		parent::__construct();
 
+		add_filter( 'jetpack_xmlrpc_methods', array( $this, 'register_update_publicize_connections_xmlrpc_method' ) );
+
 		add_action( 'load-settings_page_sharing', array( $this, 'admin_page_load' ), 9 );
 
 		add_action( 'wp_ajax_publicize_tumblr_options_page', array( $this, 'options_page_tumblr' ) );
@@ -66,13 +68,11 @@ class Publicize extends Publicize_Base {
 		<div id="message" class="updated jetpack-message jp-connect">
 			<div class="jetpack-wrap-container">
 				<div class="jetpack-text-container">
-					<h4>
 					<p><?php printf(
-						esc_html( wptexturize( __( "To use Publicize, you'll need to link your %s account to your WordPress.com account using the button to the right.", 'jetpack' ) ) ),
+						esc_html( wptexturize( __( "To use Publicize, you'll need to link your %s account to your WordPress.com account using the link below.", 'jetpack' ) ) ),
 						'<strong>' . esc_html( $blog_name ) . '</strong>'
 					); ?></p>
 					<p><?php echo esc_html( wptexturize( __( "If you don't have a WordPress.com account yet, you can sign up for free in just a few seconds.", 'jetpack' ) ) ); ?></p>
-					</h4>
 				</div>
 				<div class="jetpack-install-container">
 					<p class="submit"><a href="<?php echo $jetpack->build_connect_url( false, menu_page_url( 'sharing', false ) ); ?>" class="button-connector" id="wpcom-connect"><?php esc_html_e( 'Link account with WordPress.com', 'jetpack' ); ?></a></p>
@@ -80,6 +80,32 @@ class Publicize extends Publicize_Base {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Remove a Publicize connection
+	 */
+	function disconnect( $service_name, $connection_id, $_blog_id = false, $_user_id = false, $force_delete = false ) {
+		Jetpack::load_xml_rpc_client();
+		$xml = new Jetpack_IXR_Client();
+		$xml->query( 'jetpack.deletePublicizeConnection', $connection_id );
+
+		if ( ! $xml->isError() ) {
+			Jetpack_Options::update_option( 'publicize_connections', $xml->getResponse() );
+		} else {
+			return false;
+		}
+	}
+
+	function receive_updated_publicize_connections( $publicize_connections ) {
+		Jetpack_Options::update_option( 'publicize_connections', $publicize_connections );
+		return true;
+	}
+
+	function register_update_publicize_connections_xmlrpc_method( $methods ) {
+		return array_merge( $methods, array(
+			'jetpack.updatePublicizeConnections' => array( $this, 'receive_updated_publicize_connections' ),
+		) );
 	}
 
 	function get_connections( $service_name, $_blog_id = false, $_user_id = false ) {
@@ -144,15 +170,15 @@ class Publicize extends Publicize_Base {
 				break;
 
 			case 'completed':
-				// Jetpack blog requests Publicize Connections via new XML-RPC method
 				Jetpack::load_xml_rpc_client();
 				$xml = new Jetpack_IXR_Client();
 				$xml->query( 'jetpack.fetchPublicizeConnections' );
 
-				if ( !$xml->isError() ) {
+				if ( ! $xml->isError() ) {
 					$response = $xml->getResponse();
 					Jetpack_Options::update_option( 'publicize_connections', $response );
 				}
+
 				break;
 
 			case 'delete':
@@ -161,14 +187,8 @@ class Publicize extends Publicize_Base {
 				check_admin_referer( 'keyring-request', 'kr_nonce' );
 				check_admin_referer( "keyring-request-$service_name", 'nonce' );
 
-				Jetpack::load_xml_rpc_client();
-				$xml = new Jetpack_IXR_Client();
-				$xml->query( 'jetpack.deletePublicizeConnection', $id );
+				$this->disconnect( $service_name, $id );
 
-				if ( !$xml->isError() ) {
-					$response = $xml->getResponse();
-					Jetpack_Options::update_option( 'publicize_connections', $response );
-				}
 				add_action( 'admin_notices', array( $this, 'display_disconnected' ) );
 				break;
 			}
@@ -217,7 +237,7 @@ class Publicize extends Publicize_Base {
 		?>
 		<div id="message" class="jetpack-message jetpack-err">
 			<div class="squeezer">
-				<h4><?php echo wp_kses( $error, array( 'a' => array( 'href' => true ), 'code' => true, 'strong' => true, 'br' => true, 'b' => true ) ); ?></h4>
+				<h2><?php echo wp_kses( $error, array( 'a' => array( 'href' => true ), 'code' => true, 'strong' => true, 'br' => true, 'b' => true ) ); ?></h2>
 				<?php if ( $code ) : ?>
 				<p><?php printf( __( 'Error code: %s', 'jetpack' ), esc_html( stripslashes( $code ) ) ); ?></p>
 				<?php endif; ?>
@@ -258,6 +278,15 @@ class Publicize extends Publicize_Base {
 	*/
 	// on WordPress.com this is/calls Keyring::admin_url
 	function api_url( $service = false, $params = array() ) {
+		/**
+		 * Filters the API URL used to interact with WordPress.com.
+		 *
+		 * @module publicize
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param string https://public-api.wordpress.com/connect/?jetpack=publicize Default Publicize API URL.
+		 */
 		$url = apply_filters( 'publicize_api_url', 'https://public-api.wordpress.com/connect/?jetpack=publicize' );
 
 		if ( $service )
@@ -701,7 +730,11 @@ class Publicize extends Publicize_Base {
 		if ( 'facebook' == $service_name && isset( $connection_meta['connection_data']['meta']['facebook_profile'] ) && $submit_post ) {
 			$publicize_facebook_user = get_post_meta( $post_id, '_publicize_facebook_user' );
 			if ( empty( $publicize_facebook_user ) || 0 != $connection_meta['connection_data']['user_id'] ) {
-				update_post_meta( $post_id, '_publicize_facebook_user', $this->get_profile_link( 'facebook', $connection ) );
+				$profile_link = $this->get_profile_link( 'facebook', $connection );
+
+				if ( false !== $profile_link ) {
+					update_post_meta( $post_id, '_publicize_facebook_user', $profile_link );
+				}
 			}
 		}
 	}

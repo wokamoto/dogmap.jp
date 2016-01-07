@@ -1,9 +1,11 @@
 === Edit Author Slug ===
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
-Requires at least: 3.6.1
-Tested up to: 3.9
-Stable tag: 1.0.1
+Requires at least: 3.8.11
+Tested up to: 4.4
+Stable tag: 1.1.2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -21,19 +23,19 @@ or using a role-based author base
 http://example.com/ida/master-splinter/ (for an Administrator Role)
 http://example.com/koga/leonardo/ (for a Subscriber Role)
 
+Development of this plugin takes place on [GitHub](https://github.com/thebrandonallen/edit-author-slug/ "Edit Author Slug on Github"). Pull requests are always welcome!
+
 #### Translations Available
 * Dutch - props Juliette Reinders Folmer
-
-You can also visit the plugin's homepage at http://brandonallen.org/wordpress/plugins/edit-author-slug/
 
 == Installation ==
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Go to Users > Your Profile, or Users > All Users > (username), and edit the author slug.
-1. Click "Update Profile" or "Update User"
-1. Go to Settings > Edit Author Slug to edit settings
-1. Click "Save Changes"
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Go to Users > Your Profile, or Users > All Users > (username), and edit the author slug.
+4. Click "Update Profile" or "Update User"
+5. Go to Settings > Edit Author Slug to edit settings
+6. Click "Save Changes"
 
 == Screenshots ==
 
@@ -53,6 +55,47 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.1.2 =
+* Fix loading of minified JS in the admin. Props nuyensgert.
+
+= 1.1.1 =
+* Fix a few minor output escaping issues missed in the 1.1.0 release.
+
+= 1.1.0 =
+* Added the ability to update all author slugs at once with the "Bulk Update" tool.
+* Greatly improved the checks and error messages when manually updating an author slug for a user.
+* Further accessibility improvements to match WP 4.3.
+* Improved validation of author slugs to better match that of WP.
+
+= 1.0.6 =
+* Fix potential, although unlikely, persistent XSS vulnerability.
+* Prevent debug notice in admin. Props chesio.
+* Update heading tags to h1 to match WP 4.3.
+
+= 1.0.5.1 =
+* Identical to 1.0.5, which failed to commit properly.
+
+= 1.0.5 =
+* Add WP_User object as a parameter passed to the `ba_eas_show_user_nicename_options_list` filter
+* Add Japanese translation files. Props SmokyJp.
+* Fixed possible (although unlikely) cache invalidation issue
+* Minor code improvements and optimizations.
+
+= 1.0.4 =
+* Improve upgrade routine for older installs
+* Improve output escaping
+* Various minor fixes and improvements
+
+= 1.0.3 =
+I swear I tested this! :(
+
+* Fix custom roles slugs not saving
+
+= 1.0.2 =
+* A number of localization fixes and improvements
+* Role slug improvements
+* Temporary, semi work-around for Co-Authors Plus [https://github.com/Automattic/Co-Authors-Plus/pull/204]
 
 = 1.0.1 =
 * Fix possible syntax error when updating a profile (props Christine https://wordpress.org/support/topic/undefined-property-error-1)

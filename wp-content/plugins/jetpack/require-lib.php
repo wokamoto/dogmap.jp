@@ -6,7 +6,20 @@ function jetpack_require_lib( $slug ) {
 		return;
 	}
 	$basename = basename( $slug );
+
+	if ( defined( 'ABSPATH' ) && ! defined( 'WP_CONTENT_DIR' ) ) {
+		define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' ); // no trailing slash, full paths only - WP_CONTENT_URL is defined further down
+	}
+
 	$lib_dir = WP_CONTENT_DIR . '/lib';
+
+	/**
+	 * Filter the location of the library directory.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @param str $lib_dir Path to the library directory.
+	 */
 	$lib_dir = apply_filters( 'jetpack_require_lib_dir', $lib_dir );
 	$choices = array(
 		"$lib_dir/$slug.php",

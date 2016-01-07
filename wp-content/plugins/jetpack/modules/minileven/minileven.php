@@ -41,6 +41,15 @@ function jetpack_check_mobile() {
 
 	$is_mobile = jetpack_is_mobile();
 
+	/**
+	 * Filter the Mobile check results.
+	 *
+	 * @module minileven
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param bool $is_mobile Is the reader on a mobile device.
+	 */
 	return apply_filters( 'jetpack_check_mobile', $is_mobile );
 }
 
@@ -82,15 +91,33 @@ function wp_mobile_get_main_stylesheet() {
 }
 
 function jetpack_mobile_stylesheet( $theme ) {
+	/**
+	 * Filter Jetpack's Mobile stylesheet.
+	 *
+	 * @module minileven
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $theme Theme.
+	 */
 	return apply_filters( 'jetpack_mobile_stylesheet', 'pub/minileven', $theme );
 }
 
 function jetpack_mobile_template( $theme ) {
+	/**
+	 * Filter Jetpack's Mobile template.
+	 *
+	 * @module minileven
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $theme Theme.
+	 */
 	return apply_filters( 'jetpack_mobile_template', 'pub/minileven', $theme );
 }
 
 function jetpack_mobile_available() {
-	echo '<div style="text-align:center;margin:10px 0;"><a href="'. home_url( '?ak_action=accept_mobile' ) . '">' . __( 'View Mobile Site', 'jetpack' ) . '</a></div>';
+	echo '<div class="jetpack-mobile-link" style="text-align:center;margin:10px 0;"><a href="'. home_url( '?ak_action=accept_mobile' ) . '">' . __( 'View Mobile Site', 'jetpack' ) . '</a></div>';
 }
 
 function jetpack_mobile_request_handler() {
@@ -116,6 +143,13 @@ function jetpack_mobile_request_handler() {
 				);
 				$redirect = true;
 
+				/**
+				 * In Jetpack's Mobile theme, fires after the user taps on the link to display a full version of the site.
+				 *
+				 * @module minileven
+				 *
+				 * @since 1.8.0
+				 */
 				do_action( 'mobile_reject_mobile' );
 				break;
 			case 'force_mobile':
@@ -129,6 +163,13 @@ function jetpack_mobile_request_handler() {
 				);
 				$redirect = true;
 
+				/**
+				 * In Jetpack's Mobile theme, fires after the user taps on the link to go back from full site to mobile site.
+				 *
+				 * @module minileven
+				 *
+				 * @since 1.8.0
+				 */
 				do_action( 'mobile_force_mobile' );
 				break;
 		}
@@ -152,6 +193,15 @@ function jetpack_mobile_theme_setup() {
 	if ( jetpack_check_mobile() ) {
 		// Redirect to download page if user clicked mobile app promo link in mobile footer
 		if ( isset( $_GET['app-download'] ) ) {
+			/**
+			 * Fires before you're redirected to download page if you clicked the mobile app promo link in mobile footer
+			 *
+			 * @module minileven
+			 *
+			 * @since 1.8.0
+			 *
+			 * @param string $_GET['app-download'] app-download URL parameter.
+			 */
 			do_action( 'mobile_app_promo_download', $_GET['app-download'] );
 
 			switch ( $_GET['app-download'] ) {
@@ -167,14 +217,6 @@ function jetpack_mobile_theme_setup() {
 					header( 'Location: http://blackberry.wordpress.org/download/' );
 					exit;
 				break;
-				case 'nokia':
-					header( 'Location: http://nokia.wordpress.org/download/' );
-					exit;
-				break;
-				case 'windowsphone':
-					header( 'Location: http://social.zune.net/redirect?type=phoneApp&id=5f64ad85-f801-e011-9264-00237de2db9e' );
-					exit;
-				break;
 			}
 		}
 
@@ -186,6 +228,13 @@ function jetpack_mobile_theme_setup() {
 		if ( class_exists( 'Jetpack_Custom_CSS' ) && method_exists( 'Jetpack_Custom_CSS', 'disable' ) && ! get_option( 'wp_mobile_custom_css' ) )
 			add_action( 'init', array( 'Jetpack_Custom_CSS', 'disable' ), 11 );
 
+		/**
+		 * Fires after Jetpack's mobile theme has been setup.
+		 *
+		 * @module minileven
+		 *
+		 * @since 1.8.0
+		 */
 		do_action( 'mobile_setup' );
 	}
 }
@@ -198,34 +247,6 @@ if (isset($_COOKIE['akm_mobile']) && $_COOKIE['akm_mobile'] == 'false') {
 	add_action('wp_footer', 'jetpack_mobile_available');
 }
 
-add_action( 'wp_footer', 'mobile_admin_bar', 20 );
-function mobile_admin_bar() {
-	global $wp_version;
-
-	if ( jetpack_is_mobile() && 1 != version_compare( $wp_version, '3.5-beta3-22631' ) ) :
-		// This fix was made unnecessary in http://core.trac.wordpress.org/changeset/22636
-	?>
-	<script type="text/javascript" id='mobile-admin-bar'>
-		jQuery( function( $ ) {
-			var menupop = $( '#wpadminbar .ab-top-menu > li.menupop' )
-				.unbind( 'mouseover' )
-				.unbind( 'mouseout' )
-				.click( function ( e ) {
-					$( this ).toggleClass( 'hover' );
-					$( '#wpadminbar .menupop' ).not( this ).removeClass( 'hover' );
-				} )
-				.children( 'a' )
-					.click( function( e ) {
-						e.preventDefault();
-					} );
-			$( '#wpadminbar' ).css( 'position', 'absolute' );
-			$( '#ab-reblog-box' ).css( 'position', 'absolute' );
-		} );
-	</script>
-	<?php
-	endif;
-}
-
 function jetpack_mobile_app_promo()  {
 	?>
 	<script type="text/javascript">
@@ -236,10 +257,6 @@ function jetpack_mobile_app_promo()  {
 			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=android">Download WordPress for Android</a></span><br /><br />' );
 			else if ( ( navigator.userAgent.match( /blackberry/i ) ) || ( navigator.userAgent.match( /playbook/i ) ) || ( navigator.userAgent.match( /bb10/i ) ) )
 			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=blackberry">Download WordPress for BlackBerry</a></span><br /><br />' );
-			else if ( ( navigator.userAgent.match( /windows phone os/i ) ) )
-			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px; line-height: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=windowsphone">Download WordPress for <br />Windows Phone</a></span><br /><br />' );
-			else if ( ( navigator.userAgent.match( /nokia/i ) ) )
-			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=nokia">Download WordPress for Nokia</a></span><br /><br />' );
 		}
 	</script>
 	<?php

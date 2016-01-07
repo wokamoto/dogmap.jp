@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Head Cleaner
-Version: 1.4.2.11
+Version: 1.4.3
 Plugin URI: http://wppluginsj.sourceforge.jp/head-cleaner/
 Description: Cleaning tags from your WordPress header and footer.
 Author: wokamoto
@@ -12,7 +12,7 @@ Domain Path: /languages/
 License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
-  Copyright 2009 - 2013 wokamoto (email : wokamoto1973@gmail.com)
+  Copyright 2009 - 2015 wokamoto (email : wokamoto1973@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -3196,7 +3196,7 @@ jQuery(function($){
 	private function _get_ogp_tags() {
 		$site_name = get_bloginfo('name');
 		$url = $this->_get_permalink();
-		$title = trim(wp_title( '|', false, 'right' ));
+		$title = $title = trim(wp_title('', false));
 		$thumb = '';
 		$excerpt = '';
 		$type = $this->options['og_type_top'];
@@ -3217,7 +3217,11 @@ jQuery(function($){
 			// get the thumbnail
 			$thumb = '';
 			if ( function_exists('has_post_thumbnail') && has_post_thumbnail($id) ) {
-				$thumb = preg_replace("/^.*['\"](https?:\/\/[^'\"]*)['\"].*/i","$1",get_the_post_thumbnail($id));
+				if ($this->wp44) {
+					$thumb = get_the_post_thumbnail_url($id);
+				} else {
+					$thumb = preg_replace("/^.*['\"](https?:\/\/[^'\"]*)['\"].*/i", "$1", get_the_post_thumbnail($id));
+				}
 			} else {
 				$attachments = get_children(array(
 					'post_parent' => $id ,

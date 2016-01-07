@@ -7,7 +7,7 @@
  * @package P3_Profiler
  */
 class P3_Profiler_Plugin_Admin {
-	
+
 	/**
 	 * List table of the profile scans
 	 * @var P3_Profiler_Table
@@ -19,7 +19,7 @@ class P3_Profiler_Plugin_Admin {
 	 * @var string
 	 */
 	public static $scan = '';
-	
+
 	/**
 	 * Current action
 	 * @var string
@@ -31,7 +31,7 @@ class P3_Profiler_Plugin_Admin {
 	 * @var P3_Profiler_Reader
 	 */
 	public static $profile = '';
-	
+
 	/**
 	 * Remove the admin bar from the customer site when profiling is enabled
 	 * to prevent skewing the numbers, as much as possible.  Also prevent ssl
@@ -86,12 +86,12 @@ class P3_Profiler_Plugin_Admin {
 	 */
 	public static function load_styles() {
 		if ( 'classic' == get_user_option( 'admin_color' ) ) {
-			wp_enqueue_style ( 'jquery-ui-css', plugins_url() . '/p3-profiler/css/jquery-ui-classic.css' );
+			wp_enqueue_style ( 'jquery-ui-css', plugins_url() . '/p3-profiler/css/jquery-ui-classic.css', array(), P3_VERSION );
 		} else {
-			wp_enqueue_style ( 'jquery-ui-css', plugins_url() . '/p3-profiler/css/jquery-ui-fresh.css' );
+			wp_enqueue_style ( 'jquery-ui-css', plugins_url() . '/p3-profiler/css/jquery-ui-fresh.css', array(), P3_VERSION );
 		}
-		wp_enqueue_style( 'p3_qtip_css', plugins_url() . '/p3-profiler/css/jquery.qtip.min.css' );
-		wp_enqueue_style( 'p3_css', plugins_url() . '/p3-profiler/css/p3.css' );
+		wp_enqueue_style( 'p3_qtip_css', plugins_url() . '/p3-profiler/css/jquery.qtip.min.css', array(), P3_VERSION );
+		wp_enqueue_style( 'p3_css', plugins_url() . '/p3-profiler/css/p3.css', array(), P3_VERSION );
 	}
 
 	/**
@@ -111,7 +111,7 @@ class P3_Profiler_Plugin_Admin {
 
 		// Upgrade
 		self::upgrade();
-		
+
 		// Set up the request based on p3_action
 		if ( !empty( $_REQUEST['p3_action'] ) ) {
 			self::$action = $_REQUEST['p3_action'];
@@ -154,7 +154,7 @@ class P3_Profiler_Plugin_Admin {
 			} catch ( P3_Profiler_No_Data_Exception $e ) {
 				echo '<div class="error"><p>' .
 						sprintf( __( 'No visits recorded during this profiling session.  Check the <a href="%s">help</a> page for more information', 'p3-profiler' ),
-							add_query_arg( array( 'p3_action' => 'help', 'current_scan' => null ) ) . '#q-circumvent-cache"'
+							esc_url( add_query_arg( array( 'p3_action' => 'help', 'current_scan' => null ) ) ) . '#q-circumvent-cache"'
 						) .
 					 '</p></div>';
 				self::$scan = null;
@@ -171,21 +171,21 @@ class P3_Profiler_Plugin_Admin {
 		if ( !defined( 'WPP_PROFILING_STARTED' ) ) {
 			echo '<div class="updated usability-msg"><p>' . __( 'Click "Start Scan" to run a performance scan of your website.', 'p3-profiler' ) . '</p></div>';
 		}
-		
+
 		// Load the list table, let it handle any bulk actions
 		if ( empty( self::$profile ) && in_array( self::$action, array( 'list-scans', 'current-scan' ) ) ) {
 			self::$scan_table = new P3_Profiler_Table();
 			self::$scan_table->prepare_items();
 		}
-		
+
 		// Load scripts & styles
 		self::load_scripts();
 		self::load_styles();
-		
+
 		// Show the page
 		require_once P3_PATH . '/templates/template.php';
 	}
-	
+
 	/**
 	 * Get a list of pages for the auto-scanner
 	 * @return array
@@ -223,7 +223,7 @@ class P3_Profiler_Plugin_Admin {
 				}
 			}
 		}
-		
+
 		// Scan some admin pages, too
 		$pages[] = admin_url();
 		$pages[] = admin_url('edit.php');
@@ -249,7 +249,7 @@ class P3_Profiler_Plugin_Admin {
 	 * @param string $message
 	 */
 	public static function ajax_die( $message ) {
-		global $wp_version;	
+		global $wp_version;
 		if ( version_compare( $wp_version, '3.4-dev' ) >= 0 ) {
 			wp_die( $message );
 		} else {
@@ -262,7 +262,7 @@ class P3_Profiler_Plugin_Admin {
 	 */
 	public static function ajax_start_scan() {
 
-		// Check nonce		
+		// Check nonce
 		if ( !check_admin_referer( 'p3_ajax_start_scan', 'p3_nonce' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
@@ -273,6 +273,9 @@ class P3_Profiler_Plugin_Admin {
 		// Add the entry ( multisite installs can run more than one concurrent profile )
 		delete_option( 'p3_profiler-error_detection' );
 		$opts = get_option( 'p3-profiler_options' );
+		if( empty( $opts ) || !is_array( $opts ) ) {
+			$opts = array();
+		}
 		$opts['profiling_enabled'] = array(
 			'ip'                   => stripslashes( $_POST['p3_ip'] ),
 			'disable_opcode_cache' => ( 'true' == $_POST['p3_disable_opcode_cache'] ),
@@ -328,7 +331,7 @@ class P3_Profiler_Plugin_Admin {
 	 * Save advanced settings
 	 */
 	public static function ajax_save_settings() {
-		
+
 		// Check nonce
 		if ( !check_admin_referer( 'p3_save_settings', 'p3_nonce' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
@@ -342,7 +345,7 @@ class P3_Profiler_Plugin_Admin {
 		$opts['ip_address']           = ( $_POST['p3_ip_address'] );
 		$opts['debug']                = ('true' == $_POST['p3_debug'] );
 		update_option( 'p3-profiler_options', $opts );
-		
+
 		// Clear the debug log if it's full
 		if ( 'true' === $_POST['p3_debug'] ) {
 			$log = get_option( 'p3-profiler_debug_log' );
@@ -353,7 +356,7 @@ class P3_Profiler_Plugin_Admin {
 
 		self::ajax_die( 1 );
 	}
-	
+
 
 	/**************************************************************/
 	/** EMAIL RESULTS                                            **/
@@ -375,7 +378,7 @@ class P3_Profiler_Plugin_Admin {
 		$subject = trim( $_POST['p3_subject'] );
 		$message = strip_tags( $_POST['p3_message'] );
 		$results = strip_tags( $_POST['p3_results'] );
-		
+
 		// Append the results to the message ( if a messge was specified )
 		if ( empty( $message ) ) {
 			$message = stripslashes( $results );
@@ -401,11 +404,11 @@ class P3_Profiler_Plugin_Admin {
 		}
 		self::ajax_die( '' );
 	}
-	
+
 	/**************************************************************/
 	/** DEBUG LOG FUNCTIONS                                      **/
 	/**************************************************************/
-	
+
 	/**
 	 * Clear the debug log
 	 */
@@ -414,9 +417,9 @@ class P3_Profiler_Plugin_Admin {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		update_option( 'p3-profiler_debug_log', array() );
-		wp_redirect( add_query_arg( array( 'p3_action' => 'help' ) ) );
+		wp_redirect( esc_url( add_query_arg( array( 'p3_action' => 'help' ) ) ) );
 	}
-	
+
 	/**
 	 * Download the debug log
 	 */
@@ -430,13 +433,13 @@ class P3_Profiler_Plugin_Admin {
 		}
 		header('Pragma: public');
 		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0'); 
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Content-Type: application/force-download');
 		header('Content-Type: application/octet-stream');
 		header('Content-Type: application/download');
 		header('Content-Disposition: attachment; filename="p3debug.csv";');
 		header('Content-Transfer-Encoding: binary');
-		
+
 		// File header
 		printf('"%s","%s","%s","%s","%s","%s","%s","%s","%s"' . "\n",
 			__( 'Profiling Enabled',  'p3-profiler' ),
@@ -448,11 +451,11 @@ class P3_Profiler_Plugin_Admin {
 			__( 'Visitor IP',         'p3-profiler' ),
 			__( 'Time',               'p3-profiler' ),
 			_x( 'PID',   'Abbreviation for process id', 'p3-profiler' )
-		);		
+		);
 
 		foreach ( (array) $log as $entry ) {
 			printf('"%s","%s","%s","%s","%s","%s","%s","%s","%d"' . "\n",
-				$entry['profiling_enabled'] ? 'true' : 'false',
+				is_array( $entry['profiling_enabled']  ) ? 'true' : 'false',
 				$entry['recording_ip'],
 				$entry['scan_name'],
 				$entry['recording'] ? 'true' : 'false',
@@ -559,7 +562,7 @@ class P3_Profiler_Plugin_Admin {
 			file_put_contents( $path. DIRECTORY_SEPARATOR . 'index.php', '<' . "?php header( 'Status: 404 Not found' ); ?" . ">\nNot found" );
 		}
 	}
-	
+
 	/**
 	 * Delete the profiles folder
 	 * @param string $path
@@ -575,7 +578,7 @@ class P3_Profiler_Plugin_Admin {
 		}
 		closedir( $dir );
 		rmdir( $path );
-	}	
+	}
 
 	/**
 	 * Check to see if a scan is enabled
@@ -584,11 +587,11 @@ class P3_Profiler_Plugin_Admin {
 	public static function scan_enabled() {
 		$opts = get_option( 'p3-profiler_options' );
 		if ( !empty( $opts['profiling_enabled'] ) ) {
-			return $opts['profiling_enabled'];
+			return isset( $opts['profiling_enabled'] );
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Convert a filesize ( in bytes ) to a human readable filesize
 	 * @param int $size
@@ -608,7 +611,7 @@ class P3_Profiler_Plugin_Admin {
 		$size /= pow( 1024, $pow );
 		return round( $size, 0 ) . ' ' . $units[$pow];
 	}
-		
+
 	/**
 	 * Actions to take when a multisite blog is removed
 	 */
@@ -626,7 +629,7 @@ class P3_Profiler_Plugin_Admin {
 	 * Check options, perform any necessary data conversions
 	 */
 	public static function upgrade() {
-		
+
 		// Get the current version
 		$version = get_option( 'p3-profiler_version' );
 
@@ -637,7 +640,7 @@ class P3_Profiler_Plugin_Admin {
 			update_option( 'p3-profiler_ip_address', '' );
 			update_option( 'p3-profiler_version', '1.1.0' );
 		}
-		
+
 		// Upgrading from < 1.1.2
 		if ( empty( $version) || version_compare( $version, '1.1.2' ) < 0 ) {
 			update_option( 'p3-profiler_cache_buster', true );
@@ -664,11 +667,11 @@ class P3_Profiler_Plugin_Admin {
 				@unlink( P3_PATH . '/.profiling_enabled' );
 			}
 		}
-		
+
 		// Upgrading from < 1.3.0
 		if ( empty( $version) || version_compare( $version, '1.3.0' ) < 0 ) {
 			update_option( 'p3-profiler_version', '1.3.0' );
-			
+
 			// Move to a serialized single option
 			$opts = array(
 				'profiling_enabled'    => get_option( 'p3-profiler_profiling_enabled' ),
@@ -676,7 +679,7 @@ class P3_Profiler_Plugin_Admin {
 				'use_current_ip'       => get_option( 'p3-profiler_use_current_ip' ),
 				'ip_address'           => get_option( 'p3-profiler_ip_address' ),
 				'cache_buster'         => get_option( 'p3-profiler_cache_buster' ),
-				'debug'                => get_option( 'p3-profiler_debug' )				
+				'debug'                => get_option( 'p3-profiler_debug' )
 			);
 			update_option( 'p3-profiler_options', $opts );
 
@@ -691,12 +694,12 @@ class P3_Profiler_Plugin_Admin {
 
 		// Upgrading from < 1.5.0
 		if ( empty( $version) || version_compare( $version, '1.5.0' ) < 0 ) {
-			update_option( 'p3-profiler_version', '1.3.0' );
+			update_option( 'p3-profiler_version', '1.5.0' );
 		}
 
 		// Ensure the profiles folder is there
 		$uploads_dir = wp_upload_dir();
 		$folder      = $uploads_dir['basedir'] . DIRECTORY_SEPARATOR . 'profiles';
 		self::make_profiles_folder( $folder );
-	}	
+	}
 }

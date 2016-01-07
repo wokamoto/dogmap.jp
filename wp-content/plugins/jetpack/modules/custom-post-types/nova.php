@@ -1,17 +1,7 @@
 <?php
 
 /*
- * Plugin Name: Nova - Restaurant Websites Shouldn't Suck
- * Plugin URI: http://wordpress.org/extend/plugins/nova/
- * Author: Automattic
- * Version: 0.1
- * License: GPL2+
- * Text Domain: nova
- * Domain Path: /languages/
- */
-
-/*
- * Put the following code in your themee's Food Menu Page Template to customize the markup of the menu.
+ * Put the following code in your theme's Food Menu Page Template to customize the markup of the menu.
 
 if ( class_exists( 'Nova_Restaurant' ) ) {
 	Nova_Restaurant::init( array(
@@ -40,7 +30,7 @@ class Nova_Restaurant {
 	const MENU_ITEM_LABEL_TAX = 'nova_menu_item_label';
 	const MENU_TAX = 'nova_menu';
 
-	var $version = '0.1';
+	public $version = '0.1';
 
 	protected $default_menu_item_loop_markup = array(
 		'menu_tag'               => 'section',
@@ -65,7 +55,7 @@ class Nova_Restaurant {
 		}
 
 		if ( $menu_item_loop_markup ) {
-			$instance->menu_item_loop_markup = wp_parse_args( $menu_item_loop_markup, $this->default_menu_item_loop_markup );
+			$instance->menu_item_loop_markup = wp_parse_args( $menu_item_loop_markup, $instance->default_menu_item_loop_markup );
 		}
 
 		return $instance;
@@ -80,6 +70,10 @@ class Nova_Restaurant {
 		add_action( 'admin_menu',            array( $this, 'add_admin_menus'      ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_nova_styles'  ) );
 		add_action( 'admin_head',            array( $this, 'set_custom_font_icon' ) );
+
+		// Enable Omnisearch for Menu Items.
+		if ( class_exists( 'Jetpack_Omnisearch_Posts' ) )
+			new Jetpack_Omnisearch_Posts( self::MENU_ITEM_POST_TYPE );
 
 		// Always sort menu items correctly
 		add_action( 'parse_query',   array( $this, 'sort_menu_item_queries_by_menu_order'    ) );
@@ -110,6 +104,16 @@ class Nova_Restaurant {
 			return true;
 
 		// Otherwise, say no unless something wants to filter us to say yes.
+		/**
+		 * Allow something else to hook in and enable this CPT.
+		 *
+		 * @module custom-content-types
+		 *
+		 * @since 2.6.0
+		 *
+		 * @param bool false Whether or not to enable this CPT.
+		 * @param string $var The slug for this CPT.
+		 */
 		return (bool) apply_filters( 'jetpack_enable_cpt', false, self::MENU_ITEM_POST_TYPE );
 	}
 
@@ -134,6 +138,8 @@ class Nova_Restaurant {
 				'separate_items_with_commas' => __( 'For example, spicy, favorite, etc. <br /> Separate Labels with commas', 'jetpack' ),
 				'add_or_remove_items'        => __( 'Add or remove Labels', 'jetpack' ),
 				'choose_from_most_used'      => __( 'Choose from the most used Labels', 'jetpack' ),
+				'items_list_navigation'      => __( 'Menu item label list navigation',   'jetpack' ),
+				'items_list'                 => __( 'Menu item labels list',              'jetpack' ),
 			),
 			'no_tagcloud' => __( 'No Labels found', 'jetpack' ),
 
@@ -142,17 +148,19 @@ class Nova_Restaurant {
 
 		register_taxonomy( self::MENU_TAX, self::MENU_ITEM_POST_TYPE, array(
 			'labels' => array(
-				'name'               => __( 'Menu Sections', 'jetpack' ),
-				'singular_name'      => __( 'Menu Section', 'jetpack' ),
-				'search_items'       => __( 'Search Menu Sections', 'jetpack' ),
-				'all_items'          => __( 'All Menu Sections', 'jetpack' ),
-				'parent_item'        => __( 'Parent Menu Section', 'jetpack' ),
-				'parent_item_colon'  => __( 'Parent Menu Section:', 'jetpack' ),
-				'edit_item'          => __( 'Edit Menu Section', 'jetpack' ),
-				'view_item'          => __( 'View Menu Section', 'jetpack' ),
-				'update_item'        => __( 'Update Menu Section', 'jetpack' ),
-				'add_new_item'       => __( 'Add New Menu Section', 'jetpack' ),
-				'new_item_name'      => __( 'New Menu Sections Name', 'jetpack' ),
+				'name'                  => __( 'Menu Sections',                 'jetpack' ),
+				'singular_name'         => __( 'Menu Section',                  'jetpack' ),
+				'search_items'          => __( 'Search Menu Sections',          'jetpack' ),
+				'all_items'             => __( 'All Menu Sections',             'jetpack' ),
+				'parent_item'           => __( 'Parent Menu Section',           'jetpack' ),
+				'parent_item_colon'     => __( 'Parent Menu Section:',          'jetpack' ),
+				'edit_item'             => __( 'Edit Menu Section',             'jetpack' ),
+				'view_item'             => __( 'View Menu Section',             'jetpack' ),
+				'update_item'           => __( 'Update Menu Section',           'jetpack' ),
+				'add_new_item'          => __( 'Add New Menu Section',          'jetpack' ),
+				'new_item_name'         => __( 'New Menu Sections Name',        'jetpack' ),
+				'items_list_navigation' => __( 'Menu section list navigation',  'jetpack' ),
+				'items_list'            => __( 'Menu section list',             'jetpack' ),
 			),
 			'rewrite' => array(
 				'slug'         => 'menu',
@@ -171,18 +179,21 @@ class Nova_Restaurant {
 			'description' => __( "Items on your restaurant's menu", 'jetpack' ),
 
 			'labels' => array(
-				'name'               => __( 'Menu Items', 'jetpack' ),
-				'singular_name'      => __( 'Menu Item', 'jetpack' ),
-				'menu_name'          => __( 'Food Menus', 'jetpack' ),
-				'all_items'          => __( 'Menu Items', 'jetpack' ),
-				'add_new'            => __( 'Add One Item', 'jetpack' ),
-				'add_new_item'       => __( 'Add Menu Item', 'jetpack' ),
-				'edit_item'          => __( 'Edit Menu Item', 'jetpack' ),
-				'new_item'           => __( 'New Menu Item', 'jetpack' ),
-				'view_item'          => __( 'View Menu Item', 'jetpack' ),
-				'search_items'       => __( 'Search Menu Items', 'jetpack' ),
-				'not_found'          => __( 'No Menu Items found', 'jetpack' ),
-				'not_found_in_trash' => __( 'No Menu Items found in Trash', 'jetpack' ),
+				'name'                  => __( 'Menu Items',                   'jetpack' ),
+				'singular_name'         => __( 'Menu Item',                    'jetpack' ),
+				'menu_name'             => __( 'Food Menus',                   'jetpack' ),
+				'all_items'             => __( 'Menu Items',                   'jetpack' ),
+				'add_new'               => __( 'Add One Item',                 'jetpack' ),
+				'add_new_item'          => __( 'Add Menu Item',                'jetpack' ),
+				'edit_item'             => __( 'Edit Menu Item',               'jetpack' ),
+				'new_item'              => __( 'New Menu Item',                'jetpack' ),
+				'view_item'             => __( 'View Menu Item',               'jetpack' ),
+				'search_items'          => __( 'Search Menu Items',            'jetpack' ),
+				'not_found'             => __( 'No Menu Items found',          'jetpack' ),
+				'not_found_in_trash'    => __( 'No Menu Items found in Trash', 'jetpack' ),
+				'filter_items_list'     => __( 'Filter menu items list',       'jetpack' ),
+				'items_list_navigation' => __( 'Menu item list navigation',    'jetpack' ),
+				'items_list'            => __( 'Menu items list',              'jetpack' ),
 			),
 			'supports' => array(
 				'title',
@@ -269,16 +280,16 @@ class Nova_Restaurant {
 	 */
 	function add_to_dashboard() {
 		$number_menu_items = wp_count_posts( self::MENU_ITEM_POST_TYPE );
-		$number_menu_items_published = sprintf( '%1s %2s',
-			number_format_i18n( $number_menu_items->publish ),
-			_n( 'Food Menu Item', 'Food Menu Items', intval( $number_menu_items->publish ), 'jetpack' )
-		);
 
 		if ( current_user_can( 'administrator' ) ) {
-			$number_menu_items_published = sprintf( '<a href="%1s">%2s %3s</a>',
+			$number_menu_items_published = sprintf( '<a href="%1$s">%2$s</a>',
 				esc_url( get_admin_url( get_current_blog_id(), 'edit.php?post_type=' . self::MENU_ITEM_POST_TYPE ) ),
-				number_format_i18n( $number_menu_items->publish ),
-				_n( 'Food Menu Item', 'Food Menu Items', intval( $number_menu_items->publish ), 'jetpack' )
+				sprintf( _n( '%1$d Food Menu Item', '%1$d Food Menu Items', intval( $number_menu_items->publish ), 'jetpack' ), number_format_i18n( $number_menu_items->publish ) )
+			);
+		}
+		else {
+			$number_menu_items_published = sprintf( '<span>%1$s</span>',
+				sprintf( _n( '%1$d Food Menu Item', '%1$d Food Menu Items', intval( $number_menu_items->publish ), 'jetpack' ), number_format_i18n( $number_menu_items->publish ) )
 			);
 		}
 
@@ -391,12 +402,12 @@ class Nova_Restaurant {
 	 */
 	function set_custom_font_icon() {
 	?>
-        <style type="text/css">
-            #menu-posts-nova_menu_item .wp-menu-image:before {
-                font-family: 'nova-font' !important;
-                content: '\e603' !important;
-            }
-        </style>
+	<style type="text/css">
+	#menu-posts-nova_menu_item .wp-menu-image:before {
+		font-family: 'nova-font' !important;
+		content: '\e603' !important;
+	}
+	</style>
 	<?php
 	}
 
@@ -962,7 +973,12 @@ class Nova_Restaurant {
 			}
 		}
 
+		if ( ! isset( $term_id ) ) {
+			return false;
+		}
+
 		return get_term( $term_id, self::MENU_TAX );
+
 	}
 
 	function list_labels( $post_id = 0 ) {

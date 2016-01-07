@@ -6,21 +6,31 @@
  */
 class Jetpack_Sync {
 	// What modules want to sync what content
-	var $sync_conditions = array( 'posts' => array(), 'comments' => array() );
+	public $sync_conditions = array( 'posts' => array(), 'comments' => array() );
 
 	// We keep track of all the options registered for sync so that we can sync them all if needed
-	var $sync_options = array();
+	public $sync_options = array();
+
+	public $sync_constants = array();
 
 	// Keep trac of status transitions, which we wouldn't always know about on the Jetpack Servers but are important when deciding what to do with the sync.
-	var $post_transitions = array();
-	var $comment_transitions = array();
+	public $post_transitions = array();
+	public $comment_transitions = array();
 
 	// Objects to sync
-	var $sync = array();
+	public $sync = array();
 
 	function __construct() {
 		// WP Cron action.  Only used on upgrade
 		add_action( 'jetpack_sync_all_registered_options', array( $this, 'sync_all_registered_options' ) );
+		add_action( 'jetpack_heartbeat',  array( $this, 'sync_all_registered_options' ) );
+
+		// Sync constants on heartbeat and plugin upgrade and connects
+		add_action( 'init', array( $this, 'register_constants_as_options' ) );
+		add_action( 'jetpack_sync_all_registered_options', array( $this, 'sync_all_constants' ) );
+		add_action( 'jetpack_heartbeat',  array( $this, 'sync_all_constants' ) );
+
+		add_action( 'jetpack_activate_module', array( $this, 'sync_module_constants' ), 10, 1 );
 	}
 
 /* Static Methods for Modules */
@@ -32,7 +42,7 @@ class Jetpack_Sync {
 	 *	post_stati => array( post_status slugs ): The post stati to sync.  Default: publish
 	 */
 	static function sync_posts( $file, array $settings = null ) {
-		if( is_network_admin() ) return;
+		if ( is_network_admin() ) return;
 		$jetpack = Jetpack::init();
 		$args = func_get_args();
 		return call_user_func_array( array( $jetpack->sync, 'posts' ), $args );
@@ -47,7 +57,7 @@ class Jetpack_Sync {
 	 * 	comment_stati => array( comment_status slugs ): The comment stati to sync.  Default: approved
 	 */
 	static function sync_comments( $file, array $settings = null ) {
-		if( is_network_admin() ) return;
+		if ( is_network_admin() ) return;
 		$jetpack = Jetpack::init();
 		$args = func_get_args();
 		return call_user_func_array( array( $jetpack->sync, 'comments' ), $args );
@@ -59,10 +69,21 @@ class Jetpack_Sync {
 	 * @param string $option ...
 	 */
 	static function sync_options( $file, $option /*, $option, ... */ ) {
-		if( is_network_admin() ) return;
+		if ( is_network_admin() ) return;
 		$jetpack = Jetpack::init();
 		$args = func_get_args();
 		return call_user_func_array( array( $jetpack->sync, 'options' ), $args );
+	}
+	/**
+	 * @param string $file __FILE__
+	 * @param string $option, Option name to sync
+	 * @param string $option ...
+	 */
+	static function sync_constant( $file, $constant ) {
+		if ( is_network_admin() ) return;
+		$jetpack = Jetpack::init();
+		$args = func_get_args();
+		return call_user_func_array( array( $jetpack->sync, 'constant' ), $args );
 	}
 
 /* Internal Methods */
@@ -134,6 +155,7 @@ class Jetpack_Sync {
 		$sync_data = array(
 			'modules' => $modules,
 			'version' => JETPACK__VERSION,
+			'is_multisite' => is_multisite(),
 		);
 
 		return $sync_data;
@@ -144,6 +166,11 @@ class Jetpack_Sync {
 	 */
 	function sync() {
 		if ( !$this->sync ) {
+			return false;
+		}
+
+		// Don't sync anything from a staging site.
+		if ( Jetpack::is_development_mode() || Jetpack::jetpack_is_staging_site() ) {
 			return false;
 		}
 
@@ -193,7 +220,13 @@ class Jetpack_Sync {
 				break;
 			case 'option' :
 				foreach ( $sync_operations as $option => $settings ) {
-					$sync_data['option'][$option] = array( 'value' => get_option( $option ) );
+					$sync_data['option'][ $option ] = array( 'value' => get_option( $option ) );
+				}
+				break;
+
+			case 'constant' :
+				foreach( $sync_operations as $constant => $settings ) {
+					$sync_data['constant'][ $constant ] = array( 'value' => $this->get_constant( $constant ) );
 				}
 				break;
 
@@ -210,7 +243,6 @@ class Jetpack_Sync {
 				break;
 			}
 		}
-
 		Jetpack::xmlrpc_async_call( 'jetpack.syncContent', $sync_data );
 	}
 
@@ -351,6 +383,7 @@ class Jetpack_Sync {
 		$delete_on_behalf_of = array();
 		$submit_on_behalf_of = array();
 		$delete_stati = array( 'delete' );
+		$cache_cleared = false;
 
 		foreach ( $module_conditions as $module => $conditions ) {
 			if ( !in_array( $post->post_type, $conditions['post_types'] ) ) {
@@ -362,7 +395,11 @@ class Jetpack_Sync {
 			if ( $deleted_post ) {
 				$delete_on_behalf_of[] = $module;
 			} else {
-				clean_post_cache( $post->ID );
+				if ( ! $cache_cleared ) {
+					// inefficient to clear cache more than once
+					clean_post_cache( $post->ID );
+					$cache_cleared = true;
+				}
 				$new_status = get_post_status( $post->ID ); // Inherited status is resolved here
 			}
 
@@ -462,16 +499,61 @@ class Jetpack_Sync {
 		$post['extra'] = array(
 			'author' => get_the_author_meta( 'display_name', $post_obj->post_author ),
 			'author_email' => get_the_author_meta( 'email', $post_obj->post_author ),
+			'dont_email_post_to_subs' => get_post_meta( $post_obj->ID, '_jetpack_dont_email_post_to_subs', true ),
 		);
 
 		if ( $fid = get_post_thumbnail_id( $id ) ) {
 			$feature = wp_get_attachment_image_src( $fid, 'large' );
-			if ( !empty( $feature[0] ) )
+			if ( ! empty( $feature[0] ) ) {
 				$post['extra']['featured_image'] = $feature[0];
+			}
+
+			$attachment = get_post( $fid );
+			if ( ! empty( $attachment ) ) {
+				$metadata = wp_get_attachment_metadata( $fid );
+
+				$post['extra']['post_thumbnail'] = array(
+					'ID'        => (int) $fid,
+					'URL'       => (string) wp_get_attachment_url( $fid ),
+					'guid'      => (string) $attachment->guid,
+					'mime_type' => (string) $attachment->post_mime_type,
+					'width'     => (int) isset( $metadata['width'] ) ? $metadata['width'] : 0,
+					'height'    => (int) isset( $metadata['height'] ) ? $metadata['height'] : 0,
+				);
+
+				if ( isset( $metadata['duration'] ) ) {
+					$post['extra']['post_thumbnail'] = (int) $metadata['duration'];
+				}
+
+				/**
+				 * Filters the Post Thumbnail information returned for a specific post.
+				 *
+				 * @since 3.3.0
+				 *
+				 * @param array $post['extra']['post_thumbnail'] {
+				 * 	Array of details about the Post Thumbnail.
+				 *	@param int ID Post Thumbnail ID.
+				 *	@param string URL Post thumbnail URL.
+				 *	@param string guid Post thumbnail guid.
+				 *	@param string mime_type Post thumbnail mime type.
+				 *	@param int width Post thumbnail width.
+				 *	@param int height Post thumbnail height.
+				 * }
+				 */
+				$post['extra']['post_thumbnail'] = (object) apply_filters( 'get_attachment', $post['extra']['post_thumbnail'] );
+			}
 		}
 
 		$post['permalink'] = get_permalink( $post_obj->ID );
 		$post['shortlink'] = wp_get_shortlink( $post_obj->ID );
+		/**
+		 * Allow modules to send extra info on the sync post process.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param array $args Array of custom data to attach to a post.
+		 * @param Object $post_obj Object returned by get_post() for a given post ID.
+		 */
 		$post['module_custom_data'] = apply_filters( 'jetpack_sync_post_module_custom_data', array(), $post_obj );
 		return $post;
 	}
@@ -679,7 +761,7 @@ class Jetpack_Sync {
 		$this->register( 'delete_option', $option );
 	}
 
-	function updated_option_action( $old_value ) {
+	function updated_option_action() {
 		// The value of $option isn't passed to the filter
 		// Calculate it
 		$option = current_filter();
@@ -706,19 +788,110 @@ class Jetpack_Sync {
 		}
 	}
 
-	function sync_all_registered_options( $options = array() ) {
+	function sync_all_registered_options() {
 		if ( 'jetpack_sync_all_registered_options' == current_filter() ) {
-			$all_registered_options = array_unique( call_user_func_array( 'array_merge', $this->sync_options ) );
-			foreach ( $all_registered_options as $option ) {
-				$this->added_option_action( $option );
-			}
+			add_action( 'shutdown', array( $this, 'register_all_options' ), 8 );
 		} else {
 			wp_schedule_single_event( time(), 'jetpack_sync_all_registered_options', array( $this->sync_options ) );
 		}
 	}
 
+	/**
+	 * All the options that are defined in modules as well as class.jetpack.php will get synced.
+	 * Registers all options to be synced.
+	 */
+	function register_all_options() {
+		$all_registered_options = array_unique( call_user_func_array( 'array_merge', $this->sync_options ) );
+		foreach ( $all_registered_options as $option ) {
+			$this->added_option_action( $option );
+		}
+	}
+
+/* Constants Sync */
+
+	function get_all_constants() {
+		return array(
+			'EMPTY_TRASH_DAYS',
+			'WP_POST_REVISIONS',
+			'AUTOMATIC_UPDATER_DISABLED',
+			'ABSPATH',
+			'WP_CONTENT_DIR',
+			'FS_METHOD',
+			'DISALLOW_FILE_EDIT',
+			'DISALLOW_FILE_MODS',
+			'WP_AUTO_UPDATE_CORE',
+			'WP_HTTP_BLOCK_EXTERNAL',
+			'WP_ACCESSIBLE_HOSTS',
+			);
+	}
+	/**
+	 * This lets us get the constant value like get_option( 'jetpack_constant_CONSTANT' );
+	 * Not the best way to get the constant value but necessery in some cases like in the API.
+	 */
+	function register_constants_as_options() {
+		foreach( $this->get_all_constants() as $constant ) {
+			add_filter( 'pre_option_jetpack_constant_'. $constant, array( $this, 'get_default_constant' ) );
+		}
+	}
+
+	function sync_all_constants() {
+		// add the constant to sync.
+		foreach( $this->get_all_constants() as $constant ) {
+			$this->register_constant( $constant );
+		}
+		add_action( 'shutdown', array( $this, 'register_all_module_constants' ), 8 );
+	}
+
+	/**
+	 * Returns default values of Constants
+	 */
+	function default_constant( $constant ) {
+		switch( $constant ) {
+			case 'WP_AUTO_UPDATE_CORE':
+				return 'minor';
+				break;
+
+			default:
+				return null;
+				break;
+		}
+	}
+
+	function register_all_module_constants() {
+		// also add the contstants from each module to be synced.
+		foreach( $this->sync_constants as $module ) {
+			foreach( $module as $constant ) {
+				$this->register_constant( $constant );
+			}
+		}
+	}
+
+	/**
+	 * Sync constants required by the module that was just activated.
+ 	 * If you add Jetpack_Sync::sync_constant( __FILE__, 'HELLO_WORLD' );
+	 * to the module it will start syncing the constant after the constant has been updated.
+	 *
+	 * This function gets called on module activation.
+	 */
+	function sync_module_constants( $module ) {
+
+		if ( isset( $this->sync_constants[ $module ] ) && is_array( $this->sync_constants[ $module ] ) ) {
+			// also add the contstants from each module to be synced.
+			foreach( $this->sync_constants[ $module ] as $constant ) {
+				$this->register_constant(  $constant );
+			}
+		}
+	}
+
+	public function reindex_needed() {
+		return ( $this->_get_post_count_local() != $this->_get_post_count_cloud() );
+	}
+
 	public function reindex_trigger() {
 		$response = array( 'status' => 'ERROR' );
+
+		// Force a privacy check
+		Jetpack::check_privacy( JETPACK__PLUGIN_FILE );
 
 		Jetpack::load_xml_rpc_client();
 		$client = new Jetpack_IXR_Client( array(
@@ -778,11 +951,15 @@ class Jetpack_Sync {
 				'action' => __( 'Refresh Status', 'jetpack' ),
 				'status' => __( 'Status unknown.', 'jetpack' ),
 			),
+			'ERROR:LARGE' => array(
+				'action' => __( 'Refresh Status', 'jetpack' ),
+				'status' => __( 'This site is too large, please contact Jetpack support to sync.', 'jetpack' ),
+			),
 		) );
 
 		wp_enqueue_script(
 			'jetpack_sync_reindex_control',
-			plugins_url( '_inc/jquery.jetpack-sync.js', __FILE__ ),
+			plugins_url( '_inc/jquery.jetpack-sync.js', JETPACK__PLUGIN_FILE ),
 			array( 'jquery' ),
 			JETPACK__VERSION
 		);
@@ -799,5 +976,129 @@ EOT;
 			esc_attr( $strings ),
 			esc_attr__( 'Refresh Status', 'jetpack' )
 		);
+	}
+
+	private function _get_post_count_local() {
+		global $wpdb;
+		return (int) $wpdb->get_var(
+			"SELECT count(*)
+				FROM {$wpdb->posts}
+				WHERE post_status = 'publish' AND post_password = ''"
+		);
+	}
+
+	private function _get_post_count_cloud() {
+		$blog_id = Jetpack::init()->get_option( 'id' );
+
+		$body = array(
+			'size' => 1,
+		);
+
+		$response = wp_remote_post(
+			"https://public-api.wordpress.com/rest/v1/sites/$blog_id/search",
+			array(
+				'timeout' => 10,
+				'user-agent' => 'jetpack_related_posts',
+				'sslverify' => true,
+				'body' => $body,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return 0;
+		}
+
+		$results = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		return (int) $results['results']['total'];
+	}
+
+	/**
+	 * Sometimes we need to fake options to be able to sync data with .com
+	 * This is a helper function. That will make it easier to do just that.
+	 *
+	 * It will make sure that the options are synced when do_action( 'jetpack_sync_all_registered_options' );
+	 *
+	 * Which should happen everytime we update Jetpack to a new version or daily by Jetpack_Heartbeat.
+	 *
+	 * $callback is a function that is passed into a filter that returns the value of the option.
+	 * This value should never be false. Since we want to short circuit the get_option function
+	 * to return the value of the our callback.
+	 *
+	 * You can also trigger an update when a something else changes by calling the
+	 * do_action( 'add_option_jetpack_' . $option, 'jetpack_'.$option, $callback_function );
+	 * on the action that should that would trigger the update.
+	 *
+	 *
+	 * @param  string $option   Option will always be prefixed with Jetpack and be saved on .com side
+	 * @param  string or array  $callback
+	 */
+	function mock_option( $option , $callback ) {
+		add_filter( 'pre_option_jetpack_'. $option, $callback );
+		// This shouldn't happen but if it does we return the same as before.
+		add_filter( 'option_jetpack_'. $option, $callback );
+		// Instead of passing a file we just pass in a string.
+		$this->options( 'mock-option' , 'jetpack_' . $option );
+
+	}
+	/**
+	 * Sometimes you need to sync constants to .com
+	 * Using the function will allow you to do just that.
+	 *
+	 * @param  'string' $constant Constants defined in code.
+	 *
+	 */
+	function register_constant( $constant ) {
+		$this->register( 'constant', $constant );
+	}
+
+	function get_default_constant() {
+		$filter = current_filter();
+		// We don't know what the constant is so we get it from the current filter.
+		if ( 'pre_option_jetpack_constant_' === substr( $filter, 0, 28 ) ) {
+			$constant = substr( $filter, 28 );
+			if ( defined( $constant ) ) {
+				// If constant is set to false we will not shortcut the get_option function and will return the default value.
+				// Hance we set it to null. Which in most cases would produce the same result.
+				return false === constant( $constant ) ? null : constant( $constant );
+			}
+			return $this->default_constant( $constant );
+		}
+	}
+	/**
+	 * Simular to $this->options() function.
+	 * Add the constant to be synced to .com when we activate the module.
+	 * As well as on heartbeat and plugin upgrade and connection to .com.
+	 *
+	 * @param string $file
+	 * @param string $constant
+	 */
+	function constant( $file, $constant ) {
+		$constants = func_get_args();
+		$file = array_shift( $constants );
+
+		$module_slug = Jetpack::get_module_slug( $file );
+
+		if ( ! isset( $this->sync_constants[ $module_slug ] ) ) {
+			$this->sync_constants[ $module_slug ] = array();
+		}
+
+		foreach ( $constants as $constant ) {
+			$this->sync_constants[ $module_slug ][] = $constant;
+		}
+	}
+
+	/**
+	 * Helper function to return the constants value.
+	 *
+	 * @param  string $constant
+	 * @return value of the constant or null if the constant is set to false or doesn't exits.
+	 */
+	static function get_constant( $constant ) {
+		if ( defined( $constant ) ) {
+			return constant( $constant );
+		}
+
+		return null;
 	}
 }

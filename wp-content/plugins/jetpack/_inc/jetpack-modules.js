@@ -1,8 +1,8 @@
 
-( function( window, $, items, models, views, i18n, nonces ) {
+( function( window, $, items, models, views, i18n, modalinfo, nonces ) {
 	'use strict';
 
-	var modules, list_table, handle_module_tag_click, $the_table, $the_filters, $the_search, $jp_frame, $bulk_button, show_modal, hide_modal, set_modal_tab;
+	var modules, list_table, handle_module_tag_click, $the_table, $the_filters, $the_search, $jp_frame, $bulk_button, show_modal, hide_modal, set_modal_tab, originPoint;
 
 	$the_table   = $( '.wp-list-table.jetpack-modules' );
 	$the_filters = $( '.navbar-form' );
@@ -35,27 +35,48 @@
 	$( '.subsubsub a' ).on( 'click', { modules : modules }, handle_module_tag_click );
 
 	/**
+	 * Attach event listener for ESC key to close modal
+	 */
+
+	$( window ).on( 'keydown', function( e ) {
+		// If pressing ESC close the modal
+		if ( 27 === e.keyCode ) {
+			$( '.shade, .modal' ).hide();
+			$( '.manage-right' ).removeClass( 'show' );
+			originPoint.focus();
+			$( '.modal' )[0].removeAttribute( 'tabindex' );
+		}
+	});
+
+	/**
 	 * The modal details.
 	 */
 
-	show_modal = function( module, tab ) {
+	show_modal = function( module ) {
 		$jp_frame.children( '.modal, .shade' ).show();
-		$jp_frame.children( '.modal' ).data( 'current-module', module );
-		set_modal_tab( tab );
-
-		/**
-		 * Handle the configure tab. If it shouldn't be there, hide it!
-		 */
-		$jp_frame.find( '.modal header li.config' ).show();
-		if ( ! items[ module ].configurable ) {
-			$jp_frame.find( '.modal header li.config' ).hide();
-		}
+		$( '.modal ').empty().html( wp.template( 'modal' )( items[ module ] ) );
+		$( '.modal' )[0].setAttribute( 'tabindex', '0' );
+		$( '.modal' ).focus();
+		$( 'body' ).css( 'overflow', 'hidden' );
 	};
+
+	/**
+	 * If modalinfo is defined, auto popup the modal
+	 */
+	$( document ).ready(function() {
+		if ( modalinfo ) {
+			show_modal( modalinfo );
+		}
+	});
 
 	hide_modal = function() {
 		$jp_frame.children( '.modal, .shade' ).hide();
 		$jp_frame.children( '.modal' ).data( 'current-module', '' );
 		set_modal_tab( null );
+		originPoint.focus();
+		$( '.modal' )[0].removeAttribute( 'tabindex' );
+		$( 'body' ).css( 'overflow', 'auto' );
+		event.preventDefault();
 	};
 
 	set_modal_tab = function( tab ) {
@@ -74,12 +95,7 @@
 		}
 	};
 
-	$jp_frame.on( 'click', '.modal header .close, .shade', hide_modal );
-
-	$jp_frame.on( 'click', '.modal header ul li a', function( event ){
-		event.preventDefault();
-		set_modal_tab( $(this).data('tab') );
-	} );
+	$jp_frame.on( 'click', '.modal .close, .shade', hide_modal );
 
 	$jp_frame.children( '.modal' ).on( 'learn-more', function() {
 		var current_module = $jp_frame.children( '.modal' ).data( 'current-module' );
@@ -96,12 +112,8 @@
 
 	$the_table.on( 'click', '.info a', { modules : modules }, function( event ) {
 		event.preventDefault();
+		originPoint = this;
 		show_modal( $(this).closest('.jetpack-module').attr('id'), 'learn-more' );
-	} );
-
-	$the_table.on( 'click', '.configure a', { modules : modules }, function( event ) {
-		event.preventDefault();
-		show_modal( $(this).closest('.jetpack-module').attr('id'), 'config' );
 	} );
 
 	$the_filters.on( 'click', '.button-group .button', { modules : modules }, function( event ) {
@@ -110,8 +122,12 @@
 		modules.trigger( 'change' );
 	} );
 
-	$the_search.on( 'keyup search', function() {
-		modules.trigger( 'change' );
+	$the_search.on( 'keyup search', function( e ) {
+		// Don't trigger change on tab, since it's only used for accessibility
+		// anyway, and will remove all checked boxes
+		if ( e.keyCode !== 9 ) {
+			modules.trigger( 'change' );
+		}
 	} );
 
 	$the_search.prop( 'placeholder', i18n.search_placeholder );
@@ -134,4 +150,4 @@
 		event.preventDefault();
 	} );
 
-} ) ( this, jQuery, window.jetpackModulesData.modules, this.jetpackModules.models, this.jetpackModules.views, window.jetpackModulesData.i18n, window.jetpackModulesData.nonces );
+} ) ( this, jQuery, window.jetpackModulesData.modules, this.jetpackModules.models, this.jetpackModules.views, window.jetpackModulesData.i18n, window.jetpackModulesData.modalinfo, window.jetpackModulesData.nonces );

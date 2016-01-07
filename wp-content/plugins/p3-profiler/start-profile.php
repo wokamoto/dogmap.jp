@@ -49,8 +49,11 @@ function p3_profiler_disable() {
 	if ( false === $transient ) {
 		$transient = '';
 	}
-	file_put_contents( $path, $transient );
+	if ( !empty( $opts ) && array_key_exists( 'profiling_enabled', $opts ) && !empty( $opts['profiling_enabled']['name'] ) ) {
+		file_put_contents( $path, $transient );
+	}
 	delete_option( 'p3_scan_' . $opts['profiling_enabled']['name'], $transient );
+	delete_option( 'p3_profiler-error_detection' );
 	$opts['profiling_enabled'] = false;
 	update_option( 'p3-profiler_options', $opts );
 }

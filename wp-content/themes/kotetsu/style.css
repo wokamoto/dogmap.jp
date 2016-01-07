@@ -1,0 +1,297 @@
+@charset "utf-8";
+/*
+Theme Name: Kotetsu
+Theme URI: https://github.com/inc2734/kotetsu/
+Description: Kotetsu is a simple theme for the blog. This theme is responsive, supports desktop( 1280 and 1024 ), tablets and smartphones. Features, using Sass and PHP Class in functions.php. So this theme is for developers!
+Author: inc2734
+Author URI: http://2inc.org
+Version: 1.0.6
+License: GNU General Public License v2.0
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: blue, white, right-sidebar, responsive-layout, editor-style, sticky-post, microformats, featured-images, custom-colors, custom-menu
+*/
+
+* {
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+}
+
+body {
+	color: #000;
+	font-size: 100%;
+	font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+	/* 	font-family: 'ヒラギノ明朝 Pro W3', 'Hiragino Mincho Pro', 'ＭＳ Ｐ明朝', 'MS PMincho', serif; */
+	line-height: 1.4;
+	margin: 0;
+	padding: 0;
+}
+
+header, footer, nav, section, article, figure, aside, main {
+	display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	clear: both;
+	font-size: 100%;
+	font-weight: normal;
+	margin: 40px 0 0;
+	padding: 0;
+}
+p, ul, ol, dl, table {
+	margin: 20px 0 0;
+	padding: 0;
+}
+li, dt, dd {
+	margin: 0;
+	padding: 0;
+}
+dd {
+	margin-left: 1em;
+}
+
+/**
+ * img
+ */
+img {
+	border: none;
+	height: auto;
+	max-width: 100%;
+	vertical-align: text-bottom;
+}
+table img {
+	vertical-align: bottom;
+}
+
+/**
+ * ul
+ */
+ul li {
+	margin-left: 30px;
+	padding-left: 5px;
+}
+
+/**
+ * ol
+ */
+ol li {
+	margin-left: 30px;
+}
+
+/**
+ * table
+ */
+table {
+	font-size: 100%;
+	padding: 0;
+}
+th {
+	font-weight: normal;
+}
+th, td {
+	padding: 0;
+	text-align: left;
+}
+
+/**
+ * form
+ */
+button,
+input,
+select,
+textarea {
+	box-sizing: border-box;
+	max-width: 100%;
+	font-size: 100%;
+	margin: 0;
+	vertical-align: baseline;
+	*vertical-align: middle;
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	border: 1px solid #ccc;
+	border-color: #ccc #ccc #bbb #ccc;
+	border-radius: 3px;
+	background: #e6e6e6;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 15px 17px rgba(255, 255, 255, 0.5), inset 0 -5px 12px rgba(0, 0, 0, 0.05);
+	color: rgba(0, 0, 0, .8);
+	cursor: pointer;
+	-webkit-appearance: button;
+	font-size: 12px;
+	line-height: 1;
+	padding: .6em 1em .4em;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+button:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+	border-color: #ccc #bbb #aaa #bbb;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 15px 17px rgba(255, 255, 255, 0.8), inset 0 -5px 12px rgba(0, 0, 0, 0.02);
+}
+button:focus,
+input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+button:active,
+input[type="button"]:active,
+input[type="reset"]:active,
+input[type="submit"]:active {
+	border-color: #aaa #bbb #bbb #bbb;
+	box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+input[type="checkbox"],
+input[type="radio"] {
+	padding: 0;
+}
+input[type="search"] {
+	-webkit-appearance: textfield;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing:    content-box;
+	box-sizing:         content-box;
+}
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea {
+	color: #666;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+	color: #111;
+}
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"] {
+	padding: 3px;
+}
+textarea {
+	overflow: auto;
+	padding-left: 3px;
+	vertical-align: top;
+}
+
+/**
+ * blockquote
+ */
+blockquote {
+	border-left: #eee solid 5px;
+	margin: 0.5em 0 0.5em 20px;
+	padding: 0 0 0 20px;
+}
+
+/**
+ * pre
+ */
+pre {
+	background: #eee;
+	font-family: "Courier 10 Pitch", Courier, monospace;
+	font-size: 15px;
+	max-width: 100%;
+	overflow: auto;
+	padding: 15px;
+}
+
+/**
+ * abbr, acronym
+ */
+abbr, acronym {
+	border-bottom: 1px dotted #666;
+	cursor: help;
+}
+
+/**
+ * sup, sub
+ */
+sup,
+sub {
+	font-size: 75%;
+	height: 0;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	bottom: 1ex;
+}
+sub {
+	top: .5ex;
+}
+
+embed,
+iframe,
+object {
+	max-width: 100%;
+}
+
+/**
+ * .wp-caption
+ */
+.wp-caption {
+	border: none;
+	text-align: left;
+	background-color: transparent;
+	padding: 0;
+	margin: 20px 0 0;
+	border-radius: 0;
+	max-width: 100%;
+}
+.wp-caption-text {
+	margin-top: 5px;
+	font-size: 12px;
+	line-height: 1.4;
+}
+.gallery-caption {
+}
+
+/**
+ * Alignment
+ */
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1.5em;
+}
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1.5em;
+}
+.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/**
+ * .sticky ( Sticky Posts )
+ * Setting by layout.css
+ */
+.sticky {
+}
+
+/**
+ * .bypostauthor
+ */
+.bypostauthor {
+}

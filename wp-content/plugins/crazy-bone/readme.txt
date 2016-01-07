@@ -3,8 +3,8 @@ Contributors: wokamoto, megumithemes
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJCY7XB8F4&lc=JP&item_name=WordPress%20Plugins&item_number=wp%2dplugins&currency_code=JPY&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: log, login, users
 Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 0.5.2
+Tested up to: 4.3.1
+Stable tag: 0.6.0
 
 Tracks user name, time of login, IP address and browser user agent.
 
@@ -32,9 +32,32 @@ none
 
 1. The admin page
 
-== Changelog == 
+== Changelog ==
+
+**0.6.0 - Dec. 5, 2016
+
+fixed XSS.
+Unauthenticated attackers can inject html/js into User-Agent HTTP request header resulting in persistent XSS on page /wp-admin/users.php?page=crazy-bone%2Fplugin.php.
+
+
+**0.5.6 - Dec. 5, 2016
+
+fixed minor bug.
+
+**0.5.5 - Jan. 18, 2015**
+
+Pagination doesn't work correctly.
+
+**0.5.4 - Dec. 17, 2014**
+
+Fix "Redefining already defined constructor" warning
+
+**0.5.3 - Oct. 20, 2014**
+
+source code refactoring.
 
 **0.5.2 - Oct. 23, 2013**
+
 action hook fix, sql syntax fix
 
 **0.5.1 - Sep. 9, 2013**

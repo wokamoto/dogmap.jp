@@ -1,28 +1,25 @@
 <?php
 
-if ( !function_exists( 'rawurlencode_deep' ) ) :
 /**
- * Navigates through an array and raw encodes the values to be used in a URL.
- *
- * @since WordPress 3.4.0
- *
- * @param array|string $value The array or string to be encoded.
- * @return array|string $value The encoded array (or string from the callback).
- */
-function rawurlencode_deep( $value ) {
-	return is_array( $value ) ? array_map( 'rawurlencode_deep', $value ) : rawurlencode( $value );
-}
-endif;
+* Required for class.media-extractor.php to match expected function naming convention.
+*
+* @param $url Can be just the $url or the whole $atts array
+* @return bool|mixed The Youtube video ID via jetpack_get_youtube_id
+*/
 
-if ( !function_exists( 'get_youtube_id' ) ) :
+function jetpack_shortcode_get_youtube_id( $url ) {
+    return jetpack_get_youtube_id( $url );
+}
+
 /**
 * @param $url Can be just the $url or the whole $atts array
 * @return bool|mixed The Youtube video ID
 */
-function get_youtube_id( $url ) {
+function jetpack_get_youtube_id( $url ) {
 	// Do we have an $atts array?  Get first att
-	if ( is_array( $url ) )
-		$url = $url[0];
+	if ( is_array( $url ) ) {
+		$url = reset( $url );
+	}
 
 	$url = youtube_sanitize_url( $url );
 	$url = parse_url( $url );
@@ -44,7 +41,6 @@ function get_youtube_id( $url ) {
 
 	return $id;
 }
-endif;
 
 if ( !function_exists( 'youtube_sanitize_url' ) ) :
 /**
@@ -67,4 +63,28 @@ function youtube_sanitize_url( $url ) {
 
 	return $url;
 }
+endif;
+
+/**
+ * Merge in three string helper functions from WPCOM.
+ *
+ * @see WPCOM/wp-content/mu-plugins/string-helpers.php
+ */
+if ( ! function_exists( 'wp_startswith' ) ) :
+	function wp_startswith( $haystack, $needle ) {
+		return 0 === strpos( $haystack, $needle );
+	}
+endif;
+
+
+if ( ! function_exists( 'wp_endswith' ) ) :
+	function wp_endswith( $haystack, $needle ) {
+		return $needle === substr( $haystack, -strlen( $needle ));
+	}
+endif;
+
+if ( ! function_exists( 'wp_in' ) ) :
+	function wp_in( $needle, $haystack ) {
+		return false !== strpos( $haystack, $needle );
+	}
 endif;

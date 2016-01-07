@@ -50,9 +50,8 @@ elseif (version_compare($wp_version, "2.5", ">="))
 	$jquery_ver = '1.2.3';
 
 if (AJAX_LIBS_GOOGLE) {
-	$schema = is_ssl() ? 'https' : 'http';
-	define('GOOGLE_JS_API_URL',           "{$schema}://www.google.com/jsapi");
-	define('AJAX_LIBS_GOOGLE_URL',        "{$schema}://ajax.googleapis.com/ajax/libs/");
+	define('GOOGLE_JS_API_URL',           'http://www.google.com/jsapi');
+	define('AJAX_LIBS_GOOGLE_URL',        'http://ajax.googleapis.com/ajax/libs/');
 	define('AJAX_LIBS_PROTOTYPE_JS_VER',  '1.6.0.3');
 	define('AJAX_LIBS_SCRIPTACULOUS_VER', '1.8.2');
 	define('AJAX_LIBS_JQUERY_VER',        $jquery_ver);

@@ -7,6 +7,7 @@
  * Requires Connection: No
  * Auto Activate: No
  * Module Tags: Appearance
+ * Additional Search Queries: scroll, infinite, infinite scroll
  */
 
 /**
@@ -123,6 +124,7 @@ class Jetpack_Infinite_Scroll_Extras {
 		if ( ! is_a( $theme, 'WP_Theme' ) && ! is_array( $theme ) )
 			return;
 
+		/** This filter is already documented in modules/infinite-scroll/infinity.php */
 		$customization_file = apply_filters( 'infinite_scroll_customization_file', dirname( __FILE__ ) . "/infinite-scroll/themes/{$theme['Stylesheet']}.php", $theme['Stylesheet'] );
 
 		if ( is_readable( $customization_file ) ) {
@@ -148,7 +150,7 @@ class Jetpack_Infinite_Scroll_Extras {
 		// Abort if Stats module isn't active
 		if ( in_array( 'stats', Jetpack::get_active_modules() ) ) {
 			// Abort if user is logged in but logged-in users shouldn't be tracked.
-			if ( is_user_logged_in() ) {
+			if ( is_user_logged_in() && function_exists( 'stats_get_options' ) ) {
 				$stats_options = stats_get_options();
 				$track_loggedin_users = isset( $stats_options['reg_users'] ) ? (bool) $stats_options['reg_users'] : false;
 
@@ -185,6 +187,23 @@ class Jetpack_Infinite_Scroll_Extras {
 	 * @return null
 	 */
 	public function action_wp_enqueue_scripts() {
+		// Do not load scripts and styles on singular pages and static pages
+		$load_scripts_and_styles = ! ( is_singular() || is_page() );
+		if (
+			/**
+			 * Allow plugins to enqueue all Infinite Scroll scripts and styles on singular pages as well.
+			 *
+			 *  @module infinite-scroll
+			 *
+			 * @since 3.1.0
+			 *
+			 * @param bool $load_scripts_and_styles Should scripts and styles be loaded on singular pahes and static pages. Default to false.
+			 */
+			! apply_filters( 'jetpack_infinite_scroll_load_scripts_and_styles', $load_scripts_and_styles )
+		) {
+			return;
+		}
+
 		// VideoPress stand-alone plugin
 		global $videopress;
 		if ( ! empty( $videopress ) && The_Neverending_Home_Page::archive_supports_infinity() && is_a( $videopress, 'VideoPress' ) && method_exists( $videopress, 'enqueue_scripts' ) ) {
@@ -193,11 +212,12 @@ class Jetpack_Infinite_Scroll_Extras {
 
 		// VideoPress Jetpack module
 		if ( Jetpack::is_module_active( 'videopress' ) ) {
-			Jetpack_VideoPress_Shortcode::enqueue_scripts();
+			wp_enqueue_script( 'videopress' );
 		}
 
 		// Fire the post_gallery action early so Carousel scripts are present.
 		if ( Jetpack::is_module_active( 'carousel' ) ) {
+			/** This filter is already documented in core/wp-includes/media.php */
 			do_action( 'post_gallery', '', '' );
 		}
 
@@ -207,12 +227,18 @@ class Jetpack_Infinite_Scroll_Extras {
 		}
 
 		// Core's Audio and Video Shortcodes
-		if ( 'mediaelement' === apply_filters( 'wp_audio_shortcode_library', 'mediaelement' ) ) {
+		if (
+			/** This filter is already documented in core/wp-includes/media.php */
+			'mediaelement' === apply_filters( 'wp_audio_shortcode_library', 'mediaelement' )
+		) {
 			wp_enqueue_style( 'wp-mediaelement' );
 			wp_enqueue_script( 'wp-mediaelement' );
 		}
 
-		if ( 'mediaelement' === apply_filters( 'wp_video_shortcode_library', 'mediaelement' ) ) {
+		if (
+			/** This filter is already documented in core/wp-includes/media.php */
+			'mediaelement' === apply_filters( 'wp_video_shortcode_library', 'mediaelement' )
+		) {
 			wp_enqueue_style( 'wp-mediaelement' );
 			wp_enqueue_script( 'wp-mediaelement' );
 		}

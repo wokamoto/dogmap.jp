@@ -46,7 +46,7 @@ class P3_Profiler_Plugin {
 		// Version check, only 3.3+
 		if ( ! version_compare( $wp_version, '3.3', '>=' ) ) {
 			if ( function_exists( 'deactivate_plugins' ) )
-				deactivate_plugins( __FILE__ );
+				deactivate_plugins( P3_PATH . DIRECTORY_SEPARATOR . 'p3-profiler.php' );
 			die( '<strong>P3</strong> requires WordPress 3.3 or later' );
 		}
 
@@ -75,9 +75,6 @@ class P3_Profiler_Plugin {
 		$opts['debug'] = false;
 		update_option( 'p3-profiler_options', $opts );
 		update_option( 'p3-profiler_debug_log', array() );
-		if ( !empty( $p3_profiler ) ) {
-			remove_action( 'shutdown', array( $p3_profiler, 'shutdown_handler' ) );
-		}
 
 		// Remove mu-plugin
 		if ( file_exists( WPMU_PLUGIN_DIR . '/p3-profiler.php' ) ) {

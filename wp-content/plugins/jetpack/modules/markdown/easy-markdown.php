@@ -148,8 +148,9 @@ class WPCom_Markdown {
 	 * @return null
 	 */
 	protected function load_markdown_for_comments() {
-		add_filter( 'preprocess_comment', array( $this, 'preprocess_comment' ) );
-		add_filter( 'comment_save_pre', array( $this, 'comment_save_pre' ) );
+		// Use priority 9 so that Markdown runs before KSES, which can clean up
+		// any munged HTML.
+		add_filter( 'pre_comment_content', array( $this, 'pre_comment_content' ), 9 );
 	}
 
 	/**
@@ -157,8 +158,7 @@ class WPCom_Markdown {
 	 * @return null
 	 */
 	protected function unload_markdown_for_comments() {
-		remove_filter( 'preprocess_comment', array( $this, 'preprocess_comment' ) );
-		remove_filter( 'comment_save_pre', array( $this, 'comment_save_pre' ) );
+		remove_filter( 'pre_comment_content', array( $this, 'pre_comment_content' ), 9 );
 	}
 
 	/**
@@ -294,6 +294,15 @@ class WPCom_Markdown {
 	 * @return string support url
 	 */
 	protected function get_support_url() {
+		/**
+		 * Filter the Markdown support URL.
+		 *
+		 * @module markdown
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string $url Markdown support URL.
+		 */
 		return apply_filters( 'easy_markdown_support_url', 'http://en.support.wordpress.com/markdown-quick-reference/' );
 	}
 
@@ -422,17 +431,32 @@ class WPCom_Markdown {
 			if ( $this->is_markdown( $post_id ) && ! empty( $post_data['post_content_filtered'] ) ) {
 				$post_data['post_content_filtered'] = '';
 			}
+			// we have no context to determine supported post types in the `post_content_pre` hook,
+			// which already ran to sanitize code blocks. Undo that.
+			$post_data['post_content'] = $this->get_parser()->codeblock_restore( $post_data['post_content'] );
 			return $post_data;
 		}
 		// rejigger post_content and post_content_filtered
 		// revisions are already in the right place, except when we're restoring, but that's taken care of elsewhere
-		if ( 'revision' !== $post_data['post_type'] ) {
+		// also prevent quick edit feature from overriding already-saved markdown (issue https://github.com/Automattic/jetpack/issues/636)
+		if ( 'revision' !== $post_data['post_type'] && ! isset( $_POST['_inline_edit'] ) ) {
+			/**
+			 * Filter the original post content passed to Markdown.
+			 *
+			 * @module markdown
+			 *
+			 * @since 2.8.0
+			 *
+			 * @param string $post_data['post_content'] Untransformed post content.
+			 */
 			$post_data['post_content_filtered'] = apply_filters( 'wpcom_untransformed_content', $post_data['post_content'] );
 			$post_data['post_content'] = $this->transform( $post_data['post_content'], array( 'id' => $post_id ) );
+			/** This filter is already documented in core/wp-includes/default-filters.php */
 			$post_data['post_content'] = apply_filters( 'content_save_pre', $post_data['post_content'] );
 		} elseif ( 0 === strpos( $post_data['post_name'], $post_data['post_parent'] . '-autosave' ) ) {
 			// autosaves for previews are weird
 			$post_data['post_content'] = $this->transform( $post_data['post_content'], array( 'id' => $post_data['post_parent'] ) );
+			/** This filter is already documented in core/wp-includes/default-filters.php */
 			$post_data['post_content'] = apply_filters( 'content_save_pre', $post_data['post_content'] );
 		}
 
@@ -471,20 +495,12 @@ class WPCom_Markdown {
 
 	/**
 	 * Run a comment through Markdown. Easy peasy.
-	 * @param  string $comment_data A comment.
-	 * @return string               A comment, processed by Markdown.
+	 * @param  string $content
+	 * @return string
 	 */
-	public function preprocess_comment( $comment_data ) {
-		$comment_data['comment_content'] = $this->transform( $comment_data['comment_content'], array(
-			'id' => $this->comment_hash( $comment_data['comment_content'] )
-		) );
-		return $comment_data;
-	}
-
-	public function comment_save_pre( $content ) {
+	public function pre_comment_content( $content ) {
 		return $this->transform( $content, array(
 			'id' => $this->comment_hash( $content ),
-			'unslash' => false
 		) );
 	}
 
@@ -513,6 +529,16 @@ class WPCom_Markdown {
 		if ( $args['unslash'] )
 			$text = wp_unslash( $text );
 
+		/**
+		 * Filter the content to be run through Markdown, before it's transformed by Markdown.
+		 *
+		 * @module markdown
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string $text Content to be run through Markdown
+		 * @param array $args Array of Markdown options.
+		 */
 		$text = apply_filters( 'wpcom_markdown_transform_pre', $text, $args );
 		// ensure our paragraphs are separated
 		$text = str_replace( array( '</p><p>', "</p>\n<p>" ), "</p>\n\n<p>", $text );
@@ -532,6 +558,16 @@ class WPCom_Markdown {
 		$text = preg_replace( '/((id|href)="#?fn(ref)?):/', "$1-", $text );
 		// Markdown inserts extra spaces to make itself work. Buh-bye.
 		$text = rtrim( $text );
+		/**
+		 * Filter the content to be run through Markdown, after it was transformed by Markdown.
+		 *
+		 * @module markdown
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string $text Content to be run through Markdown
+		 * @param array $args Array of Markdown options.
+		 */
 		$text = apply_filters( 'wpcom_markdown_transform_post', $text, $args );
 
 		// probably need to re-slash

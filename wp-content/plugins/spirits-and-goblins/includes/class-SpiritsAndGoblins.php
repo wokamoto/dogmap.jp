@@ -22,10 +22,18 @@ class SpiritsAndGoblins {
 
 	private $options = array();
 
-	function __construct($options = null) {
-		self::$instance = $this;
+	private function __construct() {}
 
-		$this->options = isset($options) ? $options : SpiritsAndGoblins_Admin::get_option();
+	public static function get_instance() {
+		if( !isset( self::$instance ) ) {
+			$c = __CLASS__;
+			self::$instance = new $c();    
+		}
+		return self::$instance;
+	}
+
+	public function init() {
+		$this->options = SpiritsAndGoblins_Admin::get_option();
 
 		add_action('login_form', array($this, 'login_form'));
 		add_action('login_form_otp', array($this, 'login_form_otp'));

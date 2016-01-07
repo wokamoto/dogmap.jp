@@ -5,27 +5,32 @@ defined( 'WPCOM_JSON_API__DEBUG' ) or define( 'WPCOM_JSON_API__DEBUG', false );
 class WPCOM_JSON_API {
 	static $self = null;
 
-	var $endpoints = array();
+	public $endpoints = array();
 
-	var $token_details = array();
+	public $token_details = array();
 
-	var $method = '';
-	var $url = '';
-	var $path = '';
-	var $version = null;
-	var $query = array();
-	var $post_body = null;
-	var $files = null;
-	var $content_type = null;
-	var $accept = '';
+	public $method = '';
+	public $url = '';
+	public $path = '';
+	public $version = null;
+	public $query = array();
+	public $post_body = null;
+	public $files = null;
+	public $content_type = null;
+	public $accept = '';
 
-	var $_server_https;
-	var $exit = true;
-	var $public_api_scheme = 'https';
+	public $_server_https;
+	public $exit = true;
+	public $public_api_scheme = 'https';
 
-	var $trapped_error = null;
-	var $did_output = false;
+	public $output_status_code = 200;
 
+	public $trapped_error = null;
+	public $did_output = false;
+
+	/**
+	 * @return WPCOM_JSON_API instance
+	 */
 	static function init( $method = null, $url = null, $post_body = null ) {
 		if ( !self::$self ) {
 			$class = function_exists( 'get_called_class' ) ? get_called_class() : __CLASS__;
@@ -52,6 +57,17 @@ class WPCOM_JSON_API {
 		case 't' :
 		case 'true' :
 			return true;
+		}
+
+		return false;
+	}
+
+	static function is_falsy( $value ) {
+		switch ( strtolower( (string) $value ) ) {
+			case '0' :
+			case 'f' :
+			case 'false' :
+				return true;
 		}
 
 		return false;
@@ -106,7 +122,7 @@ class WPCOM_JSON_API {
 				}
 			} else {
 				$this->post_body = $post_body;
-				$this->content_type = '{' === $this->post_body[0] ? 'application/json' : 'application/x-www-form-urlencoded';
+				$this->content_type = '{' === isset( $this->post_body[0] ) && $this->post_body[0] ? 'application/json' : 'application/x-www-form-urlencoded';
 			}
 		} else {
 			$this->post_body = null;
@@ -121,15 +137,35 @@ class WPCOM_JSON_API {
 	}
 
 	function serve( $exit = true ) {
+		ini_set( 'display_errors', false );
+
 		$this->exit = (bool) $exit;
 
-		add_filter( 'home_url', array( $this, 'ensure_http_scheme_of_home_url' ), 10, 3 );
+		// This was causing problems with Jetpack, but is necessary for wpcom
+		// @see https://github.com/Automattic/jetpack/pull/2603
+		// @see r124548-wpcom
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			add_filter( 'home_url', array( $this, 'ensure_http_scheme_of_home_url' ), 10, 3 );
+		}
 
 		add_filter( 'user_can_richedit', '__return_true' );
 
 		add_filter( 'comment_edit_pre', array( $this, 'comment_edit_pre' ) );
 
 		$initialization = $this->initialize();
+		if ( 'OPTIONS' == $this->method ) {
+			/**
+			 * Fires before the page output.
+			 * Can be used to specify custom header options.
+			 *
+			 * @module json-api
+			 *
+			 * @since 3.1.0
+			 */
+			do_action( 'wpcom_json_api_options' );
+			return $this->output( 200, '', 'plain/text' );
+		}
+
 		if ( is_wp_error( $initialization ) ) {
 			$this->output_error( $initialization );
 			return;
@@ -138,8 +174,20 @@ class WPCOM_JSON_API {
 		// Normalize path and extract API version
 		$this->path = untrailingslashit( $this->path );
 		preg_match( '#^/rest/v(\d+(\.\d+)*)#', $this->path, $matches );
-		$this->path = substr( $this->path, strlen( $matches[0] ) );
-		$this->version = $matches[1];
+
+		// HACK Alert!
+		// In order to workaround a bug in the iOS 5.6 release we need to handle /rest/sites/new as if it was
+		// /rest/v1.1/sites/new
+		if ( $this->path === '/rest/sites/new' ) {
+			$this->version = '1.1';
+			$this->path = '/sites/new';
+		} else if ( $this->path === '/rest/users/new' ) {
+			$this->version = '1.1';
+			$this->path = '/users/new';
+		} else {
+			$this->path = substr( $this->path, strlen( $matches[0] ) );
+			$this->version = $matches[1];
+		}
 
 		$allowed_methods = array( 'GET', 'POST' );
 		$four_oh_five = false;
@@ -148,6 +196,12 @@ class WPCOM_JSON_API {
 		$matching_endpoints = array();
 
 		if ( $is_help ) {
+			$origin = get_http_origin();
+
+			if ( !empty( $origin ) && 'GET' == $this->method ) {
+				header( 'Access-Control-Allow-Origin: ' . esc_url_raw( $origin ) );
+			}
+
 			$this->path = substr( rtrim( $this->path, '/' ), 0, -5 );
 			// Show help for all matching endpoints regardless of method
 			$methods = $allowed_methods;
@@ -179,6 +233,12 @@ class WPCOM_JSON_API {
 			$endpoint_path        = $endpoint_path_versions[0];
 			$endpoint_min_version = $endpoint_path_versions[1];
 			$endpoint_max_version = $endpoint_path_versions[2];
+
+			// Make sure max_version is not less than min_version
+			if ( version_compare( $endpoint_max_version, $endpoint_min_version, '<' ) ) {
+				$endpoint_max_version = $endpoint_min_version;
+			}
+
 			foreach ( $methods as $method ) {
 				if ( !isset( $endpoints_by_method[$method] ) ) {
 					continue;
@@ -231,18 +291,25 @@ class WPCOM_JSON_API {
 		}
 
 		if ( $is_help ) {
+			/**
+			 * Fires before the API output.
+			 *
+			 * @since 1.9.0
+			 *
+			 * @param string help.
+			 */
 			do_action( 'wpcom_json_api_output', 'help' );
 			if ( 'json' === $help_content_type ) {
 				$docs = array();
 				foreach ( $matching_endpoints as $matching_endpoint ) {
-					if ( !$matching_endpoint[0]->in_testing || WPCOM_JSON_API__DEBUG )
+					if ( $matching_endpoint[0]->is_publicly_documentable() || WPCOM_JSON_API__DEBUG )
 						$docs[] = call_user_func( array( $matching_endpoint[0], 'generate_documentation' ) );
 				}
 				return $this->output( 200, $docs );
 			} else {
 				status_header( 200 );
 				foreach ( $matching_endpoints as $matching_endpoint ) {
-					if ( !$matching_endpoint[0]->in_testing || WPCOM_JSON_API__DEBUG )
+					if ( $matching_endpoint[0]->is_publicly_documentable() || WPCOM_JSON_API__DEBUG )
 						call_user_func( array( $matching_endpoint[0], 'document' ) );
 				}
 			}
@@ -253,17 +320,21 @@ class WPCOM_JSON_API {
 			return $this->output( 404, '', 'text/plain' );
 		}
 
+		/** This action is documented in class.json-api.php */
 		do_action( 'wpcom_json_api_output', $endpoint->stat );
 
 		$response = $this->process_request( $endpoint, $path_pieces );
 
-		if ( !$response ) {
+		if ( !$response && !is_array( $response ) ) {
 			return $this->output( 500, '', 'text/plain' );
 		} elseif ( is_wp_error( $response ) ) {
 			return $this->output_error( $response );
 		}
 
-		return $this->output( 200, $response );
+		$output_status_code = $this->output_status_code;
+		$this->set_output_status_code();
+
+		return $this->output( $output_status_code, $response );
 	}
 
 	function process_request( WPCOM_JSON_API_Endpoint $endpoint, $path_pieces ) {
@@ -279,7 +350,13 @@ class WPCOM_JSON_API {
 		else
 			$this->output( $status_code, $response, $content_type );
 		$this->exit = $exit;
-		$this->finish_request();
+		if ( ! defined( 'XMLRPC_REQUEST' ) || ! XMLRPC_REQUEST ) {
+			$this->finish_request();
+		}
+	}
+
+	function set_output_status_code( $code = 200 ) {
+		$this->output_status_code = $code;
 	}
 
 	function output( $status_code, $response = null, $content_type = 'application/json' ) {
@@ -290,6 +367,10 @@ class WPCOM_JSON_API {
 			return $content_type;
 		}
 		$this->did_output = true;
+
+		// 400s and 404s are allowed for all origins
+		if ( 404 == $status_code || 400 == $status_code )
+			header( 'Access-Control-Allow-Origin: *' );
 
 		if ( is_null( $response ) ) {
 			$response = new stdClass;
@@ -332,7 +413,11 @@ class WPCOM_JSON_API {
 		}
 
 		if ( $callback ) {
-			echo "$callback(";
+			// Mitigate Rosetta Flash [1] by setting the Content-Type-Options: nosniff header
+			// and by prepending the JSONP response with a JS comment.
+			// [1] http://miki.it/blog/2014/7/8/abusing-jsonp-with-rosetta-flash/
+			echo "/**/$callback(";
+
 		}
 		echo $this->json_encode( $response );
 		if ( $callback ) {
@@ -346,9 +431,7 @@ class WPCOM_JSON_API {
 		return $content_type;
 	}
 
-	function output_error( $error ) {
-		if ( function_exists( 'bump_stats_extra' ) )
-			bump_stats_extra( 'rest-api-errors', $this->token_details['client_id'] );
+	public static function serializable_error ( $error ) {
 
 		$status_code = $error->get_error_data();
 
@@ -362,17 +445,35 @@ class WPCOM_JSON_API {
 			'error'   => $error->get_error_code(),
 			'message' => $error->get_error_message(),
 		);
-		return $this->output( $status_code, $response );
+		return array(
+			'status_code' => $status_code,
+			'errors' => $response
+		);
+	}
+
+	function output_error( $error ) {
+		if ( function_exists( 'bump_stats_extra' ) ) {
+			$client_id = ! empty( $this->token_details['client_id'] ) ? $this->token_details['client_id'] : 0;
+			bump_stats_extra( 'rest-api-errors', $client_id );
+		}
+
+		$error_response = $this->serializable_error( $error );
+
+		return $this->output( $error_response[ 'status_code'], $error_response['errors'] );
 	}
 
 	function filter_fields( $response ) {
-		if ( empty( $this->query['fields'] ) || ! empty( $response['error'] ) || ! empty( $this->endpoint->custom_fields_filtering ) )
+		if ( empty( $this->query['fields'] ) || ( is_array( $response ) && ! empty( $response['error'] ) ) || ! empty( $this->endpoint->custom_fields_filtering ) )
 			return $response;
 
 		$fields = array_map( 'trim', explode( ',', $this->query['fields'] ) );
 
+		if ( is_object( $response ) ) {
+			$response = (array) $response;
+		}
+
 		$has_filtered = false;
-		if ( empty( $response['ID'] ) ) {
+		if ( is_array( $response ) && empty( $response['ID'] ) ) {
 			$keys_to_filter = array(
 				'categories',
 				'comments',
@@ -393,23 +494,27 @@ class WPCOM_JSON_API {
 			);
 
 			foreach ( $keys_to_filter as $key_to_filter ) {
-				if ( empty( $response[ $key_to_filter ] ) || $has_filtered )
+				if ( ! isset( $response[ $key_to_filter ] ) || $has_filtered )
 					continue;
 
 				foreach ( $response[ $key_to_filter ] as $key => $values ) {
 					if ( is_object( $values ) ) {
 						$response[ $key_to_filter ][ $key ] = (object) array_intersect_key( (array) $values, array_flip( $fields ) );
-						$has_filtered = true;
 					} elseif ( is_array( $values ) ) {
 						$response[ $key_to_filter ][ $key ] = array_intersect_key( $values, array_flip( $fields ) );
-						$has_filtered = true;
 					}
 				}
+
+				$has_filtered = true;
 			}
 		}
 
 		if ( ! $has_filtered ) {
-			$response = array_intersect_key( $response, array_flip( $fields ) );
+			if ( is_object( $response ) ) {
+				$response = (object) array_intersect_key( (array) $response, array_flip( $fields ) );
+			} else if ( is_array( $response ) ) {
+				$response = array_intersect_key( $response, array_flip( $fields ) );
+			}
 		}
 
 		return $response;
@@ -446,11 +551,30 @@ class WPCOM_JSON_API {
 	}
 
 	function switch_to_blog_and_validate_user( $blog_id = 0, $verify_token_for_blog = true ) {
+		if ( $this->is_restricted_blog( $blog_id ) ) {
+			return new WP_Error( 'unauthorized', 'User cannot access this restricted blog', 403 );
+		}
+
 		if ( -1 == get_option( 'blog_public' ) && !current_user_can( 'read' ) ) {
 			return new WP_Error( 'unauthorized', 'User cannot access this private blog.', 403 );
 		}
 
 		return $blog_id;
+	}
+
+	// Returns true if the specified blog ID is a restricted blog
+	function is_restricted_blog( $blog_id ) {
+		/**
+		 * Filters all REST API access and return a 403 unauthorized response for all Restricted blog IDs.
+		 *
+		 * @module json-api
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param array $array Array of Blog IDs.
+		 */
+		$restricted_blog_ids = apply_filters( 'wpcom_json_api_restricted_blog_ids', array() );
+		return true === in_array( $blog_id, $restricted_blog_ids );
 	}
 
 	function post_like_count( $blog_id, $post_id ) {

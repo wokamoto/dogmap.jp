@@ -4,13 +4,16 @@ Donate link: http://yoast.com/donate/
 Tags: rss, footer
 Requires at least: 2.7
 Tested up to: 3.0.1
-stable tag: 0.9.8
+stable tag: 0.9.9
 
-This plugin makes it easy to add a line of content to the beginning or the end of all the articles in your feeds, for instance to display a link back to your blog.
+This plugin is no longer maintained and replaced by Yoast SEO.
 
 == Description ==
 
-This plugin makes it easy to add a line of content to the beginning or the end of all the articles in your feeds, for instance to display a link back to your blog.
+> <strong>PLEASE NOTE</strong>
+> This plugin no longer works and has been replaced by [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/).
+
+=== For historical reasons only: ===
 
 More info:
 
@@ -20,6 +23,9 @@ More info:
 * Check out the other [Wordpress plugins](http://yoast.com/wordpress/) by the same author.
 
 == Changelog ==
+
+= 0.9.9 =
+* Closing down the plugin entirely.
 
 = 0.9.8 =
 * Should not release updates before having had 2 cups of coffee. Fixes bug in 0.9.7 upgrade.

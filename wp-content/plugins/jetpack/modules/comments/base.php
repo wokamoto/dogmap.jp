@@ -270,6 +270,7 @@ class Highlander_Comments_Base {
 
 		// Set comment author cookies
 		if ( ( 'wordpress' != $id_source ) && is_user_logged_in() ) {
+			/** This filter is already documented in core/wp-includes/comment-functions.php */
 			$comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );
 			setcookie( 'comment_author_'       . COOKIEHASH, $comment->comment_author, time() + $comment_cookie_lifetime,              COOKIEPATH, COOKIE_DOMAIN );
 			setcookie( 'comment_author_email_' . COOKIEHASH, $comment->comment_author_email, time() + $comment_cookie_lifetime,        COOKIEPATH, COOKIE_DOMAIN );

@@ -27,11 +27,11 @@ class wokController {
 	var $admin_option, $admin_action, $admin_hook;
 	var $note, $error;
 	var $charset;
-	var $wp25, $wp26, $wp27, $wp28, $wp29, $wp30, $wp31, $wp32, $wp33, $wp34;
+	var $wp25, $wp26, $wp27, $wp28, $wp29, $wp30, $wp31, $wp32, $wp33, $wp34, $wp44;
 	var $inline_js;
 
-	var $jquery_js  = 'includes/js/jquery-1.8.3.min.js';
-	var $jquery_ver = '1.8.3';
+	var $jquery_js  = 'includes/js/jquery-1.4.2.min.js';
+	var $jquery_ver = '1.4.2';
 
 	var $jquery_noconflict_js = 'includes/js/jquery.noconflict.js';
 
@@ -52,7 +52,7 @@ class wokController {
 		$this->wp32    = version_compare($wp_version, "3.2", ">=");
 		$this->wp33    = version_compare($wp_version, "3.3", ">=");
 		$this->wp34    = version_compare($wp_version, "3.4", ">=");
-		$this->wp35    = version_compare($wp_version, "3.5", ">=");
+		$this->wp44    = version_compare($wp_version, "4.4", ">=");
 
 		$this->setPluginDir($file);
 		$this->loadTextdomain();
@@ -87,7 +87,7 @@ class wokController {
 		$this->file_path = $file;
 		$this->plugins_dir = trailingslashit(defined('PLUGINDIR') ? PLUGINDIR : 'wp-content/plugins');
 		$filename = explode("/", $this->file_path);
-		if(count($filename) <= 1) $filename = explode("€\", $this->file_path);
+		if(count($filename) <= 1) $filename = explode("\\", $this->file_path);
 		$this->plugin_dir  = $filename[count($filename) - 2];
 		$this->plugin_file = $filename[count($filename) - 1];
 		$this->plugin_url  = $this->wp_plugin_url($this->plugin_dir);
@@ -98,7 +98,7 @@ class wokController {
 		$this->textdomain_name = $this->plugin_dir;
 		$abs_plugin_dir = $this->wp_plugin_dir($this->plugin_dir);
 		$sub_dir = (!empty($sub_dir)
-			? preg_replace('/^€//', '', $sub_dir)
+			? preg_replace('/^\//', '', $sub_dir)
 			: (file_exists($abs_plugin_dir.'languages') ? 'languages' : (file_exists($abs_plugin_dir.'language') ? 'language' : (file_exists($abs_plugin_dir.'lang') ? 'lang' : '')))
 			);
 		$textdomain_dir = trailingslashit(trailingslashit($this->plugin_dir) . $sub_dir);
@@ -281,31 +281,25 @@ class wokController {
 		return trailingslashit( trailingslashit( defined('WP_CONTENT_DIR')
 			? WP_CONTENT_DIR
 			: trailingslashit(ABSPATH) . 'wp-content'
-			) . preg_replace('/^€//', '', $path) );
+			) . preg_replace('/^\//', '', $path) );
 	}
 
 	// WP_CONTENT_URL
 	function wp_content_url($path = '') {
-		if function_exists('content_url')
-			return content_url($path);
-		else
-			return trailingslashit( trailingslashit( defined('WP_CONTENT_URL')
-				? WP_CONTENT_URL
-				: trailingslashit(function_exists('site_url') ? site_url() : get_option('siteurl')) . 'wp-content'
-				) . preg_replace('/^€//', '', $path) );
+		return trailingslashit( trailingslashit( defined('WP_CONTENT_URL')
+			? WP_CONTENT_URL
+			: trailingslashit(get_option('siteurl')) . 'wp-content'
+			) . preg_replace('/^\//', '', $path) );
 	}
 
 	// WP_PLUGIN_DIR
 	function wp_plugin_dir($path = '') {
-		return trailingslashit($this->wp_content_dir( 'plugins/' . preg_replace('/^€//', '', $path) ));
+		return trailingslashit($this->wp_content_dir( 'plugins/' . preg_replace('/^\//', '', $path) ));
 	}
 
 	// WP_PLUGIN_URL
 	function wp_plugin_url($path = '') {
-		if (function_exists('plugins_url'))
-			return plugins_url($path):
-		else
-			return trailingslashit($this->wp_content_url( 'plugins/' . preg_replace('/^€//', '', $path) ));
+		return trailingslashit($this->wp_content_url( 'plugins/' . preg_replace('/^\//', '', $path) ));
 	}
 
 }
@@ -319,9 +313,6 @@ class wokScriptManager {
 	/*
 	* Constructor
 	*/
-	function wokScriptManager() {
-		$this->__construct();
-	}
 	function __construct() {
 //		global $wp_scripts;
 //		if (!is_a($wp_scripts, 'WP_Scripts'))
@@ -371,9 +362,9 @@ class wokScriptManager {
 
 	function printScript($js) {
 		if ($js != '') {
-			echo "<script type=€"text/javascript€">//<![CDATA[€n";
+			echo "<script type=\"text/javascript\">//<![CDATA[\n";
 			echo $js;
-			echo "//]]></script>€n";
+			echo "//]]></script>\n";
 		}
 	}
 

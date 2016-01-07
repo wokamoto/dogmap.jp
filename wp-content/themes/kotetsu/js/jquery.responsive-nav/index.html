@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>jquery.responsive-nav デモ</title>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<style type="text/css">
+	body {
+		margin: 0;
+		padding: 0;
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: 24px;
+		margin: 0 auto 20px;
+		padding: 20px 0 0;
+		width: 940px;
+	}
+	section {
+		border-top: #ddd solid 1px;
+		margin: 0 auto;
+		padding: 80px 0;
+		width: 940px;
+	}
+	section h1 {
+		margin: 0 0 20px;
+		padding: 0;
+	}
+	section h2 {
+		font-size: 20px;
+		margin: 40px auto 10px;
+	}
+	pre code {
+		background-color: #f5f5f5;
+		border: #ddd solid 1px;
+		border-radius: 5px;
+		display: block;
+		padding: 20px;
+	}
+
+	#fontsize {
+		float: left;
+		margin: 0 20px 0 0;
+	}
+	#inverse {
+		float: left;
+	}
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.responsive-nav.js"></script>
+	<link rel="stylesheet" type="text/css" href="jquery.responsive-nav.css" />
+	<script type="text/javascript">
+	jQuery( function( $ ) {
+		$( '#global-nav' ).responsive_nav();
+	} );
+	</script>
+	<style>
+	#global-nav {
+		background-color: #3886FC;
+	}
+	#global-nav ul li a {
+		color: #fff;
+		background-color: #3886FC;
+		font-size: 12px;
+		padding: 5px 20px;
+		text-decoration: none;
+	}
+	#global-nav ul li a:hover {
+		background-color: #5093F8;
+	}
+	#global-nav ul li ul {
+		display: none;
+	}
+	@media screen and ( max-width: 939px ) {
+		#responsive-btn {
+			display: block;
+			position: absolute;
+			right: 20px;
+			top: 10px;
+		}
+		h1, section {
+			padding-left: 20px;
+			padding-right: 20px;
+			width: auto;
+		}
+		section h1 {
+			padding-left: 0;
+			padding-right: 0;
+		}
+		pre {
+			overflow: hidden;
+		}
+	}
+	</style>
+</head>
+<body>
+
+<div id="responsive-btn"></div>
+<h1>jQuery.responsive-nav デモ</h1>
+
+<section>
+	<h1>デモ</h1>
+	<p>
+		画面幅が940px以上の場合はPC用のナビゲーションが、それ以下のときはスマートフォン用のナビゲーションが表示されます。スマートフォン用のナビゲーションは右上に表示される開閉ボタンをクリックすることで開閉します。
+	</p>
+	<div id="global-nav">
+		<ul>
+			<li><a href="">ホーム</a></li>
+			<li>
+				<a href="">会社案内</a>
+				<ul>
+					<li><a href="">組織図</a></li>
+					<li>
+						<a href="">部署案内</a>
+						<ul>
+							<li><a href="">営業部</a></li>
+							<li><a href="">経理部</a></li>
+							<li><a href="">システム開発部</a></li>
+							<li><a href="">サポート</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><a href="">よくあるご質問</a></li>
+			<li><a href="">お問い合わせ</a></li>
+		</ul>
+	<!-- end #global-nav" --></div>
+</section>
+
+<section>
+	<h1>jquery.responsive-nav の基本的な使い方</h1>
+	<p>
+		jQuery、jquery.responsive-nav.js の3つのjsファイルと、jquery.responsive-nav.css を読み込みます。そして任意の要素に対して responsive_nav() を実行します。
+	</p>
+
+	<h2>JavaScript</h2>
+	<pre><code>
+	jQuery( function( $ ) {
+		// 例として #global-nav に対して responsive_nav() を実行します。
+		$( '#global-nav' ).responsive_nav();
+	} );
+	</code></pre>
+
+	<h2>HTML</h2>
+	<p>
+		&lt;div id=&quot;responsive-btn&quot;&gt;&lt;/div&gt; は任意の場所に設置できます。<b>PC用のナビゲーションを表示するかスマートフォン用のナビゲーションを表示するかは、&lt;div id=&quot;responsive-btn&quot;&gt;&lt;/div&gt; が display: block か displya: none かで判断されます。</b>display: block だとスマートフォン用ナビゲーションを表示、display: none だとPC用のナビゲーションを表示します。デフォルトは display: none となるので、メディアクエリーで一定の幅より狭くなったときに display: block にするように設定します。
+	</p>
+	<p>
+		ナビゲーション自体は、ul・li の入れ子でマークアップする必要があります。その外側は特に指定はありませんが、responsive_nave() を実行するための要素で囲む必要があります。
+	</p>
+	<pre><code>
+&lt;div id=&quot;responsive-btn&quot;&gt;&lt;/div&gt;
+
+&lt;div id=&quot;global-nav&quot;&gt;
+	&lt;ul&gt;
+		&lt;li&gt;&lt;a href=&quot;&quot;&gt;ホーム&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;
+			&lt;a href=&quot;&quot;&gt;会社案内&lt;/a&gt;
+			&lt;ul&gt;
+				&lt;li&gt;&lt;a href=&quot;&quot;&gt;組織図&lt;/a&gt;&lt;/li&gt;
+				&lt;li&gt;
+					&lt;a href=&quot;&quot;&gt;部署案内&lt;/a&gt;
+					&lt;ul&gt;
+						&lt;li&gt;&lt;a href=&quot;&quot;&gt;営業部&lt;/a&gt;&lt;/li&gt;
+						&lt;li&gt;&lt;a href=&quot;&quot;&gt;経理部&lt;/a&gt;&lt;/li&gt;
+						&lt;li&gt;&lt;a href=&quot;&quot;&gt;システム開発部&lt;/a&gt;&lt;/li&gt;
+						&lt;li&gt;&lt;a href=&quot;&quot;&gt;サポート&lt;/a&gt;&lt;/li&gt;
+					&lt;/ul&gt;
+				&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&quot;&quot;&gt;よくあるご質問&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&quot;&quot;&gt;お問い合わせ&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;!-- end #global-nav&quot; --&gt;&lt;/div&gt;
+	</code></pre>
+
+	<h2>CSS</h2>
+	<p>
+		スマートフォン用のCSSはガチガチにあたっていますが、PC用のナビゲーションはデザインに自由度をもたすため、最低限のスタイルのみあてています。上記のデモではPC用のナビゲーションのデザインを行うために、下記のスタイルを追加であてています。また、メディアクエリーで幅が939px以下になったときにスマートフォン用のナビゲーションに変化するように設定しています。
+	</p>
+	<pre><code>
+
+	#global-nav {
+		background-color: #3886FC;
+	}
+	#global-nav ul li a {
+		color: #fff;
+		background-color: #3886FC;
+		font-size: 12px;
+		padding: 5px 20px;
+		text-decoration: none;
+	}
+	#global-nav ul li a:hover {
+		background-color: #5093F8;
+	}
+	#global-nav ul li ul {
+		display: none;
+	}
+	@media screen and ( max-width: 939px ) {
+		#responsive-btn {
+			display: block;
+			position: absolute;
+			right: 20px;
+			top: 10px;
+		}
+	}
+	</code></pre>
+</section>
+
+<section>
+	Copyright &copy; Takashi Kitajima All Rights Reserved.
+</section>
+</body>
+</html>

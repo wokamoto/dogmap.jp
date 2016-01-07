@@ -4,7 +4,7 @@ Plugin Name: Crazy Bone
 Plugin URI: https://github.com/wokamoto/crazy-bone
 Description: Tracks user name, time of login, IP address and browser user agent.
 Author: wokamoto
-Version: 0.5.2
+Version: 0.6.0
 Author URI: http://dogmap.jp/
 Text Domain: user-login-log
 Domain Path: /languages/
@@ -13,7 +13,7 @@ License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
 
-  Copyright 2013 (email : wokamoto1973@gmail.com)
+  Copyright 2013-2015 (email : wokamoto1973@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,6 +33,13 @@ if (!class_exists('DetectBrowsersController'))
 	require_once( dirname(__FILE__) . '/includes/detect_browsers.php' );
 if (!class_exists('DetectCountriesController'))
 	require_once( dirname(__FILE__) . '/includes/detect_countries.php' );
+
+$crazy_bone = crazy_bone::get_instance();
+$crazy_bone->init();
+$crazy_bone->add_action();
+
+register_activation_hook(__FILE__, array($crazy_bone, 'activate'));
+register_deactivation_hook(__FILE__, array($crazy_bone, 'deactivate'));
 
 load_plugin_textdomain(crazy_bone::TEXT_DOMAIN, false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
@@ -58,7 +65,19 @@ class crazy_bone {
 
 	static $instance;
 
-	function __construct(){
+	private function __construct() {}
+
+	public static function get_instance() {
+		if( !isset( self::$instance ) ) {
+			$c = __CLASS__;
+			self::$instance = new $c();
+		}
+
+		return self::$instance;
+	}
+
+	// initialize
+	public function init(){
 		global $wpdb;
 
 		self::$instance = $this;
@@ -74,7 +93,10 @@ class crazy_bone {
 			$this->options = array('installed' => false);
 		if (!isset($this->options['installed']) || !$this->options['installed'])
 			$this->activate();
+	}
 
+	// added action
+	public function add_action(){
 		add_action('wp_login', array($this, 'user_login_log'), 10, 2);
 		add_action('wp_authenticate', array($this, 'wp_authenticate_log'), 10, 2);
 		add_action('login_form_logout', array($this, 'user_logout_log'));
@@ -92,9 +114,6 @@ class crazy_bone {
 
 		add_action('wp_ajax_dismiss-ull-wp-pointer', array($this, 'ajax_dismiss'));
 		add_action('wp_ajax_nopriv_dismiss-ull-wp-pointer', array($this, 'ajax_dismiss'));
-
-		register_activation_hook(__FILE__, array($this, 'activate'));
-		register_deactivation_hook(__FILE__, array($this, 'deactivate'));
 	}
 
 	public function activate(){
@@ -219,13 +238,17 @@ CREATE TABLE `{$this->ull_table}` (
 	}
 
 	public function cookie_expired_log($cookie_elements) {
-		$user = get_userdatabylogin($cookie_elements['username']);
-		$this->logging($user->ID, 'cookie_expired');
+        if ( function_exists('get_userdatabylogin') ) {
+		    $user = get_userdatabylogin($cookie_elements['username']);
+		    $this->logging($user->ID, 'cookie_expired');
+        }
 	}
 
 	public function cookie_bad_hash_log($cookie_elements) {
-		$user = get_userdatabylogin($cookie_elements['username']);
-		$this->logging($user->ID, 'cookie_bad_hash');
+        if ( function_exists('get_userdatabylogin') ) {
+		    $user = get_userdatabylogin($cookie_elements['username']);
+		    $this->logging($user->ID, 'cookie_bad_hash');
+        }
 	}
 
 	function wp_authenticate_log($user_login, $user_password) {
@@ -356,7 +379,7 @@ CREATE TABLE `{$this->ull_table}` (
 			"</p>",
 			__('Caution!', self::TEXT_DOMAIN),
 			__('Someone has logged in from another IP.', self::TEXT_DOMAIN),
-			__("The someone's IP address :", self::TEXT_DOMAIN),
+			__("The someone\\'s IP address :", self::TEXT_DOMAIN),
 			__('Your current IP address :', self::TEXT_DOMAIN)
 			);
 ?>
@@ -430,7 +453,9 @@ jQuery(function(){setTimeout('get_ull_info()', 10000);});
 
 	// Detect Country
 	public static function detect_country($ip) {
-		$detect_countries = new DetectCountriesController();
+		static $detect_countries;
+		if ( !isset($detect_countries) )
+			$detect_countries = new DetectCountriesController();
 		list($country_name, $country_code) = $detect_countries->get_info($ip);
 		if ( empty($country_code) )
 			$country_code = __('UNKNOWN', self::TEXT_DOMAIN);
@@ -444,7 +469,9 @@ jQuery(function(){setTimeout('get_ull_info()', 10000);});
 
 	// Detect Browser
 	public static function detect_browser($ua) {
-		$detect_browsers = new DetectBrowsersController();
+		static $detect_browsers;
+		if ( !isset($detect_browsers) )
+			$detect_browsers = new DetectBrowsersController();
 		list($browser_name, $browser_code, $browser_ver, $os_name, $os_code, $os_ver, $pda_name, $pda_code, $pda_ver) = $detect_browsers->get_info($ua);
 		if (empty($os_code)) {
 			$os_name = !empty($pda_code) ? $pda_name : $browser_name;
@@ -475,53 +502,9 @@ jQuery(function(){setTimeout('get_ull_info()', 10000);});
 		return $time;
 	}
 
-	private function nice_time($dest) {
-		$dest = intval($dest);
-		$sour = intval(func_num_args() == 1 ? strtotime($this->time()) : func_get_arg(1));
-		$nicetime = '';
-
-		$tt = $dest - $sour;
-
-		$year = intval($tt / self::SEC_YEAR);
-		if ($year < -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . sprintf(__('%d years', self::TEXT_DOMAIN), abs($year));
-		} else if ($year == -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . __('one year', self::TEXT_DOMAIN);
-		}
-
-		$month = intval($tt / self::SEC_MONTH);
-		if ($month < -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . sprintf(__('%d months', self::TEXT_DOMAIN), abs($month));
-			$tt = ($dest + abs($year) * self::SEC_MONTH) - $sour;
-		} else if ($month == -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . __('one month', self::TEXT_DOMAIN);
-			$tt = ($dest + self::SEC_MONTH) - $sour;
-		}
-
-		$day = intval($tt / self::SEC_DAY);
-		if ($day < -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . sprintf(__('%d days', self::TEXT_DOMAIN), abs($day));
-		} else if ($day == -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . __('one day', self::TEXT_DOMAIN);
-		}
-
-		$hour = intval($tt / self::SEC_HOUR);
-		if ($hour  < -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . sprintf(__('%d hours', self::TEXT_DOMAIN), abs($hour));
-			$tt = ($dest + abs($hour) * self::SEC_HOUR) - $sour;
-		} else if ($hour == -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . __('one hour', self::TEXT_DOMAIN);
-			$tt = ($dest + self::SEC_HOUR) - $sour;
-		}
-
-		$minute = intval($tt / self::SEC_MINUITE);
-		if ($minute < -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . sprintf(__('%d minutes', self::TEXT_DOMAIN), abs($minute));
-		} else if ($minute == -1) {
-			$nicetime .= (!empty($nicetime) ? ' ' : '' ) . __('one minute', self::TEXT_DOMAIN);
-		}
-
-		return empty($nicetime) ? __('Just now!', self::TEXT_DOMAIN) : sprintf(__('%s ago.', self::TEXT_DOMAIN), $nicetime);
+	private function nice_time($date) {
+		$nicetime = human_time_diff($date, current_time('timestamp'));
+		return empty($nicetime) ? __('Just now!', self::TEXT_DOMAIN) : $nicetime;
 	}
 
 	public static function icon_img_tag($src, $alt, $title, $style = 'width:16px;height:16px;', $class = '') {
@@ -604,7 +587,7 @@ jQuery(function(){setTimeout('get_ull_info()', 10000);});
 			$start = (intval($page) - 1) * intval($per_page);
 
 		$page_links = paginate_links( array(
-			'base'      => add_query_arg( 'apage', '%#%' ) ,
+			'base'      => add_query_arg( 'paged', '%#%' ) ,
 			'format'    => '' ,
 			'prev_text' => __('&laquo;') ,
 			'next_text' => __('&raquo;') ,
@@ -698,7 +681,7 @@ jQuery(function(){setTimeout('get_ull_info()', 10000);});
 		$total = intval($wpdb->get_var("SELECT count(`{$this->ull_table}`.`ID`) {$sql}"));
 
 		// Pagination
-		$page = abs(intval(isset($_GET['apage']) ? $_GET['apage'] : 1));
+		$page = abs(intval(isset($_GET['paged']) ? $_GET['paged'] : 1));
 		$start = ($page - 1) * self::LIST_PER_PAGE;
 		$page_links_text = $this->get_pagenation($total, self::LIST_PER_PAGE, $page, $start);
 
@@ -812,11 +795,11 @@ $user_login =
 	(is_array($errors) && isset($errors['user_login']))
 	? $errors['user_login']
 	: $row->user_login;
-$password = 
+$password =
 	(is_array($errors) && isset($errors['user_login']) && isset($errors['user_password']))
 	? "{$errors['user_login']} / {$errors['user_password']}"
 	: '';
-$errors = 
+$errors =
 	(is_array($errors) && isset($errors['errors']))
 	? implode(', ', array_keys($errors['errors']))
 	: '';
@@ -827,13 +810,13 @@ if ($errors != 'invalid_username')
 <?php if ($user_id <= 0) { ?>
 <td class="username column-username"><?php echo $user_login; ?></td>
 <?php } ?>
-<td class="date column-date"><?php echo $row->activity_date; ?></td>
-<td class="status column-status"><?php echo $row->activity_status; ?></td>
-<td class="ip column-ip"><?php echo trim(self::get_country_flag($row->activity_IP, '', true) . '<br>' . $row->activity_IP); ?></td>
-<td class="agent column-agent"><?php echo trim(self::get_browser_icon($row->activity_agent) . '<br>' . $ua); ?></td>
-<td class="errors column-errors"><?php echo $errors; ?></td>
+<td class="date column-date"><?php echo esc_html($row->activity_date); ?></td>
+<td class="status column-status"><?php echo esc_html($row->activity_status); ?></td>
+<td class="ip column-ip"><?php echo trim(self::get_country_flag($row->activity_IP, '', true) . '<br>' . esc_html($row->activity_IP)); ?></td>
+<td class="agent column-agent"><?php echo trim(self::get_browser_icon($row->activity_agent) . '<br>' . esc_html($ua)); ?></td>
+<td class="errors column-errors"><?php echo esc_html($errors); ?></td>
 <?php if ($user_id == 0) { ?>
-<td class="password column-errors"><?php echo $password; ?></td>
+<td class="password column-errors"><?php echo esc_html($password); ?></td>
 <?php } ?>
 </tr>
 <?php $row_num++; }?>
@@ -873,7 +856,7 @@ if ($errors != 'invalid_username')
 		$total = intval($wpdb->get_var("SELECT count(*) from ({$sql}) as log"));
 
 		// Pagination
-		$page = abs(intval(isset($_GET['apage']) ? $_GET['apage'] : 1));
+		$page = abs(intval(isset($_GET['paged']) ? $_GET['paged'] : 1));
 		$start = ($page - 1) * self::LIST_PER_PAGE;
 		$page_links_text = $this->get_pagenation($total, self::LIST_PER_PAGE, $page, $start);
 
@@ -951,11 +934,11 @@ $user_login =
 	(is_array($errors) && isset($errors['user_login']))
 	? $errors['user_login']
 	: $row->user_login;
-$password = 
+$password =
 	(is_array($errors) && isset($errors['user_login']) && isset($errors['user_password']))
 	? "{$errors['user_login']} / {$errors['user_password']}"
 	: '';
-$errors = 
+$errors =
 	(is_array($errors) && isset($errors['errors']))
 	? implode(', ', array_keys($errors['errors']))
 	: '';
@@ -963,13 +946,13 @@ if ($errors != 'invalid_username')
 	$password = '';
 ?>
 <tr id="log-<?php echo $row_num ?>">
-<td class="username column-username"><?php echo $user_login; ?></td>
-<td class="status column-status"><?php echo $row->activity_status; ?></td>
-<td class="errors column-errors"><?php echo $errors; ?></td>
+<td class="username column-username"><?php echo esc_html($user_login); ?></td>
+<td class="status column-status"><?php echo esc_html($row->activity_status); ?></td>
+<td class="errors column-errors"><?php echo esc_html($errors); ?></td>
 <?php if ($user_id == 0) { ?>
-<td class="password column-errors"><?php echo $password; ?></td>
+<td class="password column-errors"><?php echo esc_html($password); ?></td>
 <?php } ?>
-<td class="count column-errors" style="text-align:right;"><?php echo $row->count; ?></td>
+<td class="count column-errors" style="text-align:right;"><?php echo esc_html($row->count); ?></td>
 </tr>
 <?php $row_num++; }?>
 </tbody>
@@ -986,5 +969,3 @@ if ($errors != 'invalid_username')
 <?php
 	}
 }
-
-new crazy_bone();

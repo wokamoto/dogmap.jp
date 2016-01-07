@@ -30,7 +30,7 @@
 }
 
 #enabled-services {
-	padding-bottom: 20px;	
+	padding-bottom: 20px;
 }
 
 #available-services, #enabled-services {
@@ -131,9 +131,6 @@ li.service.share-reddit span:before {
 li.service.share-tumblr span:before {
 	content: '\f214';
 }
-li.service.share-stumbleupon span:before {
-	content: '\f223';
-}
 li.service.share-pocket span:before {
 	content: '\f224';
 }
@@ -165,13 +162,14 @@ body.settings_page_sharing ul.preview li.preview-item, body.settings_page_sharin
 	text-decoration: none;
 }
 
-div.sd-social-icon ul.preview li.preview-item a span {
+div.sd-social-icon ul.preview li.preview-item a span,
+div.sd-social-icon .inner li.preview-item a span {
 	display: none;
 }
 
 div.sd-social-icon ul.preview li.preview-item.preview-custom a span {
 	display: inline-block;
-	
+
 }
 
 .services .preview li.share-custom a {
@@ -292,25 +290,17 @@ body.settings_page_sharing .advanced input[type=submit] {
 	height:21px;
 }
 
-.preview-stumbleupon .option-smart-on {
-	background: url(images/smart-stumbleupon.png) no-repeat top left;
-	background-size: 74px 18px;
-	width: 74px;
-	height: 18px;
-	margin-top: 1px;
-}
-
 .preview-facebook .option-smart-on {
 	background: url(images/smart-like.png) no-repeat top left;
-	background-size: 50px 20px;
-	width:50px;
+	background-size: 85px 20px;
+	width:85px;
 	height:20px;
 }
 
 .preview-twitter .option-smart-on {
 	background: url(images/smart-twitter.png?1) no-repeat top left;
-	background-size: 92px 20px;
-	width:92px;
+	background-size: 60px 20px;
+	width:60px;
 	height:20px;
 }
 
@@ -360,13 +350,13 @@ body.settings_page_sharing .advanced input[type=submit] {
 }
 
 .sharing-hidden li.share-end {
-    clear: both;
-    height: 0;
-    padding: 0px !important;
-    margin: 0px !important;
-    width: 0;
-    visibility: hidden;
-    float: none;
+	clear: both;
+	height: 0;
+	padding: 0px !important;
+	margin: 0px !important;
+	width: 0;
+	visibility: hidden;
+	float: none;
 }
 
 .preview .sharing-label {
@@ -398,4 +388,3 @@ body.settings_page_sharing .advanced input[type=submit] {
 	width: 0;
 	text-indent: 100%;
 }
-

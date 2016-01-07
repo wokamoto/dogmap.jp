@@ -3,8 +3,8 @@ Contributors: miyauchi, wokamoto
 Donate link: http://ninjax.cc/
 Tags: nginx, reverse proxy, cache
 Requires at least: 3.4
-Tested up to: 3.9
-Stable tag: 2.6.0
+Tested up to: 4.1
+Stable tag: 3.1.1
 
 Provides some functions of controlling Nginx proxy server cache.
 
@@ -36,7 +36,9 @@ Flush all proxy caches.
 `wp nginx flush`
 
 Show list of all proxy caches.
-`wp nginx list`
+`wp nginx list --format=csv`
+
+`wp nginx list --format=json`
 
 See help.
 `wp help nginx`
@@ -94,6 +96,38 @@ Setting the key for the reverse cache proxy.
 
 
 == Changelog ==
+
+= 3.1.1 =
+
+* Tested up to wp4.1
+
+= 3.1.0 =
+
+* Add filter for WP-API
+
+https://github.com/megumiteam/nginx-cache-controller/compare/3.0.0...3.1.0
+
+= 3.0.0 =
+
+* list sub command supported csv and json
+
+https://github.com/megumiteam/nginx-cache-controller/compare/2.9.0...3.0.0
+
+= 2.9.0 =
+
+* Add feed features.
+
+https://github.com/megumiteam/nginx-cache-controller/compare/2.8.0...2.9.0
+
+= 2.8.0 =
+
+* Don't load wp-cron.php when DISABLE_WP_CRON is defined.
+
+https://github.com/megumiteam/nginx-cache-controller/compare/2.7.0...2.8.0
+
+= 2.7.0 =
+
+https://github.com/megumiteam/nginx-cache-controller/compare/2.6.0...2.7.0
 
 = 2.6.0 =
 
@@ -166,4 +200,3 @@ The author must acknowledge the thing that the operation guarantee and the suppo
 == Contact ==
 
 * https://github.com/miya0001/nginx-champuru
-

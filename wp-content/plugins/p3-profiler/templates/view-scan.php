@@ -7,11 +7,11 @@ if ( !empty( self::$profile ) ) {
 	$url_stats = self::$profile->get_stats_by_url();
 	$domain    = @parse_url( self::$profile->report_url, PHP_URL_HOST );
 }
-$pie_chart_id                 = substr( md5( uniqid() ), -8 );
-$runtime_chart_id             = substr( md5( uniqid() ), -8 );
-$query_chart_id               = substr( md5( uniqid() ), -8 );
-$component_breakdown_chart_id = substr( md5( uniqid() ), -8 );
-$component_runtime_chart_id   = substr( md5( uniqid() ), -8 );
+$pie_chart_id                 = 'pie_'       . substr( md5( uniqid() ), -8 );
+$runtime_chart_id             = 'runtime_'   . substr( md5( uniqid() ), -8 );
+$query_chart_id               = 'query_'     . substr( md5( uniqid() ), -8 );
+$component_breakdown_chart_id = 'breakdown_' . substr( md5( uniqid() ), -8 );
+$component_runtime_chart_id   = 'runtime2_'  . substr( md5( uniqid() ), -8 );
 ?>
 <script type="text/javascript">
 
@@ -1080,3 +1080,5 @@ $plugin_list
 		
 	</div>
 </div>
+
+<?php do_action( 'p3_runtime_by_plugin_notifications', self::$profile ); ?>

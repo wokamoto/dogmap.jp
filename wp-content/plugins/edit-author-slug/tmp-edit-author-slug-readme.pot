@@ -1,0 +1,425 @@
+msgid ""
+msgstr "MIME-Version: 1.0\n"
+
+#. Name.
+msgid "Edit Author Slug"
+msgstr ""
+
+#. Short description.
+msgid "Allows an admin (or capable user) to edit the author slug of a user, and change the author base."
+msgstr ""
+
+#. Screenshot description.
+msgid "Settings"
+msgstr ""
+
+#. Screenshot description.
+msgid "Individual user author slug"
+msgstr ""
+
+#. Found in description header.
+msgid "Translations Available"
+msgstr ""
+
+#. Found in description list item.
+msgid "Dutch - props Juliette Reinders Folmer"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "This plugin allows an Admin to change the author slug (a.k.a. - nicename), without having to actually enter the database. You can also change the Author Base (the '/author/' portion of the author URLs). Two new fields will be added to your Dashboard. The \"Edit Author Slug\" field can be found under Users &gt; Your Profile or Users &gt; Authors &amp; Users (Users &gt; Users in WP 3.0). The \"Author Base\" field can be found under Settings &gt; Edit Author Slug. This allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug."
+msgstr ""
+
+#. Found in description paragraph.
+msgid ""
+"WordPress default structure\n"
+"http://example.com/author/username/"
+msgstr ""
+
+#. Found in description paragraph.
+msgid ""
+"Edit Author Slug allows for\n"
+"http://example.com/ninja/master-ninja/"
+msgstr ""
+
+#. Found in description paragraph.
+msgid ""
+"or using a role-based author base\n"
+"http://example.com/ida/master-splinter/ (for an Administrator Role)\n"
+"http://example.com/koga/leonardo/ (for a Subscriber Role)"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Development of this plugin takes place on <a href=\"https://github.com/thebrandonallen/edit-author-slug/\" title=\"Edit Author Slug on Github\">GitHub</a>. Pull requests are always welcome!"
+msgstr ""
+
+#. Found in installation list item.
+msgid "Upload <code>edit-author-slug</code> folder to your WordPress plugins directory (typically 'wp-content/plugins')"
+msgstr ""
+
+#. Found in installation list item.
+msgid "Activate the plugin through the 'Plugins' menu in WordPress"
+msgstr ""
+
+#. Found in installation list item.
+msgid "Go to Users &gt; Your Profile, or Users &gt; All Users &gt; (username), and edit the author slug."
+msgstr ""
+
+#. Found in installation list item.
+msgid "Click \"Update Profile\" or \"Update User\""
+msgstr ""
+
+#. Found in installation list item.
+msgid "Go to Settings &gt; Edit Author Slug to edit settings"
+msgstr ""
+
+#. Found in installation list item.
+msgid "Click \"Save Changes\""
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix loading of minified JS in the admin. Props nuyensgert."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix a few minor output escaping issues missed in the 1.1.0 release."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added the ability to update all author slugs at once with the \"Bulk Update\" tool."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Greatly improved the checks and error messages when manually updating an author slug for a user."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Further accessibility improvements to match WP 4.3."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improved validation of author slugs to better match that of WP."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix potential, although unlikely, persistent XSS vulnerability."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Prevent debug notice in admin. Props chesio."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Update heading tags to h1 to match WP 4.3."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Identical to 1.0.5, which failed to commit properly."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Add WP_User object as a parameter passed to the <code>ba_eas_show_user_nicename_options_list</code> filter"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Add Japanese translation files. Props SmokyJp."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed possible (although unlikely) cache invalidation issue"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Minor code improvements and optimizations."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improve upgrade routine for older installs"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improve output escaping"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Various minor fixes and improvements"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix custom roles slugs not saving"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "A number of localization fixes and improvements"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Role slug improvements"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Temporary, semi work-around for Co-Authors Plus [https://github.com/Automattic/Co-Authors-Plus/pull/204]"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix possible syntax error when updating a profile (props Christine https://wordpress.org/support/topic/undefined-property-error-1)"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added ability to do role-based author bases"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added ability to use role-based author templates"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Moderate code refactoring"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Various code fixes and improvements"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Add \"nickname\" as option for auto-update"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "First pass at unit test (only checks if the plugin is installed, for now)"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed loading of translation files. Looks in wp-content/plugins/edit-author-slug/languages. If you're running 3.7+ (and you are... aren't you?), it will fall back to wp-content/languages/plugins if a proper localization can't be found in the edit-author-slug folder."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed instances where the Author Base wouldn't change, or would result in a 404"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Update readme references to plugin settings"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix some copy pasta in settings"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Update screenshots"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Quickly caught a few things I missed, so this release was skipped. See 0.9.4 for changes"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix issue where any profile information other than the Author Slug could not be updated"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Minor code improvement"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Add 'Settings' link to plugins list table"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Allow Author Slug to be automatically created/updated based on a defined structure"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Switched to using the Settings API, which also means that all options moved to the Settings &gt; Edit Author Slug page"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Various code improvements/optimizations"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix a bug that prevented non-admin users from updating their profile"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Drastically improved error handling and feedback for author slug editing."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Restore duplicate author slug check as old method could alter the slug without any sort of warning."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Further improve the logic for flushing rewrite rules."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Introduce ba_eas_can_edit_author_slug() and matching filter to make it even easier to give users the ability to update their own author slug."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Add message in plugins list warning users of WP less than 3.2 that 0.8 is the last update they'll receive."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Remove overzealous cap check."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix some unfortunate errors I missed before tagging 0.7."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Significant code refactoring."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added custom capability to give site admins the ability to add author slug access to other roles."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvements/optimizations to code logic."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed an incorrect textdomain string."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Removed filter added in 0.6 as it was messy. It's much easier to achieve the same result without the plugin."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Got rid of wp_die() statement on duplicate author slugs in favor of WP's built-in duplicate author slug method."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added Dutch translation - props Juliette Reinders Folmer."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Don't hard code the languages folder path."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improve class check/initialization."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Some code cleanup."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "More security hardening."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added filter to allow for the complete removal of the Author Base (http://brandonallen.org/2010/11/03/how-to-remove-the-author-base-with-edit-author-slug/)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Flush rewrite rules only when necessary instead of every page load."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added 'Author Slug' column to Users &gt; Authors &amp; Users (Users &gt; Users in 3.0) page (props Yonat Sharon for the jumpstart)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Ended support for the WP 2.8 branch. Most likely still works, but I will not support it."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Various bug fixes."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added ability to change the Author Base."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated documentation."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added some extra security via WP esc_* functions."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added Belorussian translation, props Marcis G."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added Hebrew Translation, props Yonat Sharon."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Now localization friendly."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug that prevented updating a user if the author slug did not change."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a check to avoid duplicate slugs."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Properly sanitize slug before comparison and database insertion."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated plugin URI."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Update tags to reflect WordPress 2.9.1 compatability."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Update link to plugin homepage."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Update tags to reflect WordPress 2.9 compatability."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fix version number issues."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Remove extra debug functions left behind."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Add screenshot."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Initial release."
+msgstr ""
+
+#. Found in changelog paragraph.
+msgid "I swear I tested this! :("
+msgstr ""
+
+#. Found in faq header.
+msgid "Why can't I edit my Author Slug?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Why isn't my new Author Slug working?"
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Make sure you are an admin, or have been assigned the <code>edit_users</code> or <code>edit_author_slug</code> capability."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "While I've made every attempt to prevent this, I may have missed a spot or two. First things first, go to Settings &gt; Permalinks and click \"Save Changes.\" You don't need to actually need to make any changes for this to work. Hopefully, this should kick your new Author Slug into gear."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums."
+msgstr ""

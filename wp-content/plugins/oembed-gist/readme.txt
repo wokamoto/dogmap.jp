@@ -1,25 +1,25 @@
 === oEmbed Gist ===
-Contributors: miyauchi
+Contributors: miyauchi, mt8biz
 Tags: url, link, oembed, visual editor, post, gist, github
-Requires at least: 3.0
-Tested up to: 3.8
-Stable tag: 1.6.0
+Requires at least: 4.0
+Tested up to: 4.3
+Stable tag: 2.0.3
 
 Embed your source from gist into WordPress easily.
 
 == Description ==
 
 * Embed your source from gist into WordPress easily.
-* You simply paste URL of your Gist.
+* You simply have to paste the URL of your Gist.
+* You can embed a specific revision of the Gist.
+* You can embed an individual file that is part of a multi-file Gist.
 
 = Summary =
 
-You can embed your program sources from gist simply paste URL like below.
+You can embed your program sources from gist by simply pasting the URL like below.
 
 * https://gist.github.com/973153
 * https://gist.github.com/973153#file_select_media.html
-
-PHP5 is required!
 
 = Support =
 
@@ -29,9 +29,9 @@ PHP5 is required!
 
 == Installation ==
 
-* A plug-in installation screen is displayed on the WordPress admin panel.
+* A plugin installation screen is displayed on the WordPress admin panel.
 * It installs it in `wp-content/plugins`.
-* The plug-in is made effective.
+* The plugin is made effective.
 
 
 == Screenshots ==
@@ -41,6 +41,37 @@ PHP5 is required!
 1. It just appears!
 
 == Changelog ==
+
+= 2.0.2 =
+* Auto deploy.
+
+= 2.0.1 =
+* Add Chinese translation. Thanks [dallaslu](https://github.com/dallaslu)!!
+
+= 2.0.0 =
+* Leave a link to gist when is_feed().
+* Update tests.
+* Add readme.md
+
+https://github.com/miya0001/oembed-gist/compare/1.9.0...2.0.0
+
+= 1.9.0 =
+* Got it to work on Press This.
+
+= 1.8.1 =
+* Tested on WordPress 4.3
+
+= 1.8.0 =
+
+* Fix responsive css.
+* Add feature embedding gist's revision.
+
+= 1.7.0 =
+
+* Fix css styles for twentyfifteen.
+
+= 1.6.1 =
+* Tested up to 4.0
 
 = 1.6.0 =
 * https://github.com/miya0001/oembed-gist/compare/1.5.0...1.6.0
@@ -62,13 +93,3 @@ PHP5 is required!
 
 = 0.1.0 =
 * The first release.
-
-== Credits ==
-
-This plug-in is not guaranteed though the user of WordPress can freely use this plug-in free of charge regardless of the purpose.
-The author must acknowledge the thing that the operation guarantee and the support in this plug-in use are not done at all beforehand.
-
-== Contact ==
-
-* email to miya[at]theta.ne.jp
-* twitter @miya0001

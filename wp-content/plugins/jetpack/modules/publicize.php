@@ -1,17 +1,20 @@
 <?php
 /**
  * Module Name: Publicize
- * Module Description: Share new posts on social media networks automatically.
+ * Module Description: Automatically promote content.
  * Sort Order: 10
+ * Recommendation Order: 7
  * First Introduced: 2.0
  * Requires Connection: Yes
  * Auto Activate: Yes
- * Module Tags: Social
+ * Module Tags: Social, Recommended
+ * Feature: Recommended, Traffic
+ * Additional Search Queries: facebook, twitter, google+, googleplus, google, path, tumblr, linkedin, social, tweet, connections, sharing
  */
 
 class Jetpack_Publicize {
 
-	var $in_jetpack = true;
+	public $in_jetpack = true;
 
 	function __construct() {
 		global $publicize_ui;
@@ -99,8 +102,8 @@ class Publicize_Util {
 	 * @param int $length
 	 * @return string
 	 */
-	function crop_str( $string, $length = 256 ) {
-		$string = wp_strip_all_tags( (string) $string, true ); // true: collapse Linear Whitespace into " "
+	public static function crop_str( $string, $length = 256 ) {
+		$string = Publicize_Util::sanitize_message( $string );
 		$length = absint( $length );
 
 		if ( mb_strlen( $string, 'UTF-8' ) <= $length ) {
@@ -287,8 +290,8 @@ class Publicize_Util {
 		}
 		$done[$post_id] = true;
 
-		if ( function_exists( 'bump_stats_extras' ) )
-			bump_stats_extras( 'publicize_url', $bin );
+		/** This action is documented in modules/widgets/social-media-icons.php */
+		do_action( 'jetpack_bump_stats_extras', 'publicize_url', $bin );
 	}
 
 	public static function build_sprintf( $args ) {
@@ -304,4 +307,34 @@ class Publicize_Util {
 		}
 		return str_replace( $search, $replace, $string );
 	}
+
+	public static function sanitize_message( $message ) {
+		$message = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $message );
+		$message = wp_kses( $message, array() );
+		$message = preg_replace('/[\r\n\t ]+/', ' ', $message);
+		$message = trim( $message );
+		$message = htmlspecialchars_decode( $message, ENT_QUOTES );
+		return $message;
+	}
+}
+
+if( ! ( defined( 'IS_WPCOM' ) && IS_WPCOM ) && ! function_exists( 'publicize_init' ) ) {
+/**
+ * Helper for grabbing a Publicize object from the "front-end" (non-admin) of
+ * a site. Normally Publicize is only loaded in wp-admin, so there's a little
+ * set up that you might need to do if you want to use it on the front end.
+ * Just call this function and it returns a Publicize object.
+ *
+ * @return Publicize Object
+ */
+function publicize_init() {
+	global $publicize;
+
+	if ( ! class_exists( 'Publicize' ) ) {
+		require_once dirname( __FILE__ ) . '/publicize/publicize.php';
+	}
+
+	return $publicize;
+}
+
 }

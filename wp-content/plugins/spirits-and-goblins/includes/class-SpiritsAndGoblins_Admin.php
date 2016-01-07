@@ -17,10 +17,18 @@ class SpiritsAndGoblins_Admin {
 	private $plugin_basename;
 	private $admin_hook, $admin_action;
 
-	function __construct(){
-		self::$instance = $this;
+	private function __construct() {}
 
-		$this->options = $this->get_option();
+	public static function get_instance() {
+		if( !isset( self::$instance ) ) {
+			$c = __CLASS__;
+			self::$instance = new $c();    
+		}
+		return self::$instance;
+	}
+
+	public function init() {
+		$this->options = self::get_option();
 		$this->plugin_basename = plugin_basename(dirname(dirname(__FILE__)).'/plugin.php');
 
 		add_action('admin_menu', array($this, 'admin_menu'));
