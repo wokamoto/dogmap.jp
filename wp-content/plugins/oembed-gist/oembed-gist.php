@@ -4,7 +4,7 @@ Plugin Name: oEmbed Gist
 Plugin URI: https://github.com/miya0001/oembed-gist
 Description: Embed source from gist.github.
 Author: Takayuki Miyauchi
-Version: 2.0.3
+Version: 4.7.1
 Author URI: http://firegoby.jp/
 */
 
@@ -82,6 +82,7 @@ class gist {
 		<style>
 		.gist table {
 			margin-bottom: 0 !important;
+			table-layout: auto !important;
 		}
 		.gist .line-numbers
 		{

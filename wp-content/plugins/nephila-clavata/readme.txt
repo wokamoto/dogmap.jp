@@ -1,10 +1,10 @@
 === Nephila clavata ===
-Contributors: wokamoto, megumithemes
+Contributors: wokamoto, megumithemes, hideokamoto, amimotoami
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=9S8AJCY7XB8F4&lc=JP&item_name=WordPress%20Plugins&item_number=wp%2dplugins&currency_code=JPY&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: admin, amazon, aws, media, mirror, s3, uploads
 Requires at least: 3.5
-Tested up to: 4.2.2
-Stable tag: 0.2.3
+Tested up to: 4.5.3
+Stable tag: 0.2.5
 
 Allows you to mirror your WordPress media uploads over to Amazon S3 for storage and delivery.
 
@@ -40,6 +40,12 @@ none
 
 == Changelog ==
 
+**0.2.4 - January, 7, 2016**
+
+Add filter for ec2 instance role.
+update aws-sdk-php2/2.8.22
+thx! https://github.com/hideokamoto
+
 **0.2.3 - June 19, 2015**
 
 modified $content_path, $content_url. thx! https://github.com/torut
@@ -64,10 +70,10 @@ minor bug fix.
 
 Added uninstall script.
 
-**0.1.2 - March 8, 2013**  
+**0.1.2 - March 8, 2013**
 
 Some fix.
 
-**0.1.1 - March 7, 2013**  
+**0.1.1 - March 7, 2013**
 
 Initial release.

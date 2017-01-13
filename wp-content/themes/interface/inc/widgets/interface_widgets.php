@@ -128,7 +128,7 @@ function interface_widgets_init() {
  * $name, Name for this widget which appear on widget bar.
  */
 class interface_custom_tag_widget extends WP_Widget {
-	function interface_custom_tag_widget() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_custom-tagcloud', 'description' => __( 'Displays Custom Tag Cloud', 'interface' ) );
 		$control_ops = array('width' => 200, 'height' => 250);
 		parent::__construct( false, $name = __( 'Theme Horse: Custom Tag Cloud', 'interface' ), $widget_ops, $control_ops );
@@ -198,7 +198,7 @@ class interface_custom_tag_widget extends WP_Widget {
  * i.e. Name, description and control options.
  */
  class interface_service_widget extends WP_Widget {
- 	function interface_service_widget() {
+ 	function __construct() {
  		$widget_ops = array( 'classname' => 'widget_service', 'description' => __( 'Display Services( Business Layout )', 'interface' ) );
 		$control_ops = array( 'width' => 200, 'height' =>250 ); 
 		parent::__construct( false, $name = __( 'Theme Horse: Services', 'interface' ), $widget_ops, $control_ops);
@@ -307,7 +307,7 @@ class interface_custom_tag_widget extends WP_Widget {
  * i.e. Home Page PromoBox1, Home Page PromoBox2, Redirect Button Text and Redirect Button Link
  */
  class interface_promobox_widget extends WP_Widget {
- 	function interface_promobox_widget() {
+ 	function __construct() {
  		$widget_ops = array( 'classname' => 'widget_promotional_bar clearfix', 'description' => __( 'Display PromoBox( Business Layout )', 'interface' ) );
 		$control_ops = array( 'width' => 200, 'height' =>250 ); 
 		parent::__construct( false, $name = __( 'Theme Horse: PromoBox', 'interface' ), $widget_ops, $control_ops);
@@ -377,7 +377,7 @@ class interface_custom_tag_widget extends WP_Widget {
  * i.e. Name, description and control options.
  */
  class interface_recent_work_widget extends WP_Widget {
- 	function interface_recent_work_widget() {
+ 	function __construct() {
  		$widget_ops = array( 'classname' => 'widget_recent_work', 'description' => __( 'Use this widget to show recent work, portfolio or any pages as your wish ( Business Layout )', 'interface' ) );
 		$control_ops = array( 'width' => 200, 'height' =>250 ); 
 		parent::__construct( false, $name = __( 'Theme Horse: Featured Recent Work', 'interface' ), $widget_ops, $control_ops);
@@ -526,7 +526,7 @@ class interface_custom_tag_widget extends WP_Widget {
  */
 class interface_Widget_Testimonial extends WP_Widget {
 
-	function interface_Widget_Testimonial() {
+	function __construct() {
  		$widget_ops = array( 'classname' => 'widget_testimonial', 'description' => __( 'Display Testimonial( Business Layout )recommendation size (168 * 168)', 'interface' ) );
 		$control_ops = array( 'width' => 200, 'height' =>250 ); 
 		parent::__construct( false, $name = __( 'Theme Horse: Testimonial', 'interface' ), $widget_ops, $control_ops);
@@ -627,8 +627,8 @@ class interface_Widget_Testimonial extends WP_Widget {
 </p>
 <p>&nbsp; </p>
 <p>
-  <input class="upload1" type="text"  name="<?php echo $this->get_field_name('image1'); ?>" value="<?php echo esc_url($image1); ?>" />
-  <input class="upload-button1" name="<?php echo $this->get_field_name('image1'); ?>" type="button" value="<?php esc_attr_e( 'Upload Image 1', 'interface' ); ?>" />
+  <input class="upload1" type="text"  id="<?php echo $this->get_field_id( 'image1' ); ?>" name="<?php echo $this->get_field_name('image1'); ?>" value="<?php echo esc_url($image1); ?>" />
+  <input class="button custom_media_button" name="<?php echo $this->get_field_name('image1'); ?>" id="custom_media_button_services" type="button" value="<?php esc_attr_e( 'Upload Image 1', 'interface' ); ?>" onclick="mediaupload.uploader( '<?php echo $this->get_field_id( 'image1' ); ?>' ); return false;" />
 </p>
 <?php _e( 'Testimonial Description 1','interface'); ?>
 <textarea class="widefat" rows="8" cols="20" id="<?php echo $this->get_field_id('text1'); ?>" name="<?php echo $this->get_field_name('text1'); ?>"><?php echo $text1; ?></textarea>
@@ -658,8 +658,8 @@ class interface_Widget_Testimonial extends WP_Widget {
 </p>
 <p>&nbsp; </p>
 <p>
-  <input class="upload1" type="text"  name="<?php echo $this->get_field_name('image2'); ?>" value="<?php echo esc_url($image2); ?>" />
-  <input class="upload-button1" name="<?php echo $this->get_field_name('image2'); ?>" type="button" value="<?php esc_attr_e( 'Upload Image 2', 'interface' ); ?>" />
+  <input class="upload1" type="text"  id="<?php echo $this->get_field_id( 'image2' ); ?>" name="<?php echo $this->get_field_name('image2'); ?>" value="<?php echo esc_url($image2); ?>" />
+  <input class="button custom_media_button" name="<?php echo $this->get_field_name('image2'); ?>" id="custom_media_button_services" type="button" value="<?php esc_attr_e( 'Upload Image 2', 'interface' ); ?>" onclick="mediaupload.uploader( '<?php echo $this->get_field_id( 'image2' ); ?>' ); return false;" />
 </p>
 <?php _e( 'Testimonial Description 2','interface'); ?>
 <textarea class="widefat" rows="8" cols="20" id="<?php echo $this->get_field_id('text2'); ?>" name="<?php echo $this->get_field_name('text2'); ?>"><?php echo $text2; ?></textarea>
@@ -694,7 +694,7 @@ class interface_Widget_Testimonial extends WP_Widget {
 /*********************************************************************************************************/
 class interface_featured_image_widget extends WP_Widget {
 
-	function interface_featured_image_widget() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_ourclients', 'description' => __( 'Use to show your clients logos or any thing.', 'interface') );
 		$control_ops = array('width' => 200, 'height' => 250);
 		parent::__construct( false, $name='Theme Horse: Featured Image', $widget_ops, $control_ops );
@@ -731,8 +731,8 @@ class interface_featured_image_widget extends WP_Widget {
  			$var1 = 'redirectlink'.$i;
 		?>
 <p>
-  <input type="text" class="upload1" name="<?php echo $this->get_field_name( $var ); ?>" value="<?php if(isset ( $instance[$var] ) ) echo esc_url( $instance[$var] ); ?>" />
-  <input class="upload-button1" name="image-add" type="button" value="<?php echo esc_attr( 'Add Image'); ?>" />
+  <input type="text" class="upload1" id="<?php echo $this->get_field_id( $var ); ?>" name="<?php echo $this->get_field_name( $var ); ?>" value="<?php if(isset ( $instance[$var] ) ) echo esc_url( $instance[$var] ); ?>" />
+  <input class="button custom_media_button" name="image-add" id="custom_media_button_services" type="button" value="<?php echo esc_attr( 'Add Image'); ?>" onclick="mediaupload.uploader( '<?php echo $this->get_field_id( $var ); ?>' ); return false;" />
   <br />
 </p>
 <p>

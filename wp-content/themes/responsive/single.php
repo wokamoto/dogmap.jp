@@ -22,7 +22,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
 get_header(); ?>
 
-<div id="content" class="<?php echo esc_attr( implode( ' ', responsive_get_content_classes() ) ); ?>">
+<div id="content" class="<?php echo esc_attr( implode( ' ', responsive_get_content_classes() ) ); ?>" role="main">
 
 	<?php get_template_part( 'loop-header', get_post_type() ); ?>
 
@@ -37,7 +37,12 @@ get_header(); ?>
 				<?php get_template_part( 'post-meta', get_post_type() ); ?>
 
 				<div class="post-entry">
-					<?php the_content( __( 'Read more &#8250;', 'responsive' ) ); ?>
+					<?php
+					include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+					if( is_plugin_active('responsivepro-plugin/index.php')){
+					responsivepro_plugin_featured_image();
+					}
+					the_content( __( 'Read more &#8250;', 'responsive' ) ); ?>
 
 					<?php if ( get_the_author_meta( 'description' ) != '' ) : ?>
 

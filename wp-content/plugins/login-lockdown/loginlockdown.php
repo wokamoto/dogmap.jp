@@ -2,13 +2,19 @@
 /* 
 Plugin Name: Login LockDown
 Plugin URI: http://www.bad-neighborhood.com/
-Version: v1.6.1
+Version: v1.7.1
 Author: Michael VanDeMar
 Description: Adds some extra security to WordPress by restricting the rate at which failed logins can be re-attempted from a given IP range. Distributed through <a href="http://www.bad-neighborhood.com/" target="_blank">Bad Neighborhood</a>.
 */
 
 /*
 == Change Log ==
+*
+* ver. 1.7.1 13-Sep-2016
+* - fixed bug causing all ipv6 addresses to get locked out if 1 was
+* - added in WordPress MultiSite functionality
+* - fixed bug where subnets could be overly matched, causing more IPs to be blocked than intended
+* - moved the report for locked out IP addresses to its own tab
 *
 * ver. 1.6.1 8-Mar-2014
 * - fixed html glitch preventing options from being saved
@@ -131,14 +137,13 @@ function countFails($username = "") {
 	global $wpdb;
 	global $loginlockdownOptions;
 	$table_name = $wpdb->prefix . "login_fails";
-	$ip = $_SERVER['REMOTE_ADDR'];
-	$class_c = substr ($ip, 0 , strrpos ( $ip, "." ));
+	$subnet = calc_subnet($_SERVER['REMOTE_ADDR']);
 
 	$numFailsquery = "SELECT COUNT(login_attempt_ID) FROM $table_name " . 
 					"WHERE login_attempt_date + INTERVAL " .
 					$loginlockdownOptions['retries_within'] . " MINUTE > now() AND " . 
 					"login_attempt_IP LIKE '%s'";
-	$numFailsquery = $wpdb->prepare( $numFailsquery, $class_c  . "%");
+	$numFailsquery = $wpdb->prepare( $numFailsquery, $subnet[1]  . "%");
 
 	$numFails = $wpdb->get_var($numFailsquery);
 	return $numFails;
@@ -148,7 +153,7 @@ function incrementFails($username = "") {
 	global $wpdb;
 	global $loginlockdownOptions;
 	$table_name = $wpdb->prefix . "login_fails";
-	$ip = $_SERVER['REMOTE_ADDR'];
+	$subnet = calc_subnet($_SERVER['REMOTE_ADDR']);
 
 	$username = sanitize_user($username);
 	$user = get_user_by('login',$username);
@@ -160,7 +165,7 @@ function incrementFails($username = "") {
 		}
 		$insert = "INSERT INTO " . $table_name . " (user_id, login_attempt_date, login_attempt_IP) " .
 				"VALUES ('" . $user_id . "', now(), '%s')";
-		$insert = $wpdb->prepare( $insert, $ip );
+		$insert = $wpdb->prepare( $insert, $subnet[0] );
 		$results = $wpdb->query($insert);
 	}
 }
@@ -169,7 +174,7 @@ function lockDown($username = "") {
 	global $wpdb;
 	global $loginlockdownOptions;
 	$table_name = $wpdb->prefix . "lockdowns";
-	$ip = $_SERVER['REMOTE_ADDR'];
+	$subnet = calc_subnet($_SERVER['REMOTE_ADDR']);
 
 	$username = sanitize_user($username);
 	$user = get_user_by('login',$username);
@@ -182,7 +187,7 @@ function lockDown($username = "") {
 		$insert = "INSERT INTO " . $table_name . " (user_id, lockdown_date, release_date, lockdown_IP) " .
 				"VALUES ('" . $user_id . "', now(), date_add(now(), INTERVAL " .
 				$loginlockdownOptions['lockout_length'] . " MINUTE), '%s')";
-		$insert = $wpdb->prepare( $insert, $ip );
+		$insert = $wpdb->prepare( $insert, $subnet[0] );
 		$results = $wpdb->query($insert);
 	}
 }
@@ -190,13 +195,12 @@ function lockDown($username = "") {
 function isLockedDown() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "lockdowns";
-	$ip = $_SERVER['REMOTE_ADDR'];
-	$class_c = substr ($ip, 0 , strrpos ( $ip, "." ));
+	$subnet = calc_subnet($_SERVER['REMOTE_ADDR']);
 
 	$stillLockedquery = "SELECT user_id FROM $table_name " . 
 					"WHERE release_date > now() AND " . 
 					"lockdown_IP LIKE %s";
-	$stillLockedquery = $wpdb->prepare($stillLockedquery,$class_c . "%");
+	$stillLockedquery = $wpdb->prepare($stillLockedquery,$subnet[1] . "%");
 
 	$stillLocked = $wpdb->get_var($stillLockedquery);
 
@@ -231,6 +235,27 @@ function get_loginlockdownOptions() {
 	update_option("loginlockdownAdminOptions", $loginlockdownAdminOptions);
 	return $loginlockdownAdminOptions;
 }
+
+function calc_subnet($ip) {
+	$subnet[0] = $ip;
+	if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+		$ip = expandipv6($ip);
+		preg_match("/^([0-9abcdef]{1,4}:){4}/", $ip, $matches);
+		$subnet[0] = $ip;
+		$subnet[1] = $matches[0];
+	} else {
+		$subnet[1] = substr ($ip, 0 , strrpos ( $ip, "." ) + 1);
+	}
+	return $subnet;
+}
+
+function expandipv6($ip){
+	$hex = unpack("H*hex", inet_pton($ip));         
+	$ip = substr(preg_replace("/([A-f0-9]{4})/", "$1:", $hex['hex']), 0, -1);
+
+	return $ip;
+}
+
 
 function print_loginlockdownAdminPage() {
 	global $wpdb;
@@ -287,12 +312,24 @@ function print_loginlockdownAdminPage() {
 	$dalist = listLockedDown();
 ?>
 <div class="wrap">
+<?php
+	
+$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
+
+?>
+<h2><?php _e('Login LockDown Options', 'loginlockdown') ?></h2>
+
+	<h2 class="nav-tab-wrapper">
+		<a href="?page=loginlockdown.php&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
+		<a href="?page=loginlockdown.php&tab=activity" class="nav-tab <?php echo $active_tab == 'activity' ? 'nav-tab-active' : ''; ?>">Activity (<?php echo count($dalist); ?>)</a>
+	</h2>
+<?php if ( $active_tab == 'settings' ) { ?>
 <form method="post" action="<?php echo esc_attr($_SERVER["REQUEST_URI"]); ?>">
 <?php
 if ( function_exists('wp_nonce_field') )
 	wp_nonce_field('login-lockdown_update-options');
 ?>
-<h2><?php _e('Login LockDown Options', 'loginlockdown') ?></h2>
+
 <h3><?php _e('Max Login Retries', 'loginlockdown') ?></h3>
 <p>Number of failed login attempts within the "Retry Time Period Restriction" (defined below) needed to trigger a LockDown.</p>
 <p><input type="text" name="ll_max_login_retries" size="8" value="<?php echo esc_attr($loginlockdownAdminOptions['max_login_retries']); ?>"></p>
@@ -319,13 +356,20 @@ This helps others know about the plugin so they can protect their blogs as well 
 <div class="submit">
 <input type="submit" class="button button-primary" name="update_loginlockdownSettings" value="<?php _e('Update Settings', 'loginlockdown') ?>" /></div>
 </form>
-<br />
+<?php } else { ?>
 <form method="post" action="<?php echo esc_attr($_SERVER["REQUEST_URI"]); ?>">
 <?php
 if ( function_exists('wp_nonce_field') )
 	wp_nonce_field('login-lockdown_release-lockdowns');
 ?>
-<h3><?php _e('Currently Locked Out', 'loginlockdown') ?></h3>
+<h3><?php 
+if( count($dalist) == 1 ) {
+	printf( esc_html__( 'There is currently %d locked out IP address.', 'loginlockdown' ), count($dalist) ); 
+
+} else {
+	printf( esc_html__( 'There are currently %d locked out IP addresses.', 'loginlockdown' ), count($dalist) ); 
+} ?></h3>
+
 <?php
 	$num_lockedout = count($dalist);
 	if( 0 == $num_lockedout ) {
@@ -341,6 +385,7 @@ if ( function_exists('wp_nonce_field') )
 <div class="submit">
 <input type="submit" class="button button-primary" name="release_lockdowns" value="<?php _e('Release Selected', 'loginlockdown') ?>" /></div>
 </form>
+<?php } ?>
 </div>
 <?php
 }//End function print_loginlockdownAdminPage()
@@ -455,7 +500,70 @@ if ( isset($loginlockdown_db_version) ) {
 		return $user;
 	}
 	endif;
+	// multisite network-wide activation
+	register_activation_hook( __FILE__, 'loginlockdown_multisite_activate' );
+	function loginlockdown_multisite_activate($networkwide) {
+		global $wpdb;
+
+		if (function_exists('is_multisite') && is_multisite()) {
+			// check if it is a network activation - if so, run the activation function for each blog id
+			if ($networkwide) {
+				$old_blog = $wpdb->blogid;
+				// Get all blog ids
+				$blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+				foreach ($blogids as $blog_id) {
+					switch_to_blog($blog_id);
+					loginLockdown_install();
+				}
+				switch_to_blog($old_blog);
+				return;
+			}
+		}
+	}
+
+	// multisite new site activation
+	add_action( 'wpmu_new_blog', 'loginlockdown_multisite_newsite', 10, 6);
+	function loginlockdown_multisite_newsite($blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+		global $wpdb;
+
+		if (is_plugin_active_for_network('loginlockdown/loginlockdown.php')) {
+			$old_blog = $wpdb->blogid;
+			switch_to_blog($blog_id);
+			loginLockdown_install();
+			switch_to_blog($old_blog);
+		}
+	}
+
+	// multisite old sites check
+
+	add_action('admin_init','loginlockdown_multisite_legacy');
+	function loginlockdown_multisite_legacy() {
+		$loginlockdownMSRunOnce = get_option("loginlockdownmsrunonce");
+		if ( empty($loginlockdownMSRunOnce) ) {
+			global $wpdb;
+
+			if (function_exists('is_multisite') && is_multisite()) {
+
+				$old_blog = $wpdb->blogid;
+
+				// Get all blog ids
+				$blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+				foreach ($blogids as $blog_id) {
+
+					// check if already exists
+					$bed_check = $wpdb->query("SHOW TABLES LIKE '{$wpdb->base_prefix}{$blog_id}_login_fails'");
+					if (!$bed_check) {
+
+						switch_to_blog($blog_id);
+						loginLockdown_install();
+
+					}
+				}
+				switch_to_blog($old_blog);
+			}
+			add_option("loginlockdownmsrunonce", "done", "", "no");
+			return;
+		}
+	}
 }
 
-
-?>

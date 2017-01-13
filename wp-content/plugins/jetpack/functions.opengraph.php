@@ -55,19 +55,19 @@ function jetpack_og_tags() {
 	$description_length = 197;
 
 	if ( is_home() || is_front_page() ) {
-		$site_type              = get_option( 'open_graph_protocol_site_type' );
+		$site_type              = Jetpack_Options::get_option_and_ensure_autoload( 'open_graph_protocol_site_type', '' );
 		$tags['og:type']        = ! empty( $site_type ) ? $site_type : 'website';
 		$tags['og:title']       = get_bloginfo( 'name' );
 		$tags['og:description'] = get_bloginfo( 'description' );
 
 		$front_page_id = get_option( 'page_for_posts' );
-		if ( $front_page_id && is_home() )
+		if ( 'page' == get_option( 'show_on_front' ) && $front_page_id && is_home() )
 			$tags['og:url'] = get_permalink( $front_page_id );
 		else
 			$tags['og:url'] = home_url( '/' );
 
 		// Associate a blog's root path with one or more Facebook accounts
-		$facebook_admins = get_option( 'facebook_admins' );
+		$facebook_admins = Jetpack_Options::get_option_and_ensure_autoload( 'facebook_admins', array() );
 		if ( ! empty( $facebook_admins ) )
 			$tags['fb:admins'] = $facebook_admins;
 
@@ -108,7 +108,17 @@ function jetpack_og_tags() {
 			}
 		}
 		if ( empty( $tags['og:description'] ) ) {
-			$tags['og:description'] = __('Visit the post for more.', 'jetpack');
+				/**
+				 * Filter the fallback `og:description` used when no excerpt information is provided.
+				 *
+				 * @module sharedaddy, publicize
+				 *
+				 * @since 3.9.0
+				 *
+				 * @param string $var  Fallback og:description. Default is translated `Visit the post for more'.
+				 * @param object $data Post object for the current post.
+				 */
+			$tags['og:description'] = apply_filters( 'jetpack_open_graph_fallback_description', __( 'Visit the post for more.', 'jetpack' ), $data );
 		} else {
 			// Intentionally not using a filter to prevent pollution. @see https://github.com/Automattic/jetpack/pull/2899#issuecomment-151957382
 			$tags['og:description'] = wp_kses( trim( convert_chars( wptexturize( $tags['og:description'] ) ) ), array() );
@@ -311,32 +321,62 @@ function jetpack_og_get_image( $width = 200, $height = 200, $max_images = 4 ) { 
 	if ( empty( $image ) && function_exists( 'blavatar_domain' ) ) {
 		$blavatar_domain = blavatar_domain( site_url() );
 		if ( blavatar_exists( $blavatar_domain ) ) {
-			$image['src']    = blavatar_url( $blavatar_domain, 'img', $width, false, true );
-			$image['width']  = $width;
-			$image['height'] = $height;
+			$image_url = blavatar_url( $blavatar_domain, 'img', $width, false, true );
+
+			$img_width  = '';
+			$img_height = '';
+			$image_id = attachment_url_to_postid( $image_url );
+			$image_size = wp_get_attachment_image_src( $image_id, $width >= 512
+				? 'full'
+				: array( $width, $width ) );
+			if ( isset( $image_size[1], $image_size[2] ) ) {
+				$img_width  = $image_size[1];
+				$img_height = $image_size[2];
+			}
+
+			if (_jetpack_og_get_image_validate_size($img_width, $img_height, $width, $height)) {
+				$image['src']    = $image_url;
+				$image['width']  = $width;
+				$image['height'] = $height;
+			}
 		}
 	}
 
 	// Second fall back, Site Logo
 	if ( empty( $image ) && ( function_exists( 'jetpack_has_site_logo' ) && jetpack_has_site_logo() ) ) {
-		$image['src']        = jetpack_get_site_logo( 'url' );
 		$image_dimensions    = jetpack_get_site_logo_dimensions();
 		if ( ! empty( $image_dimensions ) ) {
-			$image['width']  = $image_dimensions['width'];
-			$image['height'] = $image_dimensions['height'];
+			$img_width = $image_dimensions['width'];
+			$img_height = $image_dimensions['height'];
+			if (_jetpack_og_get_image_validate_size($img_width, $img_height, $width, $height)) {
+				$image['src']    = jetpack_get_site_logo( 'url' );
+				$image['width']  = $width;
+				$image['height'] = $height;
+			}
 		}
 	}
 
-	// Third fall back, Site Icon
-	if ( empty( $image ) && ( function_exists( 'jetpack_has_site_icon' ) && jetpack_has_site_icon() ) ) {
-		$image['src']     = jetpack_site_icon_url( null, '512' );
-		$image['width']   = '512';
-		$image['height']  = '512';
-	}
-
-	// Fourth fall back, Core Site Icon. Added in WP 4.3.
+	// Third fall back, Core Site Icon, if valid in size. Added in WP 4.3.
 	if ( empty( $image ) && ( function_exists( 'has_site_icon') && has_site_icon() ) ) {
-		$image['src'] = get_site_icon_url( null, '512' );
+		$max_side = max( $width, $height );
+		$image_url = get_site_icon_url( $max_side );
+
+		$img_width  = '';
+		$img_height = '';
+		$image_id = attachment_url_to_postid( $image_url );
+		$image_size = wp_get_attachment_image_src( $image_id, $max_side >= 512
+			? 'full'
+			: array( $max_side, $max_side ) );
+		if ( isset( $image_size[1], $image_size[2] ) ) {
+			$img_width  = $image_size[1];
+			$img_height = $image_size[2];
+		}
+
+		if (_jetpack_og_get_image_validate_size($img_width, $img_height, $width, $height)) {
+			$image['src']     = $image_url;
+			$image['width']   = $width;
+			$image['height']  = $height;
+		}
 	}
 
 	// Finally fall back, blank image
@@ -352,6 +392,27 @@ function jetpack_og_get_image( $width = 200, $height = 200, $max_images = 4 ) { 
 	}
 
 	return $image;
+}
+
+
+/**
+* Validate the width and height against required width and height
+*
+* @param $width      int  Width of the image
+* @param $height     int  Height of the image
+* @param $req_width  int  Required width to pass validation
+* @param $req_height int  Required height to pass validation 
+* @return bool - True if the image passed the required size validation
+*/
+function _jetpack_og_get_image_validate_size($width, $height, $req_width, $req_height) {
+	if (!$width || !$height) {
+		return false;
+	}
+
+	$valid_width = ( $width >= $req_width );
+	$valid_height = ( $height >= $req_height );
+	$is_image_acceptable = $valid_width && $valid_height;
+	return $is_image_acceptable;
 }
 
 /**

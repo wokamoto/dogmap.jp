@@ -1,9 +1,9 @@
 === Edit Author Slug ===
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
-Requires at least: 3.8.11
-Tested up to: 4.4
-Stable tag: 1.1.2
+Requires at least: 4.0.10
+Tested up to: 4.5
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,22 +11,17 @@ Allows an admin (or capable user) to edit the author slug of a user, and change 
 
 == Description ==
 
-This plugin allows an Admin to change the author slug (a.k.a. - nicename), without having to actually enter the database. You can also change the Author Base (the '/author/' portion of the author URLs). Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Edit Author Slug. This allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
+This plugin allows full control of your user permalinks, allowing you to change both the author base (the '/author/' portion of the author URLs), and the author slug (defaults to the username of the author). You can set the author base globally, or you can set it to be user-specific based on a user's role. You now have the power to craft the perfect URL structure for you Author pages.
 
-WordPress default structure
-http://example.com/author/username/
+WordPress default structure *http://example.com/author/username/*.
 
-Edit Author Slug allows for
-http://example.com/ninja/master-ninja/
+Edit Author Slug allows for *http://example.com/ninja/master-ninja/*.
 
-or using a role-based author base
-http://example.com/ida/master-splinter/ (for an Administrator Role)
-http://example.com/koga/leonardo/ (for a Subscriber Role)
+Using a role-based author base would allow for *http://example.com/ida/master-splinter/* (for an Administrator Role), or *http://example.com/koga/leonardo/* (for a Subscriber Role).
 
 Development of this plugin takes place on [GitHub](https://github.com/thebrandonallen/edit-author-slug/ "Edit Author Slug on Github"). Pull requests are always welcome!
 
-#### Translations Available
-* Dutch - props Juliette Reinders Folmer
+Translations should be submitted to [Translate WordPress](https://translate.wordpress.org/projects/wp-plugins/edit-author-slug).
 
 == Installation ==
 
@@ -46,7 +41,7 @@ Development of this plugin takes place on [GitHub](https://github.com/thebrandon
 
 = Why can't I edit my Author Slug? =
 
-Make sure you are an admin, or have been assigned the `edit_users` or `edit_author_slug` capability.
+Make sure you are an admin, or have been assigned the `edit_users` capability.
 
 = Why isn't my new Author Slug working? =
 
@@ -55,6 +50,18 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.2.1 =
+* Fixed stupid error where the default user nicename wasn't being properly retrieved from the database. Sorry about that :(
+* Unfortunately, some unicorns were lost during the development of this release, but they are a resilient creature.
+
+= 1.2.0 =
+* Added the ability to use forward slashes in the author base.
+* Improved display on the settings page, and storing, of role slugs.
+* Packaged translations are now removed. Anyone interested in translating the plugin should do so at [Translate WordPress](https://translate.wordpress.org/projects/wp-plugins/edit-author-slug).
+* EXPERIMENTAL: Added the ability to set the author slug to a user's numeric user id. While I have tested this, I can't be sure that no one's site will implode. If all goes well, the experimental tag will be removed in the next major release (or two).
+* Added ability to remove the front portion of author links.
+* Accessibility improvements to the settings page.
 
 = 1.1.2 =
 * Fix loading of minified JS in the admin. Props nuyensgert.

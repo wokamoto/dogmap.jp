@@ -13,7 +13,17 @@ require_once plugin_dir_path( __FILE__ ).'sharing.php';
 function sharing_email_send_post( $data ) {
 
 	$content = sharing_email_send_post_content( $data );
-	$headers[] = sprintf( 'From: %1$s <%2$s>', $data['name'], $data['source'] );
+	// Borrowed from wp_mail();
+	$sitename = strtolower( $_SERVER['SERVER_NAME'] );
+	if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+		$sitename = substr( $sitename, 4 );
+	}
+
+	/** This filter is documented in core/src/wp-includes/pluggable.php */
+	$from_email = apply_filters( 'wp_mail_from', 'wordpress@' . $sitename );
+
+	$headers[] = sprintf( 'From: %1$s <%2$s>', $data['name'], $from_email );
+	$headers[] = sprintf( 'Reply-To: %1$s <%2$s>', $data['name'], $data['source'] );
 
 	wp_mail( $data['target'], '['.__( 'Shared Post', 'jetpack' ).'] '.$data['post']->post_title, $content, $headers );
 }
@@ -54,7 +64,7 @@ function sharing_email_check_for_spam_via_akismet( $data ) {
 }
 
 function sharing_email_send_post_content( $data ) {
-	/* translators: included in e-mail when post is shared via e-mail. First item is sender's name. Second is sender's e-mail address. */
+	/* translators: included in email when post is shared via email. First item is sender's name. Second is sender's email address. */
 	$content  = sprintf( __( '%1$s (%2$s) thinks you may be interested in the following post:', 'jetpack' ), $data['name'], $data['source'] );
 	$content .= "\n\n";
 	$content .= $data['post']->post_title."\n";
@@ -174,7 +184,7 @@ function sharing_plugin_settings( $links ) {
 function sharing_add_plugin_settings($links, $file) {
 	if ( $file == basename( dirname( __FILE__ ) ).'/'.basename( __FILE__ ) ) {
 		$links[] = '<a href="options-general.php?page=sharing.php">' . __( 'Settings', 'jetpack' ) . '</a>';
-		$links[] = '<a href="http://support.wordpress.com/sharing/">' . __( 'Support', 'jetpack' ) . '</a>';
+		$links[] = '<a href="http://support.wordpress.com/sharing/" target="_blank">' . __( 'Support', 'jetpack' ) . '</a>';
 	}
 
 	return $links;
@@ -190,7 +200,7 @@ function sharing_restrict_to_single( $services ) {
 }
 
 function sharing_init() {
-	if ( get_option( 'sharedaddy_disable_resources' ) ) {
+	if ( Jetpack_Options::get_option_and_ensure_autoload( 'sharedaddy_disable_resources', '0' ) ) {
 		add_filter( 'sharing_js', 'sharing_disable_js' );
 		remove_action( 'wp_head', 'sharing_add_header', 1 );
 	}

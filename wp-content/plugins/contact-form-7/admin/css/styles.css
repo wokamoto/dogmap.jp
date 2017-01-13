@@ -39,6 +39,10 @@ span.shortcode > input {
 	color: #a00;
 }
 
+#submitpost input.delete:hover {
+	color: #f00;
+}
+
 #submitpost input.delete:focus {
 	outline: thin dotted;
 }
@@ -50,6 +54,51 @@ span.shortcode > input {
 .keyboard-interaction {
 	visibility: hidden;
 	color: #23282d;
+}
+
+#misc-publishing-actions .misc-pub-section::before {
+	content: "\f488";
+	-moz-osx-font-smoothing: grayscale;
+	display: inline-block;
+	font: 20px/1 dashicons;
+	left: -1px;
+	padding: 0 2px 0 0;
+	position: relative;
+	text-decoration: none !important;
+	top: 0;
+	vertical-align: top;
+	color: #82878c;
+}
+
+#misc-publishing-actions .misc-pub-section.warning::before {
+	content: "\f534";
+}
+
+#misc-publishing-actions .misc-pub-section.warning a.external {
+	font-style: italic;
+}
+
+div.config-error, span.config-error, ul.config-error {
+	color: #d00;
+	font-style: normal;
+	font-size: 13px;
+}
+
+ul.config-error {
+	margin: 0;
+}
+
+ul.config-error li {
+	padding: 0 4px;
+	margin: 0;
+}
+
+ul.config-error li a.external {
+	font-style: italic;
+}
+
+[data-config-field][aria-invalid="true"] {
+	border-color: #d00;
 }
 
 /*
@@ -103,7 +152,7 @@ span.shortcode > input {
 	color: #000;
 }
 
-#contact-form-editor .contact-form-editor-panel h3 {
+#contact-form-editor .contact-form-editor-panel h2 {
 	font-size: 18px;
 	font-weight: 400;
 	line-height: 24px;
@@ -128,7 +177,7 @@ span.shortcode > input {
 }
 
 /*
- * Form Panel
+ * Form Tab
  */
 #tag-generator-list a.button {
 	font-size: 12px;
@@ -239,7 +288,7 @@ span.shortcode > input {
 }
 
 /*
- * Mail Panel
+ * Mail Tab
  */
 .contact-form-editor-box-mail span.mailtag {
 	display: inline-block;
@@ -251,6 +300,13 @@ span.shortcode > input {
 
 .contact-form-editor-box-mail span.mailtag.used {
 	color: #666;
+}
+
+/*
+ * Messages Tab
+ */
+#messages-panel p.description {
+	margin: 5px 0 10px;
 }
 
 /*
@@ -267,13 +323,40 @@ span.shortcode > input {
 /*
  * Welcome Panel
  */
-.welcome-panel p.message {
-	line-height: 1.4em;
-	margin-right: 25px;
+.welcome-panel .welcome-panel-column,
+.welcome-panel .welcome-panel-column:first-child {
+	width: 48%;
+	padding: 0 2% 0 0;
+	margin: 0 0 1em 0;
 }
 
-.welcome-panel li {
-	margin-bottom: 12px;
+@media screen and (max-width: 870px) {
+	.welcome-panel .welcome-panel-column,
+	.welcome-panel .welcome-panel-column:first-child {
+		display: block;
+		float: none;
+		width: 100%;
+	}
+}
+
+.welcome-panel h3 {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 2.1em;
+	margin: 1em 0 1.2em;
+}
+
+.welcome-panel h3 .dashicons {
+	position: relative;
+	top: -2px;
+	display: inline-block;
+	width: 60px;
+	color: #575757;
+	font-size: 40px;
+}
+
+.welcome-panel p a {
+	font-weight: bold;
 }
 
 .welcome-panel-close {
@@ -304,9 +387,11 @@ span.shortcode > input {
 	margin: 8px 8px 8px -8px;
 }
 
-.card h3.title {
+.card h2.title {
 	float: left;
 	max-width: 240px;
+	font-size: 1.3em;
+	font-weight: 600;
 }
 
 .card .infobox {

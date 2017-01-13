@@ -83,6 +83,7 @@ function responsive_get_option_defaults() {
 		'foursquare_uid'                  => '',
 		'responsive_inline_css'           => '',
 		'responsive_inline_js_head'       => '',
+		'responsive_inline_js_footer' => '',
 		'responsive_inline_css_js_footer' => '',
 		'static_page_layout_default'      => 'default',
 		'single_post_layout_default'      => 'default',
@@ -366,12 +367,51 @@ if ( !function_exists( 'responsive_post_meta_data' ) ) {
 						 esc_html( get_the_date() )
 				),
 				'byline',
-				sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s">%3$s</a></span>',
+				sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s"><span class="author-gravtar">%4$s</span>%3$s</a></span>',
 						 get_author_posts_url( get_the_author_meta( 'ID' ) ),
 						 sprintf( esc_attr__( 'View all posts by %s', 'responsive' ), get_the_author() ),
-						 esc_attr( get_the_author() )
+						 esc_attr( get_the_author() ),
+						 get_avatar( get_the_author_meta( 'ID' ), 32)
 				)
 		);
 	}
 
 }
+
+
+/**
+ * Added the footer copyright setting to the theme customizer - starts
+ */
+
+function fetch_copyright(){
+	global $responsive_options;
+	?>
+	<script>
+		jQuery(document).ready(function(){
+		var copyright_text = "<?php if (isset($responsive_options['copyright_textbox'])) { echo $responsive_options['copyright_textbox']; } ?>";
+		var cyberchimps_link = "<?php if (isset($responsive_options['poweredby_link'])) { echo $responsive_options['poweredby_link']; } ?>";
+		var siteurl = "<?php echo site_url(); ?>"; 
+		if(copyright_text == "")
+		{
+			jQuery(".copyright #copyright_link").text(" "+"Default copyright text");
+		}
+		else{ 
+			jQuery(".copyright #copyright_link").text(" "+copyright_text);
+		}
+		jQuery(".copyright #copyright_link").attr('href',siteurl);
+		if(cyberchimps_link == 1)
+		{
+			jQuery(".powered").css("display","block");
+		}
+		else{
+			jQuery(".powered").css("display","none");
+		}
+		});
+	</script>
+<?php
+}
+add_action('wp_head','fetch_copyright');
+
+/**
+ * Added the footer copyright setting to the theme customizer - ends
+ */

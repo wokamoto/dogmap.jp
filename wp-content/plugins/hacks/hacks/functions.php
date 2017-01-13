@@ -1,5 +1,5 @@
 <?php
-mysql_query("SET NAMES utf8");
+//mysql_query("SET NAMES utf8");
 remove_filter('get_shortlink', 'wpme_get_shortlink_handler', 10, 4);
 
 //wp_deregister_script('jquery');

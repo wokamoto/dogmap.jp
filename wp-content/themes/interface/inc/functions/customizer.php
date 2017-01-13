@@ -4,13 +4,13 @@
  * @subpackage Interface
  * @since Interface 3.0
  */
+if ( ! class_exists( 'WP_Customize_Section' ) ) {
+	return null;
+}
 function interface_textarea_register($wp_customize){
 	class Interface_Customize_Interface_upgrade extends WP_Customize_Control {
 		public function render_content() { ?>
 		<div class="theme-info"> 
-			<a title="<?php esc_attr_e( 'Donate', 'interface' ); ?>" href="<?php echo esc_url( 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=BRLCCUGP2ACYN' ); ?>" target="_blank">
-			<?php _e( 'Donate', 'interface' ); ?>
-			</a>
 			<a title="<?php esc_attr_e( 'Review Interface', 'interface' ); ?>" href="<?php echo esc_url( 'http://wordpress.org/support/view/theme-reviews/interface' ); ?>" target="_blank">
 			<?php _e( 'Rate Interface', 'interface' ); ?>
 			</a>
@@ -24,14 +24,6 @@ function interface_textarea_register($wp_customize){
 			<?php _e( 'View Demo', 'interface' ); ?>
 			</a>
 		</div>
-		<?php
-		}
-	}
-	class Interface_Customize_Interface_upgrade_to_pro extends WP_Customize_Control {
-		public function render_content() { ?>
-			<a href="<?php echo esc_url( 'http://themehorse.com/themes/interface-pro/' ); ?>" title="<?php esc_attr_e( 'Upgrade to Interface Pro', 'interface' ); ?>" target="_blank">
-			<?php _e( 'Upgrade to Interface Pro', 'interface' ); ?>
-			</a><?php _e('to get more aditional features like (Advanced Slider, Color Options, Typography Options and many more.)','interface');?>
 		<?php
 		}
 	}
@@ -53,13 +45,84 @@ function interface_textarea_register($wp_customize){
 				<option value="0" <?php if ( empty( $options['front_page_category'] ) ) { selected( true, true ); } ?>><?php _e( '--Disabled--', 'interface' ); ?></option>
 				<?php
 					foreach ( $categories as $category) :?>
-						<option value="<?php echo $category->cat_ID; ?>" <?php if ( in_array( $category->cat_ID, $categories) ) { selected();}?>><?php echo $category->cat_name; ?></option>
+						<option value="<?php echo $category->cat_ID; ?>" <?php if ( in_array( $category->cat_ID, $options['front_page_category']) ) { echo 'selected="selected"';}?>><?php echo $category->cat_name; ?></option>
 					<?php endforeach; ?>
 				</select>
 			</label>
 		<?php 
 		}
 	}
+}
+/**
+ * Upsell customizer section.
+ *
+ * @since  1.0.0
+ * @access public
+ */
+class Interface_Customize_Section_Upsell extends WP_Customize_Section {
+
+	/**
+	 * The type of customize section being rendered.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var    string
+	 */
+	public $type = 'upsell';
+
+	/**
+	 * Custom button text to output.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var    string
+	 */
+	public $pro_text = '';
+
+	/**
+	 * Custom pro button URL.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var    string
+	 */
+	public $pro_url = '';
+
+	/**
+	 * Add custom parameters to pass to the JS via JSON.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function json() {
+		$json = parent::json();
+
+		$json['pro_text'] = $this->pro_text;
+		$json['pro_url']  = esc_url( $this->pro_url );
+
+		return $json;
+	}
+
+	/**
+	 * Outputs the Underscore.js template.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	protected function render_template() { ?>
+
+		<li id="accordion-section-{{ data.id }}" class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
+			<h3 class="accordion-section-title">
+				{{ data.title }}
+
+				<# if ( data.pro_text && data.pro_url ) { #>
+					<a href="{{ data.pro_url }}" class="upgrade-to-pro" target="_blank">{{ data.pro_text }}</a>
+				<# } #>
+			</h3>
+		</li>
+	<?php }
 }
 
 function interface_customize_register($wp_customize){
@@ -95,29 +158,8 @@ function interface_customize_register($wp_customize){
 	global $options, $array_of_default_settings;
 	$options = wp_parse_args(  get_option( 'interface_theme_options', array() ), interface_get_option_defaults());
 /********************Interface Upgrade ******************************************/
-	$wp_customize->add_section('interface_upgrade_to_pro', array(
-		'title'					=> __('What is new on Interface Pro?', 'interface'),
-		'priority'				=> 0.5,
-	));
-	$wp_customize->add_setting( 'interface_theme_settings[interface_upgrade_to_pro]', array(
-		'default'				=> false,
-		'capability'			=> 'edit_theme_options',
-		'sanitize_callback'	=> 'wp_filter_nohtml_kses',
-	));
-	$wp_customize->add_control(
-		new Interface_Customize_Interface_upgrade_to_pro(
-		$wp_customize,
-		'interface_upgrade_to_pro',
-			array(
-				'label'					=> __('Interface Upgrade','interface'),
-				'section'				=> 'interface_upgrade_to_pro',
-				'settings'				=> 'interface_theme_settings[interface_upgrade_to_pro]',
-			)
-		)
-	);
 	$wp_customize->add_section('interface_upgrade', array(
 		'title'					=> __('Interface Support', 'interface'),
-		'description'			=> __('Hey! Buy us a beer and we shall come with new features and update.','interface'),
 		'priority'				=> 1,
 	));
 	$wp_customize->add_setting( 'interface_theme_options[interface_upgrade]', array(
@@ -720,51 +762,45 @@ function prefix_sanitize_phone( $input ) {
 	$input =  preg_replace("/[^() 0-9+-]/", '', $input);
 	return $input;
 }
-function customize_styles_interface_upgrade( $input ) { ?>
-	<style type="text/css">
-		#customize-theme-controls #accordion-section-interface_upgrade_to_pro .accordion-section-title:after {
-			color: #fff;
-		}
-		#customize-theme-controls #accordion-section-interface_upgrade_to_pro .accordion-section-title {
-			background-color: rgba(74, 137, 195, 0.9);
-			color: #fff;
-			border: 0 none;
-		}
-		#customize-theme-controls #accordion-section-interface_upgrade_to_pro .accordion-section-title:hover {
-			background-color: rgba(74, 137, 195, 1);
-		}
-		#customize-theme-controls #accordion-section-interface_upgrade a {
-			padding: 5px 0;
-			display: block;
-		}
-		#customize-theme-controls #accordion-section-interface_upgrade_to_pro a {
-			color: rgba(74, 137, 195, 1);
-		}
-		#customize-theme-controls #accordion-section-interface_upgrade_to_pro a:hover {
-			text-decoration: underline;
-		}
-	</style>
-<?php }
-function interface_upgrade_notice() {
-	// Enqueue the script
+function interface_customizer_control_scripts() {
+
 	wp_enqueue_script(
-		'interface-upgrade-pro',
+		'interface-customize-controls',
 		get_template_directory_uri() . '/inc/admin/js/interface_customizer.js',
 		array(), '3.0',
 		true
 	);
-	// Localize the script
-	wp_localize_script(
-		'interface-upgrade-pro',
-		'interfaceproupgrade',
-		array(
-			'interfaceprourl'		=> esc_url( 'http://themehorse.com/themes/interface-pro/' ),
-			'interfaceprolabel'	=> __( 'Upgrade to Interface Pro', 'interface' ),
+
+	wp_enqueue_style( 'interface-customize-controls',
+	 get_template_directory_uri() . '/inc/admin/css/customize-controls.css' );
+
+}
+
+add_action( 'customize_controls_enqueue_scripts', 'interface_customizer_control_scripts', 0 );
+
+
+function interface_customize_custom_sections( $wp_customize ) {
+
+	// Register custom section types.
+	$wp_customize->register_section_type( 'Interface_Customize_Section_Upsell' );
+
+	// Register sections.
+	$wp_customize->add_section(
+		new Interface_Customize_Section_Upsell(
+			$wp_customize,
+			'theme_upsell',
+			array(
+				'title'    => esc_html__( 'Interface Pro', 'interface' ),
+				'pro_text' => esc_html__( 'Upgrade to Pro', 'interface' ),
+				'pro_url'  => 'http://themehorse.com/themes/interface-pro',
+				'priority' => 1,
+			)
 		)
 	);
+
 }
-add_action( 'customize_controls_enqueue_scripts', 'interface_upgrade_notice' );
+
+add_action( 'customize_register', 'interface_customize_custom_sections');
 add_action('customize_register', 'interface_textarea_register');
 add_action('customize_register', 'interface_customize_register');
-add_action( 'customize_controls_print_styles', 'customize_styles_interface_upgrade');
 ?>

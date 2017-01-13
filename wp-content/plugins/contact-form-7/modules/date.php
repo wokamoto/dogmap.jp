@@ -4,20 +4,21 @@
 ** 	[date] and [date*]		# Date
 **/
 
-/* Shortcode handler */
+/* form_tag handler */
 
-add_action( 'wpcf7_init', 'wpcf7_add_shortcode_date' );
+add_action( 'wpcf7_init', 'wpcf7_add_form_tag_date' );
 
-function wpcf7_add_shortcode_date() {
-	wpcf7_add_shortcode( array( 'date', 'date*' ),
-		'wpcf7_date_shortcode_handler', true );
+function wpcf7_add_form_tag_date() {
+	wpcf7_add_form_tag( array( 'date', 'date*' ),
+		'wpcf7_date_form_tag_handler', true );
 }
 
-function wpcf7_date_shortcode_handler( $tag ) {
-	$tag = new WPCF7_Shortcode( $tag );
+function wpcf7_date_form_tag_handler( $tag ) {
+	$tag = new WPCF7_FormTag( $tag );
 
-	if ( empty( $tag->name ) )
+	if ( empty( $tag->name ) ) {
 		return '';
+	}
 
 	$validation_error = wpcf7_get_validation_error( $tag->name );
 
@@ -25,8 +26,9 @@ function wpcf7_date_shortcode_handler( $tag ) {
 
 	$class .= ' wpcf7-validates-as-date';
 
-	if ( $validation_error )
+	if ( $validation_error ) {
 		$class .= ' wpcf7-not-valid';
+	}
 
 	$atts = array();
 
@@ -37,11 +39,13 @@ function wpcf7_date_shortcode_handler( $tag ) {
 	$atts['max'] = $tag->get_date_option( 'max' );
 	$atts['step'] = $tag->get_option( 'step', 'int', true );
 
-	if ( $tag->has_option( 'readonly' ) )
+	if ( $tag->has_option( 'readonly' ) ) {
 		$atts['readonly'] = 'readonly';
+	}
 
-	if ( $tag->is_required() )
+	if ( $tag->is_required() ) {
 		$atts['aria-required'] = 'true';
+	}
 
 	$atts['aria-invalid'] = $validation_error ? 'true' : 'false';
 
@@ -82,7 +86,7 @@ add_filter( 'wpcf7_validate_date', 'wpcf7_date_validation_filter', 10, 2 );
 add_filter( 'wpcf7_validate_date*', 'wpcf7_date_validation_filter', 10, 2 );
 
 function wpcf7_date_validation_filter( $result, $tag ) {
-	$tag = new WPCF7_Shortcode( $tag );
+	$tag = new WPCF7_FormTag( $tag );
 
 	$name = $tag->name;
 
@@ -115,17 +119,17 @@ function wpcf7_date_messages( $messages ) {
 	return array_merge( $messages, array(
 		'invalid_date' => array(
 			'description' => __( "Date format that the sender entered is invalid", 'contact-form-7' ),
-			'default' => __( 'Date format seems invalid.', 'contact-form-7' )
+			'default' => __( "The date format is incorrect.", 'contact-form-7' )
 		),
 
 		'date_too_early' => array(
 			'description' => __( "Date is earlier than minimum limit", 'contact-form-7' ),
-			'default' => __( 'This date is too early.', 'contact-form-7' )
+			'default' => __( "The date is before the earliest one allowed.", 'contact-form-7' )
 		),
 
 		'date_too_late' => array(
 			'description' => __( "Date is later than maximum limit", 'contact-form-7' ),
-			'default' => __( 'This date is too late.', 'contact-form-7' )
+			'default' => __( "The date is after the latest one allowed.", 'contact-form-7' )
 		) ) );
 }
 

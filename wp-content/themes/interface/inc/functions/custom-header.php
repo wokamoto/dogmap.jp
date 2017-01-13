@@ -14,8 +14,6 @@ add_action( 'after_setup_theme', 'interface_custom_header_setup' );
  *
  * @uses add_theme_support() to register support for 3.4 and up.
  * @uses interface_header_style() to style front-end.
- * @uses interface_admin_header_style() to style wp-admin form.
- * @uses interface_admin_header_image() to add custom markup to wp-admin form.
  *
  * @since Interface 1.0
  */
@@ -42,8 +40,6 @@ function interface_custom_header_setup() {
 
 		// Callbacks for styling the header and the admin preview.
 		'wp-head-callback'       => '',
-		'admin-head-callback'    => 'interface_admin_header_style',
-		'admin-preview-callback' => 'interface_admin_header_image',
 		
 	);
 

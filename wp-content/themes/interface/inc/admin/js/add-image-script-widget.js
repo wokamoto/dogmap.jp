@@ -1,30 +1,35 @@
-// using multiple media upload through themeoptions.php
-jQuery(document).ready(function() {
-	var formfield;var uploadID = ''; /*setup the var in a global scope*/
-			jQuery('.upload-button1').live('click',function() {
-				
-			uploadID = jQuery(this).prev('input'); 
-			jQuery('html').addClass('Image');
-			formfield = jQuery('.upload1').attr('name');
-			
-			post_id = jQuery('#post_ID').val();
-			if(typeof post_id === 'undefined')
-				post_id = 0;
-				
-	 		tb_show('', 'media-upload.php?post_id='+post_id+'&amp;type=image&amp;TB_iframe=true');
-			return false;
-		});
-		// user inserts file into post. only run custom if user started process using the above process
-		// window.send_to_editor(html) is how wp would normally handle the received data
-		window.original_send_to_editor = window.send_to_editor;
-		window.send_to_editor = function(html){
-			if (formfield) {
-				fileurl = jQuery('img',html).attr('src');
-				uploadID.val(fileurl); /*assign the value of the image src to the input*/
-				tb_remove();
-				jQuery('html').removeClass('Image');
-			} else {
-				window.original_send_to_editor(html);
+jQuery(document).ready( function($) {
+
+		mediaupload = {
+			uploader : function( widget_id_string ) {
+
+				function media_upload(button_class) {
+					var _custom_media = true,
+					_orig_send_attachment = wp.media.editor.send.attachment;
+
+						$('body').on('click', button_class, function(e) {
+							// var current = $(this).prev('input');
+							// console.log( current);
+							var button_id ='#'+$(this).attr('id');
+							var self = $(button_id);
+							var send_attachment_bkp = wp.media.editor.send.attachment;
+							var button = $(button_id);
+							var id = button.attr('id').replace('_button', '');
+							_custom_media = true;
+							wp.media.editor.send.attachment = function(props, attachment){
+								if ( _custom_media  ) {
+									$("#" + widget_id_string + 'attachment_id').val(attachment.id);
+									$("#" + widget_id_string ).val(attachment.url);
+									$("#" + widget_id_string + 'preview').attr('src',attachment.url).css('display','block');
+								} else {
+									return _orig_send_attachment.apply( button_id, [props, attachment] );
+								}
+							}
+							wp.media.editor.open(button);
+								return false;
+						});
+				}
+				media_upload('.custom_media_button.button');
 			}
-		};
+		}
 });

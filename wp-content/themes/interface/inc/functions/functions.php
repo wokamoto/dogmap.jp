@@ -86,6 +86,7 @@ function interface_media_js() {
 	
     wp_enqueue_script( 'interface_meta_upload_widget', INTERFACE_ADMIN_JS_URL . '/add-image-script-widget.js', array( 'jquery','media-upload','thickbox' ) );
 	wp_enqueue_style('thickbox');
+	wp_enqueue_media();
 	
 }
 

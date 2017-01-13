@@ -1,6 +1,7 @@
 <?php
-require_once(dirname(__FILE__).'/aws.phar');
-
+if( ! defined("AWS-2.8.22.PHAR_PHAR") ){
+	require_once(dirname(__FILE__).'/aws.phar');
+}
 use Aws\Common\Aws;
 use Aws\Common\Enum\Region;
 use Aws\S3\Enum\CannedAcl;
@@ -23,14 +24,19 @@ class S3_helper {
 	public static function get_instance() {
 		if( !isset( self::$instance ) ) {
 			$c = __CLASS__;
-			self::$instance = new $c();    
+			self::$instance = new $c();
 		}
 
 		return self::$instance;
 	}
 
 	public function init($access_key = null, $secret_key = null, $region = null) {
+		$flag = false;
 		if ($access_key && $secret_key) {
+			$flag = true;
+		}
+
+		if ( apply_filters( 'nephila_clavata_flag_for_ec2' , $flag ) ) {
 			$this->init_s3($access_key, $secret_key, $region);
 		}
 	}
@@ -39,11 +45,12 @@ class S3_helper {
 	public function init_s3($access_key, $secret_key, $region = null){
 		if ( !isset($region) )
 			$region = Region::AP_NORTHEAST_1;
-		$s3 = Aws::factory(array(
+		$param = array(
 			'key' => $access_key,
 			'secret' => $secret_key,
 			'region' => $this->get_region($region),
-			))->get('s3');
+		);
+		$s3 = Aws::factory( apply_filters( 'nephila_clavata_credential', $param ) )->get('s3');
 		$this->s3 = $s3;
 		return $s3;
 	}
@@ -74,7 +81,7 @@ class S3_helper {
 	}
 
 	// S3 Upload
-	public function upload($filename, $upload_path = null, $bucket = null) {
+	public function upload($filename, $upload_path = null, $bucket = null, $storage_class = null) {
 		if (!file_exists($filename) || !$this->s3)
 			return false;
 
@@ -86,6 +93,8 @@ class S3_helper {
 				'Body'        => $this->file_body($filename),
 				'ContentType' => $this->mime_type($filename),
 				));
+			if (isset($storage_class))
+				$args['StorageClass'] = $storage_class;
 			if (isset($bucket))
 				$args['Bucket'] = $bucket;
 			if (!isset($args['Bucket']))
@@ -93,6 +102,7 @@ class S3_helper {
 			$response = $this->s3->putObject($args);
 			return $response;
 		} catch (S3Exception $e) {
+			error_log($e->__toString(),0);
 			return false;
 		}
 	}
@@ -119,6 +129,7 @@ class S3_helper {
 			file_put_contents($download_path, $response['Body']->read($response['ContentLength']));
 			return $response;
 		} catch (S3Exception $e) {
+			error_log($e->__toString(),0);
 			return false;
 		}
 	}
@@ -139,6 +150,7 @@ class S3_helper {
 			$response = $this->s3->deleteObject($args);
 			return $response;
 		} catch (S3Exception $e) {
+			error_log($e->__toString(),0);
 			return false;
 		}
 	}
@@ -151,6 +163,7 @@ class S3_helper {
 			$list_buckets = $this->s3->listBuckets();
 			return isset($list_buckets["Buckets"]) ? $list_buckets["Buckets"] : false;
 		} catch (S3Exception $e) {
+			error_log($e->__toString(),0);
 			return false;
 		}
 	}

@@ -8,7 +8,83 @@ Changelog Legend:
 [x] = Deleted
 [!] = Bugs
 
-(02/04/15) - Improvements - Version 1.9.7.7
+(10/27/16) - Improvements - Version 1.9.9.0
+
+[x] - Deprecated tags removed
+[*] - Archive functions replaced with core WordPress functions
+[!] - Minor bug fixes
+[+] - Accessibility - ARIA landmark roles added
+[+] - Enhanced skip link CSS 
+[+] - Escape functions added to improve security
+
+(08/26/16) - Improvements - Version 1.9.8.9
+
+[*] - Corrected aspect ratio of screenshot
+
+(08/19/16) - Improvements - Version 1.9.8.8
+
+[+] - Added author gravtar for post pages
+
+(08/19/16) - Improvements - Version 1.9.8.7
+
+[*] - Improved default settings
+
+
+(08/10/16) - Improvements - Version 1.9.8.6
+
+[!] - Fixed social icon label
+
+----
+
+(07/21/16) - Improvements - Version 1.9.8.5
+
+[*] - Improved Admin Dashboard appearance.
+[!] - Fixed warning;
+----
+(06/07/16) - Improvements - Version 1.9.8.4
+
+[!] - Minor fix for the link display on single pages.
+
+----
+
+(05/27/16) - Improvements - Version 1.9.8.3
+
+[!] - Fixed link display for pages on search page.
+
+----
+
+(04/15/16) - Improvements - Version 1.9.8.2
+
+[!] - Fixed scroll-top jquery conflict with WordPress 4.5 version
+
+----
+
+(03/29/16) - Improvements - Version 1.9.8.1
+
+[+] - PHP 7 compatible
+
+----
+
+(03/21/16) - Improvements - Version 1.9.8.0
+
+[+] - Fixed Bug of 'Default Copyright Text' not getting saved.
+
+----
+
+(02/26/16) - Improvements - Version 1.9.7.9
+
+[+] - Added an option to customize copyright text in footer.
+
+----
+
+(02/08/16) - Improvements - Version 1.9.7.8
+
+[!] - Fixed CSS validation errors
+
+
+----
+
+(07/17/15) - Improvements - Version 1.9.7.7
 
 [+] - Added options to customizer as per wordpress.org guidelines
 [+] - Added new plugin suggestion.
@@ -16,7 +92,7 @@ Changelog Legend:
 
 ----
 
-(02/04/15) - Improvements - Version 1.9.7.5
+(02/04/15) - Improvements - Version 1.9.7.6
 [+] - Added new plugin suggestion.
 [!] - Fix on turkish translation.
 

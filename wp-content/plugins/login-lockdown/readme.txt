@@ -2,8 +2,8 @@
 Developer: Michael VanDeMar (michael@endlesspoetry.com)
 Tags: security, login
 Requires at least: 3.6
-Tested up to: 3.8.1
-Stable Tag: 1.6.1
+Tested up to: 4.6.1
+Stable Tag: 1.7.1
 
 Limits the number of login attempts from a given IP range within a certain time period.
 
@@ -14,7 +14,7 @@ certain number of attempts are detected within a short period of time from the s
 IP range, then the login function is disabled for all requests from that range.
 This helps to prevent brute force password discovery. Currently the plugin defaults
 to a 1 hour lock out of an IP block after 3 failed login attempts within 5 minutes. This can be modified
-via the Options panel. Admisitrators can release locked out IP ranges manually from the panel.
+via the Options panel. Administrators can release locked out IP ranges manually from the panel.
 
 == Installation ==
 
@@ -25,6 +25,13 @@ via the Options panel. Admisitrators can release locked out IP ranges manually f
 Enjoy.
 
 == Change Log ==
+
+ ver. 1.7.1 13-Sep-2016
+
+ - fixed bug causing all ipv6 addresses to get locked out if 1 was
+ - added in WordPress MultiSite functionality
+ - fixed bug where subnets could be overly matched, causing more IPs to be blocked than intended
+ - moved the report for locked out IP addresses to its own tab
 
  ver. 1.6.1 8-Mar-2014
 

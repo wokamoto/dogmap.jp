@@ -176,7 +176,7 @@ function responsive_theme_options_do_page() {
 				'heading'     => '',
 				'type'        => 'checkbox',
 				'id'          => 'breadcrumb',
-				'description' => __( 'check to disable', 'responsive' ),
+				'description' => __( 'Check to disable', 'responsive' ),
 				'placeholder' => ''
 			),
 			array(
@@ -185,7 +185,7 @@ function responsive_theme_options_do_page() {
 				'heading'     => '',
 				'type'        => 'checkbox',
 				'id'          => 'cta_button',
-				'description' => __( 'check to disable', 'responsive' ),
+				'description' => __( 'Check to disable', 'responsive' ),
 				'placeholder' => ''
 			),
 			array(
@@ -194,7 +194,7 @@ function responsive_theme_options_do_page() {
 				'heading'     => '',
 				'type'        => 'checkbox',
 				'id'          => 'minified_css',
-				'description' => __( 'check to enable', 'responsive' ),
+				'description' => __( 'Check to enable', 'responsive' ),
 				'placeholder' => ''
 			),
 			array(
@@ -203,7 +203,7 @@ function responsive_theme_options_do_page() {
 				'heading'     => '',
 				'type'        => 'checkbox',
 				'id'          => 'blog_post_title_toggle',
-				'description' => __( 'check to enable', 'responsive' ),
+				'description' => __( 'Check to enable', 'responsive' ),
 			),
 			array(
 				'title'       => __( 'Title Text', 'responsive' ),
@@ -213,6 +213,24 @@ function responsive_theme_options_do_page() {
 				'id'          => 'blog_post_title_text',
 				'description' => '',
 				'placeholder' => __( 'Blog', 'responsive' )
+			),
+			array(
+				'title'       => __( 'Copyright Text', 'responsive' ),
+				'subtitle'    => '',
+				'heading'     => '',
+				'type'        => 'text',
+				'id'          => 'copyright_textbox',
+				'description' => '',
+				'placeholder' => __( 'Default Copyright Text', 'responsive' )
+			),
+			array(
+				'title'       => __( 'Display Powered By WordPress Link', 'responsive' ),
+				'subtitle'    => '',
+				'heading'     => '',
+				'type'        => 'checkbox',
+				'id'          => 'poweredby_link',
+				'description' => '',
+				'placeholder' => ''
 			)
 		),
 		'logo_upload' => array(
@@ -244,7 +262,7 @@ function responsive_theme_options_do_page() {
 				'type'        => 'text',
 				'id'          => 'home_headline',
 				'description' => __( 'Enter your headline', 'responsive' ),
-				'placeholder' => __( 'Hello, World!', 'responsive' )
+				'placeholder' => __( 'HAPPINESS', 'responsive' )
 			),
 			array(
 				'title'       => __( 'Subheadline', 'responsive' ),
@@ -253,7 +271,7 @@ function responsive_theme_options_do_page() {
 				'type'        => 'text',
 				'id'          => 'home_subheadline',
 				'description' => __( 'Enter your subheadline', 'responsive' ),
-				'placeholder' => __( 'Your H2 subheadline here', 'responsive' )
+				'placeholder' => __( 'IS A WARM CUP', 'responsive' )
 			),
 			array(
 				'title'       => __( 'Content Area', 'responsive' ),
@@ -562,4 +580,3 @@ function responsive_theme_options_validate( $input ) {
 
 	return $input;
 }
-

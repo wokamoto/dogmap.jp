@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Edit Author Slug Core Functions
  *
@@ -10,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+defined( 'ABSPATH' ) || exit;
 
 /** Nicename ******************************************************************/
 
@@ -18,9 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * Determines if an auto-update should occur
  *
  * @since 0.9.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call `ba_eas_do_auto_update` hook.
  *
  * @return bool True if auto-update enabled.
  */
@@ -44,19 +40,6 @@ function ba_eas_do_auto_update() {
  * @param int    $user_id   User id.
  * @param bool   $bulk      Bulk upgrade flag. Defaults to false.
  * @param string $structure The nicename structure to use during update.
- *
- * @uses ba_eas_do_auto_update() Do we auto-update?
- * @uses get_userdata() To get the user object.
- * @uses apply_filters() To call the `ba_eas_auto_update_user_nicename_structure` hook.
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses ba_eas_sanitize_nicename() To sanitize the new nicename.
- * @uses ba_eas_trim_nicename() To trim the new nicename to 50 characters.
- * @uses apply_filters() To call the `ba_eas_pre_auto_update_user_nicename` hook.
- * @uses remove_action() To remove the `ba_eas_auto_update_user_nicename` and prevent looping.
- * @uses wp_update_user() Update to new user_nicename.
- * @uses is_wp_error() To make sure update_user was successful before we clear the cache.
- * @uses ba_eas_update_nicename_cache() There’s always money in the banana stand!
- * @uses add_action() To re-add the `ba_eas_auto_update_user_nicename` hook.
  *
  * @return bool|int User id on success. False on failure.
  */
@@ -169,6 +152,12 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 			}
 
 			break;
+
+		case 'userid':
+
+			$nicename = $user_id;
+
+			break;
 	}
 
 	// Sanitize and trim the new user nicename.
@@ -223,9 +212,6 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
  *
  * @param int $user_id The user id.
  *
- * @uses _deprecated_function() To throw a deprecated warning.
- * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
- *
  * @return bool|int $user_id. False on failure.
  */
 function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
@@ -242,14 +228,12 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  *
  * @param string $value The option value passed to the settings API.
  *
- * @uses get_users() To get all the user ids.
- * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
- * @uses is_wp_error() To check for an error.
- * @uses add_settings_error() To add our message about how many users were updated.
- *
  * @return bool False to prevent the setting from being saved to the db.
  */
 function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
+
+	// Nonce check.
+	check_admin_referer( 'edit-author-slug-options' );
 
 	// Default the structure to the auto-update structure.
 	$structure = ba_eas()->default_user_nicename;
@@ -278,11 +262,6 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	 * @param array $users The array of user ids to update.
 	 */
 	$users = (array) apply_filters( 'ba_eas_auto_update_user_nicename_bulk_user_ids', $users );
-
-	// Bail if no users are returned.
-	if ( empty( $users ) ) {
-		return false;
-	}
 
 	// Set the default updated count.
 	$updated = 0;
@@ -323,13 +302,49 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
  * @param string $nicename The nicename being sanitized.
  * @param bool   $strict   True to return only ASCII characters.
  *
- * @uses sanitize_user() To remove any unsafe characters in the nicename.
- * @uses sanitize_title() To remove HTML/PHP tags, and whitespace.
- *
  * @return string The nicename.
  */
 function ba_eas_sanitize_nicename( $nicename = '', $strict = true ) {
 	return sanitize_title( sanitize_user( $nicename, (bool) $strict ) );
+}
+
+/**
+ * Sanitize author base and add to database.
+ *
+ * @since 0.8.0
+ * @since 1.2.0 Removed all non-sanitization code.
+ *
+ * @param string $author_base Author base to be sanitized.
+ *
+ * @return string The author base.
+ */
+function ba_eas_sanitize_author_base( $author_base = 'author' ) {
+
+	// Store the author base as passed.
+	$original_author_base = $author_base;
+
+	// Only do extra sanitization when needed.
+	if ( ! empty( $author_base ) || 'author' !== $author_base ) {
+
+		// Split the author base string on forward slashes.
+		$parts = array_filter( explode( '/', $author_base ) );
+
+		// Sanitize the parts, and put them back together.
+		$author_base = implode( '/', array_map( 'sanitize_title', $parts ) );
+	}
+
+	// Always default to `author`.
+	if ( empty( $author_base ) ) {
+		$author_base = 'author';
+	}
+
+	/**
+	 * Filters the sanitized author base.
+	 *
+	 * @param string $author_base          The sanitized author base.
+	 * @param string $original_author_base The unsanitized author base.
+	 */
+	return apply_filters( 'ba_eas_sanitize_author_base', $author_base, $original_author_base );
 }
 
 /**
@@ -339,8 +354,6 @@ function ba_eas_sanitize_nicename( $nicename = '', $strict = true ) {
  * @since 1.1.0
  *
  * @param string $nicename The nicename being sanitized.
- *
- * @uses apply_filters() To call the `editable_slug` hook.
  *
  * @return string The nicename.
  */
@@ -378,8 +391,6 @@ function ba_eas_trim_nicename( $nicename = '' ) {
  *
  * @param string $nicename The nicename to check for invalid characters.
  *
- * @uses ba_eas_sanitize_nicename() To sanitize the nicename.
- *
  * @return bool True if the nicename contains only ASCII characters, or
  *              characters that can be converted to ASCII.
  */
@@ -390,12 +401,79 @@ function ba_eas_nicename_is_ascii( $nicename = '' ) {
 /** Author Base ***************************************************************/
 
 /**
+ * Overrides the WP_Rewrite properties, `author_base` and `author_structure`,
+ * when appropriate.
+ *
+ * @since 1.2.0
+ *
+ * @return void
+ */
+function ba_eas_wp_rewrite_overrides() {
+
+	// Set default author base.
+	$author_base = 'author';
+
+	// Set to our author base if it exists.
+	if ( ! empty( ba_eas()->author_base ) ) {
+		$author_base = ba_eas()->author_base;
+	}
+
+	// If doing role-based, set accordingly.
+	if ( ba_eas_do_role_based_author_base() ) {
+		$author_base = '%ba_eas_author_role%';
+	}
+
+	// Override WP_Rewrite::author_base with our new value.
+	$GLOBALS['wp_rewrite']->author_base = $author_base;
+
+	// Override `WP_Rewrite::author_structure` with our new value.
+	if ( ba_eas_remove_front() && ba_eas_has_front() ) {
+		$GLOBALS['wp_rewrite']->author_structure = '/' . $author_base . '/%author%';
+	}
+}
+
+/**
+ * Determines if we should remove the `front` portion of the author structure.
+ *
+ * @since 1.2.0
+ *
+ * @return bool
+ */
+function ba_eas_remove_front() {
+
+	/**
+	 * Filters the return of the `remove_front` option.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param bool $remove_front The `remove_front` option.
+	 */
+	return (bool) apply_filters( 'ba_eas_remove_front', ba_eas()->remove_front );
+}
+
+/**
+ * Determines if `WP_Rewrite::front` is anything other than `/`.
+ *
+ * @since 1.2.0
+ *
+ * @return bool
+ */
+function ba_eas_has_front() {
+
+	/**
+	 * Filters the return of the `ba_eas_has_front` option.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param bool $has_front The `remove_front` option.
+	 */
+	return (bool) apply_filters( 'ba_eas_has_front', '/' !== $GLOBALS['wp_rewrite']->front );
+}
+
+/**
  * Determines if we should do a role-based author base
  *
  * @since 1.0.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call `ba_eas_do_role_based_author_base` hook.
  *
  * @return bool True if role-based author base enabled.
  */
@@ -422,11 +500,6 @@ function ba_eas_do_role_based_author_base() {
  * @param string $link    The author link with user role as author base.
  * @param int    $user_id The user id.
  *
- * @uses ba_eas_do_role_based_author_base() To determine if we're doing
- *                                          role-based author bases.
- * @uses get_userdata() To get the WP_User object.
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- *
  * @return string Author archive link.
  */
 function ba_eas_author_link( $link = '', $user_id = 0 ) {
@@ -447,6 +520,11 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
 		$link = str_replace( '%ba_eas_author_role%', $slug, $link );
 	}
 
+	// Remove front if applicable.
+	if ( ba_eas_has_front() && ba_eas_remove_front() ) {
+		$link = str_replace( $GLOBALS['wp_rewrite']->front, '/', $link );
+	}
+
 	// Return the link.
 	return $link;
 }
@@ -461,10 +539,6 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
  * @since 1.0.0
  *
  * @param string $template Current template according to template hierarchy.
- *
- * @uses get_queried_object() To get the queried object (should be WP_User object).
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses locate_template() To see if we have role-based templates.
  *
  * @return string Author archive link.
  */
@@ -483,9 +557,9 @@ function ba_eas_template_include( $template ) {
 		return $template;
 	}
 
-	// nicename and ID templates should take priority, so we need to check for their existence.
+	// Nicename and ID templates should take priority, so we need to check for their existence.
 	$nicename_template = strpos( $template, "author-{$author->user_nicename}.php" );
-	$id_template       = strpos( $template, "author-{$author->ID}.php"            );
+	$id_template       = strpos( $template, "author-{$author->ID}.php" );
 
 	// If they don't exist, search for a role based template.
 	if ( false === $nicename_template && false === $id_template ) {
@@ -532,21 +606,16 @@ function ba_eas_template_include( $template ) {
  * Rules will be recreated on next page load.
  *
  * @since 0.9.5
- *
- * @uses delete_option() To auto-update the nicename.
  */
 function ba_eas_flush_rewrite_rules() {
-	delete_option( 'rewrite_rules' );
+	update_option( 'rewrite_rules', '' );
 }
 
 /**
  * Filter out unnecessary rewrite rules from the author
  * rules array.
  *
- * @param array $author_rewrite_rules Author rewrite rules
- *
- * @uses ba_eas_do_role_based_author_base() To determine if we're doing
- *                                          role-based author bases.
+ * @param array $author_rewrite_rules Author rewrite rules.
  *
  * @return array Author rewrite rules.
  */
@@ -571,9 +640,6 @@ function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
  *
  * @param array $roles   An array of user roles.
  * @param int   $user_id The user id.
- *
- * @uses get_userdata() To get the WP_User object.
- * @uses apply_filters() To call the `ba_eas_get_user_role` hook.
  *
  * @return string The user's first listed role.
  */
@@ -610,6 +676,62 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
 }
 
 /**
+ * Returns the WP_Roles object.
+ *
+ * WP 4.3 added the `wp_roles()` function to facilitate the instantiation of the
+ * WP_Roles object. This is a wrapper function for `wp_roles()` with a fallback
+ * for those on WP < 4.3.
+ *
+ * @global WP_Roles $wp_roles
+ *
+ * @return WP_Roles
+ */
+function ba_eas_get_wp_roles() {
+
+	if ( function_exists( 'wp_roles' ) ) {
+		$wp_roles = wp_roles();
+
+	} else {
+
+		global $wp_roles;
+
+		// Make sure the `$wp_roles` global has been set.
+		if ( ! isset( $wp_roles ) ) {
+			$wp_roles = new WP_Roles();
+		}
+	}
+
+	return $wp_roles;
+}
+
+/**
+ * Return an array of WP roles.
+ *
+ * The capabilities array for each role have been removed.
+ *
+ * @since 1.2.0
+ *
+ * @global WP_Roles $wp_roles
+ *
+ * @return array
+ */
+function ba_eas_get_roles() {
+
+	// Get the `WP_Roles` object.
+	$wp_roles = ba_eas_get_wp_roles();
+
+	// Pull out just the roles array.
+	$_wp_roles = $wp_roles->roles;
+
+	// Remove user caps.
+	foreach ( $_wp_roles as $role => $details ) {
+		unset( $_wp_roles[ $role ]['capabilities'] );
+	}
+
+	return $_wp_roles;
+}
+
+/**
  * Fetch a filtered list of user roles that the current user is
  * allowed to edit.
  *
@@ -625,16 +747,16 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
  *
  * @global WP_Roles $wp_roles The WP_Roles object.
  *
- * @uses sanitize_title() To sanitize the role slug.
- *
  * @return array $editable_roles List of editable roles.
  */
 function ba_eas_get_editable_roles() {
-	global $wp_roles;
 
-	// Make sure wp_roles has been set.
-	if ( empty( $wp_roles ) ) {
-		$wp_roles = new WP_Roles();
+	// Get the `WP_Roles` object.
+	$wp_roles = ba_eas_get_wp_roles();
+
+	$roles = array();
+	if ( ! empty( $wp_roles->roles ) ) {
+		$roles = $wp_roles->roles;
 	}
 
 	/**
@@ -644,11 +766,13 @@ function ba_eas_get_editable_roles() {
 	 *
 	 * @param array $roles The return of WP_Roles::roles.
 	 */
-	$editable_roles = apply_filters( 'editable_roles', $wp_roles->roles );
+	$editable_roles = apply_filters( 'editable_roles', $roles );
 
 	// Remove user caps.
-	foreach ( $editable_roles as $role => $details ) {
-		unset( $editable_roles[ $role ]['capabilities'] );
+	if ( ! empty( $editable_roles ) ) {
+		foreach ( $editable_roles as $role => $details ) {
+			unset( $editable_roles[ $role ]['capabilities'] );
+		}
 	}
 
 	return $editable_roles;
@@ -659,16 +783,12 @@ function ba_eas_get_editable_roles() {
  *
  * @since 1.0.2
  *
- * @uses ba_eas_get_editable_roles() To sanitize the role slug.
- * @uses translate_user_role() To translate default WP role names.
- * @uses sanitize_title() To sanitize the translated role name into a role slug.
- *
  * @return array Role slugs array.
  */
 function ba_eas_get_default_role_slugs() {
 
-	// Get a filtered list of roles.
-	$roles = ba_eas_get_editable_roles();
+	// Get the array of WP roles.
+	$roles = ba_eas_get_roles();
 
 	// Convert role names into role slugs.
 	foreach ( $roles as $role => $details ) {
@@ -688,10 +808,10 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param array $base
-	 * @param array $replacements
+	 * @param array $base         The default array.
+	 * @param array $replacements The new array.
 	 *
-	 * @return array Role slugs array
+	 * @return array Role slugs array.
 	 */
 	function array_replace_recursive( $base, $replacements ) {
 		foreach ( array_slice( func_get_args(), 1 ) as $replacements ) {
@@ -729,10 +849,6 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
  * @param int    $user_id       The user id.
  * @param object $old_user_data The WP_User object.
  * @param string $new_nicename  The new user nicename.
- *
- * @uses get_userdata() To get the WP_User object.
- * @uses wp_cache_delete() To delete the old nicename from cache.
- * @uses wp_cache_add() To add the new nicename to cache.
  */
 function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_nicename = '' ) {
 

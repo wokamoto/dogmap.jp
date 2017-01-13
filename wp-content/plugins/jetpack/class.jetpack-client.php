@@ -1,7 +1,6 @@
 <?php
 
 class Jetpack_Client {
-	const WPCOM_JSON_API_HOST    = 'public-api.wordpress.com';
 	const WPCOM_JSON_API_VERSION = '1.1';
 
 	/**
@@ -18,6 +17,9 @@ class Jetpack_Client {
 			'method' => 'POST',
 			'timeout' => 10,
 			'redirection' => 0,
+			'headers' => array(),
+			'stream' => false,
+			'filename' => null,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -38,8 +40,10 @@ class Jetpack_Client {
 		$timeout = intval( $args['timeout'] );
 
 		$redirection = $args['redirection'];
+		$stream = $args['stream'];
+		$filename = $args['filename'];
 
-		$request = compact( 'method', 'body', 'timeout', 'redirection' );
+		$request = compact( 'method', 'body', 'timeout', 'redirection', 'stream', 'filename' );
 
 		@list( $token_key, $secret ) = explode( '.', $token->secret );
 		if ( empty( $token ) || empty( $secret ) ) {
@@ -64,11 +68,26 @@ class Jetpack_Client {
 		// Kind of annoying.  Maybe refactor Jetpack_Signature to handle body-hashing
 		if ( is_null( $body ) ) {
 			$body_hash = '';
+
 		} else {
-			if ( !is_string( $body ) ) {
+			// Allow arrays to be used in passing data.
+			$body_to_hash = $body;
+
+			if ( is_array( $body ) ) {
+				// We cast this to a new variable, because the array form of $body needs to be
+				// maintained so it can be passed into the request later on in the code.
+				if ( count( $body ) > 0 ) {
+					$body_to_hash = json_encode( self::_stringify_data( $body ) );
+				} else {
+					$body_to_hash = '';
+				}
+			}
+
+			if ( ! is_string( $body_to_hash ) ) {
 				return new Jetpack_Error( 'invalid_body', 'Body is malformed.' );
 			}
-			$body_hash = jetpack_sha1_base64( $body );
+
+			$body_hash = jetpack_sha1_base64( $body_to_hash );
 		}
 
 		$auth = array(
@@ -107,9 +126,15 @@ class Jetpack_Client {
 		foreach ( $auth as $key => $value ) {
 			$header_pieces[] = sprintf( '%s="%s"', $key, $value );
 		}
-		$request['headers'] = array(
+		$request['headers'] = array_merge( $args['headers'], array(
 			'Authorization' => "X_JETPACK " . join( ' ', $header_pieces ),
-		);
+		) );
+
+		// Make sure we keep the host when we do JETPACK__WPCOM_JSON_API_HOST requests.
+		$host = parse_url( $url, PHP_URL_HOST );
+		if ( $host === JETPACK__WPCOM_JSON_API_HOST ) {
+			$request['headers']['Host'] = 'public-api.wordpress.com';
+		}
 
 		if ( 'header' != $args['auth_location'] ) {
 			$url = add_query_arg( 'signature', urlencode( $signature ), $url );
@@ -249,6 +274,8 @@ class Jetpack_Client {
 			'method'      => 'string',
 			'timeout'     => 'int',
 			'redirection' => 'int',
+			'stream'      => 'boolean',
+			'filename'    => 'string',
 		) );
 
 		/**
@@ -271,7 +298,7 @@ class Jetpack_Client {
 		}
 
 		$validated_args = array_merge( $filtered_args, array(
-			'url'     => sprintf( '%s://%s/rest/v%s/%s', $proto, self::WPCOM_JSON_API_HOST, $version, $_path ),
+			'url'     => sprintf( '%s://%s/rest/v%s/%s', $proto, JETPACK__WPCOM_JSON_API_HOST, $version, $_path ),
 			'blog_id' => (int) Jetpack_Options::get_option( 'id' ),
 			'method'  => $request_method,
 		) );
@@ -279,4 +306,36 @@ class Jetpack_Client {
 		return Jetpack_Client::remote_request( $validated_args, $body );
 	}
 
+	/**
+	 * Takes an array or similar structure and recursively turns all values into strings. This is used to
+	 * make sure that body hashes are made ith the string version, which is what will be seen after a
+	 * server pulls up the data in the $_POST array.
+	 *
+	 * @param array|mixed $data
+	 *
+	 * @return array|string
+	 */
+	public static function _stringify_data( $data ) {
+
+		// Booleans are special, lets just makes them and explicit 1/0 instead of the 0 being an empty string.
+		if ( is_bool( $data ) ) {
+			return $data ? "1" : "0";
+		}
+
+		// Cast objects into arrays.
+		if ( is_object( $data ) ) {
+			$data = (array) $data;
+		}
+
+		// Non arrays at this point should be just converted to strings.
+		if ( ! is_array( $data ) ) {
+			return (string)$data;
+		}
+
+		foreach ( $data as $key => &$value ) {
+			$value = self::_stringify_data( $value );
+		}
+
+		return $data;
+	}
 }

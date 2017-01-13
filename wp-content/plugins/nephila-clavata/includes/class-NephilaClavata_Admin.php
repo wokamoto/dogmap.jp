@@ -23,12 +23,17 @@ class NephilaClavata_Admin {
 		'US_GOV_WEST_1'
 		);
 
+	private $storage_classes = array(
+		'STANDARD',
+		'REDUCED_REDUNDANCY',
+	);
+
 	private function __construct() {}
 
 	public static function get_instance() {
 		if( !isset( self::$instance ) ) {
 			$c = __CLASS__;
-			self::$instance = new $c();    
+			self::$instance = new $c();
 		}
 
 		return self::$instance;
@@ -51,6 +56,7 @@ class NephilaClavata_Admin {
 			'region'     => __('AWS Region',  NephilaClavata::TEXT_DOMAIN),
 			'bucket'     => __('S3 Bucket',  NephilaClavata::TEXT_DOMAIN),
 			's3_url'     => __('S3 URL', NephilaClavata::TEXT_DOMAIN),
+			'storage_class' => __('Storage Class', NephilaClavata::TEXT_DOMAIN),
 			);
 	}
 
@@ -71,7 +77,7 @@ class NephilaClavata_Admin {
 
 		$title = __('Nephila clavata', NephilaClavata::TEXT_DOMAIN);
 		$this->admin_hook = add_options_page($title, $title, 'manage_options', self::OPTION_PAGE, array($this, 'options_page'));
-		$this->admin_action = admin_url('/options-general.php') . '?page=' . self::OPTION_PAGE;
+		$this->admin_action = admin_url( apply_filters( 'nephila_clavata_admin_url', '/options-general.php') ) . '?page=' . self::OPTION_PAGE;
 	}
 
 	public function options_page(){
@@ -79,6 +85,7 @@ class NephilaClavata_Admin {
 		$nonce_name    = '_wpnonce_update_options';
 
 		$option_keys   = $this->option_keys();
+		$option_keys   = apply_filters( 'nephila_clavata_option_keys', $option_keys );
 		self::$options = $this->get_option();
 		$title = __('Nephila clavata', NephilaClavata::TEXT_DOMAIN);
 
@@ -173,6 +180,7 @@ class NephilaClavata_Admin {
 			unset($option_keys['bucket']);
 			unset($option_keys['s3_url']);
 		}
+		$storage_classes = $this->storage_classes;
 
 ?>
 		<div class="wrap">
@@ -181,7 +189,7 @@ class NephilaClavata_Admin {
 		<form method="post" action="<?php echo $this->admin_action;?>">
 		<?php echo wp_nonce_field($nonce_action, $nonce_name, true, false) . "\n"; ?>
 		<table class="wp-list-table fixed"><tbody>
-		<?php foreach ($option_keys as $field => $label) { $this->input_field($field, $label, array('regions' => $regions, 'buckets' => $buckets)); } ?>
+		<?php foreach ($option_keys as $field => $label) { $this->input_field($field, $label, array('regions' => $regions, 'buckets' => $buckets, 'storage_classes' => $storage_classes)); } ?>
 		</tbody></table>
 		<?php submit_button(); ?>
 		</form>
@@ -219,6 +227,19 @@ class NephilaClavata_Admin {
 						'<option value="%1$s"%2$s>%1$s</option>',
 						esc_attr($bucket['Name']),
 						$bucket['Name'] == self::$options[$field] ? ' selected' : '');
+				}
+				$input_field .= '</select></td>';
+			}
+			break;
+		case 'storage_class':
+			if ($storage_classes && count($storage_classes) > 0) {
+				$input_field  = sprintf('<td><select name="%1$s">', $field);
+				$input_field .= '<option value=""></option>';
+				foreach ($storage_classes as $storage_class) {
+					$input_field .= sprintf(
+						'<option value="%1$s"%2$s>%1$s</option>',
+						esc_attr($storage_class),
+						$storage_class == self::$options[$field] ? ' selected' : '');
 				}
 				$input_field .= '</select></td>';
 			}

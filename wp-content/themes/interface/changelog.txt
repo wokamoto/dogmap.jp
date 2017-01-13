@@ -1,4 +1,17 @@
 == CHANGE LOG ==
+= 3.0.5 =
+- Update - Theme Tags Updated
+
+= 3.0.4 =
+ - Tweak - Inject JS removed from the top of the customizer and added in panel
+ - Fix - Deprecated message fixed for new PHP7 version
+ - Fix - Deprecated header image code removed
+
+= 3.0.3 =
+ - Fix - Frontpage Category issue fixed
+ - Fix - Widgets Upload button issue fixed
+ - Update - Russian Language Updated. Thanks to Kirill Belotserkovskiy <k.belotserkovskiy@gmail.com> for updating the translation files
+
 = 3.0.2 =
  - Fix - interface_before whitespace removed
  - Fix -  Searchform display issue fixed

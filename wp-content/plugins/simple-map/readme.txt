@@ -1,9 +1,9 @@
 === Simple Map ===
 Contributors: miyauchi
 Tags: google maps, map, shortcode, address
-Requires at least: 3.6
-Tested up to: 4.4
-Stable tag: 2.9.0
+Requires at least: 3.9
+Tested up to: 4.7
+Stable tag: 4.7.0
 
 Easy way to embed google map(s).
 
@@ -50,6 +50,8 @@ You can use simple html as the tooltip content.
 * lat: Lat of the map you want to place.
 * lng: Lng of the map you want to place.
 * infowindow: If you want to open infoWindow by Default, please set "open".
+* map_type_control: True or Flase.
+* map_type_id: 'ROADMAP' or 'SATELLITE' or 'HYBRID' or 'TERRAIN'.
 
 If you will set lat/lng and address, this plugin gives priority to lat/lng.
 
@@ -123,6 +125,31 @@ You can use simple html as the tooltip content.
 3. Mobile Support. (Google static map)
 
 == Changelog ==
+
+= 2.14.2 =
+
+* Fix API key problem on static map
+
+= 2.13.0 =
+
+* Tested up to WordPress 4.5
+
+= 2.12.0 =
+
+* Add args `map_type_control` and `map_type_id`.
+
+= 2.10.1 =
+
+* Requires WordPress 3.9 or later.
+* Tested on PHP7
+
+https://github.com/miya0001/simple-map/compare/2.10.0...2.11.0
+
+= 2.10.0 =
+
+* Fix warning for Google Map api
+
+https://github.com/miya0001/simple-map/compare/2.9.0...2.10.0
 
 = 2.8.5 =
 
