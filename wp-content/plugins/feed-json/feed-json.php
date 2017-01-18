@@ -4,14 +4,14 @@ Plugin Name: Feed JSON
 Plugin URI: http://wordpress.org/extend/plugins/feed-json/
 Description: Adds a new type of feed you can subscribe to. http://example.com/feed/json or http://example.com/?feed=json to anywhere you get a JSON form.
 Author: wokamoto
-Version: 1.0.9
+Version: 1.0.10
 Author URI: http://dogmap.jp/
 
 License:
  Released under the GPL license
   http://www.gnu.org/copyleft/gpl.html
 
-  Copyright 2011-2014 (email : wokamoto1973@gmail.com)
+  Copyright 2011-2017 (email : wokamoto1973@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ class feed_json {
 	public static function get_instance() {
 		if( !isset( self::$instance ) ) {
 			$c = __CLASS__;
-			self::$instance = new $c();    
+			self::$instance = new $c();
 		}
 		return self::$instance;
 	}
@@ -79,7 +79,7 @@ class feed_json {
 	}
 
 	static public function add_feed_json() {
-		add_feed('json', array($this, 'do_feed_json'));
+		add_feed('json', array(self::$instance, 'do_feed_json'));
 	}
 
 	public function do_feed_json() {
